@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ request.url_for('static', path='style.css') }}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <title>Login</title>  
+</head>
+
+<body class="body-main">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="sidebar-logo">
+      <i class="fas fa-vote-yea text-blue-600 text-xl"></i> 
+      <span class="logo-text">E-Lection</span>
+    </div>
+  </nav>
+  
+  <!-- Main-->
+  <main class="form-main">
+    <div class="form-card">
+      
+      <!-- Icon -->
+      <img src="https://cdn-icons-png.flaticon.com/512/6543/6543058.png" 
+           alt="Login Icon" 
+           class="form-icon" />
+      
+      <!-- Title -->
+      <h2 class="form-title">Login</h2>
+      <p class="form-subtitle">Sign in to your account to continue voting</p>
+
+      {% if error %}
+      <div class="alert-error">{{ error }}</div>
+      {% endif %}
+      
+      <!-- Form -->
+      <form id="loginForm" class="space-y-4 text-left" action="/login" method="post">
+        <!-- Email -->
+        <div>
+          <label for="email" class="form-label">Email Address</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="Enter your email"
+            class="form-input"
+            value="{{ (form_data or {}).get('email', '') }}"
+            required
+          />
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label for="password" class="form-label">Password</label>
+          <div class="relative">
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Enter your password"
+              class="form-input pr-12"
+              required
+            />
+            <button
+              type="button"
+              onclick="togglePassword('password')"
+              class="password-toggle"
+            >
+              <i class="fas fa-eye" id="password-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Remember + Forgot -->
+        <div class="flex items-center justify-between">
+          <label class="flex items-center space-x-2">
+            <input id="remember" name="remember" type="checkbox" class="rounded border-gray-300" />
+            <span class="form-label">Remember me</span>
+          </label>
+          <a href="#" class="text-sm text-blue-600 hover:underline">Forgot password?</a>
+        </div>
+
+        <!-- Button -->
+        <button type="submit" class="btn btn-login w-full">
+          Sign In
+        </button>
+      </form>
+
+      <!-- Register -->
+      <div class="form-footer">
+        <p>
+          Don't have an account?
+          <a href="/register" class="text-blue-600 hover:underline font-medium">Sign up here</a>
+        </p>
+      </div>
+
+      <!-- Demo Credentials -->
+      <div class="mt-6 p-3 bg-gray-50 rounded-lg">
+        <p class="text-xs text-gray-600 text-center mb-2">Demo Credentials:</p>
+        <div class="text-xs text-gray-500 space-y-1 text-left">
+          <div>Admin: <span class="font-mono">admin@university.edu</span> / AdminPass123!</div>
+          <div>Voter: <span class="font-mono">student@university.edu</span> / StudentPass123!</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function togglePassword(id) {
+      const input = document.getElementById(id);
+      const icon = document.getElementById(id + '-eye');
+      if (!input || !icon) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    }
+  </script>
+</body>
+</html>
+

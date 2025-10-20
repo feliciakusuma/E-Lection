@@ -1,0 +1,6 @@
+tailwind
+fastapi
+sqlalchemy
+uvicorn
+jinja2
+nodejs

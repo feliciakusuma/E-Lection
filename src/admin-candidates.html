@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ request.url_for('static', path='style.css') }}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <title>Admin - Candidates</title>
+</head>
+
+<body class="admin-body">
+   <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <i class="fas fa-vote-yea text-blue-600 text-xl"></i> 
+      <span class="logo-text">E-Lection</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/admin-dashboard" class="sidebar-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/3446/3446795.png" class="icon">
+        <span>Dashboard</span>
+      </a>
+      <a href="/admin-voters" class="sidebar-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/694/694642.png" class="icon">
+        <span>Voters</span>
+      </a>
+      <a href="/admin-candidates" class="sidebar-link active">
+        <img src="https://cdn-icons-png.flaticon.com/512/7658/7658147.png" class="icon">
+        <span>Candidates</span>
+      </a>
+      <a href="/admin-elections" class="sidebar-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/6820/6820898.png" class="icon">
+        <span>Elections</span>
+      </a>   
+      <a href="/admin-settings" class="sidebar-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/1160/1160356.png" class="icon">
+        <span>Settings</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="/admin" class="logout-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/14385/14385252.png" class="icon">
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside> 
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Top Navbar -->
+    <header class="topbar">
+      <h1 class="text-xl font-semibold">Candidates Management</h1>
+      <div class="topbar-right">
+        <form method="GET" action="/admin-candidates" class="search-box" role="search">
+          <input
+            type="text"
+            name="q"
+            placeholder="Search candidates..."
+            class="search-bar"
+            value="{{ request.query_params.get('q','') }}"
+            aria-label="Search candidates"
+          />
+        </form>
+
+        <button class="notif-btn">
+          <img src="https://cdn-icons-png.flaticon.com/512/18115/18115750.png" class="icon">
+          <span class="notif-badge">3</span>
+        </button>
+        <div class="admin-profile">
+          <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="avatar">
+          <div>
+            <p class="admin-name">Admin</p>
+            <p class="admin-role">Administrator</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+      <!-- Candidates Table -->
+      <div class="candidates-wrapper">
+        <div class="candidates-toolbar">
+          <div class="filter-group">
+            <form method="GET" action="/admin-candidates" class="flex gap-2">
+              <input type="hidden" name="q" value="{{ request.query_params.get('q','') }}">
+            </form>
+
+              <select name="status" class="filter-select" onchange="this.form.submit()">
+                {% set sf = (status_filter or 'all') %}
+                <option value="all" {% if sf=='all' %}selected{% endif %}>All Status</option>
+                <option value="running" {% if sf=='running' %}selected{% endif %}>Running</option>
+                <option value="pending" {% if sf=='pending' %}selected{% endif %}>Pending</option>
+                <option value="rejected" {% if sf=='rejected' %}selected{% endif %}>Rejected</option>
+              </select>
+
+              <select name="election_id" class="filter-select w-40" onchange="this.form.submit()">
+                <option value="" {% if not selected_election_id %}selected{% endif %}>All Elections</option>
+                {% for e in elections or [] %}
+                  <option value="{{ e.id }}" {% if selected_election_id == e.id %}selected{% endif %}>{{ e.title }}</option>
+                {% endfor %}
+              </select>
+          </div>
+          
+          <!-- Add Candidate button -->
+          <a href="/admin-add-candidate" class="btn-create">
+            + Add Candidate
+          </a>
+        </div>
+
+        {% if success %}
+        <div class="alert-success mb-4">{{ success }}</div>
+        {% endif %}
+
+        {% if error %}
+        <div class="alert-error mb-4">{{ error }}</div>
+        {% endif %}
+      </div>
+
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Position</th>
+              <th>Status</th>
+              <th>Last Updated</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if candidates %}
+              {% for candidate in candidates %}
+              <tr>
+                <td class="candidate-cell">
+                  <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png">
+                  <div>
+                    <p class="font-medium">{{ candidate.full_name }}</p>
+                    <p class="candidate-id">{{ candidate.student_id }} - {{ candidate.major }}</p>
+                  </div>
+                </td>
+                <td>{{ candidate.position }}</td>
+                <td>
+                  {% if candidate.status == 'running' %}
+                    <span class="badge badge-running">Running</span>
+                  {% elif candidate.status == 'pending' %}
+                    <span class="badge badge-pending">Pending</span>
+                  {% else %}
+                    <span class="badge badge-rejected">Rejected</span>
+                  {% endif %}
+                </td>
+                <td>{{ candidate.created_at.strftime('%b %d, %Y %H:%M') if candidate.created_at else '-' }}</td>
+                <td>
+                  <div class>
+                    <a href="/admin-edit-candidate/{{ candidate.id }}" class="btn-edit">
+                      <img class="icon-sm" src="https://cdn-icons-png.flaticon.com/512/14035/14035792.png" alt="Edit">
+                    </a>
+                    <form method="POST" action="/admin-delete-candidate/{{ candidate.id }}" class="inline-block" onsubmit="return confirm('Delete this candidate?');">
+                      <button type="submit" class="btn-delete">
+                        <img class="icon-sm" src="https://cdn-icons-png.flaticon.com/512/4980/4980658.png" alt="Delete">
+                      </button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="5" class="empty-state">No candidates found.</td>
+              </tr>
+            {% endif %}
+          </tbody> 
+        </table>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

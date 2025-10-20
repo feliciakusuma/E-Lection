@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ request.url_for('static', path='style.css') }}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <title>Confirm Vote</title>  
+</head>
+
+<body class="body-main">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="sidebar-logo">
+      <i class="fas fa-vote-yea text-blue-600 text-xl"></i> 
+      <span class="logo-text">E-Lection</span>
+    </div>
+  </nav>
+   
+  <!-- Main Content -->
+  <main class="confirm-main">
+    <div class="confirm-card">
+      {% if error %}
+      <div class="alert-error mb-4">{{ error }}</div>
+      {% endif %}
+
+      {% if not candidate or not election %}
+      <h2 class="confirm-title">Nothing to confirm yet</h2>
+      <p class="confirm-subtitle">Please return to the dashboard and select a candidate.</p>
+      <a href="/dashboard" class="btn-goback mt-8">Back to Dashboard</a>
+      {% else %}
+      <!-- Checkmark -->
+      <div class="flex justify-center mb-6">
+        <img src="https://cdn-icons-png.flaticon.com/512/8832/8832119.png" 
+            alt="Checkmark" class="w-16 h-16">
+      </div>
+
+      <!-- Heading -->
+      <h2 class="confirm-title">Confirm Your Vote</h2>
+      <p class="confirm-subtitle">Please review your selection before submitting</p>
+
+      <!-- Candidate -->
+      <div class="candidate-box">
+        <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" 
+            alt="User Icon" class="w-12 h-12">
+        <div class="text-left">
+          <p class="font-semibold">{{ candidate.full_name }}</p>
+          <p class="text-sm text-gray-600">{{ candidate.position }} - {{ candidate.major }} - Cohort {{ candidate.cohort }}</p>
+        </div>
+      </div>
+
+      <!-- Security Notice -->
+      <div class="security-notice">
+        <img src="https://cdn-icons-png.flaticon.com/512/10703/10703030.png" 
+            alt="Security Icon" class="w-8 h-8">
+        <div class="text-left">
+          <p class="security-notice-title">Security Notice</p>
+          <p class="text-sm text-gray-700">
+            Your vote is encrypted and securely stored. Once submitted, it cannot be changed.
+          </p>
+        </div>
+      </div>
+
+      {% if verification_code %}
+      <div class="alert-success mt-6">
+        Your vote has been recorded. Keep this verification code safe:
+        <span class="font-mono text-base">{{ verification_code }}</span>
+      </div>
+      <div class="btn-row-spaced">
+        <a href="/dashboard" class="btn-goback flex-1">Back to Dashboard</a>
+        <a href="/verify-vote/{{ verification_code }}" class="btn-confirm flex-1">Verify Vote</a>
+      </div>
+      {% else %}
+      <form action="/vote" method="post" class="form-stack">
+        <input type="hidden" name="candidate_id" value="{{ candidate.id }}">
+        <input type="hidden" name="election_id" value="{{ election.id }}">
+        <div>
+          <label for="voter_id" class="form-label">Confirm your Student ID</label>
+          <input id="voter_id" name="voter_id" type="text" placeholder="Enter your student ID"
+                 class="form-input" required>
+        </div>
+
+        <div class="btn-row">
+          <a href="/dashboard" class="btn-goback flex-1">Go Back</a>
+          <button type="submit" class="btn-confirm flex-1">Confirm My Vote</button>
+        </div>
+      </form>
+      {% endif %}
+      {% endif %}
+    </div>
+  </main>
+</body>
+</html>
+
+

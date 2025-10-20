@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ request.url_for('static', path='style.css') }}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <title>Admin - Edit Candidate</title>
+</head>
+
+<body class="admin-body">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <i class="fas fa-vote-yea text-blue-600 text-xl"></i>
+      <span class="logo-text">E-Lection</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/admin-dashboard" class="sidebar-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/3446/3446795.png" class="icon">
+        <span>Dashboard</span>
+      </a>
+      <a href="/admin-voters" class="sidebar-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/694/694642.png" class="icon">
+        <span>Voters</span>
+      </a>
+      <a href="/admin-candidates" class="sidebar-link active">
+        <img src="https://cdn-icons-png.flaticon.com/512/7658/7658147.png" class="icon">
+        <span>Candidates</span>
+      </a>
+      <a href="/admin-elections" class="sidebar-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/6820/6820898.png" class="icon">
+        <span>Elections</span>
+      </a>
+      <a href="/admin-settings" class="sidebar-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/1160/1160356.png" class="icon">
+        <span>Settings</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="/admin" class="logout-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/14385/14385252.png" class="icon">
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Top Navbar -->
+    <header class="topbar">
+      <h1 class="text-xl font-semibold">Edit Candidate</h1>
+      <div class="topbar-right">
+        <form method="GET" action="/admin-candidates" class="search-box">
+          <input type="text" name="q" placeholder="Search candidates..." class="search-bar" value="{{ request.query_params.get('q','') }}">
+          <button type="submit" class="search-submit" aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </button>
+        </form>
+        <a href="/admin-candidates" class="btn-goback">Back to Candidates</a>
+      </div>
+    </header>
+
+    <!-- Edit Candidate Form -->
+    <div class="p-6">
+      <div class="bg-white rounded-lg shadow p-6 max-w-3xl mx-auto">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-bold">{{ candidate.full_name }}</h2>
+          <span class="text-sm text-gray-500">ID: {{ candidate.id }}</span>
+        </div>
+
+        {% if error %}
+        <div class="alert-error mb-4">{{ error }}</div>
+        {% endif %}
+
+        {% if success %}
+        <div class="alert-success mb-4">{{ success }}</div>
+        {% endif %}
+
+        <form method="POST" action="/admin-edit-candidate/{{ candidate.id }}" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium mb-1" for="full_name">Full Name</label>
+            <input type="text" id="full_name" name="full_name" class="w-full px-4 py-2 border rounded-md" value="{{ (form_data or {}).get('full_name', '') }}" required>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1" for="student_id">Student ID</label>
+            <input type="text" id="student_id" name="student_id" class="w-full px-4 py-2 border rounded-md" value="{{ (form_data or {}).get('student_id', '') }}" required>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1" for="position">Position (from Elections)</label>
+            {% set current_position = (form_data or {}).get('position', '') %}
+            <select id="position" name="position" class="w-full px-4 py-2 border rounded-md" required>
+              {% if elections and elections|length > 0 %}
+                {% for e in elections %}
+                  <option value="{{ e.title }}" data-major="{{ e.major }}" data-cohort="{{ e.cohort }}" {% if current_position == e.title %}selected{% endif %}>{{ e.title }}</option>
+                {% endfor %}
+              {% else %}
+                <option value="" disabled selected>No elections available</option>
+              {% endif %}
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1" for="major_display">Major</label>
+            <input type="text" id="major_display" class="w-full px-4 py-2 border rounded-md bg-gray-50" value="{{ (form_data or {}).get('major', '') }}" placeholder="Auto-filled from election" readonly>
+            <input type="hidden" id="major" name="major" value="{{ (form_data or {}).get('major', '') }}">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1" for="cohort_display">Cohort</label>
+            <input type="text" id="cohort_display" class="w-full px-4 py-2 border rounded-md bg-gray-50" value="{{ (form_data or {}).get('cohort', '') }}" placeholder="Auto-filled from election" readonly>
+            <input type="hidden" id="cohort" name="cohort" value="{{ (form_data or {}).get('cohort', '') }}">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1" for="status">Status</label>
+            {% set current_status = (form_data or {}).get('status', 'running') %}
+            <select id="status" name="status" class="w-full px-4 py-2 border rounded-md">
+              <option value="running" {% if current_status == 'running' %}selected{% endif %}>Running</option>
+              <option value="pending" {% if current_status == 'pending' %}selected{% endif %}>Pending</option>
+              <option value="rejected" {% if current_status == 'rejected' %}selected{% endif %}>Rejected</option>
+            </select>
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium mb-1" for="description">Bio</label>
+            <textarea id="description" name="description" class="w-full px-4 py-2 border rounded-md" rows="4">{{ (form_data or {}).get('description', '') }}</textarea>
+          </div>
+
+          <div class="md:col-span-2 flex items-center space-x-2">
+            <input id="is_active" name="is_active" type="checkbox" class="rounded border-gray-300" {% if (form_data or {}).get('is_active', False) %}checked{% endif %}>
+            <label for="is_active" class="text-sm">Candidate is active and visible to voters</label>
+          </div>
+
+          <div class="md:col-span-2 flex justify-between">
+            <a href="/admin-candidates" class="btn-goback">Cancel</a>
+            <div class="flex gap-2">
+              <button type="submit" class="btn-create">Save Changes</button>
+              <form method="POST" action="/admin-delete-candidate/{{ candidate.id }}" onsubmit="return confirm('Delete this candidate?');">
+                <button type="submit" class="btn-danger">Delete</button>
+              </form>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <style>
+    .btn-danger { background:#ef4444; color:#fff; padding:0.5rem 0.875rem; border-radius:0.5rem; }
+    .btn-danger:hover { background:#dc2626; }
+  </style>
+  <script>
+    (function() {
+      const select = document.getElementById('position');
+      const majorHidden = document.getElementById('major');
+      const cohortHidden = document.getElementById('cohort');
+      const majorDisplay = document.getElementById('major_display');
+      const cohortDisplay = document.getElementById('cohort_display');
+
+      function applyFromSelection() {
+        if (!select) return;
+        const opt = select.options[select.selectedIndex];
+        if (!opt) return;
+        const major = opt.getAttribute('data-major') || '';
+        const cohort = opt.getAttribute('data-cohort') || '';
+        majorHidden.value = major;
+        cohortHidden.value = cohort;
+        if (majorDisplay) majorDisplay.value = major;
+        if (cohortDisplay) cohortDisplay.value = cohort;
+      }
+
+      if (select) {
+        select.addEventListener('change', applyFromSelection);
+        const hasFormMajor = !!majorHidden.value;
+        const hasFormCohort = !!cohortHidden.value;
+        if (!hasFormMajor || !hasFormCohort) {
+          applyFromSelection();
+        }
+      }
+    })();
+  </script>
+</body>
+</html>

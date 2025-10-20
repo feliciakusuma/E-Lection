@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ request.url_for('static', path='style.css') }}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <title>Admin - Settings</title>
+</head>
+
+<body class="admin-body">
+   <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <i class="fas fa-vote-yea text-blue-600 text-xl"></i> 
+      <span class="logo-text">E-Lection</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/admin-dashboard" class="sidebar-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/3446/3446795.png" class="icon">
+        <span>Settings</span>
+      </a>
+      <a href="/admin-voters" class="sidebar-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/694/694642.png" class="icon">
+        <span>Voters</span>
+      </a>
+      <a href="/admin-candidates" class="sidebar-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/7658/7658147.png" class="icon">
+        <span>Candidates</span>
+      </a>
+      <a href="/admin-elections" class="sidebar-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/6820/6820898.png" class="icon">
+        <span>Elections</span>
+      </a>
+      
+      <a href="/admin-settings" class="sidebar-link active">
+        <img src="https://cdn-icons-png.flaticon.com/512/1160/1160356.png" class="icon">
+        <span>Settings</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="/admin" class="logout-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/14385/14385252.png" class="icon">
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Top Navbar -->
+    <header class="topbar">
+      <h1 class="text-xl font-semibold">Settings</h1>
+      <div class="topbar-right">
+      <div class="topbar-right">
+        <form method="GET" action="/admin-settings" class="search-box" role="search">
+          <input
+            type="text"
+            name="q"
+            placeholder="Search settings..."
+            class="search-bar"
+            value="{{ request.query_params.get('q','') }}"
+            aria-label="Search settings"
+          />
+        </form>
+        <button class="notif-btn">
+          <img src="https://cdn-icons-png.flaticon.com/512/18115/18115750.png" class="icon">
+          <span class="notif-badge">3</span>
+        </button>
+        <div class="admin-profile">
+          <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="avatar">
+          <div>
+            <p class="admin-name">Admin</p>
+            <p class="admin-role">Administrator</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <div class="candidates-wrapper">
+      <div class="bg-white rounded-lg shadow p-6 mb-6">
+        <h2 class="text-lg font-semibold mb-4">Application Mode</h2>
+        <p class="text-sm text-gray-600 mb-4">View the current runtime configuration for this demo environment.</p>
+        <dl class="form-grid-sm">
+          <div>
+            <dt class="font-medium text-gray-500">Admin Access</dt>
+            <dd class="font-semibold text-gray-800">Enabled</dd>
+          </div>
+          <div>
+            <dt class="font-medium text-gray-500">Encryption Status</dt>
+            <dd class="font-semibold text-gray-800">AES-GCM + RSA hybrid</dd>
+          </div>
+          <div>
+            <dt class="font-medium text-gray-500">Audit Logging</dt>
+            <dd class="font-semibold text-gray-800">Active</dd>
+          </div>
+          <div>
+            <dt class="font-medium text-gray-500">Demo Accounts</dt>
+            <dd class="font-semibold text-gray-800">admin@university.edu / student@university.edu</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-lg font-semibold mb-4">Next Steps</h2>
+        <ul class="list-disc list-inside text-sm text-gray-600 space-y-2">
+          <li>Replace demo credentials with production-ready admin management.</li>
+          <li>Integrate session-based authentication and route protection.</li>
+          <li>Configure SMTP provider for password recovery workflow.</li>
+          <li>Review database backups for the encrypted vote payloads.</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
+
+
+

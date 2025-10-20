@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ request.url_for('static', path='style.css') }}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <title>Admin - Add Candidate</title>
+</head>
+
+<body class="admin-body">
+   <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <i class="fas fa-vote-yea text-blue-600 text-xl"></i> 
+      <span class="logo-text">E-Lection</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/admin-dashboard" class="sidebar-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/3446/3446795.png" class="icon">
+        <span>Dashboard</span>
+      </a>
+      <a href="/admin-voters" class="sidebar-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/694/694642.png" class="icon">
+        <span>Voters</span>
+      </a>
+      <a href="/admin-candidates" class="sidebar-link active">
+        <img src="https://cdn-icons-png.flaticon.com/512/7658/7658147.png" class="icon">
+        <span>Candidates</span>
+      </a>
+      <a href="/admin-elections" class="sidebar-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/6820/6820898.png" class="icon">
+        <span>Elections</span>
+      </a>
+      
+      <a href="/admin-settings" class="sidebar-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/1160/1160356.png" class="icon">
+        <span>Settings</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="/admin" class="logout-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/14385/14385252.png" class="icon">
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Top Navbar -->
+    <header class="topbar">
+      <h1 class="text-xl font-semibold">Candidates Management</h1>
+      <div class="topbar-right">
+      <div class="topbar-right">
+        <form method="GET" action="/admin-candidates" class="search-box" role="search">
+          <input
+            type="text"
+            name="q"
+            placeholder="Search candidates..."
+            class="search-bar"
+            value="{{ request.query_params.get('q','') }}"
+            aria-label="Search candidates"
+          />
+        </form>
+        <button class="notif-btn">
+          <img src="https://cdn-icons-png.flaticon.com/512/18115/18115750.png" class="icon">
+          <span class="notif-badge">3</span>
+        </button>
+        <div class="admin-profile">
+          <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="avatar">
+          <div>
+            <p class="admin-name">Admin</p>
+            <p class="admin-role">Administrator</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Add Candidate Form -->
+    <div class="p-6">
+      <div class="bg-white rounded-lg shadow p-6 max-w-3xl mx-auto">
+        <h2 class="text-xl font-bold mb-4">Add New Candidate</h2>
+
+        {% if error %}
+        <div class="alert-error mb-4">{{ error }}</div>
+        {% endif %}
+
+        {% if success %}
+        <div class="alert-success mb-4">{{ success }}</div>
+        {% endif %}
+
+        <form method="POST" action="/admin-add-candidate" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium mb-1" for="full_name">Full Name</label>
+            <input type="text" id="full_name" name="full_name" class="w-full px-4 py-2 border rounded-md" value="{{ (form_data or {}).get('full_name', '') }}" required>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1" for="student_id">Student ID</label>
+            <input type="text" id="student_id" name="student_id" class="w-full px-4 py-2 border rounded-md" value="{{ (form_data or {}).get('student_id', '') }}" required>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1" for="position">Position (from Elections)</label>
+            {% set current_position = (form_data or {}).get('position', '') %}
+            <select id="position" name="position" class="w-full px-4 py-2 border rounded-md" required>
+              {% if elections and elections|length > 0 %}
+                {% for e in elections %}
+                  <option value="{{ e.title }}" data-major="{{ e.major }}" data-cohort="{{ e.cohort }}" {% if current_position == e.title %}selected{% endif %}>{{ e.title }}</option>
+                {% endfor %}
+              {% else %}
+                <option value="" disabled selected>No elections available</option>
+              {% endif %}
+            </select>
+            {% if not elections or elections|length == 0 %}
+            <p class="text-xs text-gray-500 mt-1">Create an election first to add candidates.</p>
+            {% endif %}
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1" for="major_display">Major</label>
+            <input type="text" id="major_display" class="w-full px-4 py-2 border rounded-md bg-gray-50" value="{{ (form_data or {}).get('major', '') }}" placeholder="Auto-filled from election" readonly>
+            <input type="hidden" id="major" name="major" value="{{ (form_data or {}).get('major', '') }}">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1" for="cohort_display">Cohort</label>
+            <input type="text" id="cohort_display" class="w-full px-4 py-2 border rounded-md bg-gray-50" value="{{ (form_data or {}).get('cohort', '') }}" placeholder="Auto-filled from election" readonly>
+            <input type="hidden" id="cohort" name="cohort" value="{{ (form_data or {}).get('cohort', '') }}">
+          </div>
+
+          <!-- Position moved above and sourced from Elections -->
+
+          <div>
+            <label class="block text-sm font-medium mb-1" for="status">Status</label>
+            <select id="status" name="status" class="w-full px-4 py-2 border rounded-md">
+              {% set current_status = (form_data or {}).get('status', 'running') %}
+              <option value="running" {% if current_status == 'running' %}selected{% endif %}>Running</option>
+              <option value="pending" {% if current_status == 'pending' %}selected{% endif %}>Pending</option>
+              <option value="rejected" {% if current_status == 'rejected' %}selected{% endif %}>Rejected</option>
+            </select>
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium mb-1" for="description">Bio</label>
+            <textarea id="description" name="description" class="w-full px-4 py-2 border rounded-md" rows="4">{{ (form_data or {}).get('description', '') }}</textarea>
+          </div>
+
+          <div class="md:col-span-2 flex items-center space-x-2">
+            <input id="is_active" name="is_active" type="checkbox" class="rounded border-gray-300" {% if (form_data or {}).get('is_active', True) %}checked{% endif %}>
+            <label for="is_active" class="text-sm">Candidate is active and visible to voters</label>
+          </div>
+
+          <div class="md:col-span-2 flex justify-end space-x-2">
+            <a href="/admin-candidates" class="btn-goback">Cancel</a>
+            <button type="submit" class="btn-create">Save Candidate</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</body>
+<script>
+  (function() {
+    const select = document.getElementById('position');
+    const majorHidden = document.getElementById('major');
+    const cohortHidden = document.getElementById('cohort');
+    const majorDisplay = document.getElementById('major_display');
+    const cohortDisplay = document.getElementById('cohort_display');
+
+    function applyFromSelection() {
+      if (!select) return;
+      const opt = select.options[select.selectedIndex];
+      if (!opt) return;
+      const major = opt.getAttribute('data-major') || '';
+      const cohort = opt.getAttribute('data-cohort') || '';
+      majorHidden.value = major;
+      cohortHidden.value = cohort;
+      if (majorDisplay) majorDisplay.value = major;
+      if (cohortDisplay) cohortDisplay.value = cohort;
+    }
+
+    if (select) {
+      select.addEventListener('change', applyFromSelection);
+      // Initialize on load if elections exist and no form_data values provided
+      const hasFormMajor = !!majorHidden.value;
+      const hasFormCohort = !!cohortHidden.value;
+      if (!hasFormMajor || !hasFormCohort) {
+        applyFromSelection();
+      }
+    }
+  })();
+</script>
+</html>
+

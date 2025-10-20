@@ -1,0 +1,1586 @@
+2025-10-04 13:52:42,094 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-04 13:52:42,288 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-10-04 13:52:42,288 - security - INFO - Request: GET http://127.0.0.1:8000/static/landingpage.jpg from 127.0.0.1
+2025-10-04 13:52:43,246 - security - INFO - Request: GET http://127.0.0.1:8000/favicon.ico from 127.0.0.1
+2025-10-04 13:52:44,757 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 13:52:53,288 - security - INFO - Request: GET http://127.0.0.1:8000/register from 127.0.0.1
+2025-10-04 13:53:02,333 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-10-04 13:53:11,529 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-04 13:53:11,545 - security - WARNING - SECURITY EVENT: ADMIN_ACCESS_BLOCKED - Admin page access attempt - IP: 127.0.0.1 - User: None
+2025-10-04 13:53:24,391 - security - INFO - Request: GET http://127.0.0.1:8000/admin-login from 127.0.0.1
+2025-10-04 13:56:54,518 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 13:57:29,413 - security - INFO - Request: POST http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 13:57:29,420 - security - WARNING - SECURITY EVENT: LOGIN_ERROR - Login error for voter@example.com: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('d29b93cb1e84104cce853fc2f81594f70cb7ab85f95db7e56d24795c2f0de308', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8) - IP: 127.0.0.1 - User: None
+2025-10-04 13:59:24,850 - security - INFO - Request: GET http://127.0.0.1:8000/admin from 127.0.0.1
+2025-10-04 13:59:28,293 - security - INFO - Request: GET http://127.0.0.1:8000/admin-login from 127.0.0.1
+2025-10-04 13:59:37,584 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-04 13:59:37,587 - security - WARNING - SECURITY EVENT: ADMIN_ACCESS_BLOCKED - Admin page access attempt - IP: 127.0.0.1 - User: None
+2025-10-04 13:59:37,638 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-04 13:59:37,663 - security - WARNING - SECURITY EVENT: ADMIN_ACCESS_BLOCKED - Admin page access attempt - IP: 127.0.0.1 - User: None
+2025-10-04 14:00:12,336 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 14:00:24,542 - security - INFO - Request: GET http://127.0.0.1:8000/admin-login from 127.0.0.1
+2025-10-04 14:00:28,911 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-04 14:00:28,911 - security - WARNING - SECURITY EVENT: ADMIN_ACCESS_BLOCKED - Admin page access attempt - IP: 127.0.0.1 - User: None
+2025-10-04 14:00:42,302 - security - INFO - Request: POST http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 14:00:42,304 - security - WARNING - SECURITY EVENT: LOGIN_ERROR - Login error for admin@university.edu: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8) - IP: 127.0.0.1 - User: None
+2025-10-04 14:01:05,512 - security - INFO - Request: GET http://127.0.0.1:8000/admin-login from 127.0.0.1
+2025-10-04 14:01:13,179 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-04 14:01:13,188 - security - WARNING - SECURITY EVENT: ADMIN_ACCESS_BLOCKED - Admin page access attempt - IP: 127.0.0.1 - User: None
+2025-10-04 14:01:13,250 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-04 14:01:13,277 - security - WARNING - SECURITY EVENT: ADMIN_ACCESS_BLOCKED - Admin page access attempt - IP: 127.0.0.1 - User: None
+2025-10-04 14:01:34,934 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 14:02:02,476 - security - INFO - Request: POST http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 14:02:02,476 - security - WARNING - SECURITY EVENT: LOGIN_ERROR - Login error for student@university.edu: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('513cac2ceb97edaf2653404a09988130b9897a6e300aa8113aab296d433e4b11', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8) - IP: 127.0.0.1 - User: None
+2025-10-04 14:03:48,127 - security - INFO - Request: POST http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 14:03:48,135 - security - WARNING - SECURITY EVENT: LOGIN_ERROR - Login error for student@university.edu: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('513cac2ceb97edaf2653404a09988130b9897a6e300aa8113aab296d433e4b11', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8) - IP: 127.0.0.1 - User: None
+2025-10-04 14:07:48,492 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 14:09:31,154 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 14:10:07,969 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 14:11:49,273 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 14:12:02,431 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 14:12:39,316 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 14:13:23,600 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 14:15:05,387 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 14:17:19,448 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 14:17:44,535 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 14:29:08,280 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 14:30:44,707 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 14:37:51,054 - security - INFO - Request: GET http://127.0.0.1:8000/register from 127.0.0.1
+2025-10-04 14:48:10,333 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 14:48:28,047 - security - INFO - Request: POST http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 14:48:28,057 - security - WARNING - SECURITY EVENT: LOGIN_ERROR - Login error for student@university.edu: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('513cac2ceb97edaf2653404a09988130b9897a6e300aa8113aab296d433e4b11', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8) - IP: 127.0.0.1 - User: None
+2025-10-04 14:48:37,173 - security - INFO - Request: GET http://127.0.0.1:8000/admin from 127.0.0.1
+2025-10-04 14:48:58,578 - security - INFO - Request: POST http://127.0.0.1:8000/admin from 127.0.0.1
+2025-10-04 14:48:58,582 - security - WARNING - SECURITY EVENT: ADMIN_LOGIN_ERROR - Admin login error for admin@university.edu: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8) - IP: 127.0.0.1 - User: None
+2025-10-04 14:50:10,516 - security - INFO - Request: GET http://127.0.0.1:8000/admin from 127.0.0.1
+2025-10-04 14:50:20,130 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 14:55:45,566 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 14:55:56,135 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-04 14:55:56,197 - security - INFO - Request: GET http://127.0.0.1:8000/static/landingpage.jpg from 127.0.0.1
+2025-10-04 14:59:08,268 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-04 14:59:08,320 - security - INFO - Request: GET http://127.0.0.1:8000/static/landingpage.jpg from 127.0.0.1
+2025-10-04 14:59:09,697 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-04 14:59:09,723 - security - INFO - Request: GET http://127.0.0.1:8000/static/landingpage.jpg from 127.0.0.1
+2025-10-04 14:59:19,693 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-04 14:59:19,720 - security - INFO - Request: GET http://127.0.0.1:8000/static/landingpage.jpg from 127.0.0.1
+2025-10-04 14:59:20,962 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-04 14:59:21,001 - security - INFO - Request: GET http://127.0.0.1:8000/static/landingpage.jpg from 127.0.0.1
+2025-10-04 15:00:10,446 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-04 15:00:10,478 - security - INFO - Request: GET http://127.0.0.1:8000/static/landingpage.jpg from 127.0.0.1
+2025-10-04 15:00:11,623 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-04 15:00:11,664 - security - INFO - Request: GET http://127.0.0.1:8000/static/landingpage.jpg from 127.0.0.1
+2025-10-04 15:00:58,008 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:01:01,009 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:01:08,029 - security - INFO - Request: GET http://127.0.0.1:8000/register from 127.0.0.1
+2025-10-04 15:01:50,176 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-04 15:01:50,225 - security - INFO - Request: GET http://127.0.0.1:8000/static/landingpage.jpg from 127.0.0.1
+2025-10-04 15:01:56,733 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-04 15:01:57,821 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-04 15:05:06,321 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-04 15:05:22,046 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-04 15:05:22,144 - security - INFO - Request: GET http://127.0.0.1:8000/static/landingpage.jpg from 127.0.0.1
+2025-10-04 15:06:39,954 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-04 15:08:04,229 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-04 15:09:06,491 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-04 15:09:47,585 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-04 15:09:47,663 - security - INFO - Request: GET http://127.0.0.1:8000/static/landingpage.jpg from 127.0.0.1
+2025-10-04 15:09:49,897 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-04 15:10:19,085 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-04 15:10:20,399 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-04 15:11:12,227 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:13:07,532 - security - INFO - Request: GET http://127.0.0.1:8000/register from 127.0.0.1
+2025-10-04 15:14:53,147 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:14:55,287 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:16:13,316 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:16:18,800 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:16:21,153 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:20:32,301 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:20:41,593 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:23:15,941 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:23:38,649 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:23:39,721 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:24:37,957 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-04 15:24:38,116 - security - INFO - Request: GET http://127.0.0.1:8000/static/landingpage.jpg from 127.0.0.1
+2025-10-04 15:24:40,768 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:26:59,692 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:28:34,506 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:30:40,411 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:30:55,378 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:33:18,381 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:35:42,146 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:36:59,371 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:37:28,753 - security - INFO - Request: GET http://127.0.0.1:8000/admin from 127.0.0.1
+2025-10-04 15:37:30,969 - security - INFO - Request: GET http://127.0.0.1:8000/admin from 127.0.0.1
+2025-10-04 15:38:51,609 - security - INFO - Request: GET http://127.0.0.1:8000/admin from 127.0.0.1
+2025-10-04 15:39:13,984 - security - INFO - Request: POST http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:39:14,046 - security - WARNING - SECURITY EVENT: LOGIN_ERROR - Login error for admin@university.edu: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8) - IP: 127.0.0.1 - User: None
+2025-10-04 15:40:59,897 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 15:41:00,140 - security - INFO - Request: POST http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:41:00,147 - security - WARNING - SECURITY EVENT: LOGIN_ERROR - Login error for admin@university.edu: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8) - IP: 127.0.0.1 - User: None
+2025-10-04 15:41:03,778 - security - INFO - Request: GET http://127.0.0.1:8000/admin from 127.0.0.1
+2025-10-04 15:41:13,926 - security - INFO - Request: POST http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:41:13,935 - security - WARNING - SECURITY EVENT: LOGIN_ERROR - Login error for admin@university.edu: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8) - IP: 127.0.0.1 - User: None
+2025-10-04 15:43:15,337 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 15:43:44,361 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 15:45:57,806 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 15:46:05,759 - security - INFO - Request: POST http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:46:05,767 - security - WARNING - SECURITY EVENT: LOGIN_ERROR - Login error for admin@university.edu: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8) - IP: 127.0.0.1 - User: None
+2025-10-04 15:50:52,202 - security - INFO - Request: POST http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:50:52,856 - security - INFO - Request: GET http://127.0.0.1:8000/favicon.ico from 127.0.0.1
+2025-10-04 15:50:58,019 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-04 15:50:58,069 - security - INFO - Request: GET http://127.0.0.1:8000/static/landingpage.jpg from 127.0.0.1
+2025-10-04 15:50:59,702 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:51:33,208 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-10-04 15:51:40,236 - security - INFO - Request: GET http://127.0.0.1:8000/confirmation from 127.0.0.1
+2025-10-04 15:51:42,965 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-10-04 15:54:18,361 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:54:25,564 - security - INFO - Request: POST http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:54:25,595 - security - WARNING - SECURITY EVENT: LOGIN_ERROR - Login error for student@university.edu: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('513cac2ceb97edaf2653404a09988130b9897a6e300aa8113aab296d433e4b11', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8) - IP: 127.0.0.1 - User: None
+2025-10-04 15:54:45,633 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 15:54:49,383 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 15:54:55,353 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 15:55:12,518 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 15:55:13,988 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 15:55:20,581 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 15:56:00,321 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 15:56:03,523 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 15:56:06,672 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 15:56:11,688 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 15:56:17,426 - security - INFO - Request: POST http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:56:17,431 - security - WARNING - SECURITY EVENT: LOGIN_ERROR - Login error for student@university.edu: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('513cac2ceb97edaf2653404a09988130b9897a6e300aa8113aab296d433e4b11', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8) - IP: 127.0.0.1 - User: None
+2025-10-04 15:56:24,292 - security - INFO - Request: POST http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:56:24,312 - security - WARNING - SECURITY EVENT: LOGIN_ERROR - Login error for student@university.edu: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('513cac2ceb97edaf2653404a09988130b9897a6e300aa8113aab296d433e4b11', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8) - IP: 127.0.0.1 - User: None
+2025-10-04 15:56:30,125 - security - INFO - Request: POST http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:56:30,136 - security - WARNING - SECURITY EVENT: LOGIN_ERROR - Login error for student@university.edu: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('513cac2ceb97edaf2653404a09988130b9897a6e300aa8113aab296d433e4b11', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8) - IP: 127.0.0.1 - User: None
+2025-10-04 15:58:28,590 - security - INFO - Request: POST http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:58:28,601 - security - WARNING - SECURITY EVENT: LOGIN_ERROR - Login error for student@university.edu: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('513cac2ceb97edaf2653404a09988130b9897a6e300aa8113aab296d433e4b11', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8) - IP: 127.0.0.1 - User: None
+2025-10-04 15:58:34,314 - security - INFO - Request: POST http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 15:58:34,319 - security - WARNING - SECURITY EVENT: LOGIN_ERROR - Login error for student@university.edu: (MySQLdb.OperationalError) (1054, "Unknown column 'users.first_name_encrypted' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('513cac2ceb97edaf2653404a09988130b9897a6e300aa8113aab296d433e4b11', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8) - IP: 127.0.0.1 - User: None
+2025-10-04 16:00:36,856 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 16:00:47,950 - security - INFO - Request: POST http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 16:00:48,039 - security - WARNING - SECURITY EVENT: LOGIN_ERROR - Login error for student@university.edu: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('513cac2ceb97edaf2653404a09988130b9897a6e300aa8113aab296d433e4b11', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8) - IP: 127.0.0.1 - User: None
+2025-10-04 16:13:15,777 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 16:14:09,141 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 16:21:32,469 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 16:23:43,617 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 16:23:54,209 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-04 16:23:55,984 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-04 16:24:00,748 - security - INFO - Request: GET http://127.0.0.1:8000/admin from 127.0.0.1
+2025-10-04 16:24:10,648 - security - INFO - Request: POST http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-04 16:24:10,654 - security - WARNING - SECURITY EVENT: LOGIN_ERROR - Login error for admin@university.edu: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8) - IP: 127.0.0.1 - User: None
+2025-10-04 16:24:20,590 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-04 16:24:36,833 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 16:24:38,597 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-04 16:24:39,703 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-04 16:24:41,471 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-04 16:24:47,661 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 16:25:14,867 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 16:26:18,181 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-04 16:26:22,396 - security - INFO - Request: GET http://127.0.0.1:8000/admin from 127.0.0.1
+2025-10-04 16:26:26,437 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-04 16:26:31,213 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-04 16:27:05,375 - security - INFO - Request: POST http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-04 16:27:05,409 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-04 16:27:13,452 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-04 16:27:17,320 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-04 16:27:21,249 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-04 16:27:27,319 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-04 16:27:29,333 - security - INFO - Request: GET http://127.0.0.1:8000/admin-results from 127.0.0.1
+2025-10-04 16:27:32,048 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-10-04 16:27:56,040 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-04 16:28:18,726 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 16:28:44,360 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 16:28:51,607 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-04 16:28:54,372 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-04 16:28:56,853 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-04 16:29:35,691 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-04 16:29:41,185 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-04 16:29:49,962 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-04 16:29:58,323 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 13:57:36,832 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-19 13:59:23,999 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-19 13:59:24,181 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-10-19 13:59:24,399 - security - INFO - Request: GET http://127.0.0.1:8000/static/landingpage.jpg from 127.0.0.1
+2025-10-19 13:59:27,052 - security - INFO - Request: GET http://127.0.0.1:8000/favicon.ico from 127.0.0.1
+2025-10-19 13:59:32,494 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-19 13:59:38,873 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-19 13:59:47,522 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-10-19 14:00:27,742 - security - INFO - Request: GET http://127.0.0.1:8000/confirmation from 127.0.0.1
+2025-10-19 14:00:29,610 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-10-19 14:00:34,864 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 14:00:36,554 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 14:01:01,779 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 14:01:06,304 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 14:01:39,203 - security - INFO - Request: POST http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 14:01:39,428 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 14:01:47,010 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 14:01:49,118 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 14:01:51,619 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-19 14:01:55,372 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 14:02:00,917 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 14:03:38,709 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 14:12:26,093 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-19 14:15:53,166 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 14:18:08,332 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-19 14:18:28,777 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 14:18:30,665 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 14:18:33,254 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 14:20:39,722 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 14:20:42,446 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 14:20:44,858 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-19 14:20:56,374 - security - INFO - Request: GET http://127.0.0.1:8000/admin-results from 127.0.0.1
+2025-10-19 14:26:31,818 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 14:27:22,994 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 14:27:48,258 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 14:28:44,131 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 14:30:18,397 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 14:30:22,307 - security - INFO - Request: GET http://127.0.0.1:8000/admin-edit-candidate/2 from 127.0.0.1
+2025-10-19 14:30:26,860 - security - INFO - Request: POST http://127.0.0.1:8000/admin-edit-candidate/2 from 127.0.0.1
+2025-10-19 14:30:26,957 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?updated=1 from 127.0.0.1
+2025-10-19 14:30:36,200 - security - INFO - Request: POST http://127.0.0.1:8000/admin-delete-candidate/1 from 127.0.0.1
+2025-10-19 14:30:36,251 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?deleted=1 from 127.0.0.1
+2025-10-19 14:30:38,424 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 14:35:28,672 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-19 14:35:28,684 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 15:00:05,790 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-19 15:00:05,805 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:00:05,806 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-election from 127.0.0.1
+2025-10-19 15:00:05,807 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:00:05,807 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:00:05,808 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-19 15:00:05,808 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:00:05,809 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-19 15:00:05,809 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:00:05,809 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:00:05,810 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-19 15:00:05,811 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:00:05,811 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:00:05,812 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:00:05,813 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:00:05,813 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:00:05,813 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-19 15:00:05,814 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:00:05,814 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-19 15:00:05,815 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:00:05,815 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:00:05,816 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:00:05,816 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:00:05,817 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-election from 127.0.0.1
+2025-10-19 15:00:05,817 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-election from 127.0.0.1
+2025-10-19 15:00:36,998 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-19 15:00:43,404 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:00:47,670 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-19 15:01:12,139 - security - INFO - Request: POST http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-19 15:01:12,346 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?success=1 from 127.0.0.1
+2025-10-19 15:01:15,265 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-19 15:01:17,672 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:01:19,331 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:01:20,211 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:01:22,011 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:01:23,333 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-19 15:01:25,244 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:05:00,500 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:05:02,408 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-10-19 15:05:05,422 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:05:06,516 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 15:05:09,332 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 15:05:11,852 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:05:14,846 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:05:35,780 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 15:05:38,032 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:06:25,842 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-19 15:06:45,024 - security - INFO - Request: POST http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-19 15:06:45,053 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?success=1 from 127.0.0.1
+2025-10-19 15:06:47,611 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:06:50,608 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:06:51,989 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:06:54,196 - security - INFO - Request: GET http://127.0.0.1:8000/admin-edit-candidate/2 from 127.0.0.1
+2025-10-19 15:07:04,715 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:07:16,556 - security - INFO - Request: GET http://127.0.0.1:8000/admin-edit-candidate/2 from 127.0.0.1
+2025-10-19 15:08:16,177 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-19 15:10:59,389 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:11:00,976 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:11:04,063 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-19 15:11:05,782 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:11:07,592 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/2 from 127.0.0.1
+2025-10-19 15:11:10,744 - security - INFO - Request: POST http://127.0.0.1:8000/delete-election/2 from 127.0.0.1
+2025-10-19 15:11:10,783 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?deleted=1 from 127.0.0.1
+2025-10-19 15:11:29,237 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 15:11:31,859 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:11:35,450 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:12:15,944 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:17:05,449 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:17:14,851 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:18:13,763 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:18:15,382 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:18:17,080 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:18:17,935 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:18:19,499 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:18:31,034 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-10-19 15:18:33,436 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:20:25,263 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:20:26,730 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 15:20:30,660 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 15:20:33,575 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:20:34,888 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-19 15:23:07,535 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-19 15:23:11,098 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:23:12,696 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-10-19 15:23:14,560 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 15:23:19,738 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-10-19 15:23:23,942 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-10-19 15:27:51,503 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-10-19 15:27:53,343 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-10-19 15:28:02,699 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 15:28:07,523 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:28:09,380 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:28:10,609 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:28:12,233 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 15:28:21,863 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:29:32,497 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:29:33,513 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 15:29:37,332 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:29:38,906 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:29:48,764 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:29:51,466 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-19 15:29:53,812 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:30:21,828 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 15:30:23,335 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-10-19 15:30:24,480 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:30:25,423 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:30:30,155 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-10-19 15:30:38,426 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-19 15:30:47,323 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 15:30:50,033 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:31:33,146 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:31:36,641 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:31:38,428 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:31:39,776 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-10-19 15:31:41,451 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:33:58,763 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?q=class from 127.0.0.1
+2025-10-19 15:33:59,968 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?q=class from 127.0.0.1
+2025-10-19 15:34:58,017 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 15:35:01,171 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-10-19 15:36:48,750 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:36:50,372 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:38:18,404 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 15:38:37,089 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=ongoing from 127.0.0.1
+2025-10-19 15:38:39,028 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=upcoming from 127.0.0.1
+2025-10-19 15:38:41,581 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=ended from 127.0.0.1
+2025-10-19 15:38:43,556 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=all from 127.0.0.1
+2025-10-19 15:38:50,117 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 15:42:32,943 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=all from 127.0.0.1
+2025-10-19 15:42:37,218 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:42:40,190 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 15:42:42,469 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:42:43,370 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-10-19 15:42:46,513 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:43:35,430 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:45:22,250 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:45:23,643 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:45:30,182 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:45:58,541 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:46:34,901 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:46:37,621 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:46:39,389 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:46:40,976 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:47:57,717 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:47:59,604 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:48:01,250 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:48:08,006 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:50:11,011 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:50:13,468 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:50:15,085 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-10-19 15:52:46,666 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-10-19 15:52:49,320 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:52:50,613 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:52:52,204 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:53:29,715 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:53:31,286 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:53:32,900 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:53:34,197 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:56:29,004 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:56:30,352 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:57:47,597 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:58:01,648 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:58:17,568 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:58:43,420 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 15:59:06,380 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 15:59:57,770 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 15:59:58,886 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 16:00:00,317 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 16:00:02,663 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 16:00:04,791 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-19 16:00:05,981 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 16:00:07,796 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 16:00:11,351 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 16:00:14,156 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 16:00:19,838 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-10-19 16:03:52,749 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-10-19 16:03:55,958 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 16:03:56,880 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 16:03:58,138 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 16:04:01,061 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 16:04:02,137 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 16:05:11,973 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 16:05:23,865 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 16:05:47,152 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 16:05:48,609 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 16:05:54,956 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 16:05:56,353 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-19 16:06:13,215 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-19 16:06:52,303 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 16:06:55,193 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 16:06:57,361 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 16:07:01,174 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 16:07:32,408 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 16:07:34,114 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-19 16:07:37,965 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 16:07:41,120 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 16:09:07,706 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-19 16:09:13,247 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-19 16:09:42,502 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-19 16:09:45,105 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 16:09:47,587 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 16:11:17,639 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-19 16:11:20,212 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 16:20:34,665 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 16:20:37,619 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-10-19 16:20:38,711 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 16:25:55,052 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 16:25:56,153 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-19 16:25:57,581 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 16:25:58,815 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 16:26:00,739 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-10-19 16:26:01,878 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 16:27:24,295 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-10-19 16:27:26,695 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 16:27:59,492 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 16:30:31,764 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-19 16:30:51,792 - security - ERROR - Default account seeding failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users 
+WHERE users.email_hash = %s 
+ LIMIT %s]
+[parameters: ('7c29e523cc63a73e60b45fdb836ed8824a6a02dd6c3a68273d76ac3adf8312fe', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-19 16:30:54,950 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 16:30:54,962 - security - ERROR - /admin-dashboard failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT count(*) AS count_1 
+FROM (SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users) AS anon_1]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\MySQLdb\cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\MySQLdb\cursors.py", line 330, in _query
+    db.query(q)
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\MySQLdb\connections.py", line 280, in query
+    _mysql.connection.query(self, query)
+MySQLdb.OperationalError: (1054, "Unknown column 'users.status' in 'field list'")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\main.py", line 713, in admin_dashboard
+    "total_users": db.query(User).count(),
+                   ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\orm\query.py", line 3146, in count
+    self._legacy_from_self(col).enable_eagerloads(False).scalar()
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2835, in scalar
+    ret = self.one()
+          ^^^^^^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2808, in one
+    return self._iter().one()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\MySQLdb\cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\MySQLdb\cursors.py", line 330, in _query
+    db.query(q)
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\MySQLdb\connections.py", line 280, in query
+    _mysql.connection.query(self, query)
+sqlalchemy.exc.OperationalError: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT count(*) AS count_1 
+FROM (SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users) AS anon_1]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+2025-10-19 16:30:57,333 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 16:30:57,339 - security - ERROR - /admin-dashboard failed: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT count(*) AS count_1 
+FROM (SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users) AS anon_1]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\MySQLdb\cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\MySQLdb\cursors.py", line 330, in _query
+    db.query(q)
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\MySQLdb\connections.py", line 280, in query
+    _mysql.connection.query(self, query)
+MySQLdb.OperationalError: (1054, "Unknown column 'users.status' in 'field list'")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\main.py", line 713, in admin_dashboard
+    "total_users": db.query(User).count(),
+                   ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\orm\query.py", line 3146, in count
+    self._legacy_from_self(col).enable_eagerloads(False).scalar()
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2835, in scalar
+    ret = self.one()
+          ^^^^^^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2808, in one
+    return self._iter().one()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\MySQLdb\cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\MySQLdb\cursors.py", line 330, in _query
+    db.query(q)
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\MySQLdb\connections.py", line 280, in query
+    _mysql.connection.query(self, query)
+sqlalchemy.exc.OperationalError: (MySQLdb.OperationalError) (1054, "Unknown column 'users.status' in 'field list'")
+[SQL: SELECT count(*) AS count_1 
+FROM (SELECT users.id AS users_id, users.first_name_encrypted AS users_first_name_encrypted, users.last_name_encrypted AS users_last_name_encrypted, users.email_hash AS users_email_hash, users.email_encrypted AS users_email_encrypted, users.student_id_encrypted AS users_student_id_encrypted, users.password_hash AS users_password_hash, users.status AS users_status, users.verification_token AS users_verification_token, users.is_active AS users_is_active, users.is_admin AS users_is_admin, users.created_at AS users_created_at, users.created_by AS users_created_by, users.data_hash AS users_data_hash 
+FROM users) AS anon_1]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+2025-10-19 16:33:03,465 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-10-19 16:33:03,479 - security - ERROR - Default account seeding failed: password cannot be longer than 72 bytes, truncate manually if necessary (e.g. my_password[:72])
+2025-10-19 16:33:06,132 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-10-19 16:33:06,140 - security - ERROR - Default account seeding failed: password cannot be longer than 72 bytes, truncate manually if necessary (e.g. my_password[:72])
+2025-10-19 16:33:26,739 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-10-19 16:33:26,747 - security - ERROR - Default account seeding failed: password cannot be longer than 72 bytes, truncate manually if necessary (e.g. my_password[:72])
+2025-10-19 16:33:28,108 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 16:34:25,892 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 16:37:02,552 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 16:37:05,542 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 16:37:06,744 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 16:37:07,703 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-10-19 16:42:22,034 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 16:42:25,129 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 16:43:41,140 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 16:50:33,421 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 16:52:03,590 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 16:52:05,469 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 16:52:06,467 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 16:53:26,707 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 16:55:32,442 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 16:55:49,671 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 16:59:44,983 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:00:41,590 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:00:49,064 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:02:07,441 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:03:33,191 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:04:52,151 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:05:05,046 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:05:05,484 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:05:06,469 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:06:42,101 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:06:43,254 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:08:45,392 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:11:54,271 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:13:34,538 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:13:55,853 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:14:10,245 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 17:14:13,633 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:14:14,794 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 17:14:30,710 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-19 17:14:33,922 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-19 17:14:40,585 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-10-19 17:14:59,412 - security - INFO - Request: GET http://127.0.0.1:8000/register from 127.0.0.1
+2025-10-19 17:15:28,992 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 17:15:31,414 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 17:15:35,122 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 17:15:38,229 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=ongoing from 127.0.0.1
+2025-10-19 17:15:39,012 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=upcoming from 127.0.0.1
+2025-10-19 17:15:40,195 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=ended from 127.0.0.1
+2025-10-19 17:15:41,494 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=all from 127.0.0.1
+2025-10-19 17:15:58,138 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-10-19 17:15:59,547 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 17:16:00,984 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 17:16:03,597 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:16:18,988 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:16:44,047 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:16:45,434 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:17:00,820 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:17:11,238 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:17:22,568 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:17:30,706 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:20:12,693 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:20:35,750 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:23:11,518 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:23:21,303 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:28:30,696 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:29:53,320 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:30:14,036 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:35:57,748 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:37:38,332 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:38:50,228 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:40:08,804 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:40:36,330 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:40:42,904 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:40:49,303 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:45:12,762 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:50:34,908 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:51:15,737 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:53:38,775 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:53:50,921 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:54:10,062 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 17:54:19,086 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 18:08:24,097 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 18:09:29,605 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 18:09:32,227 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 18:09:34,359 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 18:09:39,966 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 18:09:43,246 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 18:10:04,505 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 18:10:04,605 - security - INFO - Request: GET http://127.0.0.1:8000/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js from 127.0.0.1
+2025-10-19 18:10:20,012 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 18:11:13,076 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 18:13:12,364 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 18:13:14,569 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 18:14:22,112 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 18:16:31,034 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 18:16:58,455 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 18:17:38,244 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 18:17:50,555 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 18:21:02,271 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-10-19 18:21:12,951 - security - INFO - Request: GET http://127.0.0.1:8000/landingpage from 127.0.0.1
+2025-10-19 18:21:18,335 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-19 18:23:10,966 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-19 18:24:19,685 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-19 18:24:25,913 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-19 18:24:31,687 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-10-19 18:30:58,087 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-10-19 18:30:58,096 - security - ERROR - Default account seeding failed: password cannot be longer than 72 bytes, truncate manually if necessary (e.g. my_password[:72])
+2025-10-19 18:31:59,350 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-10-19 18:32:02,624 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-10-19 18:32:13,846 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 18:32:17,339 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 18:32:19,866 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 18:32:21,293 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 18:32:24,651 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 18:32:30,678 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 18:32:40,491 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 18:32:44,089 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/1 from 127.0.0.1
+2025-10-19 18:33:54,332 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 18:33:57,176 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 18:34:01,768 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 18:34:12,941 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 18:34:14,006 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 18:34:24,201 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 18:34:57,784 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 18:35:43,440 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 18:36:09,857 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 18:36:52,938 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 18:36:56,263 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 18:36:59,117 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-10-19 18:36:59,122 - security - ERROR - Results access error: 'Session' object has no attribute 'func'
+2025-10-19 18:37:37,215 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-19 18:37:50,657 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 18:37:54,172 - security - INFO - Request: GET http://127.0.0.1:8000/admin-edit-candidate/2 from 127.0.0.1
+2025-10-19 18:38:04,247 - security - INFO - Request: GET http://127.0.0.1:8000/admin-edit-candidate/2 from 127.0.0.1
+2025-10-19 18:40:03,261 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 18:40:04,490 - security - INFO - Request: GET http://127.0.0.1:8000/admin-edit-candidate/2 from 127.0.0.1
+2025-10-19 18:41:54,595 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 18:41:56,235 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/1 from 127.0.0.1
+2025-10-19 18:42:57,870 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/1 from 127.0.0.1
+2025-10-19 18:43:09,351 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 18:44:03,806 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 18:44:07,754 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 18:44:09,426 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/1 from 127.0.0.1
+2025-10-19 18:44:19,496 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 18:44:22,781 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 18:44:53,595 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 18:44:55,607 - security - INFO - Request: GET http://127.0.0.1:8000/admin-edit-candidate/2 from 127.0.0.1
+2025-10-19 18:45:02,397 - security - INFO - Request: GET http://127.0.0.1:8000/admin-edit-candidate/2 from 127.0.0.1
+2025-10-19 18:45:45,744 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 18:45:47,015 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-19 18:46:33,082 - security - INFO - Request: POST http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-19 18:46:33,144 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?success=1 from 127.0.0.1
+2025-10-19 18:46:36,083 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/1 from 127.0.0.1
+2025-10-19 18:46:43,297 - security - INFO - Request: POST http://127.0.0.1:8000/edit-election/1 from 127.0.0.1
+2025-10-19 18:46:43,335 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?updated=1 from 127.0.0.1
+2025-10-19 18:47:31,373 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 18:47:32,747 - security - INFO - Request: GET http://127.0.0.1:8000/admin-edit-candidate/2 from 127.0.0.1
+2025-10-19 18:54:26,506 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-10-19 18:54:26,516 - security - ERROR - Default account seeding failed: password cannot be longer than 72 bytes, truncate manually if necessary (e.g. my_password[:72])
+2025-10-19 18:54:38,694 - security - INFO - Request: GET http://127.0.0.1:8000/admin-edit-candidate/2 from 127.0.0.1
+2025-10-19 18:54:54,200 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 18:55:13,161 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 18:56:17,795 - security - INFO - Request: GET http://127.0.0.1:8000/admin-edit-candidate/2 from 127.0.0.1
+2025-10-19 18:56:29,520 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-10-19 18:56:29,534 - security - ERROR - Default account seeding failed: password cannot be longer than 72 bytes, truncate manually if necessary (e.g. my_password[:72])
+2025-10-19 18:56:53,597 - security - INFO - Request: POST http://127.0.0.1:8000/admin-delete-candidate/2 from 127.0.0.1
+2025-10-19 18:56:53,645 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?deleted=1 from 127.0.0.1
+2025-10-19 18:57:32,795 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 18:57:44,189 - security - INFO - Request: POST http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 18:57:44,216 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 18:57:46,499 - security - INFO - Request: GET http://127.0.0.1:8000/admin-edit-candidate/3 from 127.0.0.1
+2025-10-19 18:59:22,975 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-10-19 18:59:22,987 - security - ERROR - Default account seeding failed: password cannot be longer than 72 bytes, truncate manually if necessary (e.g. my_password[:72])
+2025-10-19 19:00:51,320 - security - INFO - Request: GET http://127.0.0.1:8000/admin-edit-candidate/3 from 127.0.0.1
+2025-10-19 19:04:37,840 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:04:41,385 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:06:25,358 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:06:59,068 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:07:19,769 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:07:57,055 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:07:58,050 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:09:18,194 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:09:50,780 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:10:48,067 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:11:34,392 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:12:09,970 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:15:26,577 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:15:37,259 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:17:20,073 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:17:28,144 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:17:37,684 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:18:05,149 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:18:06,225 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:18:51,989 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:18:53,187 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:20:38,717 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:23:46,373 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:27:42,767 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:27:46,706 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:27:48,615 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=dsfs from 127.0.0.1
+2025-10-19 19:27:52,542 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:28:39,380 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:28:40,194 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:28:45,128 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:31:17,059 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:31:52,156 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:31:53,301 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:32:38,697 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:32:39,640 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:34:21,070 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:34:22,018 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:34:40,300 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:35:01,554 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:35:33,631 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:35:47,827 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:36:06,274 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:36:07,080 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:37:42,792 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:38:58,019 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:39:03,161 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:39:31,800 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:39:49,975 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:39:50,724 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:40:05,885 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:40:15,292 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q= from 127.0.0.1
+2025-10-19 19:40:19,112 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=kot from 127.0.0.1
+2025-10-19 19:42:50,013 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 19:42:56,136 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 19:42:57,363 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-19 19:43:03,053 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/3 from 127.0.0.1
+2025-10-19 19:43:09,380 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 19:43:48,604 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 19:43:49,945 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 19:43:53,650 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 19:43:55,530 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 19:43:57,975 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-10-19 19:45:20,556 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-10-19 19:45:22,864 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 19:45:23,995 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 19:45:25,217 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 19:46:07,326 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 19:46:09,362 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 19:46:11,286 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 19:46:24,457 - security - INFO - Request: POST http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 19:46:24,497 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:46:27,056 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 19:46:31,964 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/3 from 127.0.0.1
+2025-10-19 19:46:37,721 - security - INFO - Request: POST http://127.0.0.1:8000/edit-election/3 from 127.0.0.1
+2025-10-19 19:46:37,826 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?updated=1 from 127.0.0.1
+2025-10-19 19:46:38,959 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 19:46:44,602 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 19:46:46,915 - security - INFO - Request: GET http://127.0.0.1:8000/admin-edit-candidate/4 from 127.0.0.1
+2025-10-19 19:46:52,116 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 19:46:52,943 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 19:46:55,193 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/3 from 127.0.0.1
+2025-10-19 19:46:57,249 - security - INFO - Request: POST http://127.0.0.1:8000/edit-election/3 from 127.0.0.1
+2025-10-19 19:46:57,285 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?updated=1 from 127.0.0.1
+2025-10-19 19:46:58,443 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 19:49:25,723 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-10-19 19:49:25,747 - security - ERROR - Default account seeding failed: password cannot be longer than 72 bytes, truncate manually if necessary (e.g. my_password[:72])
+2025-10-19 19:49:48,556 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 19:49:51,168 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 19:49:52,846 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 19:49:54,453 - security - INFO - Request: GET http://127.0.0.1:8000/admin-edit-candidate/4 from 127.0.0.1
+2025-10-19 19:50:01,661 - security - INFO - Request: POST http://127.0.0.1:8000/admin-edit-candidate/4 from 127.0.0.1
+2025-10-19 19:50:01,703 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?updated=1 from 127.0.0.1
+2025-10-19 19:50:08,290 - security - INFO - Request: POST http://127.0.0.1:8000/admin-delete-candidate/4 from 127.0.0.1
+2025-10-19 19:50:08,334 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?deleted=1 from 127.0.0.1
+2025-10-19 19:50:11,933 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 19:50:16,152 - security - INFO - Request: POST http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 19:50:16,219 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:50:17,744 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 19:50:19,397 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/3 from 127.0.0.1
+2025-10-19 19:50:21,961 - security - INFO - Request: POST http://127.0.0.1:8000/edit-election/3 from 127.0.0.1
+2025-10-19 19:50:22,026 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?updated=1 from 127.0.0.1
+2025-10-19 19:50:23,238 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 19:50:29,320 - security - INFO - Request: GET http://127.0.0.1:8000/admin-edit-candidate/5 from 127.0.0.1
+2025-10-19 19:50:31,890 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 19:50:32,793 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 19:50:34,361 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/3 from 127.0.0.1
+2025-10-19 19:50:37,063 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 19:50:39,320 - security - INFO - Request: GET http://127.0.0.1:8000/admin-edit-candidate/3 from 127.0.0.1
+2025-10-19 19:50:42,946 - security - INFO - Request: POST http://127.0.0.1:8000/admin-edit-candidate/3 from 127.0.0.1
+2025-10-19 19:50:42,995 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?updated=1 from 127.0.0.1
+2025-10-19 19:50:46,101 - security - INFO - Request: POST http://127.0.0.1:8000/admin-delete-candidate/3 from 127.0.0.1
+2025-10-19 19:50:46,135 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?deleted=1 from 127.0.0.1
+2025-10-19 19:50:47,181 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 19:50:54,092 - security - INFO - Request: POST http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 19:50:54,128 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:50:56,042 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 19:50:57,139 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/3 from 127.0.0.1
+2025-10-19 19:51:01,202 - security - INFO - Request: POST http://127.0.0.1:8000/edit-election/3 from 127.0.0.1
+2025-10-19 19:51:01,258 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?updated=1 from 127.0.0.1
+2025-10-19 19:51:02,164 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 19:51:03,672 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 19:51:05,022 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/3 from 127.0.0.1
+2025-10-19 19:51:07,631 - security - INFO - Request: POST http://127.0.0.1:8000/edit-election/3 from 127.0.0.1
+2025-10-19 19:51:07,676 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?updated=1 from 127.0.0.1
+2025-10-19 19:51:08,479 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 19:51:12,264 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 19:51:14,541 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/1 from 127.0.0.1
+2025-10-19 19:51:34,341 - security - INFO - Request: POST http://127.0.0.1:8000/edit-election/1 from 127.0.0.1
+2025-10-19 19:51:34,403 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?updated=1 from 127.0.0.1
+2025-10-19 19:51:36,069 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 19:51:37,326 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 19:51:48,048 - security - INFO - Request: POST http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-19 19:51:48,099 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:55:34,542 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-10-19 19:55:34,555 - security - ERROR - Default account seeding failed: password cannot be longer than 72 bytes, truncate manually if necessary (e.g. my_password[:72])
+2025-10-19 19:55:58,418 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-10-19 19:55:58,427 - security - ERROR - Default account seeding failed: password cannot be longer than 72 bytes, truncate manually if necessary (e.g. my_password[:72])
+2025-10-19 19:56:56,726 - security - INFO - Request: GET http://127.0.0.1:8000/result from 127.0.0.1
+2025-10-19 19:56:59,994 - security - INFO - Request: GET http://127.0.0.1:8000/results from 127.0.0.1
+2025-10-19 19:57:23,709 - security - INFO - Request: GET http://127.0.0.1:8000/results from 127.0.0.1
+2025-10-19 19:57:35,503 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-10-19 19:57:44,561 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-19 19:57:48,769 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 19:57:49,868 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 19:57:51,452 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 19:57:56,553 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-10-19 19:57:57,733 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 19:57:58,845 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 19:57:59,887 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 19:58:43,958 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:03:44,639 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:03:59,234 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:04:15,868 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:04:27,329 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:04:37,059 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:05:18,306 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:05:32,364 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 20:05:34,883 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:05:36,611 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 20:05:38,764 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:07:15,630 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 20:07:18,029 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:10:06,217 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-10-19 20:10:06,227 - security - ERROR - Default account seeding failed: password cannot be longer than 72 bytes, truncate manually if necessary (e.g. my_password[:72])
+2025-10-19 20:10:49,212 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:12:09,744 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:12:25,294 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:12:35,256 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:12:36,287 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:12:41,734 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:12:49,303 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:12:55,165 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:13:13,455 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 20:13:15,728 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:13:16,441 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-19 20:13:17,289 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:13:19,032 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 20:13:20,040 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:14:15,538 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:14:31,071 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:14:32,119 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:15:23,358 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:16:04,761 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:16:34,692 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:17:05,389 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:17:16,228 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:17:34,887 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:17:42,048 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:17:51,946 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:17:58,939 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:18:04,759 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:20:36,627 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:20:42,671 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:20:45,673 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:21:34,508 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:21:36,232 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 20:21:38,074 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=ongoing from 127.0.0.1
+2025-10-19 20:21:39,103 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=upcoming from 127.0.0.1
+2025-10-19 20:21:40,661 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=all from 127.0.0.1
+2025-10-19 20:21:49,520 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=ongoing from 127.0.0.1
+2025-10-19 20:22:11,112 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:22:14,493 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 20:22:15,428 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:22:17,609 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:22:29,798 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:22:31,102 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 20:22:32,574 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=ended from 127.0.0.1
+2025-10-19 20:22:34,246 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=all from 127.0.0.1
+2025-10-19 20:23:04,483 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?q=kit from 127.0.0.1
+2025-10-19 20:23:06,309 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:23:09,100 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=kit from 127.0.0.1
+2025-10-19 20:25:16,232 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 20:25:19,863 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 20:25:27,753 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 20:25:29,520 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:25:33,132 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:25:36,256 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:25:38,750 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=kit from 127.0.0.1
+2025-10-19 20:26:23,140 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=kit from 127.0.0.1
+2025-10-19 20:26:25,729 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:26:27,328 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-19 20:26:29,138 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=ended from 127.0.0.1
+2025-10-19 20:26:31,255 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:26:33,998 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:26:36,902 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:27:03,076 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:27:15,916 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:27:18,370 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:27:21,686 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:27:25,130 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:28:06,103 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:28:29,462 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:28:37,704 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:28:40,655 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:28:42,746 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:28:44,642 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:29:04,009 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:29:15,986 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:29:31,037 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:29:34,455 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:29:36,265 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:29:38,008 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-19 20:29:40,529 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-19 20:29:54,162 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-10-19 20:30:00,841 - security - INFO - Request: GET http://127.0.0.1:8000/confirmation from 127.0.0.1
+2025-10-19 20:30:03,147 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-10-19 20:30:07,215 - security - INFO - Request: GET http://127.0.0.1:8000/register from 127.0.0.1
+2025-10-20 12:43:26,743 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-10-20 12:43:26,790 - security - ERROR - Default account seeding failed: password cannot be longer than 72 bytes, truncate manually if necessary (e.g. my_password[:72])
+2025-10-20 12:43:29,102 - security - INFO - Request: GET http://127.0.0.1:8000/ from 127.0.0.1
+2025-10-20 12:43:29,689 - security - INFO - Request: GET http://127.0.0.1:8000/favicon.ico from 127.0.0.1
+2025-10-20 12:43:34,856 - security - INFO - Request: GET http://127.0.0.1:8000/admin from 127.0.0.1
+2025-10-20 12:43:34,870 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-20 12:43:40,180 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-20 12:43:42,282 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-20 12:43:44,429 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-20 12:43:47,978 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-10-20 12:43:48,953 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-20 12:43:57,624 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-20 12:44:01,703 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-20 12:44:03,657 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=upcoming from 127.0.0.1
+2025-10-20 12:44:07,053 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=ongoing from 127.0.0.1
+2025-10-20 12:44:09,088 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=all from 127.0.0.1
+2025-10-20 12:44:09,871 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=upcoming from 127.0.0.1
+2025-10-20 12:44:20,217 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-20 12:44:22,223 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-20 12:44:24,439 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/3 from 127.0.0.1
+2025-10-20 12:44:27,870 - security - INFO - Request: POST http://127.0.0.1:8000/edit-election/3 from 127.0.0.1
+2025-10-20 12:44:28,022 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?updated=1 from 127.0.0.1
+2025-10-20 12:44:28,925 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-20 12:44:32,793 - security - INFO - Request: GET http://127.0.0.1:8000/admin-edit-candidate/6 from 127.0.0.1
+2025-10-20 12:44:36,870 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-20 12:44:38,577 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-20 12:44:40,904 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/3 from 127.0.0.1
+2025-10-20 12:44:45,626 - security - INFO - Request: POST http://127.0.0.1:8000/edit-election/3 from 127.0.0.1
+2025-10-20 12:44:45,655 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?updated=1 from 127.0.0.1
+2025-10-20 12:44:47,417 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=ongoing from 127.0.0.1
+2025-10-20 12:44:48,425 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=ended from 127.0.0.1
+2025-10-20 12:44:50,000 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=upcoming from 127.0.0.1
+2025-10-20 12:44:51,786 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=all from 127.0.0.1
+2025-10-20 12:44:57,750 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?q=circuit from 127.0.0.1
+2025-10-20 12:45:03,446 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-20 12:45:07,605 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-10-20 12:45:12,335 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-20 12:45:15,917 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-20 12:45:57,693 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-10-20 12:45:59,617 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-20 12:46:01,464 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-20 12:46:11,151 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-20 12:46:25,761 - security - INFO - Request: POST http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-20 12:46:45,181 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-20 12:46:46,762 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-20 12:46:57,939 - security - INFO - Request: POST http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-20 12:47:05,262 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-20 12:47:06,442 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-20 12:47:19,806 - security - INFO - Request: POST http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-20 12:47:19,833 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?success=1 from 127.0.0.1
+2025-10-20 12:47:34,705 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-20 12:47:36,642 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-20 12:48:04,039 - security - INFO - Request: POST http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-10-20 12:48:04,084 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?success=1 from 127.0.0.1
+2025-10-20 12:48:06,059 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-20 12:48:07,552 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-10-20 12:48:14,677 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-20 12:48:17,449 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-20 12:48:19,079 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/4 from 127.0.0.1
+2025-10-20 12:48:21,223 - security - INFO - Request: POST http://127.0.0.1:8000/delete-election/4 from 127.0.0.1
+2025-10-20 12:48:21,243 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?deleted=1 from 127.0.0.1
+2025-10-20 12:48:26,575 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-20 12:48:29,121 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-20 12:49:23,321 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-10-20 12:49:24,288 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-10-20 12:49:25,723 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-10-20 12:51:52,376 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-10-20 12:51:52,388 - security - ERROR - Default account seeding failed: password cannot be longer than 72 bytes, truncate manually if necessary (e.g. my_password[:72])
+2025-10-20 12:53:00,712 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-10-20 12:53:04,274 - security - INFO - Request: GET http://127.0.0.1:8000/register from 127.0.0.1
+2025-10-20 12:53:47,197 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\Felicia Kusuma\Downloads\Voting\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-10-20 12:53:47,206 - security - ERROR - Default account seeding failed: password cannot be longer than 72 bytes, truncate manually if necessary (e.g. my_password[:72])
+2025-10-20 12:53:56,687 - security - INFO - Request: GET http://127.0.0.1:8000/register from 127.0.0.1

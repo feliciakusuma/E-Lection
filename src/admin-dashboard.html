@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ request.url_for('static', path='style.css') }}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <title>Admin - Dashboard</title>
+</head>
+
+<body class="admin-body">
+   <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <i class="fas fa-vote-yea text-blue-600 text-xl"></i> 
+      <span class="logo-text">E-Lection</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/admin-dashboard" class="sidebar-link active">
+        <img src="https://cdn-icons-png.flaticon.com/512/3446/3446795.png" class="icon">
+        <span>Dashboard</span>
+      </a>
+      <a href="/admin-voters" class="sidebar-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/694/694642.png" class="icon">
+        <span>Voters</span>
+      </a>
+      <a href="/admin-candidates" class="sidebar-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/7658/7658147.png" class="icon">
+        <span>Candidates</span>
+      </a>
+      <a href="/admin-elections" class="sidebar-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/6820/6820898.png" class="icon">
+        <span>Elections</span>
+      </a>   
+      <a href="/admin-settings" class="sidebar-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/1160/1160356.png" class="icon">
+        <span>Settings</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="/admin" class="logout-link">
+        <img src="https://cdn-icons-png.flaticon.com/512/14385/14385252.png" class="icon">
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Top Navbar -->
+    <header class="topbar">
+      <h1 class="text-xl font-semibold">Dashboard Overview</h1>
+      <div class="topbar-right">
+        <form method="GET" action="/admin-dashboard" class="search-box" role="search">
+          <input
+            type="text"
+            name="q"
+            placeholder="Search..."
+            class="search-bar"
+            value="{{ request.query_params.get('q','') }}"
+            aria-label="Search dashboard"
+          />
+        </form>
+        <button class="notif-btn">
+          <img src="https://cdn-icons-png.flaticon.com/512/18115/18115750.png" class="icon">
+          <span class="notif-badge">3</span>
+        </button>
+        <div class="admin-profile">
+          <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="avatar">
+          <div>
+            <p class="admin-name">Admin</p>
+            <p class="admin-role">Administrator</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard">
+      <div class="stats-grid">
+        <!-- Total Voters -->
+        <div class="stat-card">
+          <div class="stat-info">
+            <p class="stat-title">Total Voters</p>
+            <p class="stat-value">2,847</p>
+            <p class="stat-sub green">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/14035/14035529.png"
+                alt="green arrow"
+                class="inline-icon"
+              />
+              12% from last month
+            </p>
+          </div>
+          <div class="stat-icon blue">
+            <i class="fas fa-users text-blue-600 text-xl"></i>
+          </div>
+        </div>
+
+        <!-- Active Elections -->
+        <div class="stat-card">
+          <div class="stat-info">
+            <p class="stat-title">Active Elections</p>
+            <p class="stat-value">3</p>
+            <p class="stat-sub blue">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/17671/17671439.png"
+                alt="blue dot"
+                class="inline-icon"
+              />
+              2 ending today
+            </p>
+          </div>
+          <div class="stat-icon green">
+            <i class="fas fa-vote-yea text-green-600 text-xl"></i>
+          </div>
+        </div>
+
+        <!-- Votes Cast -->
+        <div class="stat-card">
+          <div class="stat-info">
+            <p class="stat-title">Votes Cast</p>
+            <p class="stat-value">1,923</p>
+            <p class="stat-sub green">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/14035/14035529.png"
+                alt="green arrow"
+                class="inline-icon"
+              />
+              67.5% turnout
+            </p>
+          </div>
+          <div class="stat-icon purple">
+            <i class="fas fa-chart-bar text-purple-600 text-xl"></i>
+          </div>
+        </div>
+
+        <!-- Pending Approvals -->
+        <div class="stat-card">
+          <div class="stat-info">
+            <p class="stat-title">Pending Approvals</p>
+            <p class="stat-value">24</p>
+            <p class="stat-sub red">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/6742/6742749.png"
+                alt="orange warning"
+                class="inline-icon"
+              />
+              Requires attention
+            </p>
+          </div>
+          <div class="stat-icon orange">
+            <i class="fas fa-exclamation-circle text-orange-600 text-xl"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Middle -->
+      <div class="middle-grid">
+        <div class="section-card wide">
+          <div class="section-header">
+            <h3>Live Voting Results</h3>
+            <select class="select-input">
+              <option>Student Council Election</option>
+              <option>Faculty Rep Election</option>
+            </select>
+          </div>
+          <div class="placeholder">[Chart Placeholder]</div>
+        </div>
+
+        <div class="section-card">
+          <h3 class="section-title">Recent Activity</h3>
+          <ul class="section-list">
+            <li class="list-item" style="display:flex; align-items:center; gap:.75rem;">
+                <div class="stat-icon green">
+                    <i class="fas fa-vote-yea text-green-600 text-xl"></i>
+                </div>
+                
+                <div>
+                    <p class="item-name">New vote cast in Student Council Election</p>
+                    <p class="item-email">2 minutes ago</p>
+                </div>
+            </li>
+            
+            <li class="list-item" style="display:flex; align-items:center; gap:.75rem;">
+                <div class="stat-icon blue">
+                    <i class="fas fa-users text-blue-600 text-xl"></i>
+                </div>
+                
+                <div>
+                    <p class="item-name">New voter registered: Sarah Johnson</p>
+                    <p class="item-email">5 minutes ago</p>
+                </div>
+            </li>
+            <li class="list-item" style="display:flex; align-items:center; gap:.75rem;">
+                <div class="stat-icon orange">
+                    <i class="fas fa-exclamation-circle text-orange-600 text-xl"></i>
+                </div>
+
+                <div>
+                    <p class="item-name">Election "Faculty Rep" ends in 2 hours</p>
+                    <p class="item-email">1 hour ago</p>
+                </div>  
+                </li>
+
+                <li class="list-item" style="display:flex; align-items:center; gap:.75rem;">
+                    <div class="stat-icon purple">
+                        <i class="fas fa-chart-bar text-purple-600 text-xl"></i>
+                    </div>
+                    
+                    <div>
+                        <p class="item-name">Candidate approved: Mike Chen</p>
+                        <p class="item-email">3 hours ago</p>
+                    </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    
+
+      <!-- Bottom -->
+      <div class="bottom-grid">
+        <div class="section-card">
+          <div class="section-header">
+            <h3>Recent Voters</h3>
+            <a href="#" class="action-link">View All</a>
+          </div>
+
+          <ul class="section-list">
+            <li class="list-item">
+              <div>
+                <p class="item-name">Emma Wilson</p>
+                <p class="item-email">emma.wilson@uni.edu</p>
+              </div>
+              <span class="badge green">Verified</span>
+            </li>
+
+            <li class="list-item">
+              <div>
+                <p class="item-name">James Rodriguez</p>
+                <p class="item-email">james.rodriguez@uni.edu</p>
+              </div>
+              <span class="badge yellow">Pending</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="section-card">
+          <div class="section-header">
+            <h3>Active Candidates</h3><ul class="section-list">{% if active_candidates %}{% for c in active_candidates %}<li class="list-item"><div><p class="item-name">{{ c.full_name }}</p><p class="item-email">{{ c.position }}</p></div>{% set st = (c.status or "running").lower() %}{% if st == "running" %}<span class="badge blue">Running</span>{% elif st == "pending" %}<span class="badge yellow">Pending</span>{% else %}<span class="badge red">{{ st|capitalize }}</span>{% endif %}</li>{% endfor %}{% else %}<li class="list-item"><div><p class="item-name">Alex Thompson</p><p class="item-email">Student Council President</p></div><span class="badge blue">Running</span></li><li class="list-item"><div><p class="item-name">Maria Garcia</p><p class="item-email">Student Council President</p></div><span class="badge blue">Running</span></li><li class="list-item"><div><p class="item-name">David Kim</p><p class="item-email">Faculty Representative</p></div><span class="badge yellow">Pending</span></li>{% endif %}</ul>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
+
+
+

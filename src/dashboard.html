@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ request.url_for('static', path='style.css') }}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <title>Dashboard</title>  
+</head>
+
+<body class="body-main">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="sidebar-logo">
+      <i class="fas fa-vote-yea text-blue-600 text-xl"></i> 
+      <span class="logo-text">E-Lection</span>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="dashboard-main">
+    <div class="dashboard-container">
+      
+      <!-- Header -->
+      <h1 class="dashboard-title">{{ active_election.title if active_election else "No Active Election" }}</h1>
+      <p class="dashboard-subtitle">
+        {% if active_election %}
+          Select your preferred candidate below
+        {% else %}
+          Check back soon for the next election event.
+        {% endif %}
+      </p>
+      
+      {% if message %}
+      <div class="alert-info">{{ message }}</div>
+      {% endif %}
+
+      {% if active_election %}
+      <!-- Election notice -->
+      <div class="election-notice">
+        <div class="election-box">
+          <img src="https://cdn-icons-png.flaticon.com/512/3416/3416094.png" alt="Clock Icon" class="icon-clock">
+          Election ends in:
+          <span class="highlight">{{ ends_in }}</span>
+        </div>
+      </div>
+      {% endif %}
+      
+      <!-- Candidate Cards -->
+      <div class="candidate-grid">
+        {% if active_election and candidates %}
+          {% for candidate in candidates %}
+          <div class="candidate-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="Candidate" class="candidate-img">
+            <div class="candidate-info">
+              <h2 class="candidate-name">{{ candidate.full_name }}</h2>
+              <p class="candidate-position">{{ candidate.position }}</p>
+              <p class="candidate-bio">
+                {{ candidate.description }}
+              </p>
+              <p class="candidate-meta">{{ candidate.major }} - Cohort {{ candidate.cohort }}</p>
+              <div class="candidate-actions">
+                <form method="get" action="/confirmation">
+                  <input type="hidden" name="candidate_id" value="{{ candidate.id }}">
+                  {% if active_election %}
+                  <input type="hidden" name="election_id" value="{{ active_election.id }}">
+                  {% endif %}
+                  <button type="submit" class="btn-vote" {% if not active_election %}disabled{% endif %}>
+                    Vote
+                  </button>
+                </form>
+                <button class="btn-details" type="button">Details</button>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <div class="empty-state">
+            <p>No candidates available yet. Please check back soon.</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </main>
+</body>
+</html>
+
