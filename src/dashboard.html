@@ -10,79 +10,98 @@
 </head>
 
 <body class="body-main">
+  {% set display_full = (user_profile.full_name if user_profile else ((request.cookies.get('first_name') or 'User') ~ ' ' ~ (request.cookies.get('last_name') or ''))).strip() %}
+  {% set avatar_url = request.cookies.get('avatar_url') or 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png' %}
   <!-- Navbar -->
   <nav class="navbar">
     <div class="sidebar-logo">
       <i class="fas fa-vote-yea text-blue-600 text-xl"></i> 
       <span class="logo-text">E-Lection</span>
     </div>
+    <div class="navbar-inner" style="margin-left:auto;display:flex;align-items:center;gap:1.5rem;">
+        <div class="profile" data-menu>
+          <img src="{{ avatar_url }}" class="avatar profile-trigger" alt="User avatar" aria-haspopup="menu" aria-expanded="false">
+          <div>
+            <p class="admin-name">{{ display_full or 'User' }}</p>
+            <p class="admin-role">Voter</p>
+          </div>
+          <div class="profile-menu" role="menu">
+            <a href="/profile" class="profile-item" role="menuitem"><i class="fa-solid fa-user-pen"></i> Edit Profile</a>
+            <a href="/logout" class="profile-item text-red-500" role="menuitem"><i class="fa-solid fa-arrow-right-from-bracket text-red-500"></i> Logout</a>
+          </div>
+        </div>
+    </div>
   </nav>
 
   <!-- Main Content -->
-  <main class="dashboard-main">
-    <div class="dashboard-container">
-      
-      <!-- Header -->
-      <h1 class="dashboard-title">{{ active_election.title if active_election else "No Active Election" }}</h1>
-      <p class="dashboard-subtitle">
-        {% if active_election %}
-          Select your preferred candidate below
-        {% else %}
-          Check back soon for the next election event.
-        {% endif %}
-      </p>
-      
-      {% if message %}
-      <div class="alert-info">{{ message }}</div>
-      {% endif %}
+  <main class="dashboard-main candidates-main">
+    <div class="candidates-container">
+      <!-- Page header -->
+      <h1 class="dashboard-title">Current Active Elections</h1>
+      <p class="dashboard-subtitle">Participate in ongoing elections or view results</p>
 
-      {% if active_election %}
-      <!-- Election notice -->
-      <div class="election-notice">
-        <div class="election-box">
-          <img src="https://cdn-icons-png.flaticon.com/512/3416/3416094.png" alt="Clock Icon" class="icon-clock">
-          Election ends in:
-          <span class="highlight">{{ ends_in }}</span>
-        </div>
-      </div>
-      {% endif %}
-      
-      <!-- Candidate Cards -->
-      <div class="candidate-grid">
-        {% if active_election and candidates %}
-          {% for candidate in candidates %}
-          <div class="candidate-card">
-            <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="Candidate" class="candidate-img">
-            <div class="candidate-info">
-              <h2 class="candidate-name">{{ candidate.full_name }}</h2>
-              <p class="candidate-position">{{ candidate.position }}</p>
-              <p class="candidate-bio">
-                {{ candidate.description }}
-              </p>
-              <p class="candidate-meta">{{ candidate.major }} - Cohort {{ candidate.cohort }}</p>
-              <div class="candidate-actions">
-                <form method="get" action="/confirmation">
-                  <input type="hidden" name="candidate_id" value="{{ candidate.id }}">
-                  {% if active_election %}
-                  <input type="hidden" name="election_id" value="{{ active_election.id }}">
-                  {% endif %}
-                  <button type="submit" class="btn-vote" {% if not active_election %}disabled{% endif %}>
-                    Vote
-                  </button>
-                </form>
-                <button class="btn-details" type="button">Details</button>
+      {% set items = elections_payload if elections_payload else elections %}
+      <div class="election-grid">
+        {% if items %}
+          {% for item in items %}
+            {% set e = item.election if item.election is defined else item %}
+            {% set st = (item.status if item.status is defined else e.status)|default('upcoming')|lower %}
+            {% set has_voted = (item.user_has_voted if item.user_has_voted is defined else e.user_has_voted)|default(false) %}
+            {% set results_published = (item.results_published if item.results_published is defined else e.results_published)|default(st=='ended') %}
+            {% set go_to_results = has_voted or results_published %}
+            {% set href = ('/results/' ~ e.id) if go_to_results else ('/candidates?election_id=' ~ e.id) %}
+            {% set badge_class = 'badge-running' if st=='ongoing' else ('badge-pending' if st=='upcoming' else 'badge-rejected') %}
+
+              <div class="election-card">
+              <div class="election-card-header">
+                <h3 class="two-line-title">{{ e.title }}</h3>
+                <span class="badge {{ badge_class }} ml-auto">{{ st|capitalize }}</span>
+              </div>
+              <div class="election-details">
+                <i class="fa-solid fa-calendar inline-icon"></i>
+                {% set ds = item.display_start if item.display_start is defined else e.start_date %}
+                {% set de = item.display_end if item.display_end is defined else e.end_date %}
+                {{ ds.strftime('%b %d, %Y %H:%M') if ds else '-' }} - {{ de.strftime('%b %d, %Y %H:%M') if de else '-' }}
+              </div>
+              <div class="election-meta">
+                <span><i class="fa-solid fa-user-tie inline-icon"></i> {{ item.candidates_count if item.candidates_count is defined else (e.candidates_count if e.candidates_count is defined else '0' ) }} Candidates</span>
+              </div>
+
+              <div class="election-cta">
+                {% if st=='ongoing' and not go_to_results %}
+                  <a class="btn-vote" style="width:100%;text-align:center;display:block;" href="/candidates?election_id={{ e.id }}">
+                    Vote Now
+                  </a>
+                {% elif go_to_results %}
+                  <a class="btn-details" style="width:100%;text-align:center;display:block;" href="/results/{{ e.id }}">&#10003; View Results</a>
+                {% else %}
+                  <div class="btn-details" style="width:100%;text-align:center;opacity:.6;">Coming Soon</div>
+                {% endif %}
               </div>
             </div>
-          </div>
           {% endfor %}
         {% else %}
-          <div class="empty-state">
-            <p>No candidates available yet. Please check back soon.</p>
-          </div>
+          <div class="empty-state">No active elections available</div>
         {% endif %}
       </div>
     </div>
   </main>
+  <script>
+    (function(){
+      function initProfileMenus(){
+        document.querySelectorAll('.profile[data-menu]').forEach(function(profile){
+          var trigger = profile.querySelector('.profile-trigger');
+          var menu = profile.querySelector('.profile-menu');
+          if(!trigger || !menu) return;
+          function close(){ menu.classList.remove('open'); trigger.setAttribute('aria-expanded','false'); }
+          function toggle(e){ e.stopPropagation(); var isOpen = menu.classList.contains('open'); if(isOpen){ close(); } else { menu.classList.add('open'); trigger.setAttribute('aria-expanded','true'); } }
+          trigger.addEventListener('click', toggle);
+          document.addEventListener('click', function(e){ if(!profile.contains(e.target)) close(); });
+          document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+        });
+      }
+      if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initProfileMenus); else initProfileMenus();
+    })();
+  </script>
 </body>
 </html>
-

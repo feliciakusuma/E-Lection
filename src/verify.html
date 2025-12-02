@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ asset(request, 'style.css') }}" />
+  <title>Verify Email</title>  
+</head>
+
+<body class="body-main">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="sidebar-logo">
+      <i class="fas fa-vote-yea text-blue-600 text-xl"></i>
+      <span class="logo-text">E-Lection</span>
+    </div>
+  </nav>
+  
+  <!-- Main-->
+  <main class="form-main">
+    <div class="form-card">
+      
+      <!-- Icon -->
+      <div class="form-icon circle-icon">
+        <i class="fa-solid fa-key text-white text-2xl"></i>
+      </div>
+      
+      <!-- Title -->
+      <h2 class="form-title">Verify your Email</h2>
+      <p class="form-subtitle">To complete the registration process, please enter the 6-digit verification code we sent to your email.</p>
+
+      <p class="form-subtitle" style="margin-bottom: 0.5rem;">Please enter your verification code</p>
+
+      {% if success %}
+      <div class="alert-success">{{ success }}</div>
+      {% endif %}
+
+      {% if error %}
+      <div class="alert-error">{{ error }}</div>
+      {% endif %}
+
+      <form id="verifyForm" class="space-y-4 text-left" action="/verify-code" method="post">
+        <input type="hidden" name="email" value="{{ email or '' }}" />
+        <div>
+          <div class="relative">
+            <div class="code-boxes">
+              {% for i in range(0,6) %}
+              <input
+                type="text"
+                inputmode="numeric"
+                maxlength="1"
+                class="code-box"
+                oninput="moveNext(this)"
+              />
+              {% endfor %}
+              <input type="hidden" id="code" name="code" required />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-footer" style="margin: 0.5rem 0 0.75rem 0; padding: 0;">
+          <span class="text-sm text-gray-600">Didn't receive a code?</span>
+          <button type="button" class="blue-underline" style="background:none;border:0;padding:0;margin-left:0.15rem;" onclick="document.getElementById('resendForm').submit();">Resend code</button>
+        </div>
+
+        <button type="submit" class="btn btn-login w-full mt-1" onclick="return validateCode();">
+          Submit
+        </button>
+
+        <a href="/login" class="btn btn-ghost w-full text-center mt-2">Cancel</a>
+      </form>
+
+      <form id="resendForm" action="/resend-code" method="post" style="display:none;">
+        <input type="hidden" name="email" value="{{ email or '' }}" />
+      </form>
+    </div>
+  </main>
+  <script>
+    (function() {
+      const boxes = Array.from(document.querySelectorAll('.code-box'));
+      const hidden = document.getElementById('code');
+      function syncCode() {
+        hidden.value = boxes.map((b) => (b.value || '').trim()).join('');
+      }
+      function handlePaste(e) {
+        const paste = (e.clipboardData || window.clipboardData).getData('text') || '';
+        if (!paste) return;
+        e.preventDefault();
+        const digits = paste.replace(/\\D/g, '').slice(0, boxes.length).split('');
+        boxes.forEach((box, idx) => { box.value = digits[idx] || ''; });
+        syncCode();
+        const next = boxes.find(b => !b.value);
+        if (next) next.focus();
+      }
+      window.moveNext = function (el) {
+        const idx = boxes.indexOf(el);
+        if (el.value && idx < boxes.length - 1) {
+          boxes[idx + 1].focus();
+        }
+        syncCode();
+      };
+      boxes.forEach((box) => {
+        box.addEventListener('input', syncCode);
+        box.addEventListener('keydown', (e) => {
+          if (e.key === 'Backspace' && !box.value) {
+            const idx = boxes.indexOf(box);
+            if (idx > 0) boxes[idx - 1].focus();
+          }
+        });
+        box.addEventListener('paste', handlePaste);
+      });
+    })();
+
+    function validateCode() {
+      const hidden = document.getElementById('code');
+      const val = (hidden && hidden.value || '').trim();
+      if (val.length !== 6) {
+        alert('Please enter the 6-digit verification code.');
+        return false;
+      }
+      return true;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ request.url_for('static', path='style.css') }}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <title>Edit Profile</title>  
+</head>
+
+<body class="body-main">
+  {% set profile_data = form_data or {} %}
+  {% set avatar_url = profile_data.get('avatar_url') or request.cookies.get('avatar_url') or 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png' %}
+  {% set display_first = profile_data.get('first_name') or request.cookies.get('first_name') or 'First Name' %}
+  {% set display_last = profile_data.get('last_name') or request.cookies.get('last_name') or 'Last Name' %}
+  {% set display_full = (display_first ~ ' ' ~ display_last).strip() %}
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="sidebar-logo">
+      <i class="fas fa-vote-yea text-blue-600 text-xl"></i> 
+      <span class="logo-text">E-Lection</span>
+    </div>
+    <div class="navbar-inner" style="margin-left:auto;display:flex;align-items:center;gap:1rem;">
+      <div class="profile" data-menu>
+        <img id="navAvatar" src="{{ avatar_url }}" class="avatar profile-trigger" alt="User avatar" aria-haspopup="menu" aria-expanded="false">
+        <div>
+          <p class="admin-name" id="navDisplayName">{{ display_full or current_user_name or 'User' }}</p>
+          <p class="admin-role" id="navRole">Voter</p>
+        </div>
+        <div class="profile-menu" role="menu">
+          <a href="/profile" class="profile-item" role="menuitem"><i class="fa-solid fa-user-pen"></i> Edit Profile</a>
+          <a href="/admin" class="profile-item text-red-500" role="menuitem"><i class="fa-solid fa-arrow-right-from-bracket text-red-500"></i> Logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="dashboard-main candidates-main">
+    <div class="candidates-container" style="max-width: 640px; margin: 0 auto;">
+
+      {% if error %}
+      <div class="alert-error mb-4">{{ error }}</div>
+      {% endif %}
+      {% if success %}
+      <div class="alert-success mb-4">{{ success }}</div>
+      {% endif %}
+
+      <div class="bg-white rounded-lg shadow p-6 text-sm md:text-base">
+        <div class="space-y-1 mb-4">
+          <h1 class="text-2xl font-semibold text-blue-700">Edit Profile</h1>
+        </div>
+
+        <form method="POST" action="/profile" enctype="multipart/form-data" class="space-y-4">
+          {% set profile_data = form_data or {} %}
+          {% set avatar_url = profile_data.get('avatar_url') or 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png' %}
+          {% set display_first = profile_data.get('first_name') or 'First Name' %}
+          {% set display_last = profile_data.get('last_name') or 'Last Name' %}
+          {% set display_student_id = profile_data.get('student_id') or 'Student ID' %}
+
+          <div class="flex flex-col items-center text-center gap-3">
+            <div class="relative w-24 h-24">
+              <img id="avatarPreview" src="{{ avatar_url }}" alt="Profile photo" class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md bg-gray-100">
+              <label for="avatar" class="absolute bottom-0 right-0 inline-flex items-center justify-center w-9 h-9 bg-blue-600 text-white rounded-full shadow hover:bg-blue-700 cursor-pointer">
+                <i class="fa-solid fa-pen text-xs"></i>
+              </label>
+              <input type="file" id="avatar" name="avatar" accept="image/*" class="hidden">
+            </div>
+            <div>
+              <p class="text-lg font-semibold" id="displayName">{{ display_first }} {{ display_last }}</p>
+              <p class="text-sm text-gray-500">Student ID: <span id="displayStudentId">{{ display_student_id }}</span></p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-sm font-medium mb-1" for="first_name">First Name</label>
+              <input type="text" id="first_name" name="first_name" class="w-full px-3 py-2 border rounded-md" value="{{ profile_data.get('first_name', '') }}" required>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1" for="last_name">Last Name</label>
+              <input type="text" id="last_name" name="last_name" class="w-full px-3 py-2 border rounded-md" value="{{ profile_data.get('last_name', '') }}" required>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1" for="email">Email</label>
+            <input type="email" id="email" name="email" class="w-full px-3 py-2 border rounded-md" value="{{ profile_data.get('email', '') }}" required>
+            <p class="text-xs text-gray-500 mt-1">Update your email address if it has changed.</p>
+          </div>
+
+          <div class="flex justify-end gap-2">
+            <a href="/dashboard" class="btn-goback">Cancel</a>
+            <button type="submit" class="btn-create">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+  <script>
+    (function(){
+      function initProfileMenus(){
+        document.querySelectorAll('.profile[data-menu]').forEach(function(profile){
+          var trigger = profile.querySelector('.profile-trigger');
+          var menu = profile.querySelector('.profile-menu');
+          if(!trigger || !menu) return;
+          function close(){ menu.classList.remove('open'); trigger.setAttribute('aria-expanded','false'); }
+          function toggle(e){ e.stopPropagation(); var isOpen = menu.classList.contains('open'); if(isOpen){ close(); } else { menu.classList.add('open'); trigger.setAttribute('aria-expanded','true'); } }
+          trigger.addEventListener('click', toggle);
+          document.addEventListener('click', function(e){ if(!profile.contains(e.target)) close(); });
+          document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+        });
+      }
+
+          function initProfileAvatar(){
+            var avatarInput = document.getElementById('avatar');
+            var avatarPreview = document.getElementById('avatarPreview');
+            var navAvatar = document.getElementById('navAvatar');
+            if(!avatarInput || !avatarPreview || !window.FileReader) return;
+            avatarInput.addEventListener('change', function(event){
+              var file = event.target.files && event.target.files[0];
+              if(!file) return;
+              var reader = new FileReader();
+              reader.onload = function(e){
+                avatarPreview.src = e.target.result;
+                if(navAvatar){ navAvatar.src = e.target.result; }
+              };
+              reader.readAsDataURL(file);
+            });
+          }
+
+      function initProfileName(){
+            var firstInput = document.getElementById('first_name');
+            var lastInput = document.getElementById('last_name');
+            var displayName = document.getElementById('displayName');
+            var navDisplayName = document.getElementById('navDisplayName');
+            if(!displayName) return;
+            function update(){
+              var first = (firstInput && firstInput.value) || 'First Name';
+              var last = (lastInput && lastInput.value) || 'Last Name';
+              var full = (first + ' ' + last).trim();
+              displayName.textContent = full;
+              if(navDisplayName){ navDisplayName.textContent = full || 'User'; }
+            }
+            if(firstInput) firstInput.addEventListener('input', update);
+            if(lastInput) lastInput.addEventListener('input', update);
+            update();
+          }
+
+      function initPasswordRequirement(){
+        var passwordInput = document.getElementById('password');
+        var confirmInput = document.getElementById('confirm_password');
+        if(!passwordInput || !confirmInput) return;
+        function syncRequirement(){
+          var hasPassword = passwordInput.value && passwordInput.value.length > 0;
+          confirmInput.required = !!hasPassword;
+        }
+        passwordInput.addEventListener('input', syncRequirement);
+        confirmInput.addEventListener('input', syncRequirement);
+        syncRequirement();
+      }
+
+      function init(){
+        initProfileMenus();
+        initProfileAvatar();
+        initProfileName();
+        initPasswordRequirement();
+      }
+
+      if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+    })();
+  </script>
+</body>
+</html>

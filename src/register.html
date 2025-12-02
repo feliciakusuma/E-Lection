@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="{{ request.url_for('static', path='style.css') }}">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-  <title>Register</title>  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ asset(request, 'style.css') }}" />
+  <title>Login</title>  
 </head>
 
 <body class="body-main">
@@ -23,13 +23,13 @@
     <div class="form-card">
      
       <!-- Icon -->
-      <img src="https://cdn-icons-png.flaticon.com/512/6543/6543058.png" 
-           alt="Register Icon" 
-           class="form-icon" />
+      <div class="form-icon circle-icon">
+        <i class="fa-solid fa-lock text-white text-2xl"></i>
+      </div>
       
       <!-- Title -->
       <h2 class="form-title">Create Account</h2>
-      <p class="form-subtitle">Register to participate in secure voting</p>
+      <p class="form-subtitle">Register to participate in e-voting</p>
 
       {% if error %}
       <div class="alert-error">{{ error }}</div>
@@ -56,58 +56,22 @@
           </div>
         </div>
 
-        <!-- Email -->
-        <div>
-          <label for="email" class="form-label">Email Address</label>
-          <input id="email" name="email" type="email" placeholder="john.doe@university.edu"
-            class="form-input" value="{{ (form_data or {}).get('email', '') }}" required />
-        </div>
-
         <!-- Student ID -->
         <div>
           <label for="studentId" class="form-label">Student ID</label>
-          <input id="studentId" name="studentId" type="text" placeholder="2024001"
+          <input id="studentId" name="studentId" type="text" placeholder="2022400001"
             class="form-input" value="{{ (form_data or {}).get('studentId', '') }}" required />
         </div>
 
-        <!-- Password -->
+        <!-- Email -->
         <div>
-          <label for="password" class="form-label">Password</label>
-          <div class="relative">
-            <input id="password" name="password" type="password" placeholder="Create a strong password"
-              class="form-input pr-12" required />
-            <button type="button" onclick="togglePassword('password')"
-              class="password-toggle">
-              <i class="fas fa-eye" id="password-eye"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- Confirm Password -->
-        <div>
-          <label for="confirmPassword" class="form-label">Confirm Password</label>
-          <div class="relative">
-            <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm your password"
-              class="form-input pr-12" required />
-            <button type="button" onclick="togglePassword('confirmPassword')"
-              class="password-toggle">
-              <i class="fas fa-eye" id="confirmPassword-eye"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- Terms -->
-        <div class="flex items-center space-x-2">
-          <input id="terms" name="terms" type="checkbox" class="rounded border-gray-300" required />
-          <label for="terms" class="form-label">
-            I agree to the
-            <a href="#" class="text-blue-600 hover:underline">Terms of Service</a> and
-            <a href="#" class="text-blue-600 hover:underline">Privacy Policy</a>
-          </label>
+          <label for="email" class="form-label">Email Address</label>
+          <input id="email" name="email" type="email" placeholder="john.doe@gmail.com"
+            class="form-input" value="{{ (form_data or {}).get('email', '') }}" required />
         </div>
 
         <!-- Submit Button -->
-        <button type="submit" class="btn btn-login w-full">
+        <button type="submit" class="btn btn-login w-full mt-4">
           Create Account
         </button>
       </form>
@@ -116,26 +80,13 @@
       <div class="form-footer">
         <p>
           Already have an account?
-          <a href="/login" class="text-blue-600 hover:underline font-medium">Sign in here</a>
+          <a href="/login" class="blue-underline">Sign in</a>
         </p>
       </div>
     </div>
   </main>
   <script>
-    function togglePassword(id) {
-      const input = document.getElementById(id);
-      const icon = document.getElementById(id + '-eye');
-      if (!input || !icon) return;
-      if (input.type === 'password') {
-        input.type = 'text';
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
-      } else {
-        input.type = 'password';
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
-      }
-    }
+    // Password fields removed; no toggles needed.
   </script>
 </body>
 </html>

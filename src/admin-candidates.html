@@ -11,36 +11,36 @@
 
 <body class="admin-body">
    <!-- Sidebar -->
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
       <i class="fas fa-vote-yea text-blue-600 text-xl"></i> 
       <span class="logo-text">E-Lection</span>
     </div>
     <nav class="sidebar-nav">
       <a href="/admin-dashboard" class="sidebar-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/3446/3446795.png" class="icon">
+        <i class="fa-solid fa-chart-line icon text-black"></i>
         <span>Dashboard</span>
       </a>
       <a href="/admin-voters" class="sidebar-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/694/694642.png" class="icon">
+        <i class="fa-solid fa-users icon text-black"></i>
         <span>Voters</span>
       </a>
       <a href="/admin-candidates" class="sidebar-link active">
-        <img src="https://cdn-icons-png.flaticon.com/512/7658/7658147.png" class="icon">
+        <i class="fa-solid fa-user-tie icon text-black"></i>
         <span>Candidates</span>
       </a>
       <a href="/admin-elections" class="sidebar-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/6820/6820898.png" class="icon">
+        <i class="fa-solid fa-square-poll-vertical icon text-black"></i>
         <span>Elections</span>
       </a>   
       <a href="/admin-settings" class="sidebar-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/1160/1160356.png" class="icon">
+        <i class="fa-solid fa-gear icon text-black"></i>
         <span>Settings</span>
       </a>
     </nav>
     <div class="sidebar-footer">
-      <a href="/admin" class="logout-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/14385/14385252.png" class="icon">
+      <a href="/admin-logout" class="logout-link">
+        <i class="fa-solid fa-arrow-right-from-bracket icon text-red-500"></i>
         <span>Logout</span>
       </a>
     </div>
@@ -50,7 +50,12 @@
   <main class="main-content">
     <!-- Top Navbar -->
     <header class="topbar">
-      <h1 class="text-xl font-semibold">Candidates Management</h1>
+      <div style="display:flex; align-items:center; gap:.75rem;">
+        <button class="hamburger" id="hamburger" aria-label="Open menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <h1 class="text-xl font-semibold">Candidates Management</h1>
+      </div>
       <div class="topbar-right">
         <form method="GET" action="/admin-candidates" class="search-box" role="search">
           <input
@@ -63,19 +68,21 @@
           />
         </form>
 
-        <button class="notif-btn">
-          <img src="https://cdn-icons-png.flaticon.com/512/18115/18115750.png" class="icon">
-          <span class="notif-badge">3</span>
-        </button>
-        <div class="admin-profile">
-          <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="avatar">
+        {% set admin_full = (request.cookies.get('full_name') or ((request.cookies.get('first_name') or '') ~ ' ' ~ (request.cookies.get('last_name') or ''))).strip() or 'Admin' %}
+        <div class="profile" data-menu>
+          <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="avatar profile-trigger" alt="Admin avatar" aria-haspopup="menu" aria-expanded="false">
           <div>
-            <p class="admin-name">Admin</p>
+            <p class="admin-name">{{ admin_full }}</p>
             <p class="admin-role">Administrator</p>
+          </div>
+          <div class="profile-menu" role="menu">
+            <a href="/admin-settings" class="profile-item" role="menuitem"><i class="fa-solid fa-user-pen"></i> Edit Profile</a>
+            <a href="/admin-logout" class="profile-item text-red-500" role="menuitem"><i class="fa-solid fa-arrow-right-from-bracket text-red-500"></i> Logout</a>
           </div>
         </div>
       </div>
     </header>
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
 
       <!-- Candidates Table -->
       <div class="candidates-wrapper">
@@ -83,14 +90,11 @@
           <div class="filter-group">
             <form method="GET" action="/admin-candidates" class="flex gap-2">
               <input type="hidden" name="q" value="{{ request.query_params.get('q','') }}">
-            </form>
-
+              {% set sf = (status_filter or 'all') %}
               <select name="status" class="filter-select" onchange="this.form.submit()">
-                {% set sf = (status_filter or 'all') %}
                 <option value="all" {% if sf=='all' %}selected{% endif %}>All Status</option>
                 <option value="running" {% if sf=='running' %}selected{% endif %}>Running</option>
                 <option value="pending" {% if sf=='pending' %}selected{% endif %}>Pending</option>
-                <option value="rejected" {% if sf=='rejected' %}selected{% endif %}>Rejected</option>
               </select>
 
               <select name="election_id" class="filter-select w-40" onchange="this.form.submit()">
@@ -99,6 +103,7 @@
                   <option value="{{ e.id }}" {% if selected_election_id == e.id %}selected{% endif %}>{{ e.title }}</option>
                 {% endfor %}
               </select>
+            </form>
           </div>
           
           <!-- Add Candidate button -->
@@ -131,37 +136,75 @@
             {% if candidates %}
               {% for candidate in candidates %}
               <tr>
-                <td class="candidate-cell">
+                <td class="candidate-cell" data-label="Name">
                   <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png">
                   <div>
                     <p class="font-medium">{{ candidate.full_name }}</p>
-                    <p class="candidate-id">{{ candidate.student_id }} - {{ candidate.major }}</p>
+                    {% set sid_parts = (candidate.student_id or '').split(' ') %}
+                    {% set sid_clean = sid_parts[0] if sid_parts else '' %}
+                    <p class="candidate-id">Student ID: {{ sid_clean }}</p>
                   </div>
                 </td>
-                <td>{{ candidate.position }}</td>
-                <td>
+                <td data-label="Position">{{ candidate.position }}</td>
+                <td data-label="Status">
                   {% if candidate.status == 'running' %}
                     <span class="badge badge-running">Running</span>
                   {% elif candidate.status == 'pending' %}
                     <span class="badge badge-pending">Pending</span>
-                  {% else %}
-                    <span class="badge badge-rejected">Rejected</span>
                   {% endif %}
                 </td>
-                <td>{{ candidate.created_at.strftime('%b %d, %Y %H:%M') if candidate.created_at else '-' }}</td>
-                <td>
+                <td data-label="Last Updated">
+                  {{ candidate.created_at.strftime('%b %d, %Y %H:%M') if candidate.created_at else '-' }}
+                </td>
+                <td data-label="Actions">
                   <div class>
                     <a href="/admin-edit-candidate/{{ candidate.id }}" class="btn-edit">
-                      <img class="icon-sm" src="https://cdn-icons-png.flaticon.com/512/14035/14035792.png" alt="Edit">
+                      <i class="fa-solid fa-pen-to-square text-blue-500"></i>
                     </a>
                     <form method="POST" action="/admin-delete-candidate/{{ candidate.id }}" class="inline-block" onsubmit="return confirm('Delete this candidate?');">
                       <button type="submit" class="btn-delete">
-                        <img class="icon-sm" src="https://cdn-icons-png.flaticon.com/512/4980/4980658.png" alt="Delete">
+                        <i class="fa-solid fa-trash text-red-500"></i>
                       </button>
                     </form>
                   </div>
                 </td>
               </tr>
+              {% if candidate.vice_full_name or candidate.vice_student_id %}
+              <tr class="bg-gray-50">
+                <td class="candidate-cell" data-label="Name">
+                  <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png">
+                  <div>
+                    <p class="font-medium">{{ candidate.vice_full_name or 'Vice President' }}</p>
+                    <p class="candidate-id">
+                      Student ID: {% if candidate.vice_student_id %}{{ candidate.vice_student_id }}{% else %}Vice President{% endif %}
+                    </p>
+                  </div>
+                </td>
+                <td data-label="Position">{{ candidate.position }}</td>
+                <td data-label="Status">
+                  {% if candidate.status == 'running' %}
+                    <span class="badge badge-running">Running</span>
+                  {% elif candidate.status == 'pending' %}
+                    <span class="badge badge-pending">Pending</span>
+                  {% endif %}
+                </td>
+                <td data-label="Last Updated">
+                  {{ candidate.created_at.strftime('%b %d, %Y %H:%M') if candidate.created_at else '-' }}
+                </td>
+                <td data-label="Actions">
+                  <div class>
+                    <a href="/admin-edit-candidate/{{ candidate.id }}" class="btn-edit" title="Edit president/vice ticket">
+                      <i class="fa-solid fa-pen-to-square text-blue-500"></i>
+                    </a>
+                    <form method="POST" action="/admin-remove-vice/{{ candidate.id }}" class="inline-block" onsubmit="return confirm('Remove this vice president only?');">
+                      <button type="submit" class="btn-delete" title="Delete vice president only">
+                        <i class="fa-solid fa-trash text-red-500"></i>
+                      </button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+              {% endif %}
               {% endfor %}
             {% else %}
               <tr>
@@ -171,7 +214,52 @@
           </tbody> 
         </table>
       </div>
+      {% if candidates %}
+      <div class="pagination">
+        <div class="pagination-info">
+          Showing 1 to {{ candidates|length }} of {{ total_count }} entries
+        </div>
+        <div class="pagination-buttons">
+          <button class="page-btn disabled" aria-disabled="true">&lsaquo;</button>
+          <button class="page-btn active">1</button>
+          <button class="page-btn disabled" aria-disabled="true">&rsaquo;</button>
+        </div>
+      </div>
+      {% endif %}
     </div>
   </main>
+  <script>
+    (function(){
+      var sidebar = document.getElementById('sidebar');
+      var burger = document.getElementById('hamburger');
+      var backdrop = document.getElementById('sidebar-backdrop');
+      if(burger && sidebar){
+        burger.addEventListener('click', function(){
+          sidebar.classList.toggle('open');
+          if(backdrop) backdrop.classList.toggle('show');
+        });
+      }
+      if(backdrop){
+        backdrop.addEventListener('click', function(){
+          sidebar.classList.remove('open');
+          backdrop.classList.remove('show');
+        });
+      }
+      function initProfileMenus(){
+        document.querySelectorAll('.profile[data-menu]').forEach(function(profile){
+          var trigger = profile.querySelector('.profile-trigger');
+          var menu = profile.querySelector('.profile-menu');
+          if(!trigger || !menu) return;
+          function close(){ menu.classList.remove('open'); trigger.setAttribute('aria-expanded','false'); }
+          function toggle(e){ e.stopPropagation(); var isOpen = menu.classList.contains('open'); if(isOpen){ close(); } else { menu.classList.add('open'); trigger.setAttribute('aria-expanded','true'); } }
+          trigger.addEventListener('click', toggle);
+          document.addEventListener('click', function(e){ if(!profile.contains(e.target)) close(); });
+          document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+        });
+      }
+      if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initProfileMenus); else initProfileMenus();
+
+    })();
+  </script>
 </body>
 </html>

@@ -1,56 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="{{ request.url_for('static', path='style.css') }}">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ asset(request, 'style.css') }}" />
   <title>Admin - Dashboard</title>
 </head>
 
 <body class="admin-body">
    <!-- Sidebar -->
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
       <i class="fas fa-vote-yea text-blue-600 text-xl"></i> 
       <span class="logo-text">E-Lection</span>
     </div>
     <nav class="sidebar-nav">
       <a href="/admin-dashboard" class="sidebar-link active">
-        <img src="https://cdn-icons-png.flaticon.com/512/3446/3446795.png" class="icon">
+        <i class="fa-solid fa-chart-line icon text-black"></i>
         <span>Dashboard</span>
       </a>
       <a href="/admin-voters" class="sidebar-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/694/694642.png" class="icon">
+        <i class="fa-solid fa-users icon text-black"></i>
         <span>Voters</span>
       </a>
       <a href="/admin-candidates" class="sidebar-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/7658/7658147.png" class="icon">
+        <i class="fa-solid fa-user-tie icon text-black"></i>
         <span>Candidates</span>
       </a>
       <a href="/admin-elections" class="sidebar-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/6820/6820898.png" class="icon">
+        <i class="fa-solid fa-square-poll-vertical icon text-black"></i>
         <span>Elections</span>
       </a>   
       <a href="/admin-settings" class="sidebar-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/1160/1160356.png" class="icon">
+        <i class="fa-solid fa-gear icon text-black"></i>
         <span>Settings</span>
       </a>
     </nav>
     <div class="sidebar-footer">
       <a href="/admin" class="logout-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/14385/14385252.png" class="icon">
+        <i class="fa-solid fa-arrow-right-from-bracket icon text-red-500"></i>
         <span>Logout</span>
       </a>
     </div>
-  </aside>
+  </aside> 
 
   <!-- Main Content -->
   <main class="main-content">
     <!-- Top Navbar -->
     <header class="topbar">
-      <h1 class="text-xl font-semibold">Dashboard Overview</h1>
+      <div style="display:flex; align-items:center; gap:.75rem;">
+        <button class="hamburger" id="hamburger" aria-label="Open menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <h1 class="text-xl font-semibold">Dashboard</h1>
+      </div>
       <div class="topbar-right">
         <form method="GET" action="/admin-dashboard" class="search-box" role="search">
           <input
@@ -62,19 +67,21 @@
             aria-label="Search dashboard"
           />
         </form>
-        <button class="notif-btn">
-          <img src="https://cdn-icons-png.flaticon.com/512/18115/18115750.png" class="icon">
-          <span class="notif-badge">3</span>
-        </button>
-        <div class="admin-profile">
-          <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="avatar">
+        {% set admin_full = (request.cookies.get('full_name') or ((request.cookies.get('first_name') or '') ~ ' ' ~ (request.cookies.get('last_name') or ''))).strip() or 'Admin' %}
+        <div class="profile" data-menu>
+          <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="avatar profile-trigger" alt="Admin avatar" aria-haspopup="menu" aria-expanded="false">
           <div>
-            <p class="admin-name">Admin</p>
+            <p class="admin-name">{{ admin_full or 'Admin' }}</p>
             <p class="admin-role">Administrator</p>
+          </div>
+          <div class="profile-menu" role="menu">
+            <a href="/admin-settings" class="profile-item" role="menuitem"><i class="fa-solid fa-user-pen"></i> Edit Profile</a>
+            <a href="/admin-logout" class="profile-item text-red-500" role="menuitem"><i class="fa-solid fa-arrow-right-from-bracket text-red-500"></i> Logout</a>
           </div>
         </div>
       </div>
     </header>
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
 
     <!-- Dashboard Content -->
     <div class="dashboard">
@@ -83,14 +90,14 @@
         <div class="stat-card">
           <div class="stat-info">
             <p class="stat-title">Total Voters</p>
-            <p class="stat-value">2,847</p>
+            <p class="stat-value">{{ stats.total_voters or 0 }}</p>
             <p class="stat-sub green">
               <img
                 src="https://cdn-icons-png.flaticon.com/512/14035/14035529.png"
                 alt="green arrow"
                 class="inline-icon"
               />
-              12% from last month
+              {{ stats.voters_growth_pct if stats.voters_growth_pct is not none else 0 }}% from last month
             </p>
           </div>
           <div class="stat-icon blue">
@@ -102,18 +109,34 @@
         <div class="stat-card">
           <div class="stat-info">
             <p class="stat-title">Active Elections</p>
-            <p class="stat-value">3</p>
-            <p class="stat-sub blue">
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/17671/17671439.png"
-                alt="blue dot"
-                class="inline-icon"
-              />
-              2 ending today
+            <p class="stat-value">{{ stats.active_elections or 0 }}</p>
+            <p class="stat-sub red">
+              <i class="fa-solid fa-clock text-red-600 text-l inline-icon"></i>
+              {{ stats.ending_today or 0 }} ending today
             </p>
           </div>
-          <div class="stat-icon green">
-            <i class="fas fa-vote-yea text-green-600 text-xl"></i>
+          <div class="stat-icon orange">
+            <i class="fa-solid fa-square-poll-horizontal text-orange-600 text-xl"></i>
+          </div>
+        </div>
+
+        
+        <!-- Total Candidates -->
+        <div class="stat-card">
+          <div class="stat-info">
+            <p class="stat-title">Total Candidates</p>
+            <p class="stat-value">{{ stats.total_candidates or 0 }}</p>
+            <p class="stat-sub green">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/14035/14035529.png"
+                alt="green arrow"
+                class="inline-icon"
+              />
+              {{ stats.candidates_growth_pct if stats.candidates_growth_pct is not none else 0 }}% from last month
+            </p>
+          </div>
+          <div class="stat-icon purple">
+            <i class="fa-solid fa-user-tie text-purple-600 text-xl"></i>
           </div>
         </div>
 
@@ -121,100 +144,116 @@
         <div class="stat-card">
           <div class="stat-info">
             <p class="stat-title">Votes Cast</p>
-            <p class="stat-value">1,923</p>
+            <p class="stat-value">{{ stats.total_votes or 0 }}</p>
             <p class="stat-sub green">
               <img
                 src="https://cdn-icons-png.flaticon.com/512/14035/14035529.png"
                 alt="green arrow"
                 class="inline-icon"
               />
-              67.5% turnout
+              {{ ("%.1f" % (stats.turnout_pct or 0.0)) }}% turnout
             </p>
           </div>
-          <div class="stat-icon purple">
-            <i class="fas fa-chart-bar text-purple-600 text-xl"></i>
-          </div>
-        </div>
-
-        <!-- Pending Approvals -->
-        <div class="stat-card">
-          <div class="stat-info">
-            <p class="stat-title">Pending Approvals</p>
-            <p class="stat-value">24</p>
-            <p class="stat-sub red">
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/6742/6742749.png"
-                alt="orange warning"
-                class="inline-icon"
-              />
-              Requires attention
-            </p>
-          </div>
-          <div class="stat-icon orange">
-            <i class="fas fa-exclamation-circle text-orange-600 text-xl"></i>
+          <div class="stat-icon green">
+            <i class="fa-solid fa-check-to-slot text-green-600 text-xl"></i>
           </div>
         </div>
       </div>
-
+      
       <!-- Middle -->
       <div class="middle-grid">
-        <div class="section-card wide">
+        <div class="section-card wide" style="display:flex; flex-direction:column;">
           <div class="section-header">
-            <h3>Live Voting Results</h3>
-            <select class="select-input">
-              <option>Student Council Election</option>
-              <option>Faculty Rep Election</option>
+            <h3 class="section-title">Live Voting Results</h3>
+            <select name="election_id" id="live-election-select" class="filter-select">
+              {% if elections and elections|length > 0 %}
+                {% for e in elections %}
+                  <option value="{{ e.id }}" {% if current_election and current_election.id == e.id %}selected{% endif %}>{{ e.title }}</option>
+                {% endfor %}
+              {% else %}
+                <option disabled selected>No elections available</option>
+              {% endif %}
             </select>
           </div>
-          <div class="placeholder">[Chart Placeholder]</div>
+          <div class="section-divider"></div>
+          {% set palette = ['#3b82f6', '#22c55e', '#a855f7', '#f59e0b'] %}
+          {% set res_len = chart_candidates|length if chart_candidates else 0 %}
+          {% if res_len == 1 %}
+            {% set gradient = palette[0] ~ ' 0deg 360deg' %}
+          {% elif res_len == 2 %}
+            {% set gradient = palette[0] ~ ' 0deg 180deg, ' ~ palette[1] ~ ' 180deg 360deg' %}
+          {% elif res_len == 3 %}
+            {% set gradient = palette[0] ~ ' 0deg 120deg, ' ~ palette[1] ~ ' 120deg 240deg, ' ~ palette[2] ~ ' 240deg 360deg' %}
+          {% else %}
+            {% set gradient = palette[1] ~ ' 0deg 90deg, ' ~ palette[0] ~ ' 90deg 180deg, ' ~ palette[2] ~ ' 180deg 270deg, ' ~ palette[3] ~ ' 270deg 360deg' %}
+          {% endif %}
+          {% if chart_candidates and chart_candidates|length > 0 %}
+          <div class="flex flex-wrap gap-6 items-start" style="flex:1 1 auto; overflow:hidden;">
+            <div class="flex-1 min-w-[240px] flex flex-col items-center justify-center gap-4">
+              <div style="width:220px;height:220px;border-radius:50%;background:conic-gradient({{ gradient }});box-shadow:0 6px 20px rgba(0,0,0,0.08);" aria-label="Vote distribution placeholder"></div>
+              <div class="flex flex-wrap justify-center gap-6 text-sm text-gray-700">
+                {% for r in chart_candidates %}
+                {% set color = palette[loop.index0 % palette|length] %}
+                <div class="flex items-center gap-2">
+                  <span class="w-3 h-3 rounded-full inline-block" style="background: {{ color }};"></span>
+                  <span class="font-medium">{{ r.full_name }}</span>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="flex-1 min-w-[260px] space-y-3 overflow-y-auto pr-1 pb-3" style="max-height: 280px;">
+              {% for r in chart_candidates %}
+              {% set color = palette[loop.index0 % palette|length] %}
+              <div class="bg-white rounded-xl shadow p-4 flex items-start gap-3 border border-gray-100">
+                <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" alt="Candidate avatar" class="w-10 h-10 rounded-full object-cover">
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center">
+                    <div class="flex-1 min-w-0">
+                      <p class="font-semibold truncate">{{ r.full_name }}</p>
+                      <p class="text-sm text-gray-500">Candidate</p>
+                    </div>
+                    <div class="text-right ml-3">
+                      <p class="font-semibold" style="color: {{ color }}">0.0%</p>
+                      <p class="text-xs text-gray-500">0 votes</p>
+                    </div>
+                  </div>
+                  <div class="mt-2 h-2 rounded-full bg-gray-200 overflow-hidden">
+                    <div class="h-2 rounded-full" style="width: 0%; background: {{ color }}"></div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% else %}
+          <div class="empty-state" style="background: transparent; min-height: 180px;">No candidates available.</div>
+          {% endif %}
         </div>
 
-        <div class="section-card">
-          <h3 class="section-title">Recent Activity</h3>
-          <ul class="section-list">
-            <li class="list-item" style="display:flex; align-items:center; gap:.75rem;">
-                <div class="stat-icon green">
-                    <i class="fas fa-vote-yea text-green-600 text-xl"></i>
+        <div class="section-card recent-activity-card">
+          <div class="section-header">
+            <h3 class="section-title">Recent Activity</h3>
+          </div>
+          <div class="section-divider"></div>
+          <ul class="section-list recent-activity-list" style="max-height:320px; overflow-y:auto;">
+            {% if recent_activity and recent_activity|length > 0 %}
+              {% for item in recent_activity %}
+              <li class="activity-list">
+                <div class="activity-icon {{ item.color }}">
+                    <i class="fa-solid {{ item.icon }} text-{{ item.color }}-600"></i>
                 </div>
-                
                 <div>
-                    <p class="item-name">New vote cast in Student Council Election</p>
-                    <p class="item-email">2 minutes ago</p>
+                    <p class="item-name">{{ item.text }}</p>
+                    <p class="item-id">{{ item.time }}</p>
                 </div>
-            </li>
-            
-            <li class="list-item" style="display:flex; align-items:center; gap:.75rem;">
-                <div class="stat-icon blue">
-                    <i class="fas fa-users text-blue-600 text-xl"></i>
-                </div>
-                
-                <div>
-                    <p class="item-name">New voter registered: Sarah Johnson</p>
-                    <p class="item-email">5 minutes ago</p>
-                </div>
-            </li>
-            <li class="list-item" style="display:flex; align-items:center; gap:.75rem;">
-                <div class="stat-icon orange">
-                    <i class="fas fa-exclamation-circle text-orange-600 text-xl"></i>
-                </div>
-
-                <div>
-                    <p class="item-name">Election "Faculty Rep" ends in 2 hours</p>
-                    <p class="item-email">1 hour ago</p>
-                </div>  
-                </li>
-
-                <li class="list-item" style="display:flex; align-items:center; gap:.75rem;">
-                    <div class="stat-icon purple">
-                        <i class="fas fa-chart-bar text-purple-600 text-xl"></i>
-                    </div>
-                    
-                    <div>
-                        <p class="item-name">Candidate approved: Mike Chen</p>
-                        <p class="item-email">3 hours ago</p>
-                    </div>
-                    </li>
-                </ul>
+              </li>
+              {% endfor %}
+            {% else %}
+              <li class="list-item" style="display:flex; align-items:center; gap:.75rem; justify-content:center; color:#6b7280;">
+                No recent activity.
+              </li>
+            {% endif %}
+          </ul>
             </div>
         </div>
     
@@ -223,36 +262,124 @@
       <div class="bottom-grid">
         <div class="section-card">
           <div class="section-header">
-            <h3>Recent Voters</h3>
-            <a href="#" class="action-link">View All</a>
+            <h3 class="section-title">Recent Voters</h3>
+            <a href="/admin-voters" class="action-link">View All</a>
           </div>
+          <div class="section-divider"></div>
 
           <ul class="section-list">
-            <li class="list-item">
-              <div>
-                <p class="item-name">Emma Wilson</p>
-                <p class="item-email">emma.wilson@uni.edu</p>
-              </div>
-              <span class="badge green">Verified</span>
-            </li>
-
-            <li class="list-item">
-              <div>
-                <p class="item-name">James Rodriguez</p>
-                <p class="item-email">james.rodriguez@uni.edu</p>
-              </div>
-              <span class="badge yellow">Pending</span>
-            </li>
+            {% if recent_voters and recent_voters|length > 0 %}
+              {% for item in recent_voters %}
+              {% set voter = item[0] %}
+              {% set has_voted = item[1] %}
+              <li class="list-item" style="display:flex; align-items:center; gap:.75rem;">
+                <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="avatar" alt="User avatar">
+                <div>
+                  <p class="item-name">{{ voter.first_name }} {{ voter.last_name }}</p>
+                  <p class="item-id">Student ID: {{ voter.student_id }}</p>
+                </div>
+                <span class="badge {% if has_voted %}green{% else %}red{% endif %}">{% if has_voted %}Has Voted{% else %}Not Voted{% endif %}</span>
+              </li>
+              {% endfor %}
+            {% else %}
+              <li class="list-item" style="display:flex; align-items:center; gap:.75rem; justify-content:center; color:#6b7280;">
+                No recent voters found.
+              </li>
+            {% endif %}
           </ul>
         </div>
 
         <div class="section-card">
           <div class="section-header">
-            <h3>Active Candidates</h3><ul class="section-list">{% if active_candidates %}{% for c in active_candidates %}<li class="list-item"><div><p class="item-name">{{ c.full_name }}</p><p class="item-email">{{ c.position }}</p></div>{% set st = (c.status or "running").lower() %}{% if st == "running" %}<span class="badge blue">Running</span>{% elif st == "pending" %}<span class="badge yellow">Pending</span>{% else %}<span class="badge red">{{ st|capitalize }}</span>{% endif %}</li>{% endfor %}{% else %}<li class="list-item"><div><p class="item-name">Alex Thompson</p><p class="item-email">Student Council President</p></div><span class="badge blue">Running</span></li><li class="list-item"><div><p class="item-name">Maria Garcia</p><p class="item-email">Student Council President</p></div><span class="badge blue">Running</span></li><li class="list-item"><div><p class="item-name">David Kim</p><p class="item-email">Faculty Representative</p></div><span class="badge yellow">Pending</span></li>{% endif %}</ul>
+            <h3 class="section-title">Active Candidates</h3>
+            <a href="/admin-candidates" class="action-link">Manage</a>
+          </div>
+          <div class="section-divider" aria-hidden="true"></div>
+          
+          <ul class="section-list">
+            {% if active_candidates %}
+              {% for c in active_candidates %}
+                {% set st = (c.status or 'pending')|lower %}
+                <li class="list-item" style="display:flex; align-items:center; gap:.75rem;">
+                  <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="avatar" alt="Candidate avatar">
+                  <div>
+                    <p class="item-name">{{ c.full_name }}</p>
+                    <p class="item-id">{{ c.position }}</p>
+                  </div>
+                  {% if st == 'running' %}
+                    <span class="badge badge-running">Running</span>
+                  {% elif st == 'pending' %}
+                    <span class="badge badge-pending">Pending</span>
+                  {% else %}
+                    <span class="badge badge-rejected">{{ st|capitalize }}</span>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            {% else %}
+              <li class="list-item" style="display:flex; align-items:center; gap:0;">
+                <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="avatar" alt="Candidate avatar">
+                <div>
+                  <p class="item-name">Alex Thompson</p>
+                  <p class="item-id">Student Council President</p>
+                </div>
+                <span class="badge badge-running">Running</span>
+              </li>
+            {% endif %}
+          </ul>
         </div>
       </div>
     </div>
   </main>
+  <script>
+    (function(){
+      var sidebar = document.getElementById('sidebar');
+      var burger = document.getElementById('hamburger');
+      var backdrop = document.getElementById('sidebar-backdrop');
+      if(burger && sidebar){
+        burger.addEventListener('click', function(){
+          sidebar.classList.toggle('open');
+          if(backdrop) backdrop.classList.toggle('show');
+        });
+      }
+      if(backdrop){
+        backdrop.addEventListener('click', function(){
+          sidebar.classList.remove('open');
+          backdrop.classList.remove('show');
+        });
+      }
+    })();
+  </script>
+  <script>
+    (function(){
+      function initProfileMenus(){
+        document.querySelectorAll('.profile[data-menu]').forEach(function(profile){
+          var trigger = profile.querySelector('.profile-trigger');
+          var menu = profile.querySelector('.profile-menu');
+          if(!trigger || !menu) return;
+          function close(){ menu.classList.remove('open'); trigger.setAttribute('aria-expanded','false'); }
+          function toggle(e){ e.stopPropagation(); var isOpen = menu.classList.contains('open'); if(isOpen){ close(); } else { menu.classList.add('open'); trigger.setAttribute('aria-expanded','true'); } }
+          trigger.addEventListener('click', toggle);
+          document.addEventListener('click', function(e){ if(!profile.contains(e.target)) close(); });
+          document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+        });
+      }
+      if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initProfileMenus); else initProfileMenus();
+    })();
+
+    (function(){
+      var sel = document.getElementById('live-election-select');
+      if(sel){
+        sel.addEventListener('change', function(){
+          var val = this.value;
+          if(val){
+            var url = new URL(window.location.href);
+            url.searchParams.set('election_id', val);
+            window.location.href = url.toString();
+          }
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
 

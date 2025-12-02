@@ -11,36 +11,36 @@
 
 <body class="admin-body">
    <!-- Sidebar -->
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar"> 
     <div class="sidebar-logo">
       <i class="fas fa-vote-yea text-blue-600 text-xl"></i> 
       <span class="logo-text">E-Lection</span>
     </div>
     <nav class="sidebar-nav">
       <a href="/admin-dashboard" class="sidebar-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/3446/3446795.png" class="icon">
+        <i class="fa-solid fa-chart-line icon text-black"></i>
         <span>Dashboard</span>
       </a>
       <a href="/admin-voters" class="sidebar-link active">
-        <img src="https://cdn-icons-png.flaticon.com/512/694/694642.png" class="icon">
+        <i class="fa-solid fa-users icon text-black"></i>
         <span>Voters</span>
       </a>
       <a href="/admin-candidates" class="sidebar-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/7658/7658147.png" class="icon">
+        <i class="fa-solid fa-user-tie icon text-black"></i>
         <span>Candidates</span>
       </a>
       <a href="/admin-elections" class="sidebar-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/6820/6820898.png" class="icon">
+        <i class="fa-solid fa-square-poll-vertical icon text-black"></i>
         <span>Elections</span>
       </a>   
       <a href="/admin-settings" class="sidebar-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/1160/1160356.png" class="icon">
+        <i class="fa-solid fa-gear icon text-black"></i>
         <span>Settings</span>
       </a>
     </nav>
     <div class="sidebar-footer">
-      <a href="/admin" class="logout-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/14385/14385252.png" class="icon">
+      <a href="/admin-logout" class="logout-link">
+        <i class="fa-solid fa-arrow-right-from-bracket icon text-red-500"></i>
         <span>Logout</span>
       </a>
     </div>
@@ -50,9 +50,15 @@
   <main class="main-content">
     <!-- Top Navbar -->
     <header class="topbar">
-      <h1 class="text-xl font-semibold">Voters Management</h1>
+      <div style="display:flex; align-items:center; gap:.75rem;">
+        <button class="hamburger" id="hamburger" aria-label="Open menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <h1 class="text-xl font-semibold">Voters Management</h1>
+      </div>
       <div class="topbar-right">
         <form method="GET" action="/admin-voters" class="search-box" role="search">
+          <input type="hidden" name="status" value="{{ status_filter or 'all' }}">
           <input
             type="text"
             name="q"
@@ -62,49 +68,41 @@
             aria-label="Search voters"
           />
         </form>
-
-        <button class="notif-btn">
-          <img src="https://cdn-icons-png.flaticon.com/512/18115/18115750.png" class="icon">
-          <span class="notif-badge">3</span>
-        </button>
-        <div class="admin-profile">
-          <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="avatar">
+        {% set admin_full = (request.cookies.get('full_name') or ((request.cookies.get('first_name') or '') ~ ' ' ~ (request.cookies.get('last_name') or ''))).strip() or 'Admin' %}
+        <div class="profile" data-menu>
+          <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="avatar profile-trigger" alt="Admin avatar" aria-haspopup="menu" aria-expanded="false">
           <div>
-            <p class="admin-name">Admin</p>
+            <p class="admin-name">{{ admin_full or 'Admin' }}</p>
             <p class="admin-role">Administrator</p>
+          </div>
+          <div class="profile-menu" role="menu">
+            <a href="/admin-settings" class="profile-item" role="menuitem"><i class="fa-solid fa-user-pen"></i> Edit Profile</a>
+            <a href="/admin-logout" class="profile-item text-red-500" role="menuitem"><i class="fa-solid fa-arrow-right-from-bracket text-red-500"></i> Logout</a>
           </div>
         </div>
       </div>
     </header>
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
 
       <!-- Voters Table -->
       <div class="candidates-wrapper">
         <div class="candidates-toolbar">
           <div class="filter-group">
-            <form method="GET" action="/admin-candidates" class="flex gap-2">
+            <form method="GET" action="/admin-voters" class="flex gap-2">
               <input type="hidden" name="q" value="{{ request.query_params.get('q','') }}">
-            </form>
-
+              {% set sf = (status_filter or 'all') %}
               <select name="status" class="filter-select" onchange="this.form.submit()">
-                {% set sf = (status_filter or 'all') %}
                 <option value="all" {% if sf=='all' %}selected{% endif %}>All Status</option>
-                <option value="running" {% if sf=='running' %}selected{% endif %}>Running</option>
-                <option value="pending" {% if sf=='pending' %}selected{% endif %}>Pending</option>
-                <option value="rejected" {% if sf=='rejected' %}selected{% endif %}>Rejected</option>
+                <option value="voted" {% if sf=='voted' %}selected{% endif %}>Has Voted</option>
+                <option value="not_voted" {% if sf=='not_voted' %}selected{% endif %}>Not Voted</option>
               </select>
-
-              <select name="election_id" class="filter-select w-40" onchange="this.form.submit()">
-                <option value="" {% if not selected_election_id %}selected{% endif %}>All Elections</option>
-                {% for e in elections or [] %}
-                  <option value="{{ e.id }}" {% if selected_election_id == e.id %}selected{% endif %}>{{ e.title }}</option>
-                {% endfor %}
-              </select>
+            </form>
           </div>
 
-          <!-- Add Candidate button -->
-          <a href="/admin-add-candidate" class="btn-create">
+          <!-- Spacer to preserve layout after removing Add Voter -->
+          <div class="btn-create" aria-hidden="true" style="visibility:hidden; pointer-events:none;">
             + Add Voter
-          </a>
+          </div>
         </div>
 
         {% if success %}
@@ -121,51 +119,43 @@
           <thead>
             <tr>
               <th>Name</th>
-              <th>Position</th>
+              <th>Email</th>
               <th>Status</th>
-              <th>Last Updated</th>
-              <th>Actions</th>
+              <th>Registration Date</th>
             </tr>
           </thead>
           <tbody>
-            {% if candidates %}
-              {% for candidate in candidates %}
-              <tr>
-                <td class="candidate-cell">
-                  <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png">
-                  <div>
-                    <p class="font-medium">{{ candidate.full_name }}</p>
-                    <p class="candidate-id">{{ candidate.student_id }} - {{ candidate.major }}</p>
-                  </div>
-                </td>
-                <td>{{ candidate.position }}</td>
-                <td>
-                  {% if candidate.status == 'running' %}
-                    <span class="badge badge-running">Running</span>
-                  {% elif candidate.status == 'pending' %}
-                    <span class="badge badge-pending">Pending</span>
-                  {% else %}
-                    <span class="badge badge-rejected">Rejected</span>
-                  {% endif %}
-                </td>
-                <td>{{ candidate.created_at.strftime('%b %d, %Y %H:%M') if candidate.created_at else '-' }}</td>
-                <td>
-                  <div class>
-                    <a href="/admin-edit-candidate/{{ candidate.id }}" class="btn-edit">
-                      <img class="icon-sm" src="https://cdn-icons-png.flaticon.com/512/14035/14035792.png" alt="Edit">
-                    </a>
-                    <form method="POST" action="/admin-delete-candidate/{{ candidate.id }}" class="inline-block" onsubmit="return confirm('Delete this candidate?');">
-                      <button type="submit" class="btn-delete">
-                        <img class="icon-sm" src="https://cdn-icons-png.flaticon.com/512/4980/4980658.png" alt="Delete">
-                      </button>
-                    </form>
-                  </div>
-                </td>
-              </tr>
+            {% if voters and voters|length > 0 %}
+              {% for item in voters %}
+                {% set voter = item[0] %}
+                {% set has_voted = item[1] %}
+                <tr>
+                  <td data-label="Name">
+                    <div class="candidate-cell" style="display:flex; align-items:center; gap:.5rem;">
+                      <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="avatar" alt="User avatar">
+                      <div>
+                        <p class="font-medium">{{ voter.first_name }} {{ voter.last_name }}</p>
+                        <p class="candidate-id">Student ID: {{ voter.student_id }}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td data-label="Email">{{ voter.email }}</td>
+                  <td data-label="Status">
+                    {% if has_voted %}
+                      <span class="badge badge-running">Has Voted</span>
+                    {% else %}
+                      <span class="badge badge-rejected">Not Voted</span>
+                    {% endif %}
+                  </td>
+                  <td data-label="Registration Date">
+                    {% set dt = voter.display_created_at or voter.created_at %}
+                    {{ dt.strftime('%b %d, %Y %H:%M') if dt else '-' }}
+                  </td>
+                </tr>
               {% endfor %}
             {% else %}
               <tr>
-                <td colspan="5" class="empty-state">No voters found.</td>
+                <td colspan="4" class="empty-state">No voters found.</td>
               </tr>
             {% endif %}
           </tbody>
@@ -173,5 +163,51 @@
       </div>
     </div>
   </main>
+  <script>
+    (function(){
+      var sidebar = document.getElementById('sidebar');
+      var burger = document.getElementById('hamburger');
+      var backdrop = document.getElementById('sidebar-backdrop');
+      if(burger && sidebar){
+        burger.addEventListener('click', function(){
+          sidebar.classList.toggle('open');
+          if(backdrop) backdrop.classList.toggle('show');
+        });
+      }
+      if(backdrop){
+        backdrop.addEventListener('click', function(){
+          sidebar.classList.remove('open');
+          backdrop.classList.remove('show');
+        });
+      }
+    })();
+  </script>
+  <script>
+    (function(){
+      function initProfileMenus(){
+        document.querySelectorAll('.profile[data-menu]').forEach(function(profile){
+          var trigger = profile.querySelector('.profile-trigger');
+          var menu = profile.querySelector('.profile-menu');
+          if(!trigger || !menu) return;
+          function close(){ menu.classList.remove('open'); trigger.setAttribute('aria-expanded','false'); }
+          function toggle(e){ e.stopPropagation(); var isOpen = menu.classList.contains('open'); if(isOpen){ close(); } else { menu.classList.add('open'); trigger.setAttribute('aria-expanded','true'); } }
+          trigger.addEventListener('click', toggle);
+          document.addEventListener('click', function(e){ if(!profile.contains(e.target)) close(); });
+          document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+        });
+      }
+      if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initProfileMenus); else initProfileMenus();
+    })();
+  </script>
+  <script>
+    (function(){
+      document.querySelectorAll('select.filter-select').forEach(function(sel){
+        sel.addEventListener('change', function(){
+          var form = sel.closest('form');
+          if(form){ form.submit(); }
+        });
+      });
+    })();
+  </script>
 </body>
 </html>

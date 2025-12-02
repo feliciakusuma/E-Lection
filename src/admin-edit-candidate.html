@@ -43,8 +43,14 @@
         <img src="https://cdn-icons-png.flaticon.com/512/14385/14385252.png" class="icon">
         <span>Logout</span>
       </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="/admin" class="logout-link">
+        <i class="fa-solid fa-arrow-right-from-bracket icon text-red-500"></i>
+        <span>Logout</span>
+      </a>
     </div>
-  </aside>
+  </aside> 
 
   <!-- Main Content -->
   <main class="main-content">
@@ -52,13 +58,21 @@
     <header class="topbar">
       <h1 class="text-xl font-semibold">Edit Candidate</h1>
       <div class="topbar-right">
-        <form method="GET" action="/admin-candidates" class="search-box">
-          <input type="text" name="q" placeholder="Search candidates..." class="search-bar" value="{{ request.query_params.get('q','') }}">
-          <button type="submit" class="search-submit" aria-label="Search">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          </button>
-        </form>
         <a href="/admin-candidates" class="btn-goback">Back to Candidates</a>
+        {% set admin_first = request.cookies.get('first_name') or 'Felicia' %}
+        {% set admin_last = request.cookies.get('last_name') or 'Kusuma' %}
+        {% set admin_full = (request.cookies.get('full_name') or ((admin_first or '') ~ ' ' ~ (admin_last or ''))).strip() or 'Admin' %}
+        <div class="profile" data-menu>
+          <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="avatar profile-trigger" alt="Admin avatar" aria-haspopup="menu" aria-expanded="false">
+          <div>
+            <p class="admin-name">{{ admin_full or 'Admin' }}</p>
+            <p class="admin-role">Administrator</p>
+          </div>
+          <div class="profile-menu" role="menu">
+            <a href="/admin-settings" class="profile-item" role="menuitem"><i class="fa-solid fa-user-pen"></i> Edit Profile</a>
+            <a href="/admin" class="profile-item text-red-500" role="menuitem"><i class="fa-solid fa-arrow-right-from-bracket text-red-500"></i> Logout</a>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -121,13 +135,37 @@
             <select id="status" name="status" class="w-full px-4 py-2 border rounded-md">
               <option value="running" {% if current_status == 'running' %}selected{% endif %}>Running</option>
               <option value="pending" {% if current_status == 'pending' %}selected{% endif %}>Pending</option>
-              <option value="rejected" {% if current_status == 'rejected' %}selected{% endif %}>Rejected</option>
             </select>
           </div>
 
-          <div class="md:col-span-2">
-            <label class="block text-sm font-medium mb-1" for="description">Bio</label>
-            <textarea id="description" name="description" class="w-full px-4 py-2 border rounded-md" rows="4">{{ (form_data or {}).get('description', '') }}</textarea>
+          <!-- Optional vice president / running mate -->
+          <div class="md:col-span-2 mt-2">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-base font-semibold">Vice President (optional)</p>
+                <p class="text-xs text-gray-500">Fill this only for president tickets; leave blank for class leader races.</p>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+              <div>
+                <label class="block text-sm font-medium mb-1" for="vice_full_name">Vice President Full Name</label>
+                <input type="text" id="vice_full_name" name="vice_full_name" class="w-full px-4 py-2 border rounded-md" value="{{ (form_data or {}).get('vice_full_name', '') }}" placeholder="Optional">
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-1" for="vice_student_id">Vice President Student ID</label>
+                <input type="text" id="vice_student_id" name="vice_student_id" class="w-full px-4 py-2 border rounded-md" value="{{ (form_data or {}).get('vice_student_id', '') }}" placeholder="Optional">
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-1" for="vice_major_display">Vice President Major</label>
+                <input type="text" id="vice_major_display" class="w-full px-4 py-2 border rounded-md bg-gray-50" value="{{ (form_data or {}).get('vice_major', '') }}" placeholder="Auto-filled from Student ID" readonly>
+                <input type="hidden" id="vice_major" name="vice_major" value="{{ (form_data or {}).get('vice_major', '') }}">
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-1" for="vice_cohort_display">Vice President Cohort</label>
+                <input type="text" id="vice_cohort_display" class="w-full px-4 py-2 border rounded-md bg-gray-50" value="{{ (form_data or {}).get('vice_cohort', '') }}" placeholder="Auto-filled from Student ID" readonly>
+                <input type="hidden" id="vice_cohort" name="vice_cohort" value="{{ (form_data or {}).get('vice_cohort', '') }}">
+              </div>
+            </div>
           </div>
 
           <div class="md:col-span-2 flex items-center space-x-2">
@@ -160,6 +198,11 @@
       const cohortHidden = document.getElementById('cohort');
       const majorDisplay = document.getElementById('major_display');
       const cohortDisplay = document.getElementById('cohort_display');
+      const viceStudentInput = document.getElementById('vice_student_id');
+      const viceMajorHidden = document.getElementById('vice_major');
+      const viceCohortHidden = document.getElementById('vice_cohort');
+      const viceMajorDisplay = document.getElementById('vice_major_display');
+      const viceCohortDisplay = document.getElementById('vice_cohort_display');
 
       function applyFromSelection() {
         if (!select) return;
@@ -181,6 +224,58 @@
           applyFromSelection();
         }
       }
+
+      const majorCodes = {
+        '22': 'Management',
+        '37': 'Industrial Engineering',
+        '39': 'Computer Science',
+        '40': 'Information Systems',
+        '21': 'Accounting',
+        '51': 'Psychology',
+        '36': 'Mechanical Engineering',
+        '41': 'Visual Communication Design',
+        '12': 'English Education'
+      };
+
+      function deriveFromStudentId(value) {
+        const digits = (value || '').replace(/\D/g, '');
+        if (digits.length < 6) return { major: '', cohort: '' };
+        const cohort = digits.slice(0, 4);
+        const code = digits.slice(4, 6);
+        const major = majorCodes[code] || '';
+        return { major, cohort };
+      }
+
+      function applyFromViceStudentId() {
+        const { major, cohort } = deriveFromStudentId(viceStudentInput ? viceStudentInput.value : '');
+        if (viceMajorHidden) viceMajorHidden.value = major;
+        if (viceCohortHidden) viceCohortHidden.value = cohort;
+        if (viceMajorDisplay) viceMajorDisplay.value = major;
+        if (viceCohortDisplay) viceCohortDisplay.value = cohort;
+      }
+
+      if (viceStudentInput) {
+        viceStudentInput.addEventListener('input', applyFromViceStudentId);
+        viceStudentInput.addEventListener('blur', applyFromViceStudentId);
+        applyFromViceStudentId();
+      }
+    })();
+  </script>
+  <script>
+    (function(){
+      function initProfileMenus(){
+        document.querySelectorAll('.profile[data-menu]').forEach(function(profile){
+          var trigger = profile.querySelector('.profile-trigger');
+          var menu = profile.querySelector('.profile-menu');
+          if(!trigger || !menu) return;
+          function close(){ menu.classList.remove('open'); trigger.setAttribute('aria-expanded','false'); }
+          function toggle(e){ e.stopPropagation(); var isOpen = menu.classList.contains('open'); if(isOpen){ close(); } else { menu.classList.add('open'); trigger.setAttribute('aria-expanded','true'); } }
+          trigger.addEventListener('click', toggle);
+          document.addEventListener('click', function(e){ if(!profile.contains(e.target)) close(); });
+          document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+        });
+      }
+      if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initProfileMenus); else initProfileMenus();
     })();
   </script>
 </body>

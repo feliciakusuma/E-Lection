@@ -11,47 +11,51 @@
 
 <body class="admin-body">
    <!-- Sidebar -->
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar"> 
     <div class="sidebar-logo">
       <i class="fas fa-vote-yea text-blue-600 text-xl"></i> 
       <span class="logo-text">E-Lection</span>
     </div>
     <nav class="sidebar-nav">
       <a href="/admin-dashboard" class="sidebar-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/3446/3446795.png" class="icon">
+        <i class="fa-solid fa-chart-line icon text-black"></i>
         <span>Dashboard</span>
       </a>
       <a href="/admin-voters" class="sidebar-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/694/694642.png" class="icon">
+        <i class="fa-solid fa-users icon text-black"></i>
         <span>Voters</span>
       </a>
       <a href="/admin-candidates" class="sidebar-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/7658/7658147.png" class="icon">
+        <i class="fa-solid fa-user-tie icon text-black"></i>
         <span>Candidates</span>
       </a>
       <a href="/admin-elections" class="sidebar-link active">
-        <img src="https://cdn-icons-png.flaticon.com/512/6820/6820898.png" class="icon">
+        <i class="fa-solid fa-square-poll-vertical icon text-black"></i>
         <span>Elections</span>
-      </a>
-      
+      </a>   
       <a href="/admin-settings" class="sidebar-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/1160/1160356.png" class="icon">
+        <i class="fa-solid fa-gear icon text-black"></i>
         <span>Settings</span>
       </a>
     </nav>
     <div class="sidebar-footer">
-      <a href="/admin" class="logout-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/14385/14385252.png" class="icon">
+      <a href="/admin-logout" class="logout-link">
+        <i class="fa-solid fa-arrow-right-from-bracket icon text-red-500"></i>
         <span>Logout</span>
       </a>
     </div>
-  </aside>
+  </aside> 
 
   <!-- Main Content -->
   <main class="main-content">
     <!-- Top Navbar -->
     <header class="topbar">
-      <h1 class="text-xl font-semibold">Elections Management</h1>
+      <div style="display:flex; align-items:center; gap:.75rem;">
+        <button class="hamburger" id="hamburger" aria-label="Open menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <h1 class="text-xl font-semibold">Elections Management</h1>
+      </div>
       <div class="topbar-right">
       <div class="topbar-right">
         <form method="GET" action="/admin-elections" class="search-box" role="search">
@@ -64,19 +68,21 @@
             aria-label="Search elections"
           />
         </form>
-        <button class="notif-btn">
-          <img src="https://cdn-icons-png.flaticon.com/512/18115/18115750.png" class="icon">
-          <span class="notif-badge">3</span>
-        </button>
-        <div class="admin-profile">
-          <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="avatar">
+        {% set admin_full = (request.cookies.get('full_name') or ((request.cookies.get('first_name') or '') ~ ' ' ~ (request.cookies.get('last_name') or ''))).strip() or 'Admin' %}
+        <div class="profile" data-menu>
+          <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="avatar profile-trigger" alt="Admin avatar" aria-haspopup="menu" aria-expanded="false">
           <div>
-            <p class="admin-name">Admin</p>
+            <p class="admin-name">{{ admin_full or 'Admin' }}</p>
             <p class="admin-role">Administrator</p>
+          </div>
+          <div class="profile-menu" role="menu">
+            <a href="/admin-settings" class="profile-item" role="menuitem"><i class="fa-solid fa-user-pen"></i> Edit Profile</a>
+            <a href="/admin-logout" class="profile-item text-red-500" role="menuitem"><i class="fa-solid fa-arrow-right-from-bracket text-red-500"></i> Logout</a>
           </div>
         </div>
       </div>
     </header>
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
 
       <!-- Candidates Table -->
       <div class="candidates-wrapper">
@@ -255,12 +261,19 @@
               <span class="status-badge {% if item.status=='ongoing' %}status-ongoing{% elif item.status=='upcoming' %}status-upcoming{% else %}status-ended{% endif %}">{{ item.status | capitalize }}</span>
             </div>
             <div class="election-details">
-              <img src="https://cdn-icons-png.flaticon.com/512/747/747310.png" class="inline-icon">
-              {{ e.start_date.strftime('%b %d, %Y %H:%M') if e.start_date else '-' }} - {{ e.end_date.strftime('%b %d, %Y %H:%M') if e.end_date else '-' }}
+              <i class="fa-solid fa-calendar inline-icon"></i>
+              <span
+                class="js-date-range"
+                data-start="{{ item.start_iso }}"
+                data-end="{{ item.end_iso }}"
+              >
+                {{ e.start_date.strftime('%b %d, %Y %H:%M') if e.start_date else '-' }} - {{ e.end_date.strftime('%b %d, %Y %H:%M') if e.end_date else '-' }}
+              </span>
             </div>
             <div class="election-meta">
-              <span><img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" class="inline-icon"> <a href="/admin-candidates" class="election-link">{{ item.candidates_count }} Candidates</a></span>
-              <span><img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" class="inline-icon"> <a href="/admin-voters" class="election-link">{{ item.voters_count }} Voters</a></span>
+              
+              <span><i class="fa-solid fa-user-tie inline-icon"></i> <a href="/admin-candidates" class="election-link">{{ item.candidates_count }} Candidates</a></span>
+              <span><i class="fa-solid fa-user-check inline-icon"></i> <a href="/admin-voters" class="election-link">{{ item.voters_count }} / {{ item.eligible_voters }} Voters</a></span>
             </div>
             <div class="election-footer">
               <span class="election-votes">
@@ -276,7 +289,58 @@
       </div>
     </div>
   </main>
+  <script>
+    (function(){
+      var sidebar = document.getElementById('sidebar');
+      var burger = document.getElementById('hamburger');
+      var backdrop = document.getElementById('sidebar-backdrop');
+      if(burger && sidebar){
+        burger.addEventListener('click', function(){
+          sidebar.classList.toggle('open');
+          if(backdrop) backdrop.classList.toggle('show');
+        });
+      }
+      if(backdrop){
+        backdrop.addEventListener('click', function(){
+          sidebar.classList.remove('open');
+          backdrop.classList.remove('show');
+        });
+      }
+    })();
+  </script>
+  <script>
+    (function(){
+      function initProfileMenus(){
+        document.querySelectorAll('.profile[data-menu]').forEach(function(profile){
+          var trigger = profile.querySelector('.profile-trigger');
+          var menu = profile.querySelector('.profile-menu');
+          if(!trigger || !menu) return;
+          function close(){ menu.classList.remove('open'); trigger.setAttribute('aria-expanded','false'); }
+          function toggle(e){ e.stopPropagation(); var isOpen = menu.classList.contains('open'); if(isOpen){ close(); } else { menu.classList.add('open'); trigger.setAttribute('aria-expanded','true'); } }
+          trigger.addEventListener('click', toggle);
+          document.addEventListener('click', function(e){ if(!profile.contains(e.target)) close(); });
+          document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+        });
+      }
+      if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initProfileMenus); else initProfileMenus();
+
+      function formatDateRangesToLocal(){
+        var opts = { year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit', hour12:false };
+        document.querySelectorAll('.js-date-range').forEach(function(el){
+          var start = el.getAttribute('data-start');
+          var end = el.getAttribute('data-end');
+          if(!start && !end) return;
+          function fmt(val){
+            if(!val) return '-';
+            var d = new Date(val);
+            if(isNaN(d.getTime())) return '-';
+            return d.toLocaleString([], opts);
+          }
+          el.textContent = fmt(start) + ' - ' + fmt(end);
+        });
+      }
+      if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', formatDateRangesToLocal); else formatDateRangesToLocal();
+    })();
+  </script>
 </body>
 </html>
-
-

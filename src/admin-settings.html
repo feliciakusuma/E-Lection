@@ -11,47 +11,51 @@
 
 <body class="admin-body">
    <!-- Sidebar -->
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
       <i class="fas fa-vote-yea text-blue-600 text-xl"></i> 
       <span class="logo-text">E-Lection</span>
     </div>
     <nav class="sidebar-nav">
       <a href="/admin-dashboard" class="sidebar-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/3446/3446795.png" class="icon">
-        <span>Settings</span>
+        <i class="fa-solid fa-chart-line icon text-black"></i>
+        <span>Dashboard</span>
       </a>
       <a href="/admin-voters" class="sidebar-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/694/694642.png" class="icon">
+        <i class="fa-solid fa-users icon text-black"></i>
         <span>Voters</span>
       </a>
       <a href="/admin-candidates" class="sidebar-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/7658/7658147.png" class="icon">
+        <i class="fa-solid fa-user-tie icon text-black"></i>
         <span>Candidates</span>
       </a>
       <a href="/admin-elections" class="sidebar-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/6820/6820898.png" class="icon">
+        <i class="fa-solid fa-square-poll-vertical icon text-black"></i>
         <span>Elections</span>
-      </a>
-      
+      </a>   
       <a href="/admin-settings" class="sidebar-link active">
-        <img src="https://cdn-icons-png.flaticon.com/512/1160/1160356.png" class="icon">
+        <i class="fa-solid fa-gear icon text-black"></i>
         <span>Settings</span>
       </a>
     </nav>
     <div class="sidebar-footer">
-      <a href="/admin" class="logout-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/14385/14385252.png" class="icon">
+      <a href="/admin-logout" class="logout-link">
+        <i class="fa-solid fa-arrow-right-from-bracket icon text-red-500"></i>
         <span>Logout</span>
       </a>
     </div>
-  </aside>
+  </aside> 
 
   <!-- Main Content -->
   <main class="main-content">
     <!-- Top Navbar -->
     <header class="topbar">
-      <h1 class="text-xl font-semibold">Settings</h1>
+      <div style="display:flex; align-items:center; gap:.75rem;">
+        <button class="hamburger" id="hamburger" aria-label="Open menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <h1 class="text-xl font-semibold">Settings</h1>
+      </div>
       <div class="topbar-right">
       <div class="topbar-right">
         <form method="GET" action="/admin-settings" class="search-box" role="search">
@@ -64,58 +68,187 @@
             aria-label="Search settings"
           />
         </form>
-        <button class="notif-btn">
-          <img src="https://cdn-icons-png.flaticon.com/512/18115/18115750.png" class="icon">
-          <span class="notif-badge">3</span>
-        </button>
-        <div class="admin-profile">
-          <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="avatar">
+        {% set admin_full = (request.cookies.get('full_name') or ((request.cookies.get('first_name') or '') ~ ' ' ~ (request.cookies.get('last_name') or ''))).strip() or 'Admin' %}
+        <div class="profile" data-menu>
+          <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="avatar profile-trigger" alt="Admin avatar" aria-haspopup="menu" aria-expanded="false">
           <div>
-            <p class="admin-name">Admin</p>
+            <p class="admin-name">{{ admin_full or 'Admin' }}</p>
             <p class="admin-role">Administrator</p>
+          </div>
+          <div class="profile-menu" role="menu">
+            <a href="/admin-settings" class="profile-item" role="menuitem"><i class="fa-solid fa-user-pen"></i> Edit Profile</a>
+            <a href="/admin-logout" class="profile-item text-red-500" role="menuitem"><i class="fa-solid fa-arrow-right-from-bracket text-red-500"></i> Logout</a>
           </div>
         </div>
       </div>
     </header>
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
 
     <!-- Content -->
     <div class="candidates-wrapper">
-      <div class="bg-white rounded-lg shadow p-6 mb-6">
-        <h2 class="text-lg font-semibold mb-4">Application Mode</h2>
-        <p class="text-sm text-gray-600 mb-4">View the current runtime configuration for this demo environment.</p>
-        <dl class="form-grid-sm">
-          <div>
-            <dt class="font-medium text-gray-500">Admin Access</dt>
-            <dd class="font-semibold text-gray-800">Enabled</dd>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <!-- Profile -->
+        <div class="bg-white rounded-lg shadow p-6">
+          <div class="flex items-center justify-between mb-3">
+            <h2 class="text-lg font-semibold">Profile</h2>
+            <span class="badge badge-running">Admin</span>
           </div>
-          <div>
-            <dt class="font-medium text-gray-500">Encryption Status</dt>
-            <dd class="font-semibold text-gray-800">AES-GCM + RSA hybrid</dd>
-          </div>
-          <div>
-            <dt class="font-medium text-gray-500">Audit Logging</dt>
-            <dd class="font-semibold text-gray-800">Active</dd>
-          </div>
-          <div>
-            <dt class="font-medium text-gray-500">Demo Accounts</dt>
-            <dd class="font-semibold text-gray-800">admin@university.edu / student@university.edu</dd>
-          </div>
-        </dl>
-      </div>
+          <p class="text-sm text-gray-600 mb-4">Update your display details. Changes apply to new sessions.</p>
+          {% if saved %}
+          <div class="alert-success mb-3">Profile updated successfully.</div>
+          {% endif %}
+          {% if error %}
+          <div class="alert-error mb-3">{{ error }}</div>
+          {% endif %}
+          <form class="space-y-3" method="POST" action="/admin-settings">
+            <div>
+              <label class="form-label">Full Name</label>
+              <input type="text" name="full_name" class="form-input" value="{{ admin.full_name if admin else '' }}" placeholder="Full name" required>
+            </div>
+            <div>
+              <label class="form-label">Email</label>
+              <input type="email" name="email" class="form-input" value="{{ admin.email if admin else '' }}" placeholder="admin@example.com" required>
+            </div>
+            <div class="flex justify-end pt-4">
+              <button type="submit" class="btn-create">Save Profile</button>
+            </div>
+          </form>
+        </div>
 
-      <div class="bg-white rounded-lg shadow p-6">
-        <h2 class="text-lg font-semibold mb-4">Next Steps</h2>
-        <ul class="list-disc list-inside text-sm text-gray-600 space-y-2">
-          <li>Replace demo credentials with production-ready admin management.</li>
-          <li>Integrate session-based authentication and route protection.</li>
-          <li>Configure SMTP provider for password recovery workflow.</li>
-          <li>Review database backups for the encrypted vote payloads.</li>
-        </ul>
+        <!-- System Status -->
+        <div class="bg-white rounded-lg shadow p-6">
+          <div class="flex items-center justify-between mb-3">
+            <h2 class="text-lg font-semibold">System Status</h2>
+            <i class="fa-solid fa-circle-info text-gray-500"></i>
+          </div>
+          <dl class="form-grid-sm">
+            <div>
+              <dt class="font-medium text-gray-500">Audit Logging</dt>
+              <dd class="font-semibold text-gray-800">Enabled</dd>
+            </div>
+            <div>
+              <dt class="font-medium text-gray-500">Encryption</dt>
+              <dd class="font-semibold text-gray-800">AES-GCM + ML-KEM</dd>
+            </div>
+            <div>
+              <dt class="font-medium text-gray-500">Google OAuth</dt>
+              <dd class="font-semibold text-gray-800">Set via env</dd>
+            </div>
+            <div>
+              <dt class="font-medium text-gray-500">Backups</dt>
+              <dd class="font-semibold text-gray-800">Manual</dd>
+            </div>
+          </dl>
+          <div class="mt-4 flex gap-2">
+            <button type="button" class="btn-goback">Export Config</button>
+            <button type="button" class="btn-create">Run Backup</button>
+          </div>
+        </div>
+
+        <!-- Notifications -->
+        <div class="bg-white rounded-lg shadow p-6">
+          <div class="flex items-center justify-between mb-3">
+            <h2 class="text-lg font-semibold">Notifications</h2>
+            <i class="fa-solid fa-bell text-orange-500"></i>
+          </div>
+          <form id="notif-form" class="space-y-3 text-sm text-gray-700">
+            <label class="flex items-center gap-3">
+              <input type="checkbox" class="rounded border-gray-300" name="notify_new_election" checked>
+              <span>Alert me when a new election is created</span>
+            </label>
+            <label class="flex items-center gap-3">
+              <input type="checkbox" class="rounded border-gray-300" name="notify_ending" checked>
+              <span>Reminder when an election is ending soon</span>
+            </label>
+            <label class="flex items-center gap-3">
+              <input type="checkbox" class="rounded border-gray-300" name="notify_admin_login">
+              <span>Admin login notifications</span>
+            </label>
+            <div class="flex justify-end pt-3">
+              <button type="submit" class="btn-create">Save Preferences</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </main>
+  <script>
+    (function(){
+      var sidebar = document.getElementById('sidebar');
+      var burger = document.getElementById('hamburger');
+      var backdrop = document.getElementById('sidebar-backdrop');
+      if(burger && sidebar){
+        burger.addEventListener('click', function(){
+          sidebar.classList.toggle('open');
+          if(backdrop) backdrop.classList.toggle('show');
+        });
+      }
+      if(backdrop){
+        backdrop.addEventListener('click', function(){
+          sidebar.classList.remove('open');
+          backdrop.classList.remove('show');
+        });
+      }
+      function initProfileMenus(){
+        document.querySelectorAll('.profile[data-menu]').forEach(function(profile){
+          var trigger = profile.querySelector('.profile-trigger');
+          var menu = profile.querySelector('.profile-menu');
+          if(!trigger || !menu) return;
+          function close(){ menu.classList.remove('open'); trigger.setAttribute('aria-expanded','false'); }
+          function toggle(e){ e.stopPropagation(); var isOpen = menu.classList.contains('open'); if(isOpen){ close(); } else { menu.classList.add('open'); trigger.setAttribute('aria-expanded','true'); } }
+          trigger.addEventListener('click', toggle);
+          document.addEventListener('click', function(e){ if(!profile.contains(e.target)) close(); });
+          document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+        });
+      }
+      if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initProfileMenus); else initProfileMenus();
+
+      function showToast(msg){
+        var existing = document.getElementById('settings-toast');
+        if(existing) existing.remove();
+        var el = document.createElement('div');
+        el.id = 'settings-toast';
+        el.textContent = msg;
+        el.style.position = 'fixed';
+        el.style.bottom = '16px';
+        el.style.right = '16px';
+        el.style.background = '#111827';
+        el.style.color = '#fff';
+        el.style.padding = '10px 14px';
+        el.style.borderRadius = '10px';
+        el.style.boxShadow = '0 10px 25px rgba(0,0,0,0.2)';
+        el.style.zIndex = '999';
+        document.body.appendChild(el);
+        setTimeout(function(){ el.remove(); }, 2500);
+      }
+
+      var profileForm = document.querySelector('.bg-white form');
+      if(profileForm){
+        profileForm.addEventListener('submit', function(e){
+          e.preventDefault();
+          showToast('Profile saved');
+        });
+      }
+
+      var notifForm = document.getElementById('notif-form');
+      if(notifForm){
+        notifForm.addEventListener('submit', function(e){
+          e.preventDefault();
+          showToast('Notification preferences saved');
+        });
+      }
+
+      document.querySelectorAll('.btn-goback').forEach(function(btn){
+        if(btn.textContent.trim() === 'Export Config'){
+          btn.addEventListener('click', function(){ showToast('Config exported'); });
+        }
+      });
+      document.querySelectorAll('.btn-create').forEach(function(btn){
+        if(btn.textContent.trim() === 'Run Backup'){
+          btn.addEventListener('click', function(){ showToast('Backup started'); });
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
-
-
-

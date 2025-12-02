@@ -4,3 +4,14 @@ sqlalchemy
 uvicorn
 jinja2
 nodejs
+passlib
+bcrypt==4.0.1
+cryptography
+python-multipart
+dnspython
+cryptography
+oqs
+psycopg2-binary
+psycopg2-binary
+google-auth
+requests

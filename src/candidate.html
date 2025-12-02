@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ request.url_for('static', path='style.css') }}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <title>Candidates</title>
+</head>
+
+<body class="body-main">
+  {% set display_first = request.cookies.get('first_name') or 'User' %}
+  {% set display_last = request.cookies.get('last_name') or '' %}
+  {% set display_full = (display_first ~ ' ' ~ display_last).strip() %}
+  {% set avatar_url = request.cookies.get('avatar_url') or 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png' %}
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="sidebar-logo">
+      <i class="fas fa-vote-yea text-blue-600 text-xl"></i>
+      <span class="logo-text">E-Lection</span>
+    </div>
+    <div class="navbar-inner" style="margin-left:auto;display:flex;align-items:center;gap:.5rem;">
+        <div class="profile" data-menu>
+          <img src="{{ avatar_url }}" class="avatar profile-trigger" alt="User avatar" aria-haspopup="menu" aria-expanded="false">
+          <div>
+            <p class="admin-name">{{ display_full or 'User' }}</p>
+            <p class="admin-role">Voter</p>
+          </div>
+          <div class="profile-menu" role="menu">
+            <a href="/profile" class="profile-item" role="menuitem"><i class="fa-solid fa-user-pen"></i> Edit Profile</a>
+            <a href="/logout" class="profile-item text-red-500" role="menuitem"><i class="fa-solid fa-arrow-right-from-bracket text-red-500"></i> Logout</a>
+          </div>
+        </div>
+    </div>
+  </nav>
+  
+  <!-- Main Content -->
+  <main class="dashboard-main candidates-main">
+    <div class="dashboard-container candidates-container">
+      {% if active_election %}
+      <p class="text-sm text-gray-600 mb-3">
+        <a href="/dashboard" class="election-link">Dashboard</a> &gt;
+        <span class="font-semibold">{{ active_election.title }}</span>
+      </p>
+
+      <!-- Election summary card -->
+      <div class="bg-white rounded-lg shadow p-6 mb-6">
+        <h1 class="text-2xl font-bold mb-1">{{ active_election.title }}</h1>
+        <p class="text-gray-600">Choose your preferred candidate for this election</p>
+        <div class="flex items-center gap-4 mt-3">
+          {% set st = (active_status or active_election.status or 'ongoing')|lower %}
+          {% if st == 'ongoing' %}
+            <span class="badge badge-running">Ongoing</span>
+          {% elif st == 'upcoming' %}
+            <span class="badge badge-pending">Upcoming</span>
+          {% else %}
+            <span class="badge badge-rejected">Ended</span>
+          {% endif %}
+          <span class="text-sm text-gray-600">Ends: {{ active_election.end_date.strftime('%B %d, %Y') if active_election.end_date else '-' }}</span>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="candidate-grid">
+        {% if active_election and candidates %}
+          {% for candidate in candidates %}
+          <div class="candidate-card">
+            <div class="candidate-info">
+              <div class="flex items-center gap-3 mb-2">
+                <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="avatar" alt="Candidate avatar">
+                <div class="flex flex-col w-full">
+                  <div class="flex items-center gap-2">
+              {% set vice_name = candidate.vice_full_name or '' %}
+              {% set combined_name = candidate.full_name ~ ((' & ' ~ vice_name) if vice_name else '') %}
+              <h2 class="item-name">{{ combined_name }}</h2>
+              <span class="badge badge-running ml-auto">{{ (candidate.status or 'running')|capitalize }}</span>
+            </div>
+                  <p class="item-id">{{ candidate.position }}</p>
+                </div>
+              </div>
+              {% set vice_major = candidate.vice_display_major or candidate.vice_major or '' %}
+              {% set vice_cohort = candidate.vice_display_cohort or candidate.vice_cohort or '' %}
+              {% set show_major = candidate.display_major or candidate.major %}
+              {% set show_cohort = candidate.display_cohort or candidate.cohort %}
+              <p class="candidate-bio mb-0">
+                {% if show_major or show_cohort %}
+                  {{ show_major }}{% if show_cohort %} Cohort {{ show_cohort }}{% endif %}
+                {% endif %}
+                {% if vice_name and (vice_major or vice_cohort) %}<br>
+                  {% if vice_major %}{{ vice_major }}{% endif %}{% if vice_major and vice_cohort %} {% endif %}{% if vice_cohort %}Cohort {{ vice_cohort }}{% endif %}
+                {% endif %}
+              </p>
+              <div class="candidate-actions mt-1">
+                <form method="get" action="/confirmation">
+                  <input type="hidden" name="candidate_id" value="{{ candidate.id }}">
+                  {% if active_election %}
+                  <input type="hidden" name="election_id" value="{{ active_election.id }}">
+                  {% endif %}
+                  <button type="submit" class="btn-vote flex-auto">Vote</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <div class="empty-state">No candidates found.</div>
+        {% endif %}
+      </div>
+
+      <div class="alert-info mt-8">
+        <p class="font-semibold mb-2">Voting Instructions</p>
+        <ul class="list-disc list-inside text-sm text-gray-700">
+          <li>Choose the candidate carefully.</li>
+          <li>Click "Vote" on your preferred candidate to proceed.</li>
+          <li>You can vote only once per election.</li>
+          {% set end_dt = active_election.display_end if active_election and active_election.display_end is defined else (active_election.end_date if active_election else None) %}
+          <li>Voting ends on {{ end_dt.strftime('%b %d, %Y %H:%M') if end_dt else 'the specified end date' }}.</li>
+        </ul>
+      </div>
+
+    </div>
+  </main>
+  <script>
+    (function(){
+      function initProfileMenus(){
+        document.querySelectorAll('.profile[data-menu]').forEach(function(profile){
+          var trigger = profile.querySelector('.profile-trigger');
+          var menu = profile.querySelector('.profile-menu');
+          if(!trigger || !menu) return;
+          function close(){ menu.classList.remove('open'); trigger.setAttribute('aria-expanded','false'); }
+          function toggle(e){ e.stopPropagation(); var isOpen = menu.classList.contains('open'); if(isOpen){ close(); } else { menu.classList.add('open'); trigger.setAttribute('aria-expanded','true'); } }
+          trigger.addEventListener('click', toggle);
+          document.addEventListener('click', function(e){ if(!profile.contains(e.target)) close(); });
+          document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+        });
+      }
+      if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initProfileMenus); else initProfileMenus();
+    })();
+  </script>
+</body>
+</html>

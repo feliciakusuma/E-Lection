@@ -11,7 +11,7 @@
 
 <body class="admin-body">
    <!-- Sidebar -->
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
       <i class="fas fa-vote-yea text-blue-600 text-xl"></i> 
       <span class="logo-text">E-Lection</span>
@@ -40,42 +40,41 @@
     </nav>
     <div class="sidebar-footer">
       <a href="/admin" class="logout-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/14385/14385252.png" class="icon">
+        <i class="fa-solid fa-arrow-right-from-bracket icon text-red-500"></i>
         <span>Logout</span>
       </a>
     </div>
-  </aside>
+  </aside> 
 
   <!-- Main Content -->
   <main class="main-content">
     <!-- Top Navbar -->
     <header class="topbar">
-      <h1 class="text-xl font-semibold">Elections Management</h1>
-      <div class="topbar-right">
-      <div class="topbar-right">
-        <form method="GET" action="/admin-elections" class="search-box" role="search">
-          <input
-            type="text"
-            name="q"
-            placeholder="Search elections..."
-            class="search-bar"
-            value="{{ request.query_params.get('q','') }}"
-            aria-label="Search elections"
-          />
-        </form>
-        <button class="notif-btn">
-          <img src="https://cdn-icons-png.flaticon.com/512/18115/18115750.png" class="icon">
-          <span class="notif-badge">3</span>
+      <div style="display:flex; align-items:center; gap:.75rem;">
+        <button class="hamburger" id="hamburger" aria-label="Open menu">
+          <i class="fa-solid fa-bars"></i>
         </button>
-        <div class="admin-profile">
-          <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="avatar">
+        <h1 class="text-xl font-semibold">Elections Management</h1>
+      </div>
+      <div class="topbar-right">
+        <a href="/admin-elections" class="btn-goback">Back to Elections</a>
+        {% set admin_first = request.cookies.get('first_name') or 'Felicia' %}
+        {% set admin_last = request.cookies.get('last_name') or 'Kusuma' %}
+        {% set admin_full = (request.cookies.get('full_name') or ((admin_first or '') ~ ' ' ~ (admin_last or ''))).strip() or 'Admin' %}
+        <div class="profile" data-menu>
+          <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="avatar profile-trigger" alt="Admin avatar" aria-haspopup="menu" aria-expanded="false">
           <div>
-            <p class="admin-name">Admin</p>
+            <p class="admin-name">{{ admin_full or 'Admin' }}</p>
             <p class="admin-role">Administrator</p>
+          </div>
+          <div class="profile-menu" role="menu">
+            <a href="/admin-settings" class="profile-item" role="menuitem"><i class="fa-solid fa-user-pen"></i> Edit Profile</a>
+            <a href="/admin" class="profile-item text-red-500" role="menuitem"><i class="fa-solid fa-arrow-right-from-bracket text-red-500"></i> Logout</a>
           </div>
         </div>
       </div>
     </header>
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
 
     <div class="p-6">
       <div class="bg-white rounded-lg shadow p-6 max-w-3xl mx-auto">
@@ -90,32 +89,33 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium mb-1" for="major">Major</label>
-            {% set current_major = (form_data or {}).get('major', 'All Major') %}
-            <select id="major" name="major" class="w-full px-4 py-2 border rounded-md">
-              <option value="Information Systems" {% if current_major == 'Information Systems' %}selected{% endif %}>Information Systems</option>
-              <option value="Computer Science" {% if current_major == 'Computer Science' %}selected{% endif %}>Computer Science</option>
-              <option value="Visual Communication Design" {% if current_major == 'Visual Communication Design' %}selected{% endif %}>Visual Communication Design</option>
-              <option value="Mechanical Engineering" {% if current_major == 'Mechanical Engineering' %}selected{% endif %}>Mechanical Engineering</option>
-              <option value="Industrial Engineering" {% if current_major == 'Industrial Engineering' %}selected{% endif %}>Industrial Engineering</option>
-              <option value="Psychology" {% if current_major == 'Psychology' %}selected{% endif %}>Psychology</option>
-              <option value="English Education" {% if current_major == 'English Education' %}selected{% endif %}>English Education</option>
-              <option value="Management" {% if current_major == 'Management' %}selected{% endif %}>Management</option>
-              <option value="Accounting" {% if current_major == 'Accounting' %}selected{% endif %}>Accounting</option>
-              <option value="All Major" {% if current_major == 'All Major' %}selected{% endif %}>All Major</option>
-            </select>
+            <label class="block text-sm font-medium mb-1" for="major">Majors</label>
+            {% set current_major = (form_data or {}).get('major', '') %}
+            <input type="hidden" id="major" name="major" value="{{ current_major }}">
+            <div id="major-select" class="multi-select">
+              <div class="selected" tabindex="0">
+                <span class="selected-text text-sm text-gray-600">Select majors</span>
+                <i class="fa-solid fa-chevron-down text-gray-500 text-xs"></i>
+              </div>
+              <div class="options">
+                <div class="option-list"></div>
+              </div>
+            </div>
           </div>
 
           <div>
             <label class="block text-sm font-medium mb-1" for="cohort">Cohort</label>
             {% set current_cohort = (form_data or {}).get('cohort', 'All Cohort') %}
-            <select id="cohort" name="cohort" class="w-full px-4 py-2 border rounded-md">
-              <option value="2022" {% if current_cohort == '2022' %}selected{% endif %}>2022</option>
-              <option value="2023" {% if current_cohort == '2023' %}selected{% endif %}>2023</option>
-              <option value="2024" {% if current_cohort == '2024' %}selected{% endif %}>2024</option>
-              <option value="2025" {% if current_cohort == '2025' %}selected{% endif %}>2025</option>
-              <option value="All Cohort" {% if current_cohort == 'All Cohort' %}selected{% endif %}>All Cohort</option>
-            </select>
+            <input type="hidden" id="cohort" name="cohort" value="{{ current_cohort }}">
+            <div id="cohort-select" class="multi-select">
+              <div class="selected" tabindex="0">
+                <span class="selected-text text-sm text-gray-600">Select cohort</span>
+                <i class="fa-solid fa-chevron-down text-gray-500 text-xs"></i>
+              </div>
+              <div class="options">
+                <div class="option-list"></div>
+              </div>
+            </div>
           </div>
 
           <div>
@@ -127,6 +127,13 @@
             <label class="block text-sm font-medium mb-1" for="end_date">End Date/Time</label>
             <input type="datetime-local" id="end_date" name="end_date" class="w-full px-4 py-2 border rounded-md" value="{{ (form_data or {}).get('end_date', '') }}" required>
           </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1" for="eligible_voters">Eligible Voters (Optional)</label>
+            <input type="number" min="0" id="eligible_voters" name="eligible_voters" class="w-full px-4 py-2 border rounded-md" value="{{ (form_data or {}).get('eligible_voters', eligible_voters or 0) }}" placeholder="e.g., 1200">
+          </div>
+
+          <input type="hidden" id="timezone_offset_minutes" name="timezone_offset_minutes" value="{{ (form_data or {}).get('timezone_offset_minutes', '') }}">
 
           <div class="md:col-span-2 flex items-center space-x-2">
             <input id="is_active" name="is_active" type="checkbox" class="rounded border-gray-300" {% if (form_data or {}).get('is_active', True) %}checked{% endif %}>
@@ -141,9 +148,173 @@
       </div>
     </div>
   </main>
+  <script>
+    (function(){
+      var sidebar = document.getElementById('sidebar');
+      var burger = document.getElementById('hamburger');
+      var backdrop = document.getElementById('sidebar-backdrop');
+      if(burger && sidebar){
+        burger.addEventListener('click', function(){
+          sidebar.classList.toggle('open');
+          if(backdrop) backdrop.classList.toggle('show');
+        });
+      }
+      if(backdrop){
+        backdrop.addEventListener('click', function(){
+          sidebar.classList.remove('open');
+          backdrop.classList.remove('show');
+        });
+      }
+
+      var tzInput = document.getElementById('timezone_offset_minutes');
+      if(tzInput){
+        var current = (tzInput.value || "").trim();
+        // Fill when empty or zero, so submissions always include the browser offset (e.g., GMT+7 => 420)
+        if(current === "" || current === "0"){
+          tzInput.value = -new Date().getTimezoneOffset();
+        }
+      }
+    })();
+  </script>
 </body>
+  <script>
+    (function(){
+      function initProfileMenus(){
+      document.querySelectorAll('.profile[data-menu]').forEach(function(profile){
+        var trigger = profile.querySelector('.profile-trigger');
+        var menu = profile.querySelector('.profile-menu');
+        if(!trigger || !menu) return;
+        function close(){ menu.classList.remove('open'); trigger.setAttribute('aria-expanded','false'); }
+        function toggle(e){ e.stopPropagation(); var isOpen = menu.classList.contains('open'); if(isOpen){ close(); } else { menu.classList.add('open'); trigger.setAttribute('aria-expanded','true'); } }
+        trigger.addEventListener('click', toggle);
+        document.addEventListener('click', function(e){ if(!profile.contains(e.target)) close(); });
+        document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+      });
+      }
+      if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initProfileMenus); else initProfileMenus();
+    })();
+  </script>
+  <script>
+    (function(){
+      var majorOptions = [
+        "All Majors",
+        "Information Systems",
+        "Computer Science",
+        "Visual Communication Design",
+        "Mechanical Engineering",
+        "Industrial Engineering",
+        "Psychology",
+        "English Education",
+        "Management",
+        "Accounting"
+      ];
+
+      function initMultiSelect(containerId, hiddenId, options, placeholder){
+        var container = document.getElementById(containerId);
+        var hidden = document.getElementById(hiddenId);
+        if(!container || !hidden || !options || !options.length) return;
+
+        var selectedBox = container.querySelector('.selected');
+        var selectedText = container.querySelector('.selected-text');
+        var list = container.querySelector('.option-list');
+
+        function updateSelectedLabel(values){
+          if(!values.length){
+            selectedText.textContent = placeholder || 'Select items';
+            selectedText.classList.add('text-gray-600');
+            return;
+          }
+          selectedText.classList.remove('text-gray-600');
+          if(values.indexOf('All Majors') !== -1){
+            selectedText.textContent = 'All majors';
+            return;
+          }
+          if(values.indexOf('All Cohort') !== -1){
+            selectedText.textContent = 'All cohorts';
+            return;
+          }
+          selectedText.textContent = values.join(', ');
+        }
+
+        function syncToHidden(){
+          var allBox = Array.prototype.find.call(list.querySelectorAll('input[type="checkbox"]'), function(cb){
+            return cb.value === 'All Majors' || cb.value.toLowerCase().indexOf('all ') === 0;
+          });
+          var allValue = allBox ? allBox.value : 'All Majors';
+
+          var checked = Array.prototype.slice.call(list.querySelectorAll('input[type="checkbox"]')).filter(function(cb){ return cb.checked; });
+          var values = checked.map(function(cb){ return cb.value; });
+          var otherBoxes = Array.prototype.slice.call(list.querySelectorAll('input[type="checkbox"]')).filter(function(cb){ return cb !== allBox; });
+          if(allBox){
+            if(this && this === allBox){
+              if(allBox.checked){
+                otherBoxes.forEach(function(cb){ cb.checked = true; });
+                values = [allValue];
+              } else {
+                otherBoxes.forEach(function(cb){ cb.checked = false; });
+                values = [];
+              }
+            } else {
+              var allSelected = otherBoxes.every(function(cb){ return cb.checked; });
+              allBox.checked = allSelected;
+              if(allSelected){ values = [allValue]; }
+              else { values = values.filter(function(v){ return v !== allValue; }); }
+            }
+          }
+
+          hidden.value = values.indexOf(allValue) !== -1 ? allValue : values.filter(function(v){ return v !== allValue; }).join(',');
+          updateSelectedLabel(hidden.value ? hidden.value.split(',').filter(Boolean) : []);
+        }
+
+        function syncFromHidden(){
+          var current = (hidden.value || '').split(',').map(function(s){ return s.trim(); }).filter(Boolean);
+          var isAll = current.indexOf('All') !== -1;
+          list.querySelectorAll('input[type="checkbox"]').forEach(function(cb){
+            if(isAll){ cb.checked = true; }
+            else { cb.checked = current.indexOf(cb.value) !== -1; }
+          });
+          updateSelectedLabel(current);
+        }
+
+        function toggleDropdown(forceClose){
+          if(forceClose === true){ container.classList.remove('open'); return; }
+          container.classList.toggle('open');
+        }
+
+        options.forEach(function(label){
+          var item = document.createElement('label');
+          item.className = 'option-item';
+          item.setAttribute('data-label', label.toLowerCase());
+          var checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.value = label;
+          checkbox.className = 'major-option';
+          var span = document.createElement('span');
+          span.textContent = label;
+          item.appendChild(checkbox);
+          item.appendChild(span);
+          list.appendChild(item);
+          checkbox.addEventListener('change', syncToHidden);
+          item.addEventListener('click', function(e){
+            if(e.target.tagName.toLowerCase() !== 'input'){
+              e.preventDefault();
+              checkbox.checked = !checkbox.checked;
+              checkbox.dispatchEvent(new Event('change'));
+            }
+          });
+        });
+
+        selectedBox.addEventListener('click', function(){ toggleDropdown(); });
+        selectedBox.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggleDropdown(); } });
+        document.addEventListener('click', function(e){ if(!container.contains(e.target)){ toggleDropdown(true); } });
+
+        syncFromHidden();
+      }
+
+      initMultiSelect('major-select', 'major', majorOptions, 'Select major');
+
+      var cohortOptions = ["All Cohort", "2022", "2023", "2024", "2025"];
+      initMultiSelect('cohort-select', 'cohort', cohortOptions, 'Select cohort');
+    })();
+  </script>
 </html>
-
-
-
-
