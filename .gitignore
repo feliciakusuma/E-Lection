@@ -1,4 +1,6 @@
-/backend/logs/
-/backend/keys/
-/keys/
-/logs/
+backend/logs/
+backend/keys/
+keys/
+logs/
+liboqs/
+liboqs-python/

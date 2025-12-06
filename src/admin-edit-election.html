@@ -92,7 +92,6 @@
             <label class="block text-sm font-medium mb-1" for="major">Majors</label>
             {% set current_major = (form_data or {}).get('major', '') %}
             <input type="hidden" id="major" name="major" value="{{ current_major }}" required>
-            <input type="text" id="major_display" name="major_display" class="w-full px-4 py-2 border rounded-md mb-2" placeholder="Select majors" value="" required readonly>
             <div id="major-select-edit" class="multi-select">
               <div class="selected" tabindex="0">
                 <span class="selected-text text-sm text-gray-600">Select major</span>
@@ -106,7 +105,6 @@
             <label class="block text-sm font-medium mb-1" for="cohort">Cohort</label>
             {% set current_cohort = (form_data or {}).get('cohort', 'All Cohort') %}
             <input type="hidden" id="cohort" name="cohort" value="{{ current_cohort }}" required>
-            <input type="text" id="cohort_display" name="cohort_display" class="w-full px-4 py-2 border rounded-md mb-2" placeholder="Select cohort" value="" required readonly>
             <div id="cohort-select-edit" class="multi-select">
               <div class="selected" tabindex="0">
                 <span class="selected-text text-sm text-gray-600">Select cohort</span>

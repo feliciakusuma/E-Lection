@@ -166,8 +166,8 @@
       {% if voters and total_pages and total_pages > 0 %}
       <div class="pagination">
         <div class="pagination-info">
-          {% set start = total_count and ((page-1)*7)+1 or 0 %}
-          {% set end = [page*7, total_count]|min if total_count else 0 %}
+          {% set start = start_idx if start_idx is defined else (total_count and ((page-1)*7)+1 or 0) %}
+          {% set end = end_idx if end_idx is defined else ([page*7, total_count]|min if total_count else 0) %}
           Showing {{ start }} to {{ end }} of {{ total_count }} entries
         </div>
         <div class="pagination-buttons">

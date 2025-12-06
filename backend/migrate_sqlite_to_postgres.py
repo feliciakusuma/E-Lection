@@ -105,7 +105,6 @@ def migrate_elections(sqlite_conn: Connection, pg_conn: Connection) -> None:
                 "is_active": r.is_active,
                 "results_json": results_json,
                 "created_at": r.created_at,
-                "data_hash": getattr(r, "data_hash", None),
             }
         )
     if payload:
@@ -114,13 +113,11 @@ def migrate_elections(sqlite_conn: Connection, pg_conn: Connection) -> None:
                 """
                 INSERT INTO elections (
                     id, title, description, start_date, end_date,
-                    status, is_active, results_json, created_at,
-                    data_hash
+                    status, is_active, results_json, created_at
                 )
                 VALUES (
                     :id, :title, :description, :start_date, :end_date,
-                    :status, :is_active, :results_json, :created_at,
-                    :data_hash
+                    :status, :is_active, :results_json, :created_at
                 )
                 """
             ),
@@ -202,7 +199,6 @@ def main() -> None:
                 "status",
                 "is_active",
                 "created_at",
-                "data_hash",
             ],
         )
         migrate_table_copy(
@@ -211,7 +207,8 @@ def main() -> None:
             "votes",
             [
                 "vote_id",
-                "voter_hash",
+                "voter_id",
+                "voter_nonce",
                 "candidate_id",
                 "election_id",
                 "vote_encrypted",
@@ -222,7 +219,6 @@ def main() -> None:
                 "verification_code",
                 "is_counted",
                 "created_at",
-                "data_hash",
                 "ticket_id",
             ],
         )

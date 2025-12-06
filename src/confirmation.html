@@ -94,6 +94,8 @@
       <form action="/vote" method="post" class="form-stack">
         <input type="hidden" name="candidate_id" value="{{ candidate.id }}">
         <input type="hidden" name="election_id" value="{{ election.id }}">
+        {# Use the signed-in user's email as voter identifier for hashing/duplicate checks #}
+        <input type="hidden" name="voter_id" value="{{ request.cookies.get('user_email') or '' }}">
         <div class="btn-row">
           <a href="/candidates?election_id={{ election.id if election else '' }}" class="btn-goback flex-1">Go Back</a>
           <button type="submit" class="btn-confirm flex-1">Confirm My Vote</button>

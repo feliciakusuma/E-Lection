@@ -92,6 +92,7 @@ def deserialize_stateful_signature_key(
     public_key_bytes = one_asym_key["publicKey"].asOctets()
     return private_key_bytes, public_key_bytes
 
+
 def _may_generate_stfl_key(
     key_name: str, dir_name: str
 ) -> tuple[Optional[bytes], Optional[bytes]]:

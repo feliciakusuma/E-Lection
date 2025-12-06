@@ -317,7 +317,6 @@ def ensure_core_schema():
                         or "email_encrypted" in legacy_cols
                         or "student_id_encrypted" in legacy_cols
                         or "created_by" in legacy_cols
-                        or "data_hash" in legacy_cols
                         or "is_admin" in legacy_cols):
                     conn.execute(text("DROP TABLE IF EXISTS users CASCADE;"))
 
@@ -360,7 +359,8 @@ def ensure_core_schema():
                 "votes",
                 {
                     "id",
-                    "voter_hash",
+                    "voter_id",
+                    "voter_nonce",
                     "ticket_id",
                     "candidate_id",
                     "election_id",
@@ -372,7 +372,6 @@ def ensure_core_schema():
                     "verification_code",
                     "is_counted",
                     "created_at",
-                    "data_hash",
                 },
             )
             drop_if_missing(
@@ -392,7 +391,6 @@ def ensure_core_schema():
                     "status",
                     "is_active",
                     "created_at",
-                    "data_hash",
                 },
             )
             drop_if_missing(
@@ -407,7 +405,6 @@ def ensure_core_schema():
                     "is_active",
                     "results_json",
                     "created_at",
-                    "data_hash",
                 },
             )
             drop_if_missing(

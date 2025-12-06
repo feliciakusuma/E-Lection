@@ -171,6 +171,25 @@ def public_dashboard(request: Request, db: Session = Depends(get_db)):
     if not active_election:
         message = "There is no active election right now."
 
+    # Mark elections as voted for the logged-in user (so the UI shows "View Results" instead of "Vote Now")
+    try:
+        user_email = request.cookies.get("user_email")
+        user_obj = User.find_by_email(db, user_email) if user_email else None
+        if user_obj and elections:
+            election_ids = [entry["election"].id for entry in elections]
+            voted_ids = set()
+            for v in db.query(Vote).filter(Vote.election_id.in_(election_ids)).all():
+                try:
+                    if v.voter_id_plain and str(v.voter_id_plain) == str(user_obj.id):
+                        voted_ids.add(v.election_id)
+                except Exception:
+                    continue
+            for entry in elections:
+                if entry["election"].id in voted_ids:
+                    entry["user_has_voted"] = True
+    except Exception:
+        pass
+
     return templates.TemplateResponse(
         "dashboard.html",
         {
@@ -251,7 +270,7 @@ def admin_elections(request: Request, db: Session = Depends(get_db)):
         candidates_count = db.query(CandidateTicket).filter(CandidateTicket.election_id == e.id).count()
         if candidates_count == 0:
             candidates_count = db.query(Candidate).filter(Candidate.position == e.title).count()
-        voters_count = db.query(Vote.voter_hash).filter(Vote.election_id == e.id).distinct().count()
+        voters_count = db.query(Vote.voter_id).filter(Vote.election_id == e.id).distinct().count()
 
         if status_filter != "all" and dstatus != status_filter:
             continue
@@ -365,7 +384,6 @@ def add_election_submit(
             status="upcoming",
             is_active=is_active,
         )
-        e.data_hash = e.title
         db.add(e)
         db.commit()
         return RedirectResponse(url="/admin-elections?success=1", status_code=303)

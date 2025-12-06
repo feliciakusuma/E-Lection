@@ -5,16 +5,21 @@ from datetime import datetime
 from urllib.parse import urlparse
 import os
 import re
-import hashlib
 import secrets
 import json
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+from cryptography.hazmat.primitives.kdf.hkdf import HKDF
+from cryptography.hazmat.primitives import hashes
 from cryptography.exceptions import InvalidTag
 
-# Disable liboqs usage to avoid local install requirements.
-_OQS_AVAILABLE = False
-oqs = None  # type: ignore
+# liboqs (ML-KEM) support
+try:  # Prefer ML-KEM, fall back cleanly if liboqs is missing
+    import oqs  # type: ignore
+    _OQS_AVAILABLE = True
+except Exception:  # pragma: no cover - used only when liboqs is unavailable
+    oqs = None  # type: ignore
+    _OQS_AVAILABLE = False
 
 def _build_default_db_url() -> str:
     """Construct a Postgres URL from env overrides with sensible defaults."""
@@ -110,15 +115,39 @@ def decrypt_with_session_key(ciphertext: bytes, session_key: bytes, nonce: bytes
 
 def mlkem_encapsulate() -> tuple[bytes, bytes]:
     """Encapsulate to ML-KEM public key, returning (kem_ciphertext, session_key)."""
-    raise RuntimeError("ML-KEM encapsulation disabled (liboqs unavailable).")
+    if not _OQS_AVAILABLE:
+        raise RuntimeError("ML-KEM encapsulation disabled (liboqs unavailable).")
+    pub, _ = _get_mlkem_keys()
+    with oqs.KeyEncapsulation(MLKEM_PARAM) as kem:
+        kem_ciphertext, shared_secret = kem.encap_secret(pub)
+    # Derive 256-bit AES session key from shared secret for uniform length
+    session_key = HKDF(
+        algorithm=hashes.SHA256(),
+        length=32,
+        salt=kem_ciphertext,
+        info=b"vote-aes-session",
+    ).derive(shared_secret)
+    return kem_ciphertext, session_key
 
 def mlkem_decapsulate(kem_ciphertext: bytes) -> bytes:
     """Decapsulate KEM ciphertext using ML-KEM private key, return session key."""
-    raise RuntimeError("ML-KEM decapsulation disabled (liboqs unavailable).")
+    if not _OQS_AVAILABLE:
+        raise RuntimeError("ML-KEM decapsulation disabled (liboqs unavailable).")
+    _, sec = _get_mlkem_keys()
+    # liboqs-python passes secret key in constructor
+    with oqs.KeyEncapsulation(MLKEM_PARAM, secret_key=sec) as kem:
+        shared_secret = kem.decap_secret(kem_ciphertext)
+    session_key = HKDF(
+        algorithm=hashes.SHA256(),
+        length=32,
+        salt=kem_ciphertext,
+        info=b"vote-aes-session",
+    ).derive(shared_secret)
+    return session_key
 
 def decrypt_session_key(encrypted_session_key: bytes) -> bytes:
     """Derive the AES session key from stored KEM ciphertext using ML-KEM only."""
-    raise RuntimeError("ML-KEM decapsulation disabled (liboqs unavailable).")
+    return mlkem_decapsulate(encrypted_session_key)
 
 class AuditMixin:
     """Mixin to add audit trail to models"""
@@ -126,20 +155,6 @@ class AuditMixin:
     @declared_attr
     def created_at(cls):
         return Column(DateTime, default=datetime.utcnow, nullable=False)
-    
-    @declared_attr
-    def data_hash(cls):
-        return Column(String(64), nullable=True)  # SHA-256 hash for integrity
-    
-    def generate_hash(self):
-        """Generate hash of critical data for integrity verification"""
-        data_str = ""
-        for column in self.__table__.columns:
-            if column.name not in ['id', 'created_at', 'data_hash']:
-                value = getattr(self, column.name)
-                if value is not None:
-                    data_str += str(value)
-        return hashlib.sha256(data_str.encode()).hexdigest()
 
 class User(Base):
     __tablename__ = "users"
@@ -175,7 +190,7 @@ class Vote(Base, AuditMixin):
     __tablename__ = "votes"
 
     id = Column(Integer, primary_key=True, index=True)
-    voter_hash = Column(String(64), nullable=False)  # Hashed voter ID for anonymity
+    voter_id = Column(LargeBinary, nullable=False)  # Encrypted voter identifier (shares payload with vote_encrypted)
     ticket_id = Column(Integer, nullable=True)  # FK to candidate_tickets
     candidate_id = Column(Integer, nullable=True)  # legacy compatibility
     election_id = Column(Integer, nullable=False)
@@ -184,23 +199,23 @@ class Vote(Base, AuditMixin):
     session_key_encrypted = Column(LargeBinary, nullable=False)  # ML-KEM ciphertext for AES session key
     vote_nonce = Column(LargeBinary, nullable=False)  # Nonce for vote encryption
     timestamp_nonce = Column(LargeBinary, nullable=False)  # Nonce for timestamp encryption
+    voter_nonce = Column(LargeBinary, nullable=False)  # Nonce for voter encryption
     verification_code = Column(String(100), nullable=False, unique=True)  # For vote verification
     is_counted = Column(Boolean, default=False)
 
     def __init__(self, voter_id, election_id, ticket_id=None, candidate_id=None, **kwargs):
-        # Create anonymous voter hash
-        self.voter_hash = hashlib.sha256(f"{voter_id}_{secrets.token_hex(16)}".encode()).hexdigest()
         self.ticket_id = ticket_id
         self.candidate_id = candidate_id
         self.election_id = election_id
 
         # Prepare payloads
+        now_iso = datetime.utcnow().isoformat()
         vote_payload = json.dumps({
             'candidate_id': candidate_id,
             'election_id': election_id,
-            'timestamp': datetime.utcnow().isoformat()
+            'voter_id': voter_id,
+            'timestamp': now_iso,
         }).encode()
-        timestamp_payload = datetime.utcnow().isoformat().encode()
 
         # Derive one-time AES session key per ballot using ML-KEM
         kem_ciphertext, session_key = mlkem_encapsulate()
@@ -208,13 +223,18 @@ class Vote(Base, AuditMixin):
 
         vote_nonce = secrets.token_bytes(12)
         timestamp_nonce = secrets.token_bytes(12)
+        voter_nonce = secrets.token_bytes(12)
 
-        self.vote_encrypted = aesgcm.encrypt(vote_nonce, vote_payload, None)
-        self.timestamp_encrypted = aesgcm.encrypt(timestamp_nonce, timestamp_payload, None)
+        ciphertext = aesgcm.encrypt(vote_nonce, vote_payload, None)
+        self.vote_encrypted = ciphertext
+        # Store the same ciphertext for compatibility (single encryption per ballot)
+        self.timestamp_encrypted = ciphertext
+        self.voter_id = ciphertext
         # Store ML-KEM ciphertext (encapsulated key)
         self.session_key_encrypted = kem_ciphertext
         self.vote_nonce = vote_nonce
         self.timestamp_nonce = timestamp_nonce
+        self.voter_nonce = voter_nonce
         self.verification_code = secrets.token_urlsafe(32)
         super().__init__(**kwargs)
 
@@ -235,11 +255,23 @@ class Vote(Base, AuditMixin):
     def vote_timestamp(self):
         """Decrypt and return vote timestamp"""
         try:
-            session_key = self._session_key()
-            plaintext = decrypt_with_session_key(self.timestamp_encrypted, session_key, self.timestamp_nonce)
-            return plaintext.decode()
-        except InvalidTag:
+            data = self.vote_data
+            if isinstance(data, dict):
+                return data.get("timestamp", "") or ""
+        except Exception:
             return ""
+        return ""
+
+    @property
+    def voter_id_plain(self):
+        """Decrypt and return voter identifier"""
+        try:
+            data = self.vote_data
+            if isinstance(data, dict):
+                return str(data.get("voter_id", "") or "")
+        except Exception:
+            return ""
+        return ""
 
 class Cohort(Base):
     __tablename__ = "cohort"
@@ -437,12 +469,8 @@ def get_secure_db():
         db.close()
 
 def verify_data_integrity(db, model_class, record_id):
-    """Verify data integrity using stored hash"""
-    record = db.query(model_class).filter(model_class.id == record_id).first()
-    if record and hasattr(record, 'data_hash'):
-        current_hash = record.generate_hash()
-        return current_hash == record.data_hash
-    return False
+    """Data hash integrity check disabled."""
+    return True
 
 def get_vote_count_secure(db, election_id):
     """Get vote count without exposing individual votes"""

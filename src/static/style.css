@@ -2042,6 +2042,7 @@ body { margin: 0; }
   align-items: center;
   justify-content: center;
   margin: auto 0;
+  min-height: 260px;
 }
 
 .results-chart-container canvas {
@@ -2075,5 +2076,37 @@ body { margin: 0; }
 
 .results-list > div:last-child {
   margin-bottom: 0;
+}
+
+/* Live results (admin dashboard) */
+.live-results-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.live-results-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  width: 100%;
+  min-height: 420px;
+}
+@media (min-width: 1024px) {
+  .live-results-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.live-results-chart {
+  height: 100%;
+}
+
+.live-results-sidebar {
+  height: 100%;
+}
+
+.activity-scroll {
+  max-height: 320px;
+  overflow-y: auto;
 }
 

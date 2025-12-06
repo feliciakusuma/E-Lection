@@ -110,7 +110,10 @@
           return basePalette[idx % basePalette.length];
         });
         var maxVotes = data.length ? Math.max.apply(null, data) : 0;
-        var yMax = hasVotes ? Math.max((Math.ceil(maxVotes / 20) + 1) * 20, 100) : 100;
+        var eligibleCap = {{ eligible_voters or 0 }};
+        var dynamicCap = hasVotes ? Math.max((Math.ceil(maxVotes / 10) + 1) * 10, 10) : 10;
+        var yMax = (eligibleCap && eligibleCap > 0) ? eligibleCap : dynamicCap;
+        var step = yMax > 0 ? Math.max(1, Math.ceil(yMax / 5)) : 1;
         new Chart(ctx, {
           type: 'bar',
           data: {
@@ -151,7 +154,7 @@
                   border: { display: false },
                   ticks: {
                     precision: 0,
-                    stepSize: 25,
+                    stepSize: step,
                     color: '#000',
                     callback: function(value){ return Number.isInteger(value) ? value : ''; }
                   }

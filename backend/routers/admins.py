@@ -1,4 +1,6 @@
 from datetime import datetime, timedelta
+import json
+import hashlib
 from fastapi import APIRouter, Depends, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy import func, or_, text
@@ -21,6 +23,14 @@ from ..services.audit import log_security_event, security_logger
 from ..utils.counts import get_eligible_voters_count
 
 router = APIRouter()
+
+
+def _ticket_label(president: Candidate | None, vice: Candidate | None) -> str:
+    pres_name = (getattr(president, "full_name", "") or "").strip()
+    vice_name = (getattr(vice, "full_name", "") or "").strip()
+    if pres_name and vice_name:
+        return f"{pres_name} & {vice_name}"
+    return pres_name or vice_name or ""
 
 
 @router.get("/admin-dashboard", response_class=HTMLResponse)
@@ -179,7 +189,7 @@ def admin_dashboard(request: Request, db: Session = Depends(get_db)):
                 title = "an election"
             ts = getattr(v, "created_at", None)
             activity_items.append(
-                {"icon": "fa-vote-yea", "color": "green", "text": f"New vote cast in {title}", "time": relative_time(ts), "ts": ts}
+                {"icon": "fa-vote-yea", "color": "green", "text": f"New vote cast: {title}", "time": relative_time(ts), "ts": ts}
             )
     except Exception:
         pass
@@ -267,6 +277,7 @@ def admin_dashboard(request: Request, db: Session = Depends(get_db)):
         elections = []
 
     current_election = None
+    eligible_voters_current = None
     live_results = []
     if elections:
         try:
@@ -280,6 +291,19 @@ def admin_dashboard(request: Request, db: Session = Depends(get_db)):
 
     # Build live results aligned with results page
     if current_election:
+        # Election-specific eligible voters (matches results page scaling)
+        try:
+            meta = {}
+            if current_election.description and str(current_election.description).strip().startswith("{"):
+                meta = json.loads(current_election.description)
+            eligible_voters_current = int(meta.get("eligible_voters") or 0)
+        except Exception:
+            eligible_voters_current = None
+        if not eligible_voters_current:
+            try:
+                eligible_voters_current = get_eligible_voters_count(db)
+            except Exception:
+                eligible_voters_current = 0
         try:
             vote_counts = get_vote_count_secure(db, current_election.id)
             tickets = db.query(CandidateTicket).filter(CandidateTicket.election_id == current_election.id).all()
@@ -293,9 +317,7 @@ def admin_dashboard(request: Request, db: Session = Depends(get_db)):
                     if t.vice_president_candidate_id
                     else None
                 )
-                name = (getattr(pres, "full_name", "") or "").strip()
-                if vice:
-                    name = f"{name} & {getattr(vice, 'full_name', '').strip()}"
+                name = _ticket_label(pres, vice)
                 if not name:
                     continue
                 raw.append({"name": name, "votes": int(vote_counts.get(t.id, 0))})
@@ -307,11 +329,27 @@ def admin_dashboard(request: Request, db: Session = Depends(get_db)):
                         {"name": getattr(c, "full_name", f"Candidate {c.id}"), "votes": int(vote_counts.get(f"legacy_candidate_{c.id}", 0))}
                     )
 
-            for key, count in vote_counts.items():
-                if isinstance(key, str) and key.startswith("legacy_candidate_"):
-                    cid = int(key.split("_")[-1])
-                    c = db.query(Candidate).filter(Candidate.id == cid).first()
-                    raw.append({"name": getattr(c, "full_name", f"Candidate {cid}"), "votes": int(count)})
+            if tickets:
+                for key, count in vote_counts.items():
+                    if isinstance(key, str) and key.startswith("legacy_candidate_"):
+                        cid = int(key.split("_")[-1])
+                        c = db.query(Candidate).filter(Candidate.id == cid).first()
+                        ticket_match = (
+                            db.query(CandidateTicket)
+                            .filter(CandidateTicket.election_id == current_election.id, CandidateTicket.president_candidate_id == cid)
+                            .first()
+                        )
+                        if ticket_match:
+                            pres = c
+                            vice = (
+                                db.query(Candidate).filter(Candidate.id == ticket_match.vice_president_candidate_id).first()
+                                if ticket_match.vice_president_candidate_id
+                                else None
+                            )
+                            name = _ticket_label(pres, vice)
+                        else:
+                            name = getattr(c, "full_name", f"Candidate {cid}")
+                        raw.append({"name": name, "votes": int(count)})
 
             if not raw:
                 candidates = db.query(Candidate).filter(Candidate.position == current_election.title).all()
@@ -325,6 +363,11 @@ def admin_dashboard(request: Request, db: Session = Depends(get_db)):
                         raw.append({"name": name, "votes": 0})
                 else:
                     raw.append({"name": "No candidates", "votes": 0})
+
+            aggregated = {}
+            for r in raw:
+                aggregated[r["name"]] = aggregated.get(r["name"], 0) + r["votes"]
+            raw = [{"name": name, "votes": votes} for name, votes in aggregated.items()]
 
             total_votes_live = sum(r["votes"] for r in raw) or 0
             palette = ["#2563eb", "#22c55e", "#7c3aed", "#f59e0b", "#06b6d4"]
@@ -407,6 +450,8 @@ def admin_dashboard(request: Request, db: Session = Depends(get_db)):
             "recent_activity": activity_items,
             "current_election": current_election,
             "live_results": live_results,
+            "eligible_voters": total_voters,
+            "eligible_voters_current": eligible_voters_current,
         },
     )
 
@@ -432,26 +477,53 @@ def admin_voters(request: Request, db: Session = Depends(get_db)):
             )
         )
 
-    # Compute has_voted by matching hashed student_id + election_id to stored voter_hashes.
-    votes_hashes = {v[0] for v in db.query(Vote.voter_hash).all()}
+    # Compute has_voted by decrypting voter identifiers; fall back to legacy hashes
     election_ids = [row[0] for row in db.query(Election.id).all()]
+    votes_all = db.query(Vote).all()
+
+    def vote_matches_user(vote: Vote, user: User) -> bool:
+        ident_email = (user.email or "").strip()
+        ident_sid = (user.student_id or "").strip()
+        ident_id = str(getattr(user, "id", "") or "").strip()
+
+        # Primary: decrypt stored voter_id
+        try:
+            plain = vote.voter_id_plain or ""
+            if plain and (plain == ident_email or plain == ident_sid or plain == ident_id):
+                return True
+        except Exception:
+            pass
+
+        # Fallback: legacy hashed bytes (hex string from earlier versions)
+        try:
+            raw = (vote.voter_id or b"").decode(errors="ignore")
+        except Exception:
+            raw = ""
+        if raw and len(raw) == 64:
+            try:
+                import hashlib
+                if ident_email and raw == hashlib.sha256(f"{ident_email}_{vote.election_id}".encode()).hexdigest():
+                    return True
+                if ident_sid and raw == hashlib.sha256(f"{ident_sid}_{vote.election_id}".encode()).hexdigest():
+                    return True
+                if ident_id and raw == hashlib.sha256(f"{ident_id}_{vote.election_id}".encode()).hexdigest():
+                    return True
+            except Exception:
+                pass
+        return False
 
     def user_has_voted(user: User) -> bool:
-        sid = (user.student_id or "").strip()
-        if not sid or not election_ids or not votes_hashes:
+        if not election_ids or not votes_all:
             return False
-        for eid in election_ids:
-            hval = hashlib.sha256(f"{sid}_{eid}".encode()).hexdigest()
-            if hval in votes_hashes:
+        for v in votes_all:
+            if v.election_id not in election_ids:
+                continue
+            if vote_matches_user(v, user):
                 return True
         return False
 
-    total_count = query.count()
-    voters_all = (
-        query.order_by(User.created_at.desc()).offset(offset).limit(page_size).all()
-        if hasattr(User, "created_at")
-        else query.all()
-    )
+    total_count = query.count()  # total voters (unfiltered)
+    voters_all = query.order_by(User.created_at.desc()).all() if hasattr(User, "created_at") else query.all()
 
     voter_rows = []
     for v in voters_all:
@@ -468,19 +540,32 @@ def admin_voters(request: Request, db: Session = Depends(get_db)):
     elif sf == "not_voted":
         voter_rows = [row for row in voter_rows if not row[1]]
 
-    total_pages = (total_count + page_size - 1) // page_size if total_count else 1
+    # Apply pagination after filtering; clamp page to filtered total
+    filtered_total = len(voter_rows)
+    total_pages = (filtered_total + page_size - 1) // page_size if filtered_total else 1
+    if page > total_pages:
+        page = total_pages
+        offset = (page - 1) * page_size if page > 0 else 0
+    if page < 1:
+        page = 1
+        offset = 0
+    paginated_rows = voter_rows[offset : offset + page_size]
+    start_idx = offset + 1 if filtered_total > 0 else 0
+    end_idx = min(offset + page_size, filtered_total) if filtered_total > 0 else 0
 
     return templates.TemplateResponse(
         "admin-voters.html",
         {
             "request": request,
-            "voters": voter_rows,
+            "voters": paginated_rows,
             "status_filter": sf,
             "success": None,
             "error": None,
             "page": page,
             "total_pages": total_pages,
-            "total_count": total_count,
+            "total_count": filtered_total,
+            "start_idx": start_idx,
+            "end_idx": end_idx,
         },
     )
 

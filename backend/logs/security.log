@@ -6221,3 +6221,587 @@ WHERE admins.email = %(email_1)s
 2025-12-05 20:51:51,070 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
 2025-12-05 20:51:51,819 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
 2025-12-05 20:51:52,974 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-06 17:58:18,763 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 17:58:19,180 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 17:58:23,598 - security - INFO - Request: GET http://127.0.0.1:8000/admin from 127.0.0.1
+2025-12-06 17:58:23,944 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-06 17:58:25,026 - security - INFO - Request: GET http://127.0.0.1:8000/favicon.ico from 127.0.0.1
+2025-12-06 17:58:26,091 - security - INFO - Request: POST http://127.0.0.1:8000/admin from 127.0.0.1
+2025-12-06 17:58:27,046 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-06 17:58:27,622 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-06 17:58:29,417 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 17:58:30,513 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-06 17:58:31,711 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 17:58:32,768 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-12-06 17:58:34,473 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 17:58:41,752 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 17:58:45,439 - security - INFO - Request: GET http://127.0.0.1:8000/results/2 from 127.0.0.1
+2025-12-06 18:04:08,441 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 18:04:09,973 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 18:04:10,240 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 18:04:17,140 - security - INFO - Request: GET http://127.0.0.1:8000/logout from 127.0.0.1
+2025-12-06 18:04:17,194 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-12-06 18:04:18,545 - security - INFO - Request: GET http://127.0.0.1:8000/login/google from 127.0.0.1
+2025-12-06 18:04:22,328 - security - INFO - Request: GET http://127.0.0.1:8000/authorize?state=FYcUjgnifjA9x4_83c8IrLVnkZsP5_c8&code=4%2F0Ab32j91YPxzwaeDKudbiUH1Vdmyrz6ZN3BfEQ8YTG2yic8oajS8wlsFVXyfBtF2jxIdgNg&scope=email+profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&authuser=1&prompt=none from 127.0.0.1
+2025-12-06 18:04:25,777 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 18:04:32,561 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-06 18:04:34,973 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 18:04:35,883 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-06 18:04:36,989 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 18:04:37,874 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-12-06 19:03:16,489 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 19:03:17,064 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 19:28:10,499 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-12-06 19:28:13,041 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-06 19:28:14,060 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 19:28:15,374 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-06 21:15:16,399 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:15:16,713 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:15:38,823 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 21:15:39,502 - security - INFO - Request: GET http://127.0.0.1:8000/favicon.ico from 127.0.0.1
+2025-12-06 21:15:41,023 - security - INFO - Request: GET http://127.0.0.1:8000/results/2 from 127.0.0.1
+2025-12-06 21:15:46,633 - security - INFO - Request: GET http://127.0.0.1:8000/admin from 127.0.0.1
+2025-12-06 21:15:48,224 - security - INFO - Request: POST http://127.0.0.1:8000/admin from 127.0.0.1
+2025-12-06 21:15:48,753 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-06 21:15:52,509 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-12-06 21:15:54,221 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 21:15:57,610 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-06 21:16:01,638 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 21:16:02,888 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-12-06 21:16:03,896 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 21:16:06,929 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/1 from 127.0.0.1
+2025-12-06 21:16:16,689 - security - INFO - Request: POST http://127.0.0.1:8000/edit-election/1 from 127.0.0.1
+2025-12-06 21:16:16,768 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?updated=1 from 127.0.0.1
+2025-12-06 21:16:24,478 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 21:16:56,880 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:16:57,181 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:17:10,789 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:17:11,087 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:17:19,212 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=1 from 127.0.0.1
+2025-12-06 21:17:22,059 - security - INFO - Request: GET http://127.0.0.1:8000/confirmation?candidate_id=6&election_id=1 from 127.0.0.1
+2025-12-06 21:17:23,407 - security - INFO - Request: POST http://127.0.0.1:8000/vote from 127.0.0.1
+2025-12-06 21:17:23,483 - security - INFO - Vote cast successfully - Election: 1, Verification: LK8EPpfLzl-Bf-AmNHhS2w3iOZqUYFhbPrfPBdh9cik
+2025-12-06 21:17:23,497 - security - INFO - Request: GET http://127.0.0.1:8000/results/1?verification_code=LK8EPpfLzl-Bf-AmNHhS2w3iOZqUYFhbPrfPBdh9cik from 127.0.0.1
+2025-12-06 21:17:49,128 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/1 from 127.0.0.1
+2025-12-06 21:17:51,003 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 21:19:25,675 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 21:19:27,761 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=1 from 127.0.0.1
+2025-12-06 21:20:21,965 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:20:22,549 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:20:36,041 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:20:36,389 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:20:45,669 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:20:46,096 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:20:46,112 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-06 21:20:54,194 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:20:54,608 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:20:54,618 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-06 21:21:07,409 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-06 21:21:20,286 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 21:22:10,122 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:22:10,422 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:22:22,928 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 21:22:24,476 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-06 21:22:30,997 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/2 from 127.0.0.1
+2025-12-06 21:22:37,951 - security - INFO - Request: POST http://127.0.0.1:8000/edit-election/2 from 127.0.0.1
+2025-12-06 21:22:37,986 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?updated=1 from 127.0.0.1
+2025-12-06 21:22:40,961 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 21:22:42,121 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=2 from 127.0.0.1
+2025-12-06 21:22:44,046 - security - INFO - Request: GET http://127.0.0.1:8000/confirmation?candidate_id=9&election_id=2 from 127.0.0.1
+2025-12-06 21:22:45,053 - security - INFO - Request: POST http://127.0.0.1:8000/vote from 127.0.0.1
+2025-12-06 21:22:45,108 - security - INFO - Vote cast successfully - Election: 2, Verification: BxiLapTLR_G2bbkxGPMl4Yuy_QvfX_mrZ2extvkQYnk
+2025-12-06 21:22:45,121 - security - INFO - Request: GET http://127.0.0.1:8000/results/2?verification_code=BxiLapTLR_G2bbkxGPMl4Yuy_QvfX_mrZ2extvkQYnk from 127.0.0.1
+2025-12-06 21:23:14,975 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:23:15,269 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:23:55,977 - security - INFO - Request: GET http://127.0.0.1:8000/results/2?verification_code=BxiLapTLR_G2bbkxGPMl4Yuy_QvfX_mrZ2extvkQYnk from 127.0.0.1
+2025-12-06 21:24:00,510 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 21:24:01,836 - security - INFO - Request: GET http://127.0.0.1:8000/results/2 from 127.0.0.1
+2025-12-06 21:24:17,372 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-06 21:24:28,520 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:24:29,000 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:24:42,565 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:24:43,065 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:24:43,091 - security - INFO - Request: POST http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-06 21:24:43,148 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?success=1 from 127.0.0.1
+2025-12-06 21:24:45,883 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-06 21:24:55,378 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:24:55,803 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:24:56,934 - security - INFO - Request: GET http://127.0.0.1:8000/admin-edit-candidate/7 from 127.0.0.1
+2025-12-06 21:24:59,766 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-06 21:25:05,363 - security - INFO - Request: GET http://127.0.0.1:8000/results/2 from 127.0.0.1
+2025-12-06 21:25:14,281 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-12-06 21:25:45,038 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-12-06 21:26:10,059 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 21:26:13,313 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-06 21:26:14,687 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 21:26:15,495 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-12-06 21:26:16,358 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-06 21:26:17,013 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 21:26:41,411 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 21:26:50,860 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 21:27:11,152 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:27:11,452 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:28:40,038 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 21:28:46,205 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-06 21:28:48,748 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-12-06 21:28:54,712 - security - INFO - Request: POST http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-12-06 21:28:54,780 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?created=1 from 127.0.0.1
+2025-12-06 21:28:55,792 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 21:28:59,707 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-06 21:29:01,010 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-12-06 21:29:06,258 - security - INFO - Request: POST http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-12-06 21:29:06,294 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?created=1 from 127.0.0.1
+2025-12-06 21:29:08,928 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 21:29:11,672 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=9 from 127.0.0.1
+2025-12-06 21:29:14,451 - security - INFO - Request: GET http://127.0.0.1:8000/confirmation?candidate_id=16&election_id=9 from 127.0.0.1
+2025-12-06 21:29:16,394 - security - INFO - Request: POST http://127.0.0.1:8000/vote from 127.0.0.1
+2025-12-06 21:29:16,415 - security - WARNING - SECURITY EVENT: VOTE_BLOCKED - Invalid election: 9 - IP: 127.0.0.1 - User: felicia.kusuma294@gmail.com
+2025-12-06 21:29:23,711 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=9 from 127.0.0.1
+2025-12-06 21:29:27,800 - security - INFO - Request: GET http://127.0.0.1:8000/confirmation?candidate_id=16&election_id=9 from 127.0.0.1
+2025-12-06 21:29:30,492 - security - INFO - Request: POST http://127.0.0.1:8000/vote from 127.0.0.1
+2025-12-06 21:29:30,506 - security - WARNING - SECURITY EVENT: VOTE_BLOCKED - Invalid election: 9 - IP: 127.0.0.1 - User: felicia.kusuma294@gmail.com
+2025-12-06 21:29:39,492 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 21:29:42,709 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/9 from 127.0.0.1
+2025-12-06 21:29:51,972 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 21:29:53,344 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-06 21:29:54,841 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 21:29:55,934 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/9 from 127.0.0.1
+2025-12-06 21:29:57,737 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 21:30:38,499 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 21:30:47,541 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=9 from 127.0.0.1
+2025-12-06 21:30:56,121 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:30:56,577 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:30:56,590 - security - INFO - Request: GET http://127.0.0.1:8000/confirmation?candidate_id=16&election_id=9 from 127.0.0.1
+2025-12-06 21:30:56,604 - security - INFO - Request: GET http://127.0.0.1:8000/confirmation?candidate_id=16&election_id=9 from 127.0.0.1
+2025-12-06 21:31:07,809 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:31:08,106 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:31:09,152 - security - INFO - Request: POST http://127.0.0.1:8000/vote from 127.0.0.1
+2025-12-06 21:31:09,221 - security - INFO - Vote cast successfully - Election: 9, Verification: -K-5JqKO7IrWjU99CUKKFRYat9S3iRva43DGzZsHIMQ
+2025-12-06 21:31:09,233 - security - INFO - Request: GET http://127.0.0.1:8000/results/9?verification_code=-K-5JqKO7IrWjU99CUKKFRYat9S3iRva43DGzZsHIMQ from 127.0.0.1
+2025-12-06 21:31:15,840 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 21:31:17,983 - security - INFO - Request: GET http://127.0.0.1:8000/results/9 from 127.0.0.1
+2025-12-06 21:31:23,520 - security - INFO - Request: GET http://127.0.0.1:8000/results/9 from 127.0.0.1
+2025-12-06 21:32:31,856 - security - INFO - Request: GET http://127.0.0.1:8000/admin from 127.0.0.1
+2025-12-06 21:32:35,959 - security - INFO - Request: POST http://127.0.0.1:8000/admin from 127.0.0.1
+2025-12-06 21:32:35,967 - security - WARNING - SECURITY EVENT: ADMIN_LOGIN_FAILED - Invalid admin credentials for: felicia.kusua294@gmail.com - IP: 127.0.0.1 - User: None
+2025-12-06 21:32:40,038 - security - INFO - Request: POST http://127.0.0.1:8000/admin from 127.0.0.1
+2025-12-06 21:32:40,475 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-06 21:32:47,482 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-06 21:32:51,498 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-06 21:33:11,010 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:33:11,442 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:33:26,244 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:33:26,539 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:33:29,199 - security - INFO - Request: GET http://127.0.0.1:8000/results/9 from 127.0.0.1
+2025-12-06 21:33:32,442 - security - INFO - Request: GET http://127.0.0.1:8000/results/9 from 127.0.0.1
+2025-12-06 21:33:43,981 - security - INFO - Request: GET http://127.0.0.1:8000/results/9 from 127.0.0.1
+2025-12-06 21:33:44,971 - security - INFO - Request: GET http://127.0.0.1:8000/results/9 from 127.0.0.1
+2025-12-06 21:34:34,989 - security - INFO - Request: GET http://127.0.0.1:8000/results/9 from 127.0.0.1
+2025-12-06 21:34:37,564 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 21:34:39,309 - security - INFO - Request: GET http://127.0.0.1:8000/results/2 from 127.0.0.1
+2025-12-06 21:35:39,147 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:35:39,443 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:35:54,392 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:35:54,681 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:36:14,990 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-06 21:36:17,866 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-06 21:36:19,390 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-06 21:36:21,639 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=9 from 127.0.0.1
+2025-12-06 21:37:21,324 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=9 from 127.0.0.1
+2025-12-06 21:37:22,404 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=9 from 127.0.0.1
+2025-12-06 21:37:26,141 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-06 21:37:28,225 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-06 21:37:30,135 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-06 21:37:31,692 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=9 from 127.0.0.1
+2025-12-06 21:37:34,464 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:37:34,760 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:37:36,569 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=9 from 127.0.0.1
+2025-12-06 21:37:42,519 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-06 21:37:45,622 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-06 21:37:50,447 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-06 21:39:15,212 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-06 21:39:17,337 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=9 from 127.0.0.1
+2025-12-06 21:39:20,013 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-06 21:39:22,008 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-06 21:39:28,995 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=9 from 127.0.0.1
+2025-12-06 21:39:40,569 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-06 21:40:32,744 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-06 21:40:35,447 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-06 21:40:37,579 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=9 from 127.0.0.1
+2025-12-06 21:41:33,290 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-06 21:41:57,240 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=9 from 127.0.0.1
+2025-12-06 21:42:11,887 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=9 from 127.0.0.1
+2025-12-06 21:42:13,228 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=9 from 127.0.0.1
+2025-12-06 21:42:15,629 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-06 21:42:38,782 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-06 21:43:06,700 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-06 21:43:18,913 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-06 21:44:03,543 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-06 21:44:11,293 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-06 21:44:34,859 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-06 21:44:44,416 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-06 21:44:50,481 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-06 21:44:59,875 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-06 21:45:02,544 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=9 from 127.0.0.1
+2025-12-06 21:45:05,757 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-06 21:45:08,282 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-06 21:45:13,656 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-06 21:45:16,146 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=9 from 127.0.0.1
+2025-12-06 21:45:30,924 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=9 from 127.0.0.1
+2025-12-06 21:46:34,352 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=9 from 127.0.0.1
+2025-12-06 21:46:43,733 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=9 from 127.0.0.1
+2025-12-06 21:46:47,866 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-06 21:46:50,084 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=9 from 127.0.0.1
+2025-12-06 21:46:51,483 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-06 21:46:52,828 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-06 21:46:54,533 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-06 21:49:36,265 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-06 21:52:30,026 - security - INFO - Request: GET http://127.0.0.1:8000/results/2 from 127.0.0.1
+2025-12-06 21:52:52,136 - security - INFO - Request: GET http://127.0.0.1:8000/results/2 from 127.0.0.1
+2025-12-06 21:52:53,677 - security - INFO - Request: GET http://127.0.0.1:8000/results/2 from 127.0.0.1
+2025-12-06 21:53:00,021 - security - INFO - Request: GET http://127.0.0.1:8000/results/2 from 127.0.0.1
+2025-12-06 21:54:16,217 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:54:16,512 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:54:25,005 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:54:25,314 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:54:48,324 - security - INFO - Request: GET http://127.0.0.1:8000/results/2 from 127.0.0.1
+2025-12-06 21:54:51,662 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 21:54:53,418 - security - INFO - Request: GET http://127.0.0.1:8000/results/9 from 127.0.0.1
+2025-12-06 21:54:55,162 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 21:55:13,755 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:55:14,065 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:55:18,747 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:55:19,039 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:55:24,553 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:55:24,853 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:55:52,596 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:55:52,895 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:56:23,525 - security - INFO - Request: GET http://127.0.0.1:8000/results/2 from 127.0.0.1
+2025-12-06 21:56:25,874 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 21:56:31,436 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:56:31,744 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:56:40,681 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:56:40,981 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:56:52,740 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:56:53,045 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:57:01,954 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:57:02,253 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:57:22,478 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:57:22,781 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:57:33,806 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:57:34,103 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 21:57:43,882 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 21:57:44,178 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:12:52,830 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:12:53,133 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:13:06,396 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:13:06,698 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:13:11,562 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:13:11,857 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:13:15,547 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 22:13:19,350 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-06 22:13:22,727 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 22:13:24,295 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-06 22:13:25,107 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 22:13:25,990 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 22:13:29,986 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-06 22:13:35,183 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 22:13:44,907 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 22:13:46,206 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-06 22:13:50,804 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:13:51,297 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:13:51,317 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 22:13:51,322 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 22:13:53,509 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-06 22:13:54,859 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?page=2 from 127.0.0.1
+2025-12-06 22:13:57,455 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?page=1 from 127.0.0.1
+2025-12-06 22:13:59,036 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?page=2 from 127.0.0.1
+2025-12-06 22:14:01,573 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?page=1 from 127.0.0.1
+2025-12-06 22:14:05,163 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-06 22:14:08,384 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:14:08,682 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:14:14,674 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 22:14:15,474 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-06 22:14:16,318 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 22:17:14,189 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:17:14,602 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:18:16,286 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 22:18:19,912 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=voted from 127.0.0.1
+2025-12-06 22:18:29,751 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=all from 127.0.0.1
+2025-12-06 22:18:31,971 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-06 22:18:34,963 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=pending&election_id= from 127.0.0.1
+2025-12-06 22:18:38,638 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=pending&election_id=9 from 127.0.0.1
+2025-12-06 22:18:41,247 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=pending&election_id=2 from 127.0.0.1
+2025-12-06 22:18:42,909 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=pending&election_id=3 from 127.0.0.1
+2025-12-06 22:18:44,286 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=pending&election_id= from 127.0.0.1
+2025-12-06 22:19:19,115 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 22:19:22,090 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=voted from 127.0.0.1
+2025-12-06 22:19:35,874 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=all from 127.0.0.1
+2025-12-06 22:20:30,305 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:20:31,349 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:22:43,111 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 22:22:43,456 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-06 22:22:45,397 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-06 22:22:48,093 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=9 from 127.0.0.1
+2025-12-06 22:22:51,656 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 22:22:55,480 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-06 22:22:58,273 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-06 22:23:01,133 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=2 from 127.0.0.1
+2025-12-06 22:23:03,236 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 22:23:05,829 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=not_voted from 127.0.0.1
+2025-12-06 22:24:30,175 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=not_voted from 127.0.0.1
+2025-12-06 22:25:10,103 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:25:11,110 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:25:44,021 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=not_voted from 127.0.0.1
+2025-12-06 22:25:44,396 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-06 22:25:48,439 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=voted from 127.0.0.1
+2025-12-06 22:25:51,082 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=all from 127.0.0.1
+2025-12-06 22:25:53,412 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-12-06 22:25:54,653 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 22:25:56,213 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-06 22:26:00,434 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=9 from 127.0.0.1
+2025-12-06 22:26:03,653 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-06 22:26:07,748 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id= from 127.0.0.1
+2025-12-06 22:27:37,765 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:27:38,604 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:28:35,387 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=9 from 127.0.0.1
+2025-12-06 22:28:38,357 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 22:28:40,918 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=not_voted from 127.0.0.1
+2025-12-06 22:30:33,782 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:30:34,196 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:32:25,974 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-06 22:32:27,007 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-06 22:32:29,928 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 22:32:30,117 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-06 22:32:31,216 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-06 22:32:32,566 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 22:32:41,152 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:32:42,066 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:32:42,137 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-12-06 22:32:42,153 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 22:32:46,649 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 22:32:58,744 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 22:33:02,702 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-06 22:33:04,263 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 22:33:05,750 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-06 22:33:08,920 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-06 22:33:15,348 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 22:33:20,140 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=voted from 127.0.0.1
+2025-12-06 22:33:22,030 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-06 22:33:23,816 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 22:33:26,322 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-06 22:33:30,676 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=2 from 127.0.0.1
+2025-12-06 22:34:27,801 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:34:28,231 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:34:50,896 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-06 22:34:54,338 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 22:34:55,534 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-06 22:35:17,510 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:35:17,968 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:35:52,008 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 22:37:15,616 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:37:16,066 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:37:33,484 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:37:33,906 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:37:47,731 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:37:48,230 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:37:51,008 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:37:51,430 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:38:28,696 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:38:29,193 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:38:41,036 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:38:41,486 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:38:53,822 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:38:54,301 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:39:03,032 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:39:03,454 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:39:09,833 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:39:10,418 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:39:13,286 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:39:13,712 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:39:16,798 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:39:17,247 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:42:33,009 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:42:33,451 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:42:33,461 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 22:42:33,476 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 22:42:33,836 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-06 22:42:42,144 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:42:42,683 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:42:45,536 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:42:46,026 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:42:54,178 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:42:54,642 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:44:01,366 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 22:44:05,116 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-06 22:44:05,399 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-06 22:44:08,200 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-06 22:44:11,413 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-06 22:47:03,096 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:47:04,036 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:47:04,093 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 22:47:04,106 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 22:47:07,570 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-06 22:47:39,208 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:47:40,314 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:48:08,900 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:48:09,876 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:52:53,496 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 22:52:53,959 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-06 22:52:54,666 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=1 from 127.0.0.1
+2025-12-06 22:52:56,067 - security - INFO - Request: GET http://127.0.0.1:8000/confirmation?candidate_id=6&election_id=1 from 127.0.0.1
+2025-12-06 22:52:57,287 - security - INFO - Request: POST http://127.0.0.1:8000/vote from 127.0.0.1
+2025-12-06 22:52:57,376 - security - INFO - Vote cast successfully - Election: 1, Verification: -E25DqwGgYKS_3_2LeDvPrTteDhk03nnfN_YrF7tip4
+2025-12-06 22:52:57,388 - security - INFO - Request: GET http://127.0.0.1:8000/results/1?verification_code=-E25DqwGgYKS_3_2LeDvPrTteDhk03nnfN_YrF7tip4 from 127.0.0.1
+2025-12-06 22:53:08,110 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 22:53:09,566 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-06 22:53:09,893 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-06 22:53:14,071 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-06 22:53:15,854 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-06 22:55:52,116 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:55:52,516 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:57:42,284 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:57:43,300 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:58:08,438 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:58:09,448 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 22:59:03,778 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 22:59:04,176 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 23:00:31,206 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 23:00:31,632 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 23:01:06,897 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 23:01:07,276 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 23:01:30,284 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 23:01:30,711 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 23:04:05,542 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 23:04:05,973 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 23:04:26,996 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 23:04:27,406 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 23:04:50,718 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 23:04:51,199 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 23:05:07,473 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 23:05:07,974 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 23:05:22,058 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 23:05:22,533 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 23:05:31,180 - security - INFO - Request: GET http://127.0.0.1:8000/results/1?verification_code=-E25DqwGgYKS_3_2LeDvPrTteDhk03nnfN_YrF7tip4 from 127.0.0.1
+2025-12-06 23:05:31,439 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-06 23:05:33,556 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 23:06:25,756 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=1 from 127.0.0.1
+2025-12-06 23:06:27,576 - security - INFO - Request: GET http://127.0.0.1:8000/confirmation?candidate_id=6&election_id=1 from 127.0.0.1
+2025-12-06 23:06:28,800 - security - INFO - Request: POST http://127.0.0.1:8000/vote from 127.0.0.1
+2025-12-06 23:06:28,919 - security - INFO - Vote cast successfully - Election: 1, Verification: OeC5dexfNLXg6qGfqAelDLjpRwSMYyCH8yaDoPfmXJg
+2025-12-06 23:06:28,946 - security - INFO - Request: GET http://127.0.0.1:8000/results/1?verification_code=OeC5dexfNLXg6qGfqAelDLjpRwSMYyCH8yaDoPfmXJg from 127.0.0.1
+2025-12-06 23:06:31,023 - security - INFO - Request: GET http://127.0.0.1:8000/results/1?verification_code=OeC5dexfNLXg6qGfqAelDLjpRwSMYyCH8yaDoPfmXJg from 127.0.0.1
+2025-12-06 23:07:04,302 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 23:07:10,559 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-06 23:07:10,855 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-06 23:07:14,063 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 23:07:17,614 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-06 23:07:20,185 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 23:07:22,339 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-12-06 23:07:40,627 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-06 23:07:43,624 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-06 23:07:45,574 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-06 23:07:47,813 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-06 23:07:51,243 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-06 23:07:54,165 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 23:07:56,690 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=2 from 127.0.0.1
+2025-12-06 23:07:59,562 - security - INFO - Request: GET http://127.0.0.1:8000/confirmation?candidate_id=9&election_id=2 from 127.0.0.1
+2025-12-06 23:08:00,818 - security - INFO - Request: POST http://127.0.0.1:8000/vote from 127.0.0.1
+2025-12-06 23:08:00,891 - security - INFO - Vote cast successfully - Election: 2, Verification: 3tNNlfDpY2ido7EJLlBCJMi0HanmaTOModG-WdN_N6Y
+2025-12-06 23:08:00,904 - security - INFO - Request: GET http://127.0.0.1:8000/results/2?verification_code=3tNNlfDpY2ido7EJLlBCJMi0HanmaTOModG-WdN_N6Y from 127.0.0.1
+2025-12-06 23:08:12,297 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=2 from 127.0.0.1
+2025-12-06 23:08:20,238 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 23:08:22,346 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=9 from 127.0.0.1
+2025-12-06 23:08:25,040 - security - INFO - Request: GET http://127.0.0.1:8000/confirmation?candidate_id=16&election_id=9 from 127.0.0.1
+2025-12-06 23:08:26,911 - security - INFO - Request: POST http://127.0.0.1:8000/vote from 127.0.0.1
+2025-12-06 23:08:26,961 - security - INFO - Vote cast successfully - Election: 9, Verification: OluYZSQZ6LIAvcJ-J4XG8gSji9dvlR2FrkDHjnmyaZQ
+2025-12-06 23:08:26,976 - security - INFO - Request: GET http://127.0.0.1:8000/results/9?verification_code=OluYZSQZ6LIAvcJ-J4XG8gSji9dvlR2FrkDHjnmyaZQ from 127.0.0.1
+2025-12-06 23:08:31,616 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-06 23:08:53,015 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 23:08:53,411 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 23:09:16,983 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 23:09:17,427 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 23:09:40,088 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 23:09:49,702 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-06 23:10:41,122 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 23:10:42,177 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 23:11:11,325 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-06 23:11:14,607 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-06 23:11:17,511 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-06 23:11:21,997 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=9 from 127.0.0.1
+2025-12-06 23:12:55,293 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 23:12:55,683 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 23:13:46,919 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 23:13:47,309 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 23:13:55,696 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 23:13:56,178 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 23:15:25,202 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 23:15:26,249 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 23:15:26,307 - security - INFO - Request: POST http://127.0.0.1:8000/vote from 127.0.0.1
+2025-12-06 23:15:26,350 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=9 from 127.0.0.1
+2025-12-06 23:15:26,705 - security - INFO - Vote cast successfully - Election: 9, Verification: sfeCi9LpuzNv7D0m9K1_fUyd9lW5kZFBKAnKZdvoRZI
+2025-12-06 23:15:26,755 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-06 23:15:33,736 - security - INFO - Request: GET http://127.0.0.1:8000/confirmation?candidate_id=16&election_id=9 from 127.0.0.1
+2025-12-06 23:15:33,783 - security - INFO - Request: GET http://127.0.0.1:8000/results/9 from 127.0.0.1
+2025-12-06 23:15:36,147 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 23:15:40,948 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 23:15:42,828 - security - INFO - Request: GET http://127.0.0.1:8000/results/9 from 127.0.0.1
+2025-12-06 23:15:48,655 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=2 from 127.0.0.1
+2025-12-06 23:15:59,216 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=9 from 127.0.0.1
+2025-12-06 23:15:59,614 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-06 23:16:04,480 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-06 23:16:07,264 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-06 23:16:09,078 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-06 23:16:13,676 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-06 23:16:25,107 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=2 from 127.0.0.1
+2025-12-06 23:16:27,045 - security - INFO - Request: GET http://127.0.0.1:8000/confirmation?candidate_id=9&election_id=2 from 127.0.0.1
+2025-12-06 23:16:28,846 - security - INFO - Request: POST http://127.0.0.1:8000/vote from 127.0.0.1
+2025-12-06 23:16:28,931 - security - INFO - Vote cast successfully - Election: 2, Verification: RSKLTh6YWN0gkZQVhATnOrxwp4u8vA0xWyUxmgm0zKc
+2025-12-06 23:16:28,952 - security - INFO - Request: GET http://127.0.0.1:8000/results/2?verification_code=RSKLTh6YWN0gkZQVhATnOrxwp4u8vA0xWyUxmgm0zKc from 127.0.0.1
+2025-12-06 23:16:35,484 - security - INFO - Request: POST http://127.0.0.1:8000/vote from 127.0.0.1
+2025-12-06 23:16:35,533 - security - WARNING - SECURITY EVENT: VOTE_DUPLICATE - Duplicate vote attempt for election 2 - IP: 127.0.0.1 - User: felicia.kusuma294@gmail.com
+2025-12-06 23:16:49,676 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 23:16:52,251 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=1 from 127.0.0.1
+2025-12-06 23:16:53,632 - security - INFO - Request: GET http://127.0.0.1:8000/confirmation?candidate_id=6&election_id=1 from 127.0.0.1
+2025-12-06 23:16:54,767 - security - INFO - Request: POST http://127.0.0.1:8000/vote from 127.0.0.1
+2025-12-06 23:16:54,857 - security - INFO - Vote cast successfully - Election: 1, Verification: oEOjHtIZjjix8l_I9k75aSz9bTGN6JHtN_zcdUPhDnw
+2025-12-06 23:16:54,889 - security - INFO - Request: GET http://127.0.0.1:8000/results/1?verification_code=oEOjHtIZjjix8l_I9k75aSz9bTGN6JHtN_zcdUPhDnw from 127.0.0.1
+2025-12-06 23:16:58,377 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 23:17:02,295 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-06 23:18:34,210 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-06 23:18:38,874 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 23:18:39,949 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-06 23:18:40,923 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 23:18:42,057 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-12-06 23:18:43,973 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 23:18:46,054 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/9 from 127.0.0.1
+2025-12-06 23:18:52,152 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 23:18:52,570 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 23:19:28,975 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/9 from 127.0.0.1
+2025-12-06 23:19:42,557 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/9 from 127.0.0.1
+2025-12-06 23:19:45,299 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 23:19:48,991 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/9 from 127.0.0.1
+2025-12-06 23:19:50,352 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 23:19:51,348 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-06 23:19:53,736 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-06 23:19:55,500 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-06 23:29:35,798 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 23:29:35,972 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-06 23:30:25,200 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=1 from 127.0.0.1
+2025-12-06 23:30:27,339 - security - INFO - Request: GET http://127.0.0.1:8000/confirmation?candidate_id=6&election_id=1 from 127.0.0.1
+2025-12-06 23:30:28,896 - security - INFO - Request: POST http://127.0.0.1:8000/vote from 127.0.0.1
+2025-12-06 23:30:29,056 - security - INFO - Vote cast successfully - Election: 1, Verification: D4T1A8T6eZs3ZtL91Pp8Qt_sCzdI7012YegA7XTChKI
+2025-12-06 23:30:29,114 - security - INFO - Request: GET http://127.0.0.1:8000/results/1?verification_code=D4T1A8T6eZs3ZtL91Pp8Qt_sCzdI7012YegA7XTChKI from 127.0.0.1
+2025-12-06 23:30:41,256 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-06 23:30:41,752 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-06 23:30:41,754 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 23:30:41,771 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 23:30:57,361 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=2 from 127.0.0.1
+2025-12-06 23:31:52,573 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-06 23:32:25,727 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-06 23:32:26,007 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-06 23:32:29,048 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-06 23:32:29,898 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-06 23:32:30,781 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-06 23:32:31,789 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-12-06 23:32:32,927 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1

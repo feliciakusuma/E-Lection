@@ -4,9 +4,13 @@ from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from cryptography.hazmat.primitives.kdf.hkdf import HKDF
 from cryptography.hazmat.primitives import hashes
 
-# liboqs intentionally disabled to avoid local install issues.
-_OQS_AVAILABLE = False
-oqs = None  # type: ignore
+# liboqs (for ML-KEM)
+try:
+    import oqs  # type: ignore
+    _OQS_AVAILABLE = True
+except Exception:  # pragma: no cover - for environments without liboqs
+    oqs = None  # type: ignore
+    _OQS_AVAILABLE = False
 DLL_DIR = None
 
 # ------------------------------
@@ -26,23 +30,50 @@ NONCE_LEN       = 12                      # 96-bit nonce for AES-GCM
 # OQS / ML-KEM helpers (compat across versions)
 # ------------------------------
 def _oqs_list_kems():
-    return []
+    return oqs.get_enabled_kem_mechanisms() if _OQS_AVAILABLE else []
 
 
 def _pick_mlkem768_name() -> str:
-    raise RuntimeError("liboqs is disabled; ML-KEM operations are unavailable")
+    if not _OQS_AVAILABLE:
+        raise RuntimeError("liboqs is disabled; ML-KEM operations are unavailable")
+    # liboqs added ML-KEM names in recent versions; fall back to Kyber aliases if needed
+    for name in _oqs_list_kems():
+        if name.upper().startswith("ML-KEM-768"):
+            return name
+    # Accept legacy Kyber768 if ML-KEM names not present
+    for legacy in ("Kyber768", "Kyber-768"):
+        if legacy in _oqs_list_kems():
+            return legacy
+    raise RuntimeError("ML-KEM-768 not available in this liboqs build")
 
 
 ALG = "ML-KEM-768"
 
 def mlkem_keygen() -> Tuple[bytes, bytes]:
-    raise RuntimeError("liboqs is disabled; ML-KEM operations are unavailable")
+    if not _OQS_AVAILABLE:
+        raise RuntimeError("liboqs is disabled; ML-KEM operations are unavailable")
+    kem_name = _pick_mlkem768_name()
+    with oqs.KeyEncapsulation(kem_name) as kem:
+        pk = kem.generate_keypair()
+        sk = kem.export_secret_key()
+        return pk, sk
 
 def mlkem_encaps(pk: bytes) -> Tuple[bytes, bytes]:
-    raise RuntimeError("liboqs is disabled; ML-KEM operations are unavailable")
+    if not _OQS_AVAILABLE:
+        raise RuntimeError("liboqs is disabled; ML-KEM operations are unavailable")
+    kem_name = _pick_mlkem768_name()
+    with oqs.KeyEncapsulation(kem_name) as kem:
+        ct, ss = kem.encap_secret(pk)
+        return ct, ss
 
 def mlkem_decaps(ct: bytes, sk: bytes) -> bytes:
-    raise RuntimeError("liboqs is disabled; ML-KEM operations are unavailable")
+    if not _OQS_AVAILABLE:
+        raise RuntimeError("liboqs is disabled; ML-KEM operations are unavailable")
+    kem_name = _pick_mlkem768_name()
+    with oqs.KeyEncapsulation(kem_name) as kem:
+        kem.import_secret_key(sk)
+        ss = kem.decap_secret(ct)
+        return ss
 
 # ------------------------------
 # Utilities

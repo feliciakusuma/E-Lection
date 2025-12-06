@@ -1,17 +1,27 @@
 from __future__ import annotations
 
-import hashlib
+import json
 from urllib.parse import urlencode
 from datetime import datetime
 from fastapi import APIRouter, Depends, Form, HTTPException, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy.orm import Session
 
-from ..database import Candidate, CandidateTicket, Election, Vote, get_readonly_db, get_secure_db, get_vote_count_secure
+from ..database import Candidate, CandidateTicket, Election, Vote, User, get_readonly_db, get_secure_db, get_vote_count_secure
 from ..dependencies import get_db, templates
 from ..services.audit import create_audit_log, log_security_event, security_logger
+from ..utils.counts import get_eligible_voters_count
 
 router = APIRouter()
+
+
+def _ticket_label(president: Candidate | None, vice: Candidate | None) -> str:
+    """Consistently format ticket name with optional vice."""
+    pres_name = (getattr(president, "full_name", "") or "").strip()
+    vice_name = (getattr(vice, "full_name", "") or "").strip()
+    if pres_name and vice_name:
+        return f"{pres_name} & {vice_name}"
+    return pres_name or vice_name or ""
 
 
 @router.get("/confirmation", response_class=HTMLResponse)
@@ -39,15 +49,37 @@ def confirm(
         if not candidate:
             error = "Selected candidate could not be found."
 
+    user_email = request.cookies.get("user_email")
+    user_obj = User.find_by_email(db, user_email) if user_email else None
+
+    now = datetime.utcnow()
     if election_id is not None:
-        election = db.query(Election).filter(Election.id == election_id).first()
+        election = db.query(Election).filter(Election.id == election_id, Election.is_active == True).first()
     else:
         election = (
             db.query(Election)
-            .filter(Election.is_active == True, Election.status == "ongoing")
+            .filter(Election.is_active == True)
             .order_by(Election.start_date.asc())
             .first()
         )
+    # Respect start/end window even if status wasn't flipped
+    if election and election.start_date and now < election.start_date:
+        election = None
+    if election and election.end_date and now > election.end_date:
+        election = None
+
+    # Redirect voters who already cast a ballot for this election
+    if election and user_obj:
+        vid = str(user_obj.id)
+        try:
+            already = any(
+                v.voter_id_plain and str(v.voter_id_plain) == vid
+                for v in db.query(Vote).filter(Vote.election_id == election.id).all()
+            )
+            if already:
+                return RedirectResponse(url=f"/results/{election.id}", status_code=303)
+        except Exception:
+            pass
 
     return templates.TemplateResponse(
         "confirmation.html",
@@ -74,23 +106,49 @@ def cast_vote(
     client_ip = request.client.host
 
     try:
+        # Prefer authenticated user id from cookie
+        user_cookie = request.cookies.get("user_email")
+        user_obj = User.find_by_email(db, user_cookie) if user_cookie else None
+        voter_identifier = str(user_obj.id) if user_obj else (voter_id or "").strip()
+        if not voter_identifier:
+            log_security_event("VOTE_BLOCKED", "Missing voter_id in submission", client_ip, None)
+            raise HTTPException(status_code=400, detail="Login required to vote")
+
+        now = datetime.utcnow()
         election = (
             db.query(Election)
-            .filter(Election.id == election_id, Election.status == "ongoing", Election.is_active == True)
+            .filter(Election.id == election_id, Election.is_active == True)
             .first()
         )
 
         if not election:
             log_security_event("VOTE_BLOCKED", f"Invalid election: {election_id}", client_ip, voter_id)
             raise HTTPException(status_code=400, detail="Election not available")
+        if election.start_date and now < election.start_date:
+            log_security_event("VOTE_BLOCKED", f"Election not started: {election_id}", client_ip, voter_id)
+            raise HTTPException(status_code=400, detail="Election not available")
+        if election.end_date and now > election.end_date:
+            log_security_event("VOTE_BLOCKED", f"Election ended: {election_id}", client_ip, voter_id)
+            raise HTTPException(status_code=400, detail="Election not available")
 
-        voter_hash_check = hashlib.sha256(f"{voter_id}_{election_id}".encode()).hexdigest()
-        existing_vote = db.query(Vote).filter(Vote.election_id == election_id, Vote.voter_hash == voter_hash_check).first()
+        # Duplicate check: decrypt or legacy-hash match existing votes for this election
+        def _vote_matches(vote: Vote) -> bool:
+            try:
+                if vote.voter_id_plain and str(vote.voter_id_plain) == str(voter_identifier):
+                    return True
+            except Exception:
+                pass
+            # Also compare encrypted payload if it includes voter_id
+            try:
+                data = vote.vote_data
+                if isinstance(data, dict) and str(data.get("voter_id", "")) == str(voter_identifier):
+                    return True
+            except Exception:
+                pass
+            return False
 
-        if existing_vote:
-            log_security_event(
-                "VOTE_DUPLICATE", f"Duplicate vote attempt for election {election_id}", client_ip, voter_id
-            )
+        if any(_vote_matches(v) for v in db.query(Vote).filter(Vote.election_id == election_id).all()):
+            log_security_event("VOTE_DUPLICATE", f"Duplicate vote attempt for election {election_id}", client_ip, voter_id)
             raise HTTPException(status_code=400, detail="Vote already cast")
 
         ticket = None
@@ -104,25 +162,35 @@ def cast_vote(
                 log_security_event("VOTE_BLOCKED", f"Invalid ticket: {ticket_id}", client_ip, voter_id)
                 raise HTTPException(status_code=400, detail="Ticket not available")
 
-        # Legacy fallback: allow direct candidate voting if ticket not provided
+        # If only candidate_id is provided, try to map it to a ticket for this election
+        candidate = None
         if ticket is None and candidate_id is not None:
             candidate = db.query(Candidate).filter(Candidate.id == candidate_id, Candidate.is_active == True).first()
             if not candidate:
                 log_security_event("VOTE_BLOCKED", f"Invalid candidate: {candidate_id}", client_ip, voter_id)
                 raise HTTPException(status_code=400, detail="Candidate not available")
+            ticket = (
+                db.query(CandidateTicket)
+                .filter(
+                    CandidateTicket.election_id == election_id,
+                    CandidateTicket.president_candidate_id == candidate_id,
+                )
+                .first()
+            )
+        if ticket is None:
+            log_security_event("VOTE_BLOCKED", f"No valid ticket for election {election_id}", client_ip, voter_id)
+            raise HTTPException(status_code=400, detail="Ticket not available")
 
         effective_candidate_id = candidate_id
-        if ticket is not None and effective_candidate_id is None:
+        if ticket is not None:
             effective_candidate_id = ticket.president_candidate_id
 
         new_vote = Vote(
-            voter_id=voter_id,
+            voter_id=voter_identifier,
             election_id=election_id,
             ticket_id=ticket.id if ticket else None,
             candidate_id=effective_candidate_id,
         )
-        new_vote.voter_hash = voter_hash_check
-        new_vote.data_hash = new_vote.generate_hash()
         new_vote.is_counted = True
 
         db.add(new_vote)
@@ -133,15 +201,9 @@ def cast_vote(
             "Vote cast successfully - Election: %s, Verification: %s", election_id, new_vote.verification_code
         )
 
-        query_params = urlencode(
-            {
-                "ticket_id": ticket.id if ticket else None,
-                "candidate_id": candidate_id if ticket is None else None,
-                "election_id": election_id,
-                "verification_code": new_vote.verification_code,
-            }
-        )
-        return RedirectResponse(url=f"/confirmation?{query_params}", status_code=303)
+        # After a successful, encrypted ballot write, send the voter straight to the results page
+        query_params = urlencode({"verification_code": new_vote.verification_code})
+        return RedirectResponse(url=f"/results/{election_id}?{query_params}", status_code=303)
 
     except HTTPException:
         db.rollback()
@@ -172,9 +234,7 @@ def api_results(election_id: int, db=Depends(get_readonly_db)):
             if not pres:
                 continue
             vice = db.query(Candidate).filter(Candidate.id == t.vice_president_candidate_id).first() if t.vice_president_candidate_id else None
-            name = (getattr(pres, "full_name", "") or "").strip()
-            if vice:
-                name = f"{name} & {getattr(vice, 'full_name', '').strip()}"
+            name = _ticket_label(pres, vice)
             if not name:
                 continue
             raw.append({"name": name, "votes": int(vote_counts.get(t.id, 0))})
@@ -185,11 +245,29 @@ def api_results(election_id: int, db=Depends(get_readonly_db)):
             for c in candidates:
                 raw.append({"name": getattr(c, "full_name", f"Candidate {c.id}"), "votes": int(vote_counts.get(f"legacy_candidate_{c.id}", 0))})
 
-        for key, count in vote_counts.items():
-            if isinstance(key, str) and key.startswith("legacy_candidate_"):
-                cid = int(key.split("_")[-1])
-                c = db.query(Candidate).filter(Candidate.id == cid).first()
-                raw.append({"name": getattr(c, "full_name", f"Candidate {cid}"), "votes": int(count)})
+        if tickets:
+            # Only add legacy rows separately when tickets exist (avoids duplication when candidates already appended)
+            for key, count in vote_counts.items():
+                if isinstance(key, str) and key.startswith("legacy_candidate_"):
+                    cid = int(key.split("_")[-1])
+                    c = db.query(Candidate).filter(Candidate.id == cid).first()
+                    # If this candidate is already in a ticket, label it with president & vice to merge tallies correctly
+                    ticket_match = (
+                        db.query(CandidateTicket)
+                        .filter(CandidateTicket.election_id == election_id, CandidateTicket.president_candidate_id == cid)
+                        .first()
+                    )
+                    if ticket_match:
+                        pres = c
+                        vice = (
+                            db.query(Candidate).filter(Candidate.id == ticket_match.vice_president_candidate_id).first()
+                            if ticket_match.vice_president_candidate_id
+                            else None
+                        )
+                        name = _ticket_label(pres, vice)
+                    else:
+                        name = getattr(c, "full_name", f"Candidate {cid}")
+                    raw.append({"name": name, "votes": int(count)})
 
         if not raw:
             # If no tickets or votes, synthesize ticket-like pairs from candidates
@@ -204,6 +282,12 @@ def api_results(election_id: int, db=Depends(get_readonly_db)):
                     raw.append({"name": name, "votes": 0})
             else:
                 raw.append({"name": "No candidates", "votes": 0})
+
+        # Merge duplicate names (e.g., legacy + ticket results for same candidate)
+        aggregated = {}
+        for r in raw:
+            aggregated[r["name"]] = aggregated.get(r["name"], 0) + r["votes"]
+        raw = [{"name": name, "votes": votes} for name, votes in aggregated.items()]
 
         total = sum(r["votes"] for r in raw) or 0
         palette = ["#10b981", "#3b82f6", "#6b7280", "#f59e0b", "#ef4444"]
@@ -232,6 +316,21 @@ def election_results_page(request: Request, election_id: int, db=Depends(get_sec
     if not election:
         return RedirectResponse(url="/dashboard?error=Election%20not%20found", status_code=303)
 
+    # Eligible voters ceiling for charts (priority: DB count, then election metadata)
+    try:
+        eligible_voters = get_eligible_voters_count(db._session if hasattr(db, "_session") else db)
+    except Exception:
+        eligible_voters = 0
+    try:
+        meta = {}
+        if election.description and str(election.description).strip().startswith("{"):
+            meta = json.loads(election.description)
+        meta_eligible = int(meta.get("eligible_voters") or 0)
+        if meta_eligible > 0:
+            eligible_voters = meta_eligible
+    except Exception:
+        pass
+
     results = []
     try:
         vote_counts = get_vote_count_secure(db, election_id)
@@ -243,9 +342,7 @@ def election_results_page(request: Request, election_id: int, db=Depends(get_sec
             if not pres:
                 continue
             vice = db.query(Candidate).filter(Candidate.id == t.vice_president_candidate_id).first() if t.vice_president_candidate_id else None
-            name = (getattr(pres, "full_name", "") or "").strip()
-            if vice:
-                name = f"{name} & {getattr(vice, 'full_name', '').strip()}"
+            name = _ticket_label(pres, vice)
             if not name:
                 continue
             raw.append({"name": name, "votes": int(vote_counts.get(t.id, 0))})
@@ -255,11 +352,27 @@ def election_results_page(request: Request, election_id: int, db=Depends(get_sec
             for c in candidates:
                 raw.append({"name": getattr(c, "full_name", f"Candidate {c.id}"), "votes": int(vote_counts.get(f"legacy_candidate_{c.id}", 0))})
 
-        for key, count in vote_counts.items():
-            if isinstance(key, str) and key.startswith("legacy_candidate_"):
-                cid = int(key.split("_")[-1])
-                c = db.query(Candidate).filter(Candidate.id == cid).first()
-                raw.append({"name": getattr(c, "full_name", f"Candidate {cid}"), "votes": int(count)})
+        if tickets:
+            for key, count in vote_counts.items():
+                if isinstance(key, str) and key.startswith("legacy_candidate_"):
+                    cid = int(key.split("_")[-1])
+                    c = db.query(Candidate).filter(Candidate.id == cid).first()
+                    ticket_match = (
+                        db.query(CandidateTicket)
+                        .filter(CandidateTicket.election_id == election_id, CandidateTicket.president_candidate_id == cid)
+                        .first()
+                    )
+                    if ticket_match:
+                        pres = c
+                        vice = (
+                            db.query(Candidate).filter(Candidate.id == ticket_match.vice_president_candidate_id).first()
+                            if ticket_match.vice_president_candidate_id
+                            else None
+                        )
+                        name = _ticket_label(pres, vice)
+                    else:
+                        name = getattr(c, "full_name", f"Candidate {cid}")
+                    raw.append({"name": name, "votes": int(count)})
 
         if not raw:
             candidates = db.query(Candidate).filter(Candidate.position == election.title).all()
@@ -273,6 +386,11 @@ def election_results_page(request: Request, election_id: int, db=Depends(get_sec
                     raw.append({"name": name, "votes": 0})
             else:
                 raw.append({"name": "No candidates", "votes": 0})
+
+        aggregated = {}
+        for r in raw:
+            aggregated[r["name"]] = aggregated.get(r["name"], 0) + r["votes"]
+        raw = [{"name": name, "votes": votes} for name, votes in aggregated.items()]
 
         total = sum(r["votes"] for r in raw) or 0
         palette = ["#10b981", "#3b82f6", "#6b7280", "#f59e0b", "#ef4444"]
@@ -323,7 +441,15 @@ def election_results_page(request: Request, election_id: int, db=Depends(get_sec
             # If the fallback also fails, leave results empty and let the template handle it.
             pass
 
-    return templates.TemplateResponse("results.html", {"request": request, "election": election, "results": results})
+    return templates.TemplateResponse(
+        "results.html",
+        {
+            "request": request,
+            "election": election,
+            "results": results,
+            "eligible_voters": eligible_voters,
+        },
+    )
 
 
 @router.get("/verify-vote/{verification_code}", response_class=HTMLResponse)

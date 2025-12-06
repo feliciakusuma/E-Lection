@@ -8,7 +8,7 @@ from sqlalchemy import or_
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import OperationalError
 
-from ..database import Candidate, Election, User, CandidateTicket, Cohort, Major
+from ..database import Candidate, Election, User, CandidateTicket, Cohort, Major, Vote
 from ..dependencies import get_db, templates
 from ..services.audit import log_security_event, security_logger
 from ..utils.validation import MAJOR_CODE_MAP
@@ -20,12 +20,15 @@ router = APIRouter()
 def candidates_page(request: Request, db: Session = Depends(get_db)):
     """Render candidates for a specific election (via election_id) or the current active one."""
     election_id_param = (request.query_params.get("election_id", "") or "").strip()
+    user_obj: User | None = None
 
     def derive_user_meta():
         email_cookie = request.cookies.get("user_email")
         if not email_cookie:
             return None, None
+        nonlocal user_obj
         user = User.find_by_email(db, email_cookie)
+        user_obj = user
         if not user:
             return None, None
         sid = (user.student_id or "").strip()
@@ -112,6 +115,24 @@ def candidates_page(request: Request, db: Session = Depends(get_db)):
             active_election.display_end = base_end + tz_offset if base_end else None
         except Exception:
             pass
+
+    def has_voted(user: User | None, election_id: int | None) -> bool:
+        if not user or not election_id:
+            return False
+        vid = str(user.id)
+        try:
+            for v in db.query(Vote).filter(Vote.election_id == election_id).all():
+                try:
+                    if v.voter_id_plain and str(v.voter_id_plain) == vid:
+                        return True
+                except Exception:
+                    continue
+        except Exception:
+            return False
+        return False
+
+    if active_election and has_voted(user_obj, active_election.id):
+        return RedirectResponse(url=f"/results/{active_election.id}", status_code=303)
 
     query = db.query(Candidate).filter(Candidate.is_active == True)
     if active_election:
@@ -251,7 +272,17 @@ def admin_candidates(request: Request, db: Session = Depends(get_db)):
         election = db.query(Election).filter(Election.id == int(election_id_param)).first()
         if election:
             selected_election_id = election.id
-            query = query.filter(Candidate.position == election.title)
+            ticket_rows = db.query(CandidateTicket).filter(CandidateTicket.election_id == election.id).all()
+            cand_ids = []
+            for t in ticket_rows:
+                if t.president_candidate_id:
+                    cand_ids.append(t.president_candidate_id)
+                if t.vice_president_candidate_id:
+                    cand_ids.append(t.vice_president_candidate_id)
+            if cand_ids:
+                query = query.filter(Candidate.id.in_(cand_ids))
+            else:
+                query = query.filter(Candidate.position == election.title)
 
     tickets = db.query(CandidateTicket).all()
     vice_ids = {t.vice_president_candidate_id for t in tickets if t.vice_president_candidate_id}
@@ -396,7 +427,6 @@ def admin_add_candidate_submit(
             cohort_id=cand_cohort_id,
             major_id=cand_major_id,
         )
-        candidate.data_hash = candidate.generate_hash()
 
         db.add(candidate)
         db.flush()
@@ -416,7 +446,6 @@ def admin_add_candidate_submit(
                 cohort_id=v_cohort_id,
                 major_id=v_major_id,
             )
-            vice_candidate.data_hash = vice_candidate.generate_hash()
             db.add(vice_candidate)
             db.flush()
 
@@ -585,7 +614,6 @@ def admin_edit_candidate_submit(
         candidate.is_active = is_active
         candidate.cohort_id = cand_cohort_id
         candidate.major_id = cand_major_id
-        candidate.data_hash = candidate.generate_hash()
 
         has_vice = any([vice_full_name.strip(), vice_student_id.strip(), vice_major.strip(), vice_cohort.strip()])
 
@@ -610,7 +638,6 @@ def admin_edit_candidate_submit(
                 current_vice.is_active = is_active
                 current_vice.cohort_id = v_cohort_id
                 current_vice.major_id = v_major_id
-                current_vice.data_hash = current_vice.generate_hash()
             else:
                 new_vice = Candidate(
                     full_name=vice_full_name or "",
@@ -622,7 +649,6 @@ def admin_edit_candidate_submit(
                     cohort_id=v_cohort_id,
                     major_id=v_major_id,
                 )
-                new_vice.data_hash = new_vice.generate_hash()
                 db.add(new_vice)
                 db.flush()
                 ticket.vice_president_candidate_id = new_vice.id
@@ -721,7 +747,6 @@ def admin_remove_vice(candidate_id: int, request: Request, db: Session = Depends
             "vice_cohort": "",
         }
         candidate.description = json.dumps(cleaned)
-        candidate.data_hash = candidate.generate_hash()
 
         if ticket:
             db.add(ticket)
