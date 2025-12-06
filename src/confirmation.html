@@ -88,7 +88,7 @@
       </div>
       <div class="btn-row-spaced">
         <a href="/dashboard" class="btn-goback flex-1">Back to Dashboard</a>
-        <a href="/verify-vote/{{ verification_code }}" class="btn-confirm flex-1">Verify Vote</a>
+        <a href="/results/{{ election.id }}" class="btn-confirm flex-1">View Results</a>
       </div>
       {% else %}
       <form action="/vote" method="post" class="form-stack">

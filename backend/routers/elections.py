@@ -55,7 +55,15 @@ def public_dashboard(request: Request, db: Session = Depends(get_db)):
         except Exception:
             meta = {}
         meta_major = meta.get("major")
-        meta_cohort = str(meta.get("cohort")) if meta.get("cohort") is not None else None
+        raw_cohort = meta.get("cohort")
+        # Support multiple cohorts stored as comma-separated string or list
+        meta_cohorts: list[str] = []
+        if raw_cohort is not None:
+            if isinstance(raw_cohort, list):
+                meta_cohorts = [str(c).strip() for c in raw_cohort if str(c).strip()]
+            else:
+                meta_cohorts = [c.strip() for c in str(raw_cohort).split(",") if c.strip()]
+        meta_cohort = meta_cohorts[0] if len(meta_cohorts) == 1 else None
         if meta_major:
             majors = [m.strip() for m in str(meta_major).split(",") if m.strip()]
             has_all_major = any(m.lower() in {"all", "all majors", "all major"} for m in majors)
@@ -63,10 +71,10 @@ def public_dashboard(request: Request, db: Session = Depends(get_db)):
                 if user_major and user_major not in majors:
                     return False
         # If cohort is declared, respect it unless it's marked as open/all
-        if meta_cohort:
-            if str(meta_cohort).lower() in {"all", "all cohort", "all cohorts"}:
+        if meta_cohorts:
+            if any(str(c).lower() in {"all", "all cohort", "all cohorts"} for c in meta_cohorts):
                 pass
-            elif user_cohort and meta_cohort.strip() != user_cohort:
+            elif user_cohort and user_cohort not in meta_cohorts:
                 return False
         return True
 
@@ -121,6 +129,9 @@ def public_dashboard(request: Request, db: Session = Depends(get_db)):
             # Count candidate tickets (president+vice counted as one)
             try:
                 candidates_count = db.query(CandidateTicket).filter(CandidateTicket.election_id == e.id).count()
+                if candidates_count == 0:
+                    # Fallback to individual candidates tied to the election title
+                    candidates_count = db.query(Candidate).filter(Candidate.position == e.title).count()
             except Exception:
                 candidates_count = 0
             disp_start = (e.start_date + tz_offset) if e.start_date else None
@@ -235,10 +246,11 @@ def admin_elections(request: Request, db: Session = Depends(get_db)):
 
         votes_q = db.query(Vote).filter(Vote.election_id == e.id)
         votes_cast = votes_q.count()
-        candidates_count = db.query(Vote.ticket_id).filter(Vote.election_id == e.id, Vote.ticket_id.isnot(None)).distinct().count()
+
+        # Count candidates from tickets; fallback to legacy direct candidates (position match)
+        candidates_count = db.query(CandidateTicket).filter(CandidateTicket.election_id == e.id).count()
         if candidates_count == 0:
-            # legacy fallback
-            candidates_count = db.query(Vote.candidate_id).filter(Vote.election_id == e.id).distinct().count()
+            candidates_count = db.query(Candidate).filter(Candidate.position == e.title).count()
         voters_count = db.query(Vote.voter_hash).filter(Vote.election_id == e.id).distinct().count()
 
         if status_filter != "all" and dstatus != status_filter:
@@ -288,8 +300,8 @@ def add_election_form(request: Request):
 def add_election_submit(
     request: Request,
     title: str = Form(...),
-    major: str = Form(""),
-    cohort: str = Form(""),
+    major: str = Form(...),
+    cohort: str = Form(...),
     start_date: str = Form(...),
     end_date: str = Form(...),
     is_active: bool = Form(False),
@@ -299,6 +311,26 @@ def add_election_submit(
 ):
     try:
         offset_minutes = int(timezone_offset_minutes or 0)
+
+        if not (major or "").strip() or not (cohort or "").strip():
+            missing_field = "Major" if not (major or "").strip() else "Cohort"
+            return templates.TemplateResponse(
+                "admin-add-election.html",
+                {
+                    "request": request,
+                    "error": f"Please fill out the {missing_field} field.",
+                    "form_data": {
+                        "title": title,
+                        "major": major,
+                        "cohort": cohort,
+                        "start_date": start_date,
+                        "end_date": end_date,
+                        "is_active": is_active,
+                        "eligible_voters": eligible_voters,
+                        "timezone_offset_minutes": timezone_offset_minutes,
+                    },
+                },
+            )
 
         def parse_dt(val: str) -> datetime:
             return datetime.strptime(val, "%Y-%m-%dT%H:%M")
@@ -428,8 +460,8 @@ def edit_election_submit(
     request: Request,
     election_id: int,
     title: str = Form(...),
-    major: str = Form(""),
-    cohort: str = Form(""),
+    major: str = Form(...),
+    cohort: str = Form(...),
     start_date: str = Form(...),
     end_date: str = Form(...),
     is_active: bool = Form(False),
@@ -443,6 +475,26 @@ def edit_election_submit(
             return RedirectResponse(url="/admin-elections?error=Election%20not%20found", status_code=303)
 
         offset_minutes = int(timezone_offset_minutes or 0)
+
+        if not (major or "").strip() or not (cohort or "").strip():
+            missing_field = "Major" if not (major or "").strip() else "Cohort"
+            return templates.TemplateResponse(
+                "admin-edit-election.html",
+                {
+                    "request": request,
+                    "error": f"Please fill out the {missing_field} field.",
+                    "form_data": {
+                        "title": title,
+                        "major": major,
+                        "cohort": cohort,
+                        "start_date": start_date,
+                        "end_date": end_date,
+                        "is_active": is_active,
+                        "eligible_voters": eligible_voters,
+                        "timezone_offset_minutes": timezone_offset_minutes,
+                    },
+                },
+            )
 
         old_title = e.title
         old_major = None
@@ -527,6 +579,12 @@ def delete_election(election_id: int, request: Request, db: Session = Depends(ge
         e = db.query(Election).filter(Election.id == election_id).first()
         if not e:
             return RedirectResponse(url="/admin-elections?error=Election%20not%20found", status_code=303)
+        # Remove related candidates/tickets for this election to keep data in sync.
+        try:
+            db.query(CandidateTicket).filter(CandidateTicket.election_id == election_id).delete()
+            db.query(Candidate).filter(Candidate.position == e.title).delete()
+        except Exception:
+            pass
         db.delete(e)
         db.commit()
         return RedirectResponse(url="/admin-elections?deleted=1", status_code=303)

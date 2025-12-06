@@ -5150,3 +5150,1074 @@ WHERE admins.email = %(email_1)s
 2025-12-02 23:35:48,459 - security - WARNING - Admin credentials not provided via env; skipping admin bootstrap
 2025-12-02 23:35:49,414 - security - INFO - Admins table ensured and admin account synced from env configuration
 2025-12-02 23:35:53,580 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 17:35:11,724 - security - WARNING - Admin credentials not provided via env; skipping admin bootstrap
+2025-12-04 17:35:13,141 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 17:35:54,779 - security - WARNING - Admin credentials not provided via env; skipping admin bootstrap
+2025-12-04 17:37:56,362 - security - WARNING - Admin credentials not provided via env; skipping admin bootstrap
+2025-12-04 17:39:02,683 - security - WARNING - Admin credentials not provided via env; skipping admin bootstrap
+2025-12-04 17:40:10,011 - security - WARNING - Admin credentials not provided via env; skipping admin bootstrap
+2025-12-04 17:44:15,160 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 17:44:15,471 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 17:44:29,878 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 17:44:34,112 - security - INFO - Request: GET http://127.0.0.1:8000/admin from 127.0.0.1
+2025-12-04 17:44:35,759 - security - INFO - Request: POST http://127.0.0.1:8000/admin from 127.0.0.1
+2025-12-04 17:44:36,202 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 17:44:44,165 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-12-04 17:44:49,548 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-12-04 17:45:32,476 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-12-04 17:45:34,117 - security - INFO - Request: GET http://127.0.0.1:8000/login/google from 127.0.0.1
+2025-12-04 17:45:37,516 - security - INFO - Request: GET http://127.0.0.1:8000/authorize?state=QHHulvUvSovlzgTMw-kLHlZnCt0Fg-A1&code=4%2F0Ab32j91xUAk3J9r0VgPC5GomPT4RVhzwvOdXhBnFx5zKWT4_xSh7APDtEvgIt9MhJ_gMgw&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&authuser=0&prompt=none from 127.0.0.1
+2025-12-04 17:45:39,225 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 17:46:24,346 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-04 17:46:24,366 - security - INFO - Request: GET http://127.0.0.1:8000/admin from 127.0.0.1
+2025-12-04 17:46:25,959 - security - INFO - Request: POST http://127.0.0.1:8000/admin from 127.0.0.1
+2025-12-04 17:46:26,448 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 17:46:28,109 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-04 17:46:42,753 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 17:46:44,651 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 17:46:45,761 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 17:46:46,644 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 17:46:55,559 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 17:47:21,551 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 17:47:24,402 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 17:47:24,412 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-12-04 17:47:26,084 - security - INFO - Request: GET http://127.0.0.1:8000/login/google from 127.0.0.1
+2025-12-04 17:47:29,113 - security - INFO - Request: GET http://127.0.0.1:8000/authorize?state=uxRLfuT96Y9HS2Tvr9EKMRSBEPzRCc6m&code=4%2F0Ab32j91CIiYCGfkLLKxlAVxJmpK391rWGKFaOcK6HzhX4OXTGL6_MMP0f-2REDbquZdF2A&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+openid&authuser=0&prompt=none from 127.0.0.1
+2025-12-04 17:47:30,793 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 17:47:33,391 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 17:47:34,507 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 17:47:42,987 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 17:48:20,535 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 17:49:11,525 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 17:49:24,804 - security - INFO - Request: GET http://127.0.0.1:8000/profile from 127.0.0.1
+2025-12-04 17:49:27,834 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 17:49:30,987 - security - INFO - Request: GET http://127.0.0.1:8000/profile from 127.0.0.1
+2025-12-04 17:49:36,115 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 17:50:00,750 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 17:50:12,093 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-04 17:50:12,120 - security - INFO - Request: GET http://127.0.0.1:8000/admin from 127.0.0.1
+2025-12-04 17:53:08,126 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 17:53:08,414 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 17:57:22,338 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 17:57:22,903 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 17:57:23,035 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 17:57:29,990 - security - INFO - Request: GET http://127.0.0.1:8000/profile from 127.0.0.1
+2025-12-04 17:57:37,899 - security - INFO - Request: POST http://127.0.0.1:8000/profile from 127.0.0.1
+2025-12-04 17:58:03,254 - security - INFO - Request: GET http://127.0.0.1:8000/profile from 127.0.0.1
+2025-12-04 17:58:05,122 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 17:58:16,475 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 17:58:17,450 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 17:58:31,213 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 17:59:27,831 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 17:59:52,575 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:00:02,671 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:00:03,711 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:00:26,909 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:01:02,758 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:01:03,766 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:01:24,407 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:01:27,152 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:01:52,541 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:02:00,025 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:02:00,722 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:02:01,094 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:02:06,959 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:02:07,882 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:02:12,192 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:02:36,044 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:02:42,120 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 18:03:32,864 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:03:35,086 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:03:39,947 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:04:12,954 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:04:13,808 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:04:22,197 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:04:22,919 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:04:23,339 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:04:57,558 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:04:58,380 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:05:34,133 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:06:20,792 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:06:34,445 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 18:08:47,831 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:08:47,899 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 18:08:47,904 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:09:00,537 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:09:09,904 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 18:09:43,050 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:09:43,140 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:09:43,142 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 18:10:10,685 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:10:10,711 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 18:10:25,794 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:10:25,876 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:12:02,872 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:12:02,975 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:12:13,116 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:12:13,233 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:12:20,583 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:12:20,670 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:12:35,035 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:12:35,150 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:12:50,283 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:12:50,393 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:13:02,995 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:13:03,068 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:13:11,441 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:13:11,518 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:13:12,567 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:13:12,645 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:13:25,715 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:13:25,740 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 18:13:58,349 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:13:58,419 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 18:13:58,425 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:14:25,235 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:14:25,352 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 18:14:25,359 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:14:48,024 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:14:48,173 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:15:04,351 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:15:04,459 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:15:18,987 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:15:19,035 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:15:19,879 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:15:33,445 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:15:33,502 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:15:34,421 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:15:34,487 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:15:44,239 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:15:44,301 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:15:49,215 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:15:49,329 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:16:14,951 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:16:14,976 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 18:16:32,031 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:16:32,118 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:16:40,729 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:16:40,759 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 18:17:30,611 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:17:30,671 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:17:44,547 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:17:44,637 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:17:45,611 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:17:59,729 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:17:59,804 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:18:12,942 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:18:13,022 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:18:13,551 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:18:13,623 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:18:13,922 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:18:13,991 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:18:42,560 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:18:42,622 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:18:50,958 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=2 from 127.0.0.1
+2025-12-04 18:18:51,076 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:18:56,275 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=2 from 127.0.0.1
+2025-12-04 18:18:56,357 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:19:00,608 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:19:00,636 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 18:20:23,513 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:20:23,648 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 18:20:23,651 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:20:25,098 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:20:25,166 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:20:25,314 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 18:21:04,484 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:21:04,624 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:21:06,596 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=2 from 127.0.0.1
+2025-12-04 18:21:06,668 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:21:28,936 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=2 from 127.0.0.1
+2025-12-04 18:21:29,062 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:21:35,887 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=2 from 127.0.0.1
+2025-12-04 18:21:35,945 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:21:42,006 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=2 from 127.0.0.1
+2025-12-04 18:21:42,069 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:22:08,597 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:22:08,653 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:22:09,785 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:22:09,869 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:22:30,188 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:22:30,311 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:22:31,329 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:22:31,374 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:22:54,275 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:22:54,298 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 18:23:33,367 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:23:33,477 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 18:23:33,487 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:23:52,685 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:23:52,755 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:24:01,048 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:24:01,153 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:24:09,294 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:24:09,438 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:24:16,674 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:24:16,816 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:24:18,010 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:24:18,064 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:24:19,465 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:24:19,539 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:24:27,583 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:24:27,683 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:24:28,420 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:24:28,495 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:24:31,892 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:24:31,917 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 18:24:48,456 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:24:48,588 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:26:07,213 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:26:07,267 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:26:08,131 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:26:20,035 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:26:20,114 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:26:20,896 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:26:33,361 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:26:33,480 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:26:34,917 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:26:39,827 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:26:40,757 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:26:45,671 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:26:45,793 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:27:14,743 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:27:14,819 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:27:44,684 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:27:44,769 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:27:45,606 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:27:50,859 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:27:50,945 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:27:59,807 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:27:59,934 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:28:04,206 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 18:28:04,319 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:28:06,443 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:28:06,568 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:28:39,037 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:28:39,116 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:28:42,254 - security - INFO - Request: GET http://127.0.0.1:8000/profile from 127.0.0.1
+2025-12-04 18:28:42,324 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:28:56,423 - security - INFO - Request: POST http://127.0.0.1:8000/profile from 127.0.0.1
+2025-12-04 18:28:56,479 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:29:11,208 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 18:29:11,510 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 18:29:15,501 - security - INFO - Request: POST http://127.0.0.1:8000/profile from 127.0.0.1
+2025-12-04 18:29:15,656 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:29:17,775 - security - INFO - Request: POST http://127.0.0.1:8000/profile from 127.0.0.1
+2025-12-04 18:31:54,151 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 18:31:54,461 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 18:33:44,158 - security - INFO - Request: POST http://127.0.0.1:8000/profile from 127.0.0.1
+2025-12-04 18:33:44,354 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:35:31,543 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 18:35:32,030 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 18:35:36,868 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 18:35:37,215 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 18:35:39,017 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 18:35:39,326 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 18:36:03,147 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 18:36:03,454 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 18:36:20,350 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 18:36:20,645 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 18:36:28,805 - security - INFO - Request: GET http://127.0.0.1:8000/profile from 127.0.0.1
+2025-12-04 18:36:29,008 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:36:40,803 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 18:36:41,099 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 18:36:50,662 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 18:36:50,964 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 18:38:29,252 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 18:38:29,549 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 18:39:42,331 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 18:39:42,816 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 18:39:46,712 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 18:39:53,761 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-04 18:39:55,789 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 18:39:55,898 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:39:57,226 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 18:39:58,822 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 18:40:00,929 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 18:40:08,205 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 18:40:44,050 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 18:40:44,356 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 18:41:16,472 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 18:41:16,608 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 18:41:16,621 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:41:20,523 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 18:41:20,647 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:41:29,064 - security - INFO - Request: POST http://127.0.0.1:8000/profile from 127.0.0.1
+2025-12-04 18:41:29,207 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:41:35,725 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 18:41:35,812 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:41:57,007 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 18:41:57,132 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:42:00,423 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 18:42:02,032 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 18:42:02,192 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:42:03,075 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 18:42:03,136 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:42:04,288 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 18:42:04,424 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:42:06,374 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-12-04 18:42:06,509 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:42:07,818 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 18:42:07,916 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:42:13,339 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:42:13,362 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 18:43:34,511 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 18:43:34,588 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:43:36,275 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 18:43:50,026 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 18:43:50,116 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:43:51,727 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 18:43:52,310 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 18:44:01,900 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 18:44:01,987 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:44:02,765 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 18:44:03,533 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 18:44:03,875 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 18:44:04,171 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 18:44:20,050 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 18:44:20,143 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:44:35,615 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 18:44:35,719 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:44:53,552 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 18:44:53,656 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:45:18,266 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 18:45:18,332 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:45:19,615 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 18:45:21,850 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 18:45:21,906 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:45:36,512 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 18:45:36,870 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 18:45:38,128 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 18:45:38,266 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:45:40,559 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 18:45:48,834 - security - INFO - Request: POST http://127.0.0.1:8000/profile from 127.0.0.1
+2025-12-04 18:45:52,680 - security - INFO - Request: GET http://127.0.0.1:8000/verify-code?email=feliciakusuma.77@gmail.com&changing=1 from 127.0.0.1
+2025-12-04 18:45:57,551 - security - INFO - Request: GET http://127.0.0.1:8000/login from 127.0.0.1
+2025-12-04 18:45:59,234 - security - INFO - Request: GET http://127.0.0.1:8000/login/google from 127.0.0.1
+2025-12-04 18:46:02,511 - security - INFO - Request: GET http://127.0.0.1:8000/authorize?state=f6EdOYqsuR2IAXmpmr_b_nuvPKyKEM3g&code=4%2F0Ab32j93mIP58jnCM03At5hjY7ylqXYwiWmWEuTFGyoq9nLFnTicoW6STJfamUBlelhYjcQ&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+openid&authuser=1&prompt=none from 127.0.0.1
+2025-12-04 18:46:04,533 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 18:46:04,701 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 18:49:41,989 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 18:49:42,284 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 19:16:42,911 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:16:43,175 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-04 19:16:45,355 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-04 19:16:47,663 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-04 19:16:50,504 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-04 19:16:51,992 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:16:52,131 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:16:53,316 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:17:19,337 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:17:21,285 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-04 19:17:23,457 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-04 19:17:25,138 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-04 19:17:31,594 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-04 19:17:32,582 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-04 19:18:34,884 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 19:18:35,180 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 19:18:38,260 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-04 19:19:00,077 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:19:04,164 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 19:19:05,319 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:19:07,765 - security - INFO - Request: GET http://127.0.0.1:8000/admin-edit-candidate/9 from 127.0.0.1
+2025-12-04 19:19:10,071 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:19:13,604 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 19:19:14,236 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 19:19:14,254 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:19:14,260 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:19:14,260 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:19:14,270 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:19:16,492 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/5 from 127.0.0.1
+2025-12-04 19:19:18,438 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:20:16,869 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 19:20:17,164 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 19:20:23,757 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 19:20:24,053 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 19:20:26,683 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:20:26,926 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:20:29,841 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:20:30,141 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-04 19:20:34,390 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-04 19:20:37,966 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-04 19:20:41,285 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-04 19:20:44,625 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=5 from 127.0.0.1
+2025-12-04 19:21:30,845 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 19:21:32,285 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:21:33,927 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:21:35,336 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-12-04 19:21:36,917 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:21:42,618 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:21:43,694 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:22:00,666 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:22:05,140 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-04 19:22:09,026 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-04 19:22:11,639 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-04 19:22:14,533 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=5 from 127.0.0.1
+2025-12-04 19:22:29,423 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=5 from 127.0.0.1
+2025-12-04 19:22:30,579 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=5 from 127.0.0.1
+2025-12-04 19:22:40,394 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-04 19:22:42,293 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=5 from 127.0.0.1
+2025-12-04 19:22:47,863 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 19:23:07,952 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=5 from 127.0.0.1
+2025-12-04 19:23:12,797 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-04 19:23:14,250 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=5 from 127.0.0.1
+2025-12-04 19:23:44,305 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=5 from 127.0.0.1
+2025-12-04 19:23:45,129 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=5 from 127.0.0.1
+2025-12-04 19:23:51,254 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:23:52,426 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:23:59,409 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 19:23:59,466 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:24:00,913 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:24:03,236 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:24:17,377 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:24:17,552 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-04 19:24:19,372 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:24:26,621 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-04 19:24:29,269 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-04 19:24:31,152 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:24:31,271 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:24:32,216 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:24:33,493 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-12-04 19:24:56,323 - security - INFO - Request: POST http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-12-04 19:24:56,414 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?created=1 from 127.0.0.1
+2025-12-04 19:24:56,530 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:24:58,267 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:24:58,429 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-04 19:25:02,375 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-04 19:25:06,090 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=5 from 127.0.0.1
+2025-12-04 19:25:09,747 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:25:28,941 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:25:29,035 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:26:53,244 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:26:53,298 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:26:54,340 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:27:17,429 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:27:17,499 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:27:18,402 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:27:26,785 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:27:27,742 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:27:27,812 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:27:41,215 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:27:41,326 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-04 19:27:44,653 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 19:27:44,714 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:27:45,765 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:27:47,145 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:27:48,333 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-12-04 19:27:49,535 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:27:55,542 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 19:27:56,070 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 19:28:06,467 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/5 from 127.0.0.1
+2025-12-04 19:28:06,567 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:28:18,985 - security - INFO - Request: POST http://127.0.0.1:8000/edit-election/5 from 127.0.0.1
+2025-12-04 19:28:19,087 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?updated=1 from 127.0.0.1
+2025-12-04 19:28:21,264 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 19:28:21,369 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:28:33,377 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 19:28:33,914 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 19:28:42,475 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:28:42,714 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 19:29:17,774 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 19:29:17,910 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:29:44,826 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:29:44,996 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:30:21,692 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 19:30:21,786 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:30:24,286 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:30:26,495 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:30:26,700 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-04 19:30:29,489 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:30:31,593 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:30:33,884 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-04 19:30:35,728 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-04 19:30:39,749 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:31:33,879 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:31:33,959 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:33:28,423 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:33:30,277 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:34:01,526 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 19:34:01,831 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 19:34:06,029 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:34:29,155 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:34:30,224 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:34:35,534 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:34:37,698 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:35:13,066 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:35:13,264 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:35:16,007 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:35:17,647 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:35:18,853 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:35:19,859 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:35:20,564 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:35:21,058 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:35:50,204 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:35:50,892 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:36:59,187 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:36:59,306 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:37:00,907 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?page=2 from 127.0.0.1
+2025-12-04 19:37:05,209 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?page=1 from 127.0.0.1
+2025-12-04 19:37:07,782 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?page=2 from 127.0.0.1
+2025-12-04 19:37:15,221 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-12-04 19:37:22,602 - security - INFO - Request: POST http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-12-04 19:37:22,632 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?created=1 from 127.0.0.1
+2025-12-04 19:37:29,398 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?created=1&page=2 from 127.0.0.1
+2025-12-04 19:37:31,636 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?created=1&page=1 from 127.0.0.1
+2025-12-04 19:38:21,150 - security - INFO - Request: POST http://127.0.0.1:8000/admin-delete-candidate/14 from 127.0.0.1
+2025-12-04 19:38:21,193 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?deleted=1 from 127.0.0.1
+2025-12-04 19:38:21,331 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:38:24,877 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?deleted=1 from 127.0.0.1
+2025-12-04 19:38:26,722 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?deleted=1&page=2 from 127.0.0.1
+2025-12-04 19:38:28,710 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?deleted=1&page=1 from 127.0.0.1
+2025-12-04 19:38:30,190 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?deleted=1&page=2 from 127.0.0.1
+2025-12-04 19:38:31,635 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?deleted=1&page=1 from 127.0.0.1
+2025-12-04 19:38:34,015 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 19:38:49,498 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:38:50,324 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:38:51,801 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-12-04 19:38:52,922 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:38:54,150 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:38:54,345 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-04 19:38:57,869 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 19:38:59,470 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 19:39:12,888 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 19:39:13,973 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 19:39:16,768 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:39:39,400 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 19:39:39,697 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 19:40:43,154 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 19:40:43,290 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:41:24,663 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 19:41:24,957 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 19:41:27,659 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 19:41:30,083 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:41:31,299 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:41:34,819 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:41:46,144 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:42:33,548 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:42:33,626 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:42:37,153 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:42:38,734 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-12-04 19:42:42,624 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 19:43:01,592 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 19:43:02,854 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:43:02,987 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-04 19:43:03,690 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:43:05,316 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:43:27,431 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 19:43:27,736 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 19:43:29,005 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:43:30,256 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:43:49,510 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:43:49,683 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:43:50,137 - security - INFO - Request: GET http://127.0.0.1:8000/favicon.ico from 127.0.0.1
+2025-12-04 19:43:56,030 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:43:56,154 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:43:56,532 - security - INFO - Request: GET http://127.0.0.1:8000/favicon.ico from 127.0.0.1
+2025-12-04 19:46:21,690 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:46:21,816 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:46:23,109 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:46:27,030 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 19:46:46,076 - security - INFO - Request: POST http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 19:46:46,117 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?success=1 from 127.0.0.1
+2025-12-04 19:46:48,856 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/6 from 127.0.0.1
+2025-12-04 19:46:51,963 - security - INFO - Request: POST http://127.0.0.1:8000/delete-election/6 from 127.0.0.1
+2025-12-04 19:46:51,996 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?deleted=1 from 127.0.0.1
+2025-12-04 19:46:54,552 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?deleted=1 from 127.0.0.1
+2025-12-04 19:46:56,066 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?deleted=1 from 127.0.0.1
+2025-12-04 19:47:03,482 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 19:47:22,317 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 19:47:22,465 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:47:23,065 - security - INFO - Request: GET http://127.0.0.1:8000/favicon.ico from 127.0.0.1
+2025-12-04 19:48:43,482 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 19:48:43,546 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:48:58,848 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 19:48:58,928 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:49:21,305 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 19:49:21,351 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:49:32,769 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?deleted=1 from 127.0.0.1
+2025-12-04 19:49:32,850 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:49:37,958 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:49:38,264 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-04 19:50:36,646 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:50:36,753 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:50:44,005 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:50:44,084 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:50:47,786 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:50:47,881 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-04 19:50:49,781 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 19:50:51,051 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:50:54,965 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:50:55,138 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:50:59,805 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-04 19:51:06,628 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/5 from 127.0.0.1
+2025-12-04 19:51:06,736 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:51:10,069 - security - INFO - Request: POST http://127.0.0.1:8000/delete-election/5 from 127.0.0.1
+2025-12-04 19:51:10,119 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?deleted=1 from 127.0.0.1
+2025-12-04 19:51:19,620 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/1 from 127.0.0.1
+2025-12-04 19:51:19,689 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:51:24,484 - security - INFO - Request: POST http://127.0.0.1:8000/edit-election/1 from 127.0.0.1
+2025-12-04 19:51:24,535 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?updated=1 from 127.0.0.1
+2025-12-04 19:51:28,440 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/3 from 127.0.0.1
+2025-12-04 19:51:30,179 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:51:32,067 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:51:32,184 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-04 19:51:34,709 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=2 from 127.0.0.1
+2025-12-04 19:51:39,688 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:51:39,772 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:51:44,302 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/3 from 127.0.0.1
+2025-12-04 19:51:47,108 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:51:48,512 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/3 from 127.0.0.1
+2025-12-04 19:51:58,715 - security - INFO - Request: POST http://127.0.0.1:8000/edit-election/3 from 127.0.0.1
+2025-12-04 19:51:58,759 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?updated=1 from 127.0.0.1
+2025-12-04 19:51:58,834 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:52:01,080 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:52:01,254 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-04 19:52:04,308 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-04 19:52:06,638 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-04 19:52:15,090 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:52:15,132 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:52:19,745 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:52:19,918 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-04 19:53:12,882 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:53:12,993 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-04 19:53:15,457 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:53:15,583 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:53:19,515 - security - INFO - Request: POST http://127.0.0.1:8000/admin-delete-candidate/13 from 127.0.0.1
+2025-12-04 19:53:19,538 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?deleted=1 from 127.0.0.1
+2025-12-04 19:53:23,624 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:53:26,632 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-04 19:53:31,589 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-04 19:53:42,663 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 19:53:42,960 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 19:54:58,349 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 19:54:58,644 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 19:55:28,157 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-04 19:55:28,366 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-04 19:55:30,673 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 19:55:30,865 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:55:32,161 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:55:33,940 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:55:35,259 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-12-04 19:55:36,411 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:55:40,922 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:55:42,679 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 19:55:58,174 - security - INFO - Request: POST http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 19:56:06,803 - security - INFO - Request: POST http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 19:56:06,877 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?success=1 from 127.0.0.1
+2025-12-04 19:56:08,821 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 19:56:09,060 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:56:14,768 - security - INFO - Request: POST http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 19:56:14,791 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?updated=1 from 127.0.0.1
+2025-12-04 19:56:16,804 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 19:56:18,221 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-12-04 19:56:21,554 - security - INFO - Request: POST http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-12-04 19:56:21,578 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?created=1 from 127.0.0.1
+2025-12-04 19:56:23,268 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:57:27,782 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:57:27,885 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-04 19:57:30,668 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:57:31,770 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:57:32,972 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 19:58:18,425 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 19:58:18,742 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 19:58:20,267 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 19:58:20,454 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:58:23,525 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 19:58:29,669 - security - INFO - Request: POST http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 19:58:29,735 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?updated=1 from 127.0.0.1
+2025-12-04 19:58:33,186 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 19:58:33,486 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 19:58:38,998 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 19:58:39,292 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 19:58:47,919 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 19:58:48,226 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 19:59:02,457 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 19:59:04,577 - security - INFO - Request: POST http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 19:59:04,651 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?updated=1 from 127.0.0.1
+2025-12-04 19:59:07,877 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 19:59:26,616 - security - INFO - Request: POST http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 19:59:26,643 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?success=1 from 127.0.0.1
+2025-12-04 19:59:26,707 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 19:59:28,864 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/8 from 127.0.0.1
+2025-12-04 19:59:33,641 - security - INFO - Request: POST http://127.0.0.1:8000/delete-election/8 from 127.0.0.1
+2025-12-04 19:59:33,676 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?deleted=1 from 127.0.0.1
+2025-12-04 19:59:39,205 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 20:01:14,659 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 20:01:14,719 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 20:01:18,774 - security - INFO - Request: POST http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 20:01:18,795 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?updated=1 from 127.0.0.1
+2025-12-04 20:01:20,619 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 20:01:22,670 - security - INFO - Request: POST http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 20:01:22,698 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?updated=1 from 127.0.0.1
+2025-12-04 20:02:18,952 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 20:02:20,262 - security - INFO - Request: GET http://127.0.0.1:8000/admin-add-candidate from 127.0.0.1
+2025-12-04 20:02:30,963 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 20:02:31,041 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 20:02:33,282 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:02:51,178 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 20:02:52,719 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:02:53,966 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:03:45,655 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 20:03:45,951 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 20:04:47,153 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 20:04:47,449 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 20:06:26,434 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:06:26,562 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 20:06:28,429 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 20:06:42,301 - security - INFO - Request: POST http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 20:06:42,345 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?updated=1 from 127.0.0.1
+2025-12-04 20:08:01,154 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 20:08:18,064 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 20:08:18,105 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 20:08:20,294 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 20:08:37,758 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 20:09:47,065 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 20:09:56,196 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 20:09:56,878 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 20:09:58,730 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:10:08,808 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 20:10:10,713 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 20:10:11,577 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 20:10:11,634 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 20:10:50,409 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 20:10:52,381 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:10:53,824 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:10:55,846 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:10:57,337 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 20:11:18,892 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 20:11:31,747 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:11:33,267 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 20:11:57,233 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:11:59,453 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:12:20,484 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:12:20,538 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 20:12:21,499 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:13:11,794 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:13:28,225 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:13:30,924 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:16:59,583 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:16:59,671 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 20:17:00,841 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:17:02,063 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:17:04,355 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:17:06,691 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:17:09,511 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:17:33,746 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:18:04,843 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:18:05,752 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:18:11,844 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:18:39,876 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:18:59,704 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:19:05,371 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:19:53,963 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:19:54,201 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 20:23:37,521 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:23:37,731 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 20:23:38,795 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:28:35,435 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:28:35,622 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 20:28:49,422 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 20:28:49,721 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 20:29:11,424 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 20:29:11,724 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 20:29:14,164 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 20:29:14,459 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 20:29:24,922 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:30:52,518 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:30:54,617 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:31:03,981 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:31:06,073 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:31:07,289 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:31:28,921 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:31:31,628 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:31:33,725 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:31:33,801 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 20:31:34,184 - security - INFO - Request: GET http://127.0.0.1:8000/favicon.ico from 127.0.0.1
+2025-12-04 20:31:35,941 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:32:38,250 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:33:05,941 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:34:32,281 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 20:34:32,754 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 20:34:32,990 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:34:52,876 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:35:14,431 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 20:35:14,728 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 20:37:30,063 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 20:37:30,365 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 20:37:41,565 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:37:41,729 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 20:37:45,122 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:37:46,143 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:38:02,574 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 20:38:02,877 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 20:39:13,121 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 20:39:13,424 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 20:39:53,832 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 20:39:54,141 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 20:39:56,738 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 20:39:57,053 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 20:40:16,304 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 20:40:16,611 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 20:40:20,180 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 20:40:20,478 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 20:40:22,842 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 20:40:23,434 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 20:40:44,439 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 20:40:44,742 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 20:40:48,862 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 20:40:49,161 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 20:41:29,362 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 20:41:29,661 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 20:41:33,259 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 20:41:33,642 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 20:41:37,022 - security - INFO - Request: GET http://127.0.0.1:8000/add-election from 127.0.0.1
+2025-12-04 20:41:50,661 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:41:56,401 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 20:41:57,857 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-12-04 20:42:12,061 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 20:42:12,211 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-04 20:43:14,623 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 20:43:14,714 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 20:43:16,876 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=2 from 127.0.0.1
+2025-12-04 20:43:21,512 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 20:43:22,043 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 20:43:23,474 - security - INFO - Request: GET http://127.0.0.1:8000/confirmation?candidate_id=9&election_id=2 from 127.0.0.1
+2025-12-04 20:43:26,111 - security - INFO - Request: GET http://127.0.0.1:8000/candidates?election_id=2 from 127.0.0.1
+2025-12-04 20:43:53,404 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 20:44:58,674 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 20:44:59,710 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 20:45:01,113 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:45:03,346 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 20:45:05,711 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?page=2 from 127.0.0.1
+2025-12-04 20:45:07,641 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?page=1 from 127.0.0.1
+2025-12-04 20:45:10,187 - security - INFO - Request: POST http://127.0.0.1:8000/admin-delete-candidate/15 from 127.0.0.1
+2025-12-04 20:45:10,222 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?deleted=1 from 127.0.0.1
+2025-12-04 20:45:11,154 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:45:13,848 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/7 from 127.0.0.1
+2025-12-04 20:45:16,562 - security - INFO - Request: POST http://127.0.0.1:8000/delete-election/7 from 127.0.0.1
+2025-12-04 20:45:16,583 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?deleted=1 from 127.0.0.1
+2025-12-04 20:45:21,956 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 20:45:23,459 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:45:24,729 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=ongoing from 127.0.0.1
+2025-12-04 20:45:25,556 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=upcoming from 127.0.0.1
+2025-12-04 20:45:26,335 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=ended from 127.0.0.1
+2025-12-04 20:45:28,036 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 20:45:31,101 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=voted from 127.0.0.1
+2025-12-04 20:45:34,164 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=all from 127.0.0.1
+2025-12-04 20:45:35,213 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 20:45:36,492 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:45:38,693 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 20:45:40,813 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=pending&election_id= from 127.0.0.1
+2025-12-04 20:45:50,986 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=pending&election_id=3 from 127.0.0.1
+2025-12-04 20:45:57,674 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 20:45:59,300 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=ended from 127.0.0.1
+2025-12-04 20:46:00,143 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=upcoming from 127.0.0.1
+2025-12-04 20:47:52,561 - security - INFO - Request: GET http://127.0.0.1:8000/confirmation?candidate_id=9&election_id=2 from 127.0.0.1
+2025-12-04 20:47:53,821 - security - INFO - Request: POST http://127.0.0.1:8000/vote from 127.0.0.1
+2025-12-04 20:48:03,351 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 20:48:03,491 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-04 20:48:04,331 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 20:48:05,695 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 20:48:08,307 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 20:48:10,382 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=voted from 127.0.0.1
+2025-12-04 20:49:59,682 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-04 20:50:00,153 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-04 20:50:12,085 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=all from 127.0.0.1
+2025-12-04 20:50:12,209 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 20:50:13,930 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=voted from 127.0.0.1
+2025-12-04 20:50:16,247 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 20:50:18,731 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=pending&election_id= from 127.0.0.1
+2025-12-04 20:51:26,202 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=pending&election_id= from 127.0.0.1
+2025-12-04 20:51:31,873 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=pending&election_id=3 from 127.0.0.1
+2025-12-04 20:51:33,609 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 20:51:35,621 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=voted from 127.0.0.1
+2025-12-04 20:52:43,414 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=voted from 127.0.0.1
+2025-12-04 20:52:46,525 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 20:52:49,309 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=running&election_id= from 127.0.0.1
+2025-12-04 20:52:57,464 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 20:53:04,530 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=voted from 127.0.0.1
+2025-12-04 20:54:37,484 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=voted from 127.0.0.1
+2025-12-04 20:54:41,862 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=voted from 127.0.0.1
+2025-12-04 20:54:43,997 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 20:55:11,221 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 20:55:13,951 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=voted from 127.0.0.1
+2025-12-04 20:55:39,596 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=voted from 127.0.0.1
+2025-12-04 20:55:40,381 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=voted from 127.0.0.1
+2025-12-04 20:55:55,040 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=voted from 127.0.0.1
+2025-12-04 21:10:17,549 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 21:10:17,847 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:10:24,076 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:10:26,434 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id= from 127.0.0.1
+2025-12-04 21:10:28,558 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=2 from 127.0.0.1
+2025-12-04 21:10:31,524 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:10:45,291 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 21:12:43,361 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:12:44,964 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:12:45,545 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:12:46,178 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:12:53,018 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:12:54,102 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:13:28,446 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:14:02,827 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:16:42,611 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:17:06,143 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:17:23,564 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:18:07,150 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:18:10,663 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:18:23,598 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:18:23,941 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:18:31,901 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 21:19:00,015 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:19:00,279 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:19:00,282 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 21:19:37,169 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:20:37,073 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:20:45,310 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:20:52,411 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:21:06,880 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:21:08,211 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:21:17,697 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:22:06,279 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:22:19,222 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:23:59,859 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:24:03,024 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:24:04,133 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:24:55,335 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:25:27,387 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:25:46,305 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:26:04,391 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:26:07,196 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:26:20,212 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:26:32,600 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:26:40,314 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 21:27:42,132 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:27:42,310 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 21:27:42,314 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:28:21,958 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 21:28:22,051 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 21:28:22,059 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:28:24,322 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=voted from 127.0.0.1
+2025-12-04 21:28:24,427 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 21:28:24,436 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:28:35,366 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=voted from 127.0.0.1
+2025-12-04 21:28:35,502 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 21:28:35,514 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:28:45,469 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=voted from 127.0.0.1
+2025-12-04 21:28:45,628 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 21:28:45,638 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:30:30,773 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=voted from 127.0.0.1
+2025-12-04 21:30:30,872 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 21:30:30,886 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:30:45,303 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 21:30:45,440 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 21:30:45,449 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:30:48,118 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 21:30:48,250 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 21:30:48,260 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:30:51,238 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=voted from 127.0.0.1
+2025-12-04 21:30:51,471 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 21:30:51,475 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:32:05,347 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=voted from 127.0.0.1
+2025-12-04 21:32:05,447 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 21:32:05,464 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:32:54,494 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=voted from 127.0.0.1
+2025-12-04 21:32:54,776 - security - INFO - Request: GET http://127.0.0.1:8000/.well-known/appspecific/com.chrome.devtools.json from 127.0.0.1
+2025-12-04 21:32:54,782 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:33:04,435 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=all from 127.0.0.1
+2025-12-04 21:33:07,164 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?q=&status=voted from 127.0.0.1
+2025-12-04 21:33:08,014 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 21:35:07,730 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=all&election_id=3 from 127.0.0.1
+2025-12-04 21:35:08,004 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:35:11,361 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=pending&election_id=3 from 127.0.0.1
+2025-12-04 21:35:12,922 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 21:35:13,170 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-04 21:41:16,630 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 21:41:16,787 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:41:28,409 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 21:41:29,416 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 21:41:30,246 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 21:41:36,321 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 21:41:36,496 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:42:47,296 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 21:42:47,435 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:42:48,801 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 21:42:48,971 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:42:50,449 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 21:42:50,621 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:43:09,312 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 21:43:09,482 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:43:26,959 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 21:43:27,131 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:43:36,285 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 21:43:36,406 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-04 21:43:37,477 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 21:43:37,565 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:43:39,197 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 21:43:41,511 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 21:43:42,830 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 21:43:42,910 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:43:45,177 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-04 21:43:50,678 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters?page=1 from 127.0.0.1
+2025-12-04 21:43:50,802 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:43:53,243 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 21:43:57,283 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 21:43:57,510 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-04 21:43:59,371 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 21:43:59,521 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:44:00,993 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-12-04 21:44:02,670 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 21:44:05,288 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 21:44:05,471 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-04 21:44:39,892 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 21:44:40,159 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:44:43,072 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 21:44:49,463 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 21:44:52,740 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/2 from 127.0.0.1
+2025-12-04 21:44:52,959 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:44:57,946 - security - INFO - Request: POST http://127.0.0.1:8000/edit-election/2 from 127.0.0.1
+2025-12-04 21:44:58,046 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?updated=1 from 127.0.0.1
+2025-12-04 21:45:00,506 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 21:45:00,620 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:45:07,884 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/2 from 127.0.0.1
+2025-12-04 21:45:08,016 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:45:10,915 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 21:45:14,615 - security - INFO - Request: GET http://127.0.0.1:8000/edit-election/2 from 127.0.0.1
+2025-12-04 21:45:19,533 - security - INFO - Request: POST http://127.0.0.1:8000/edit-election/2 from 127.0.0.1
+2025-12-04 21:45:19,647 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?updated=1 from 127.0.0.1
+2025-12-04 21:45:23,384 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 21:45:23,545 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:45:52,933 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 21:45:53,093 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 21:45:56,690 - security - INFO - Request: GET http://127.0.0.1:8000/profile from 127.0.0.1
+2025-12-04 21:45:58,835 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-04 22:17:17,308 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-04 22:17:17,402 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-04 22:17:22,586 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 22:17:22,660 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-04 22:17:24,122 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 22:17:25,783 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-04 22:17:29,013 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-04 22:17:29,976 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-12-05 20:51:06,225 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2025-12-05 20:51:06,518 - security - INFO - Admins table ensured and admin account synced from env configuration
+2025-12-05 20:51:08,600 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-05 20:51:09,134 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css?v=0 from 127.0.0.1
+2025-12-05 20:51:09,655 - security - INFO - Request: GET http://127.0.0.1:8000/favicon.ico from 127.0.0.1
+2025-12-05 20:51:12,669 - security - INFO - Request: GET http://127.0.0.1:8000/admin-voters from 127.0.0.1
+2025-12-05 20:51:12,843 - security - INFO - Request: GET http://127.0.0.1:8000/static/style.css from 127.0.0.1
+2025-12-05 20:51:14,468 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-05 20:51:17,703 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates?q=&status=pending&election_id= from 127.0.0.1
+2025-12-05 20:51:19,356 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-05 20:51:20,912 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=ended from 127.0.0.1
+2025-12-05 20:51:21,759 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections?status=upcoming from 127.0.0.1
+2025-12-05 20:51:23,169 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-12-05 20:51:25,016 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1
+2025-12-05 20:51:30,188 - security - INFO - Request: GET http://127.0.0.1:8000/dashboard from 127.0.0.1
+2025-12-05 20:51:32,181 - security - INFO - Request: GET http://127.0.0.1:8000/results/1 from 127.0.0.1
+2025-12-05 20:51:35,065 - security - INFO - Request: GET http://127.0.0.1:8000/results/2 from 127.0.0.1
+2025-12-05 20:51:45,814 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=1 from 127.0.0.1
+2025-12-05 20:51:47,433 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard?election_id=3 from 127.0.0.1
+2025-12-05 20:51:50,197 - security - INFO - Request: GET http://127.0.0.1:8000/admin-candidates from 127.0.0.1
+2025-12-05 20:51:51,070 - security - INFO - Request: GET http://127.0.0.1:8000/admin-elections from 127.0.0.1
+2025-12-05 20:51:51,819 - security - INFO - Request: GET http://127.0.0.1:8000/admin-settings from 127.0.0.1
+2025-12-05 20:51:52,974 - security - INFO - Request: GET http://127.0.0.1:8000/admin-dashboard from 127.0.0.1

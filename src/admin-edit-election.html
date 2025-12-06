@@ -91,7 +91,8 @@
           <div>
             <label class="block text-sm font-medium mb-1" for="major">Majors</label>
             {% set current_major = (form_data or {}).get('major', '') %}
-            <input type="hidden" id="major" name="major" value="{{ current_major }}">
+            <input type="hidden" id="major" name="major" value="{{ current_major }}" required>
+            <input type="text" id="major_display" name="major_display" class="w-full px-4 py-2 border rounded-md mb-2" placeholder="Select majors" value="" required readonly>
             <div id="major-select-edit" class="multi-select">
               <div class="selected" tabindex="0">
                 <span class="selected-text text-sm text-gray-600">Select major</span>
@@ -104,7 +105,8 @@
           <div>
             <label class="block text-sm font-medium mb-1" for="cohort">Cohort</label>
             {% set current_cohort = (form_data or {}).get('cohort', 'All Cohort') %}
-            <input type="hidden" id="cohort" name="cohort" value="{{ current_cohort }}">
+            <input type="hidden" id="cohort" name="cohort" value="{{ current_cohort }}" required>
+            <input type="text" id="cohort_display" name="cohort_display" class="w-full px-4 py-2 border rounded-md mb-2" placeholder="Select cohort" value="" required readonly>
             <div id="cohort-select-edit" class="multi-select">
               <div class="selected" tabindex="0">
                 <span class="selected-text text-sm text-gray-600">Select cohort</span>
@@ -197,9 +199,10 @@
         "Accounting"
       ];
 
-      function initMultiSelect(containerId, hiddenId, options, placeholder){
+      function initMultiSelect(containerId, hiddenId, options, placeholder, displayInputId){
         var container = document.getElementById(containerId);
         var hidden = document.getElementById(hiddenId);
+        var displayInput = displayInputId ? document.getElementById(displayInputId) : null;
         if(!container || !hidden || !options || !options.length) return;
 
         var selectedBox = container.querySelector('.selected');
@@ -210,18 +213,22 @@
           if(!values.length){
             selectedText.textContent = placeholder || 'Select items';
             selectedText.classList.add('text-gray-600');
+            if(displayInput){ displayInput.value = ''; }
             return;
           }
           selectedText.classList.remove('text-gray-600');
           if(values.indexOf('All Majors') !== -1){
             selectedText.textContent = 'All majors';
+            if(displayInput){ displayInput.value = 'All majors'; }
             return;
           }
           if(values.indexOf('All Cohort') !== -1){
             selectedText.textContent = 'All cohorts';
+            if(displayInput){ displayInput.value = 'All cohorts'; }
             return;
           }
           selectedText.textContent = values.join(', ');
+          if(displayInput){ displayInput.value = values.join(', '); }
         }
 
         function syncToHidden(){
@@ -293,16 +300,43 @@
         });
 
         selectedBox.addEventListener('click', function(){ toggleDropdown(); });
+        if(displayInput){
+          displayInput.addEventListener('click', function(){ toggleDropdown(); });
+          displayInput.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggleDropdown(); } });
+        }
         selectedBox.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggleDropdown(); } });
         document.addEventListener('click', function(e){ if(!container.contains(e.target)){ toggleDropdown(true); } });
 
         syncFromHidden();
       }
 
-      initMultiSelect('major-select-edit', 'major', majorOptions, 'Select majors');
+      initMultiSelect('major-select-edit', 'major', majorOptions, 'Select majors', 'major_display');
 
       var cohortOptions = ["All Cohort", "2022", "2023", "2024", "2025"];
-      initMultiSelect('cohort-select-edit', 'cohort', cohortOptions, 'Select cohort');
+      initMultiSelect('cohort-select-edit', 'cohort', cohortOptions, 'Select cohort', 'cohort_display');
+
+      // Require majors/cohort selections with native validation bubble.
+      var form = document.querySelector('form[action^="/edit-election"]');
+      if(form){
+        form.addEventListener('submit', function(e){
+          var title = document.getElementById('title');
+          var start = document.getElementById('start_date');
+          var end = document.getElementById('end_date');
+          function ensureField(el){
+            if(!el || !(el.value || '').trim()){
+              e.preventDefault();
+              el && el.setCustomValidity('Please fill out this field.');
+              el && el.reportValidity();
+              return false;
+            }
+            if(el) el.setCustomValidity('');
+            return true;
+          }
+          if(!ensureField(title)) return;
+          if(!ensureField(start)) return;
+          if(!ensureField(end)) return;
+        });
+      }
     })();
   </script>
 </body>

@@ -54,9 +54,10 @@
 
               <div class="election-card">
               <div class="election-card-header">
-                <h3 class="two-line-title">{{ e.title }}</h3>
+                <h3 class="election-title title-two-line">{{ e.title }}</h3>
                 <span class="badge {{ badge_class }} ml-auto">{{ st|capitalize }}</span>
               </div>
+              <div class="election-card-divider"></div>
               <div class="election-details">
                 <i class="fa-solid fa-calendar inline-icon"></i>
                 {% set ds = item.display_start if item.display_start is defined else e.start_date %}
@@ -101,6 +102,30 @@
         });
       }
       if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initProfileMenus); else initProfileMenus();
+    })();
+  </script>
+  <script>
+    (function(){
+      function adjustTitleLines(){
+        var titles = Array.from(document.querySelectorAll('.election-title'));
+        if(!titles.length) return;
+        var anyMulti = titles.some(function(el){
+          var lineHeight = parseFloat(window.getComputedStyle(el).lineHeight) || 22;
+          if(!lineHeight) return false;
+          var lines = Math.round(el.scrollHeight / lineHeight);
+          return lines > 1;
+        });
+        titles.forEach(function(el){
+          el.classList.remove('title-one-line','title-two-line');
+          el.classList.add(anyMulti ? 'title-two-line' : 'title-one-line');
+        });
+      }
+      if(document.readyState === 'loading'){
+        document.addEventListener('DOMContentLoaded', adjustTitleLines);
+      } else {
+        adjustTitleLines();
+      }
+      window.addEventListener('resize', adjustTitleLines);
     })();
   </script>
 </body>

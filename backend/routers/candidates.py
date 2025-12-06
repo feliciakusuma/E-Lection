@@ -201,6 +201,17 @@ def candidates_page(request: Request, db: Session = Depends(get_db)):
 def admin_candidates(request: Request, db: Session = Depends(get_db)):
     tz_offset = timedelta(hours=7)
     q = (request.query_params.get("q", "") or "").strip()
+    def _safe_int(val, default):
+        try:
+            return int(val)
+        except Exception:
+            return default
+    page = max(_safe_int(request.query_params.get("page", 1) or 1, 1), 1)
+    page_size = 7
+    offset = (page - 1) * page_size
+    page = max(int(request.query_params.get("page", 1) or 1), 1)
+    page_size = 7
+    offset = (page - 1) * page_size
     status_filter = (request.query_params.get("status", "all") or "all").lower()
     election_id_param = (request.query_params.get("election_id", "") or "").strip()
 
@@ -244,9 +255,13 @@ def admin_candidates(request: Request, db: Session = Depends(get_db)):
 
     tickets = db.query(CandidateTicket).all()
     vice_ids = {t.vice_president_candidate_id for t in tickets if t.vice_president_candidate_id}
-    candidates = query.order_by(Candidate.created_at.desc()).all()
-    # Total count of all candidate rows (including vice candidates), regardless of filters applied to the table rows
-    total_count = db.query(Candidate).count()
+    total_count = query.count()
+    candidates = (
+        query.order_by(Candidate.created_at.desc())
+        .offset(offset)
+        .limit(page_size)
+        .all()
+    )
     for c in candidates:
         if getattr(c, "created_at", None):
             try:
@@ -291,6 +306,8 @@ def admin_candidates(request: Request, db: Session = Depends(get_db)):
             c.vice_cohort = v_cohort or c.vice_cohort
     elections = db.query(Election).order_by(Election.start_date.desc()).all()
 
+    total_pages = (total_count + page_size - 1) // page_size if total_count else 1
+
     return templates.TemplateResponse(
         "admin-candidates.html",
         {
@@ -301,6 +318,8 @@ def admin_candidates(request: Request, db: Session = Depends(get_db)):
             "q": q,
             "selected_election_id": selected_election_id,
             "total_count": total_count,
+            "page": page,
+            "total_pages": total_pages,
         },
     )
 

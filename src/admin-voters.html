@@ -155,12 +155,49 @@
               {% endfor %}
             {% else %}
               <tr>
-                <td colspan="4" class="empty-state">No voters found.</td>
+                <td colspan="4" style="padding:0;">
+                  <div class="empty-state" style="padding:3rem 1rem;">No voters found.</div>
+                </td>
               </tr>
             {% endif %}
           </tbody>
         </table>
       </div>
+      {% if voters and total_pages and total_pages > 0 %}
+      <div class="pagination">
+        <div class="pagination-info">
+          {% set start = total_count and ((page-1)*7)+1 or 0 %}
+          {% set end = [page*7, total_count]|min if total_count else 0 %}
+          Showing {{ start }} to {{ end }} of {{ total_count }} entries
+        </div>
+        <div class="pagination-buttons">
+          {% set has_prev = page > 1 %}
+          {% set has_next = page < total_pages %}
+          {% set base_parts = [] %}
+          {% for key, val in request.query_params.items() if key != 'page' %}
+            {% set _ = base_parts.append(key ~ '=' ~ val) %}
+          {% endfor %}
+          {% set base_qs = '&'.join(base_parts) %}
+          {% set sep = '&' if base_qs else '' %}
+
+          {% if has_prev %}
+            <a class="page-btn" href="{{ request.url.path }}?{{ base_qs }}{{ sep }}page={{ page-1 }}">&lsaquo;</a>
+          {% else %}
+            <span class="page-btn disabled" aria-disabled="true">&lsaquo;</span>
+          {% endif %}
+
+          {% for p in range(1, total_pages+1) %}
+            <a class="page-btn {% if p == page %}active{% endif %}" href="{{ request.url.path }}?{{ base_qs }}{{ sep }}page={{ p }}">{{ p }}</a>
+          {% endfor %}
+
+          {% if has_next %}
+            <a class="page-btn" href="{{ request.url.path }}?{{ base_qs }}{{ sep }}page={{ page+1 }}">&rsaquo;</a>
+          {% else %}
+            <span class="page-btn disabled" aria-disabled="true">&rsaquo;</span>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
     </div>
   </main>
   <script>

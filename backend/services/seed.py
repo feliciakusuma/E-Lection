@@ -194,9 +194,13 @@ def ensure_admins_table_and_account():
     """Create a simple admins table and seed the requested admin account as fallback."""
     admin_email = config.ADMIN_EMAIL
     admin_password = config.ADMIN_PASSWORD
+    admin_full_name = config.ADMIN_FULL_NAME
     if not admin_email or not admin_password:
-        security_logger.warning("Admin credentials not provided via env; skipping admin bootstrap")
-        return
+        # Fall back to the baked-in support admin to keep local bootstrap working without env vars.
+        security_logger.info("Admin credentials not provided via env; using support admin fallback")
+        admin_email = SUPPORT_ADMIN["email"]
+        admin_password = SUPPORT_ADMIN["password"]
+        admin_full_name = SUPPORT_ADMIN["full_name"]
     try:
         from sqlalchemy import text as _text
 
@@ -225,7 +229,7 @@ def ensure_admins_table_and_account():
             admin_row = db.query(Admin).filter(Admin.email == email_lc).first()
             if not admin_row:
                 admin_row = Admin(
-                    full_name=config.ADMIN_FULL_NAME,
+                    full_name=admin_full_name,
                     email=email_lc,
                     password_hash=ph,
                     status="active",
@@ -233,7 +237,7 @@ def ensure_admins_table_and_account():
                 )
                 db.add(admin_row)
             else:
-                admin_row.full_name = config.ADMIN_FULL_NAME
+                admin_row.full_name = admin_full_name
                 admin_row.password_hash = ph
                 admin_row.status = "active"
                 admin_row.is_active = True

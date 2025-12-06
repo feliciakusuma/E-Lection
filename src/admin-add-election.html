@@ -91,7 +91,7 @@
           <div>
             <label class="block text-sm font-medium mb-1" for="major">Majors</label>
             {% set current_major = (form_data or {}).get('major', '') %}
-            <input type="hidden" id="major" name="major" value="{{ current_major }}">
+            <input type="hidden" id="major" name="major" value="{{ current_major }}" required>
             <div id="major-select" class="multi-select">
               <div class="selected" tabindex="0">
                 <span class="selected-text text-sm text-gray-600">Select majors</span>
@@ -105,8 +105,8 @@
 
           <div>
             <label class="block text-sm font-medium mb-1" for="cohort">Cohort</label>
-            {% set current_cohort = (form_data or {}).get('cohort', 'All Cohort') %}
-            <input type="hidden" id="cohort" name="cohort" value="{{ current_cohort }}">
+            {% set current_cohort = (form_data or {}).get('cohort', '') %}
+            <input type="hidden" id="cohort" name="cohort" value="{{ current_cohort }}" required>
             <div id="cohort-select" class="multi-select">
               <div class="selected" tabindex="0">
                 <span class="selected-text text-sm text-gray-600">Select cohort</span>
@@ -311,10 +311,55 @@
         syncFromHidden();
       }
 
-      initMultiSelect('major-select', 'major', majorOptions, 'Select major');
+      initMultiSelect('major-select', 'major', majorOptions, 'Select majors');
 
       var cohortOptions = ["All Cohort", "2022", "2023", "2024", "2025"];
       initMultiSelect('cohort-select', 'cohort', cohortOptions, 'Select cohort');
+
+      var form = document.querySelector('form[action="/add-election"]');
+      if(form){
+        form.addEventListener('submit', function(e){
+          var title = document.getElementById('title');
+          var start = document.getElementById('start_date');
+          var end = document.getElementById('end_date');
+          function ensureField(el){
+            if(!el || !(el.value || '').trim()){
+              e.preventDefault();
+              alert('Please fill out this field.');
+              if(el && typeof el.focus === 'function') el.focus();
+              return false;
+            }
+            return true;
+          }
+          if(!ensureField(title)) return;
+          if(!ensureField(start)) return;
+          if(!ensureField(end)) return;
+        });
+      }
+
+      // Require majors/cohort selections (hidden inputs are not validated by default).
+      var form = document.querySelector('form[action="/add-election"]');
+      if(form){
+        form.addEventListener('submit', function(e){
+          var major = document.getElementById('major');
+          var cohort = document.getElementById('cohort');
+          var start = document.getElementById('start_date');
+          var end = document.getElementById('end_date');
+          function requireField(el, label){
+            if(!el || !(el.value || '').trim()){
+              e.preventDefault();
+              alert(label + ' - please fill out this field');
+              if(el && typeof el.focus === 'function') el.focus();
+              return false;
+            }
+            return true;
+          }
+          if(!requireField(major, 'Majors')) return;
+          if(!requireField(cohort, 'Cohort')) return;
+          if(!requireField(start, 'Start Date/Time')) return;
+          if(!requireField(end, 'End Date/Time')) return;
+        });
+      }
     })();
   </script>
 </html>

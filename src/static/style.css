@@ -647,7 +647,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   box-shadow: var(--shadow-md);
   display: flex;
   flex-direction: column;
-  height: 400px;
+  max-height:180px;
 }
 
 .candidate-img {
@@ -1563,7 +1563,10 @@ input[type="password"]::-webkit-textfield-decoration-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-bottom: 1rem;
   font-size: 0.875rem;
   color: var(--gray-600);
   gap: 1rem;
@@ -1665,21 +1668,22 @@ input[type="password"]::-webkit-textfield-decoration-container {
 .election-grid.tw-tip { data-tw: "grid grid-cols-1 md:grid-cols-4 gap-6"; }
 
 .election-card {
-  background: var(--white);
-  border-radius: 0.5rem;
-  padding: 1rem;
-  cursor: pointer;
-  transition: box-shadow 0.2s ease;
-  border: 1px solid var(--gray-200);
-  min-height: 14rem;
-  display: flex;
-  flex-direction: column;
+    background: var(--white);
+    border-radius: 0.5rem;
+    padding: 0.95rem 1rem 0.85rem;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease;
+    border: 1px solid var(--gray-200);
+    min-height: 10.25rem; /* trim excess bottom whitespace on admin cards */
+    display: flex;
+    flex-direction: column;
 }
 
 /* Make dashboard election cards a bit taller without affecting admin */
 .dashboard-main .election-card {
-  min-height: 14rem; /* align cards to a consistent boundary */
-  padding: 1.25rem;  /* slightly roomier */
+  min-height: 11rem; /* avoid excess white space under meta */
+  max-height:300px;
+  padding: 1.05rem;  /* slightly roomier */
 }
 
 .election-card:hover {
@@ -1687,43 +1691,43 @@ input[type="password"]::-webkit-textfield-decoration-container {
 }
 
 .election-card-header {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 0.5rem;
+    display: flex;
+    align-items: flex-start; /* push status badge to top edge */
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
 }
 
-.election-card-header h3 {
+.election-card-divider {
+  border-top: 1px solid var(--gray-200);
+  margin: 0.35rem 0 0.65rem;
+}
+
+.election-card-header h3,
+.election-title {
   font-size: 1.125rem;
   font-weight: 600;
   line-height: 1.35rem;
-  min-height: 2.7rem; /* reserve space for two lines */
   width: 100%;
-  max-width: 28ch; /* encourage wrapping so short titles break into two lines */
+  max-width: 28ch;
   text-wrap: balance;
-}
-.dashboard-main .election-card-header h3 {
-  max-width: 26ch; /* tighten wrap for dashboard cards */
   word-break: break-word;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+.dashboard-main .election-card-header h3,
+.dashboard-main .election-title {
+  max-width: 26ch; /* tighten wrap for dashboard cards */
 }
 
-/* Force two-line wrap for dashboard titles (even short ones) */
-.two-line-title {
-  font-size: 1.125rem;
-  font-weight: 600;
-  line-height: 1.35rem;
-  min-height: 2.7rem;
-  max-width: 26ch;
-  text-wrap: balance;
-  word-break: break-word;
-  display: -webkit-box;
+.title-two-line {
   -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  min-height: 2.7rem; /* reserve two lines so rows stay aligned */
+}
+
+.title-one-line {
+  -webkit-line-clamp: 1;
+  min-height: auto; /* no extra space when all titles fit on one line */
 }
 
 .election-details {
@@ -1793,6 +1797,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   padding: 0.25rem 0.5rem;
   border-radius: 0.375rem;
   font-weight: 500;
+  margin-top: 0.1rem;
 }
 
 .status-ongoing {
@@ -1855,6 +1860,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   background-color: #f9fafb;
   border-radius: 0.75rem;
   color: #6b7280;
+  width: 100%;
 }
 /* Search inside input using original .search-bar style */
 
@@ -1875,14 +1881,12 @@ input[type="password"]::-webkit-textfield-decoration-container {
   border-radius:9999px; 
   background: var(--blue-600); 
   color:#fff; 
-  display:inline-flex; a
-  lign-items:center; 
+  display:inline-flex;
+  align-items:center; 
   justify-content:center; 
   border:none; 
   cursor:pointer;
 }
-
-\n.search-submit:hover { background: var(--blue-700); }\n
 
 .search-box{
   position:relative;
@@ -2021,3 +2025,55 @@ body { margin: 0; }
   cursor: pointer;
 }
 .multi-select .option-item:hover { background: #f1f5f9; }
+
+/* ----- Results Page ----- */
+.results-chart-card {
+  min-height: 320px;
+  max-height: 360px;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.results-chart-container {
+  flex: 1;
+  max-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto 0;
+}
+
+.results-chart-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.results-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 260px;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  flex: 1 1 auto;
+  padding: 0;
+  background: transparent;
+  border-radius: 0.75rem;
+}
+
+.results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.results-list > div {
+  margin-bottom: 0;
+}
+
+.results-list > div:last-child {
+  margin-bottom: 0;
+}
+

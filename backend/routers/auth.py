@@ -34,6 +34,32 @@ router = APIRouter()
 GOOGLE_LOGIN_ENABLED = bool(GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET)
 
 
+def parse_email_change_token(token: str | None):
+    """Return (code, pending_email) if token is for email change, else (None, None)."""
+    if not token:
+        return None, None
+    if token.startswith("change:"):
+        parts = token.split(":", 2)
+        if len(parts) == 3:
+            return parts[1], parts[2]
+    return None, None
+
+
+def find_user_by_pending_email(db: Session, email: str | None):
+    """Locate a user who is changing to the given email."""
+    if not email:
+        return None, None, None
+    target = email.strip().lower()
+    try:
+        for candidate in db.query(User).all():
+            code, pending_email = parse_email_change_token(getattr(candidate, "verification_token", None))
+            if pending_email and pending_email.strip().lower() == target:
+                return candidate, code, pending_email
+    except Exception:
+        pass
+    return None, None, None
+
+
 @router.get("/", response_class=HTMLResponse)
 def landing(request: Request):
     return RedirectResponse(url="/login", status_code=302)
@@ -442,12 +468,16 @@ def admin_logout():
 
 
 @router.get("/verify-code", response_class=HTMLResponse)
-def verify_code_page(request: Request, email: str | None = None):
+def verify_code_page(request: Request, email: str | None = None, changing: int | None = None):
+    success_msg = None
+    if request.query_params.get("changing"):
+        success_msg = "We sent a verification code to your new email. Confirm it to finish updating your account."
     return templates.TemplateResponse(
         "verify.html",
         {
             "request": request,
             "email": email or "",
+            "success": success_msg,
         },
     )
 
@@ -459,7 +489,19 @@ def verify_code_submit(
     code: str = Form(...),
     db: Session = Depends(get_db),
 ):
+    code = (code or "").strip()
     user = db.query(User).filter(User.email == email).first()
+    pending_code = None
+    pending_email = None
+    pending_mode = False
+
+    if not user:
+        user, pending_code, pending_email = find_user_by_pending_email(db, email)
+        pending_mode = user is not None
+    else:
+        pending_code, pending_email = parse_email_change_token(getattr(user, "verification_token", None))
+        pending_mode = bool(pending_email)
+
     if not user:
         return templates.TemplateResponse(
             "verify.html",
@@ -470,7 +512,18 @@ def verify_code_submit(
             },
         )
 
-    if not code or code.strip() != (user.verification_token or ""):
+    if pending_mode and pending_email and pending_email.strip().lower() != email.strip().lower():
+        return templates.TemplateResponse(
+            "verify.html",
+            {
+                "request": request,
+                "error": "This code is tied to a different email. Please use the latest verification link.",
+                "email": email,
+            },
+        )
+
+    expected_code = pending_code if pending_mode else (user.verification_token or "")
+    if not code or code.strip() != expected_code:
         return templates.TemplateResponse(
             "verify.html",
             {
@@ -481,9 +534,23 @@ def verify_code_submit(
         )
 
     try:
-        user.status = "verified"
-        user.is_active = True
+        if pending_mode and pending_email:
+            user.email = pending_email
+            user.verification_token = None
+        else:
+            user.status = "verified"
+            user.is_active = True
         db.commit()
+        if pending_mode:
+            response = RedirectResponse(url="/profile?email_updated=1", status_code=302)
+            try:
+                response.set_cookie("user_email", user.email or "", httponly=False)
+                response.set_cookie("first_name", user.first_name or "", httponly=False)
+                response.set_cookie("last_name", user.last_name or "", httponly=False)
+                response.set_cookie("full_name", f"{user.first_name or ''} {user.last_name or ''}".strip(), httponly=False)
+            except Exception:
+                pass
+            return response
         return RedirectResponse(url="/login?verified=1", status_code=302)
     except Exception:
         db.rollback()
@@ -504,6 +571,17 @@ def resend_code(
     db: Session = Depends(get_db),
 ):
     user = db.query(User).filter(User.email == email).first()
+    pending_code = None
+    pending_email = None
+    pending_mode = False
+
+    if not user:
+        user, pending_code, pending_email = find_user_by_pending_email(db, email)
+        pending_mode = user is not None
+    else:
+        pending_code, pending_email = parse_email_change_token(getattr(user, "verification_token", None))
+        pending_mode = bool(pending_email)
+
     if not user:
         return templates.TemplateResponse(
             "verify.html",
@@ -516,28 +594,32 @@ def resend_code(
 
     # Generate and set a new code
     new_code = f"{secrets.randbelow(10**6):06d}"
-    user.verification_token = new_code
+    if pending_mode and pending_email:
+        user.verification_token = f"change:{new_code}:{pending_email}"
+    else:
+        user.verification_token = new_code
     db.commit()
 
     try:
         send_verification_email(
-            to_email=email,
+            to_email=pending_email if pending_mode and pending_email else email,
             first_name=user.first_name,
             last_name=user.last_name,
             code=new_code,
         )
-        success_msg = "A new verification code has been sent."
+        success_msg = "A new verification code has been sent to your new email." if pending_mode else "A new verification code has been sent."
     except Exception as send_exc:
         success_msg = None
         security_logger.warning(f"Resend code failed for {email}: {send_exc}")
 
+    email_for_form = pending_email if pending_mode and pending_email else email
     return templates.TemplateResponse(
         "verify.html",
         {
             "request": request,
             "success": success_msg,
             "error": None if success_msg else "Unable to send code. Please try again.",
-            "email": email,
+            "email": email_for_form,
         },
     )
 

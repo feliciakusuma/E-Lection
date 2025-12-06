@@ -5,7 +5,17 @@ from sqlalchemy import func, or_, text
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Session
 
-from ..database import AuditLog, Candidate, CandidateTicket, Election, User, Vote, Admin, get_readonly_db
+from ..database import (
+    AuditLog,
+    Candidate,
+    CandidateTicket,
+    Election,
+    User,
+    Vote,
+    Admin,
+    get_readonly_db,
+    get_vote_count_secure,
+)
 from ..dependencies import get_db, templates
 from ..services.audit import log_security_event, security_logger
 from ..utils.counts import get_eligible_voters_count
@@ -100,13 +110,13 @@ def admin_dashboard(request: Request, db: Session = Depends(get_db)):
             or 0
         )
 
-    if last_month_candidates == 0:
-        candidates_growth_pct = 100 if this_month_candidates > 0 else 0
-    elif this_month_candidates == 0:
-        # Avoid showing -100% when there are no candidates this month
+    if last_month_candidates == 0 or this_month_candidates == 0:
+        # No baseline or no current data: keep at 0% to avoid misleading spikes
         candidates_growth_pct = 0
     else:
         candidates_growth_pct = round(((this_month_candidates - last_month_candidates) / last_month_candidates) * 100)
+        if candidates_growth_pct < 0:
+            candidates_growth_pct = 0  # clamp negative changes to 0% for empty/declining histories
 
     try:
         active_elections = (
@@ -257,6 +267,7 @@ def admin_dashboard(request: Request, db: Session = Depends(get_db)):
         elections = []
 
     current_election = None
+    live_results = []
     if elections:
         try:
             sel_id_int = int(selected_election_id) if selected_election_id else None
@@ -266,6 +277,72 @@ def admin_dashboard(request: Request, db: Session = Depends(get_db)):
             current_election = next((e for e in elections if e.id == sel_id_int), elections[0])
         else:
             current_election = elections[0]
+
+    # Build live results aligned with results page
+    if current_election:
+        try:
+            vote_counts = get_vote_count_secure(db, current_election.id)
+            tickets = db.query(CandidateTicket).filter(CandidateTicket.election_id == current_election.id).all()
+            raw = []
+            for t in tickets:
+                pres = db.query(Candidate).filter(Candidate.id == t.president_candidate_id).first()
+                if not pres:
+                    continue
+                vice = (
+                    db.query(Candidate).filter(Candidate.id == t.vice_president_candidate_id).first()
+                    if t.vice_president_candidate_id
+                    else None
+                )
+                name = (getattr(pres, "full_name", "") or "").strip()
+                if vice:
+                    name = f"{name} & {getattr(vice, 'full_name', '').strip()}"
+                if not name:
+                    continue
+                raw.append({"name": name, "votes": int(vote_counts.get(t.id, 0))})
+
+            if not tickets:
+                candidates = db.query(Candidate).filter(Candidate.position == current_election.title).all()
+                for c in candidates:
+                    raw.append(
+                        {"name": getattr(c, "full_name", f"Candidate {c.id}"), "votes": int(vote_counts.get(f"legacy_candidate_{c.id}", 0))}
+                    )
+
+            for key, count in vote_counts.items():
+                if isinstance(key, str) and key.startswith("legacy_candidate_"):
+                    cid = int(key.split("_")[-1])
+                    c = db.query(Candidate).filter(Candidate.id == cid).first()
+                    raw.append({"name": getattr(c, "full_name", f"Candidate {cid}"), "votes": int(count)})
+
+            if not raw:
+                candidates = db.query(Candidate).filter(Candidate.position == current_election.title).all()
+                if candidates:
+                    for i in range(0, len(candidates), 2):
+                        pres = candidates[i]
+                        vice = candidates[i + 1] if i + 1 < len(candidates) else None
+                        name = getattr(pres, "full_name", f"Candidate {pres.id}")
+                        if vice:
+                            name = f"{name} & {getattr(vice, 'full_name', f'Candidate {vice.id}')}"
+                        raw.append({"name": name, "votes": 0})
+                else:
+                    raw.append({"name": "No candidates", "votes": 0})
+
+            total_votes_live = sum(r["votes"] for r in raw) or 0
+            palette = ["#2563eb", "#22c55e", "#7c3aed", "#f59e0b", "#06b6d4"]
+            raw.sort(key=lambda x: x["votes"], reverse=True)
+            for idx, r in enumerate(raw):
+                pct = (r["votes"] / total_votes_live * 100) if total_votes_live > 0 else 0
+                rank_label = "Winner" if idx == 0 else ("Runner-up" if idx == 1 else ("Third place" if idx == 2 else "Candidate"))
+                live_results.append(
+                    {
+                        "name": r["name"],
+                        "votes": r["votes"],
+                        "percent": pct,
+                        "color": palette[idx % len(palette)],
+                        "rank_label": rank_label,
+                    }
+                )
+        except Exception:
+            live_results = live_results or []
 
     recent_voters = []
     try:
@@ -329,6 +406,7 @@ def admin_dashboard(request: Request, db: Session = Depends(get_db)):
             "recent_voters": recent_voters,
             "recent_activity": activity_items,
             "current_election": current_election,
+            "live_results": live_results,
         },
     )
 
@@ -338,6 +416,10 @@ def admin_voters(request: Request, db: Session = Depends(get_db)):
     tz_offset = timedelta(hours=7)
     q = (request.query_params.get("q", "") or "").strip()
     sf = (request.query_params.get("status", "all") or "all").lower()
+    page = max(int(request.query_params.get("page", 1) or 1), 1)
+    page_size = 7
+    offset = (page - 1) * page_size
+
     query = db.query(User)
     if q:
         like = f"%{q}%"
@@ -349,11 +431,31 @@ def admin_voters(request: Request, db: Session = Depends(get_db)):
                 User.student_id.like(like),
             )
         )
-    # Vote linkage is anonymized; we cannot reliably map to users, so skip vote filters.
-    voters = query.order_by(User.created_at.desc()).all() if hasattr(User, "created_at") else query.all()
+
+    # Compute has_voted by matching hashed student_id + election_id to stored voter_hashes.
+    votes_hashes = {v[0] for v in db.query(Vote.voter_hash).all()}
+    election_ids = [row[0] for row in db.query(Election.id).all()]
+
+    def user_has_voted(user: User) -> bool:
+        sid = (user.student_id or "").strip()
+        if not sid or not election_ids or not votes_hashes:
+            return False
+        for eid in election_ids:
+            hval = hashlib.sha256(f"{sid}_{eid}".encode()).hexdigest()
+            if hval in votes_hashes:
+                return True
+        return False
+
+    total_count = query.count()
+    voters_all = (
+        query.order_by(User.created_at.desc()).offset(offset).limit(page_size).all()
+        if hasattr(User, "created_at")
+        else query.all()
+    )
+
     voter_rows = []
-    for v in voters:
-        has_voted = False
+    for v in voters_all:
+        has_voted = user_has_voted(v)
         if getattr(v, "created_at", None):
             try:
                 v.display_created_at = v.created_at + tz_offset
@@ -361,9 +463,25 @@ def admin_voters(request: Request, db: Session = Depends(get_db)):
                 v.display_created_at = v.created_at
         voter_rows.append((v, has_voted))
 
+    if sf == "voted":
+        voter_rows = [row for row in voter_rows if row[1]]
+    elif sf == "not_voted":
+        voter_rows = [row for row in voter_rows if not row[1]]
+
+    total_pages = (total_count + page_size - 1) // page_size if total_count else 1
+
     return templates.TemplateResponse(
         "admin-voters.html",
-        {"request": request, "voters": voter_rows, "status_filter": sf, "success": None, "error": None},
+        {
+            "request": request,
+            "voters": voter_rows,
+            "status_filter": sf,
+            "success": None,
+            "error": None,
+            "page": page,
+            "total_pages": total_pages,
+            "total_count": total_count,
+        },
     )
 
 
