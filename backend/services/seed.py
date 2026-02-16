@@ -1,4 +1,5 @@
 from sqlalchemy import text
+import uuid
 from .. import config
 from ..database import SessionLocal, engine, User, Admin
 from .security import get_password_hash
@@ -15,7 +16,7 @@ SUPPORT_ADMIN = {
 }
 
 
-def _resolve_ids_from_student_id(conn, student_id: str | None) -> tuple[int | None, int | None]:
+def _resolve_ids_from_student_id(conn, student_id: str | None) -> tuple[uuid.UUID | None, uuid.UUID | None]:
     if not student_id:
         return None, None
     sid = student_id.strip()
@@ -143,11 +144,12 @@ def seed_cohorts_and_majors():
             # Recreate lightweight reference tables to guarantee constraints.
             conn.execute(text("DROP TABLE IF EXISTS cohort CASCADE;"))
             conn.execute(text("DROP TABLE IF EXISTS majors CASCADE;"))
+            conn.execute(text("CREATE EXTENSION IF NOT EXISTS pgcrypto;"))
             conn.execute(
                 text(
                     """
                     CREATE TABLE IF NOT EXISTS cohort (
-                        cohort_id SERIAL PRIMARY KEY,
+                        cohort_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         cohort_num INTEGER NOT NULL UNIQUE
                     );
                     """
@@ -157,7 +159,7 @@ def seed_cohorts_and_majors():
                 text(
                     """
                     CREATE TABLE IF NOT EXISTS majors (
-                        major_id SERIAL PRIMARY KEY,
+                        major_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         major_code INTEGER NOT NULL UNIQUE,
                         major_name VARCHAR(200) NOT NULL
                     );
@@ -319,6 +321,24 @@ def ensure_core_schema():
                         or "created_by" in legacy_cols
                         or "is_admin" in legacy_cols):
                     conn.execute(text("DROP TABLE IF EXISTS users CASCADE;"))
+                else:
+                    # Ensure verification token storage is encrypted + hashed
+                    if "verification_token" in legacy_cols and "verification_token_encrypted" not in legacy_cols:
+                        conn.execute(text("ALTER TABLE users RENAME COLUMN verification_token TO verification_token_encrypted;"))
+                        legacy_cols = conn.execute(
+                            text(
+                                """
+                                SELECT column_name
+                                FROM information_schema.columns
+                                WHERE table_name = 'users'
+                                """
+                            )
+                        ).scalars().all()
+                    if "verification_token_encrypted" in legacy_cols:
+                        conn.execute(text("ALTER TABLE users ALTER COLUMN verification_token_encrypted TYPE TEXT;"))
+                    if "verification_token_hash" not in legacy_cols:
+                        conn.execute(text("ALTER TABLE users ADD COLUMN verification_token_hash VARCHAR(64);"))
+                        conn.execute(text("CREATE INDEX IF NOT EXISTS ix_users_verification_token_hash ON users (verification_token_hash);"))
 
             # Drop elections table if legacy encrypted results column exists.
             election_reg = conn.execute(text("SELECT to_regclass('public.elections')")).scalar()
@@ -359,18 +379,20 @@ def ensure_core_schema():
                 "votes",
                 {
                     "id",
-                    "voter_id",
-                    "voter_nonce",
-                    "ticket_id",
-                    "candidate_id",
                     "election_id",
                     "vote_encrypted",
-                    "timestamp_encrypted",
-                    "session_key_encrypted",
                     "vote_nonce",
-                    "timestamp_nonce",
                     "verification_code",
                     "is_counted",
+                    "created_at",
+                },
+            )
+            drop_if_missing(
+                "voter_election_status",
+                {
+                    "voter_id",
+                    "election_id",
+                    "has_voted",
                     "created_at",
                 },
             )
@@ -386,7 +408,6 @@ def ensure_core_schema():
                     "student_id",
                     "cohort_id",
                     "major_id",
-                    "description",
                     "position",
                     "status",
                     "is_active",
@@ -413,3 +434,27 @@ def ensure_core_schema():
             )
     except Exception as exc:
         security_logger.warning(f"Schema check failed: {exc}")
+
+
+def backfill_user_verification_tokens():
+    """Encrypt and hash any legacy plaintext verification tokens."""
+    db = SessionLocal()
+    try:
+        users = (
+            db.query(User)
+            .filter(User.verification_token_hash == None)  # noqa: E711
+            .all()
+        )
+        changed = False
+        for u in users:
+            token = u.verification_token
+            if token:
+                u.verification_token = token
+                changed = True
+        if changed:
+            db.commit()
+    except Exception as exc:
+        db.rollback()
+        security_logger.warning(f"Verification token backfill skipped/failed: {exc}")
+    finally:
+        db.close()

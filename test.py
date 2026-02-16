@@ -10,12 +10,11 @@ def show_latest_vote():
     print("Vote id:", v.id)
     try:
         sess = v._session_key()
-        print("Session key (first 8 hex):", sess.hex()[:16])
+        print("Session key (first 16 hex chars or 8 bytes):", sess.hex()[:16])
     except Exception as exc:
         print("Session key unavailable:", exc)
 
-    print("Decrypted vote payload:", v.vote_data)          # voter_id, candidate_id, election_id, timestamp
-    print("Decrypted vote timestamp:", v.vote_timestamp)   # ISO string
+    print("Decrypted vote payload:", v.vote_data)  # voter_id, candidate_id, election_id, ticket_id timestamp
 
 
 if __name__ == "__main__":

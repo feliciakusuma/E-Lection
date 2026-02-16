@@ -3,44 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ asset(request, 'tailwind.css') }}" />
   <link rel="stylesheet" href="{{ request.url_for('static', path='style.css') }}">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="/static/vendor/fontawesome/css/all.min.css" rel="stylesheet">
   <title>Admin - Add Election</title>
 </head>
 
 <body class="admin-body">
-   <!-- Sidebar -->
-  <aside class="sidebar" id="sidebar">
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar"> 
     <div class="sidebar-logo">
       <i class="fas fa-vote-yea text-blue-600 text-xl"></i> 
       <span class="logo-text">E-Lection</span>
     </div>
     <nav class="sidebar-nav">
       <a href="/admin-dashboard" class="sidebar-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/3446/3446795.png" class="icon">
+        <i class="fa-solid fa-chart-line text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Dashboard</span>
       </a>
       <a href="/admin-voters" class="sidebar-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/694/694642.png" class="icon">
+        <i class="fa-solid fa-users text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Voters</span>
       </a>
       <a href="/admin-candidates" class="sidebar-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/7658/7658147.png" class="icon">
+        <i class="fa-solid fa-user-tie text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Candidates</span>
       </a>
       <a href="/admin-elections" class="sidebar-link active">
-        <img src="https://cdn-icons-png.flaticon.com/512/6820/6820898.png" class="icon">
+        <i class="fa-solid fa-square-poll-vertical text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Elections</span>
-      </a>
+      </a>   
       <a href="/admin-settings" class="sidebar-link">
-        <img src="https://cdn-icons-png.flaticon.com/512/1160/1160356.png" class="icon">
+        <i class="fa-solid fa-gear text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Settings</span>
       </a>
     </nav>
     <div class="sidebar-footer">
-      <a href="/admin" class="logout-link">
-        <i class="fa-solid fa-arrow-right-from-bracket icon text-red-500"></i>
+      <a href="/admin-logout" class="logout-link">
+        <i class="fa-solid fa-arrow-right-from-bracket text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Logout</span>
       </a>
     </div>
@@ -50,7 +50,7 @@
   <main class="main-content">
     <!-- Top Navbar -->
     <header class="topbar">
-      <div style="display:flex; align-items:center; gap:.75rem;">
+      <div class="ui-flex-gap-75">
         <button class="hamburger" id="hamburger" aria-label="Open menu">
           <i class="fa-solid fa-bars"></i>
         </button>
@@ -80,18 +80,19 @@
       <div class="bg-white rounded-lg shadow p-6 max-w-3xl mx-auto">
         <h2 class="text-xl font-bold mb-4">Create New Election</h2>
 
-        {% if error %}<div class="alert-error mb-4">{{ error }}</div>{% endif %}
+        {% if error %}<div class="alert-error mb-4">{{ error | e }}</div>{% endif %}
 
         <form method="POST" action="/add-election" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token(request)  | e }}" />
           <div class="md:col-span-2">
             <label class="block text-sm font-medium mb-1" for="title">Title</label>
-            <input type="text" id="title" name="title" class="w-full px-4 py-2 border rounded-md" value="{{ (form_data or {}).get('title', '') }}" required>
+            <input type="text" id="title" name="title" class="w-full px-4 py-2 border rounded-md" value="{{ (form_data or {}).get('title', '')  | e }}" required>
           </div>
 
           <div>
             <label class="block text-sm font-medium mb-1" for="major">Majors</label>
             {% set current_major = (form_data or {}).get('major', '') %}
-            <input type="hidden" id="major" name="major" value="{{ current_major }}" required>
+            <input type="hidden" id="major" name="major" value="{{ current_major | e }}" required>
             <div id="major-select" class="multi-select">
               <div class="selected" tabindex="0">
                 <span class="selected-text text-sm text-gray-600">Select majors</span>
@@ -106,7 +107,7 @@
           <div>
             <label class="block text-sm font-medium mb-1" for="cohort">Cohort</label>
             {% set current_cohort = (form_data or {}).get('cohort', '') %}
-            <input type="hidden" id="cohort" name="cohort" value="{{ current_cohort }}" required>
+            <input type="hidden" id="cohort" name="cohort" value="{{ current_cohort | e }}" required>
             <div id="cohort-select" class="multi-select">
               <div class="selected" tabindex="0">
                 <span class="selected-text text-sm text-gray-600">Select cohort</span>
@@ -120,20 +121,20 @@
 
           <div>
             <label class="block text-sm font-medium mb-1" for="start_date">Start Date/Time</label>
-            <input type="datetime-local" id="start_date" name="start_date" class="w-full px-4 py-2 border rounded-md" value="{{ (form_data or {}).get('start_date', '') }}" required>
+            <input type="datetime-local" id="start_date" name="start_date" class="w-full px-4 py-2 border rounded-md" value="{{ (form_data or {}).get('start_date', '')  | e }}" required>
           </div>
 
           <div>
             <label class="block text-sm font-medium mb-1" for="end_date">End Date/Time</label>
-            <input type="datetime-local" id="end_date" name="end_date" class="w-full px-4 py-2 border rounded-md" value="{{ (form_data or {}).get('end_date', '') }}" required>
+            <input type="datetime-local" id="end_date" name="end_date" class="w-full px-4 py-2 border rounded-md" value="{{ (form_data or {}).get('end_date', '')  | e }}" required>
           </div>
 
           <div>
             <label class="block text-sm font-medium mb-1" for="eligible_voters">Eligible Voters (Optional)</label>
-            <input type="number" min="0" id="eligible_voters" name="eligible_voters" class="w-full px-4 py-2 border rounded-md" value="{{ (form_data or {}).get('eligible_voters', eligible_voters or 0) }}" placeholder="e.g., 1200">
+            <input type="number" min="0" id="eligible_voters" name="eligible_voters" class="w-full px-4 py-2 border rounded-md" value="{{ (form_data or {}).get('eligible_voters', eligible_voters or 0)  | e }}" placeholder="e.g., 1200">
           </div>
 
-          <input type="hidden" id="timezone_offset_minutes" name="timezone_offset_minutes" value="{{ (form_data or {}).get('timezone_offset_minutes', '') }}">
+          <input type="hidden" id="timezone_offset_minutes" name="timezone_offset_minutes" value="{{ (form_data or {}).get('timezone_offset_minutes', '')  | e }}">
 
           <div class="md:col-span-2 flex items-center space-x-2">
             <input id="is_active" name="is_active" type="checkbox" class="rounded border-gray-300" {% if (form_data or {}).get('is_active', True) %}checked{% endif %}>
@@ -148,7 +149,7 @@
       </div>
     </div>
   </main>
-  <script>
+  <script nonce="{{ csp_nonce(request) }}">
     (function(){
       var sidebar = document.getElementById('sidebar');
       var burger = document.getElementById('hamburger');
@@ -176,8 +177,9 @@
       }
     })();
   </script>
+  <script nonce="{{ csp_nonce(request) }}" src="{{ asset(request, 'app.js') }}" defer></script>
 </body>
-  <script>
+  <script nonce="{{ csp_nonce(request) }}">
     (function(){
       function initProfileMenus(){
       document.querySelectorAll('.profile[data-menu]').forEach(function(profile){
@@ -194,7 +196,7 @@
       if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initProfileMenus); else initProfileMenus();
     })();
   </script>
-  <script>
+  <script nonce="{{ csp_nonce(request) }}">
     (function(){
       var majorOptions = [
         "All Majors",
@@ -363,3 +365,5 @@
     })();
   </script>
 </html>
+
+

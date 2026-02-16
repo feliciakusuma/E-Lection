@@ -1,5 +1,5 @@
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, Boolean, Text, LargeBinary, event, func
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy import create_engine, Column, Integer, UUID, String, DateTime, Boolean, Text, LargeBinary, event, func
+from sqlalchemy.orm import sessionmaker, declarative_base, synonym
 from sqlalchemy.ext.declarative import declared_attr
 from datetime import datetime
 from urllib.parse import urlparse
@@ -7,16 +7,20 @@ import os
 import re
 import secrets
 import json
+import logging
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from cryptography.hazmat.primitives.kdf.hkdf import HKDF
 from cryptography.hazmat.primitives import hashes
 from cryptography.exceptions import InvalidTag
+import redis
+import uuid
+from sqlalchemy.dialects.postgresql import UUID
 
 # liboqs (ML-KEM) support
 try:  # Prefer ML-KEM, fall back cleanly if liboqs is missing
     import oqs  # type: ignore
-    _OQS_AVAILABLE = True
+    _OQS_AVAILABLE = hasattr(oqs, "KeyEncapsulation")
 except Exception:  # pragma: no cover - used only when liboqs is unavailable
     oqs = None  # type: ignore
     _OQS_AVAILABLE = False
@@ -27,7 +31,7 @@ def _build_default_db_url() -> str:
     password = os.getenv("POSTGRES_PASSWORD", "Kamisatoayato.77")
     host = os.getenv("POSTGRES_HOST", "localhost")
     port = os.getenv("POSTGRES_PORT", "5432")
-    db = os.getenv("POSTGRES_DB", "demo")
+    db = os.getenv("POSTGRES_DB", "election_db")
     return f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{db}"
 
 
@@ -60,6 +64,8 @@ def _load_or_create_fernet_key() -> bytes:
 
 ENCRYPTION_KEY = _load_or_create_fernet_key()
 cipher_suite = Fernet(ENCRYPTION_KEY)
+
+logger = logging.getLogger(__name__)
 
 # ML-KEM settings and key storage (defaults to ML-KEM-768)
 MLKEM_PARAM = os.getenv("MLKEM_PARAM", "ML-KEM-768")
@@ -149,6 +155,47 @@ def decrypt_session_key(encrypted_session_key: bytes) -> bytes:
     """Derive the AES session key from stored KEM ciphertext using ML-KEM only."""
     return mlkem_decapsulate(encrypted_session_key)
 
+REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
+try:
+    SESSION_KEY_TTL_SECONDS = int(os.getenv("SESSION_KEY_TTL_SECONDS", "0") or 0)
+except ValueError:
+    SESSION_KEY_TTL_SECONDS = 0
+_redis_client = None
+
+
+def _get_redis_client():
+    global _redis_client
+    if _redis_client is None:
+        _redis_client = redis.Redis.from_url(REDIS_URL)
+    return _redis_client
+
+
+def _session_cache_key(verification_code: str) -> str:
+    return f"vote_session:{verification_code}"
+
+
+def cache_session_ciphertext(verification_code: str, ciphertext: bytes) -> None:
+    if not ciphertext:
+        return
+    try:
+        client = _get_redis_client()
+        key = _session_cache_key(verification_code)
+        if SESSION_KEY_TTL_SECONDS > 0:
+            client.setex(key, SESSION_KEY_TTL_SECONDS, ciphertext)
+        else:
+            client.set(key, ciphertext)
+    except redis.RedisError as exc:
+        logger.warning("Failed to cache session key for %s: %s", verification_code, exc)
+
+
+def get_cached_session_ciphertext(verification_code: str) -> bytes | None:
+    try:
+        client = _get_redis_client()
+        return client.get(_session_cache_key(verification_code))
+    except redis.RedisError as exc:
+        logger.warning("Failed to fetch session key for %s: %s", verification_code, exc)
+        return None
+
 class AuditMixin:
     """Mixin to add audit trail to models"""
     
@@ -159,13 +206,13 @@ class AuditMixin:
 class User(Base):
     __tablename__ = "users"
     
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     first_name = Column(String(100), nullable=False)
     last_name = Column(String(100), nullable=False)
     email = Column(String(255), nullable=False, unique=True, index=True)
     student_id = Column(String(50), nullable=False, unique=True)
-    cohort_id = Column(Integer, nullable=True)
-    major_id = Column(Integer, nullable=True)
+    cohort_id = Column(UUID, nullable=True)
+    major_id = Column(UUID, nullable=True)
     status = Column(String(20), default="pending")  # pending, verified, rejected
     verification_token = Column(String(100), nullable=True)
     is_active = Column(Boolean, default=True)
@@ -189,57 +236,45 @@ class User(Base):
 class Vote(Base, AuditMixin):
     __tablename__ = "votes"
 
-    id = Column(Integer, primary_key=True, index=True)
-    voter_id = Column(LargeBinary, nullable=False)  # Encrypted voter identifier (shares payload with vote_encrypted)
-    ticket_id = Column(Integer, nullable=True)  # FK to candidate_tickets
-    candidate_id = Column(Integer, nullable=True)  # legacy compatibility
-    election_id = Column(Integer, nullable=False)
-    vote_encrypted = Column(LargeBinary, nullable=False)  # AES-GCM ciphertext
-    timestamp_encrypted = Column(LargeBinary, nullable=False)  # AES-GCM ciphertext
-    session_key_encrypted = Column(LargeBinary, nullable=False)  # ML-KEM ciphertext for AES session key
-    vote_nonce = Column(LargeBinary, nullable=False)  # Nonce for vote encryption
-    timestamp_nonce = Column(LargeBinary, nullable=False)  # Nonce for timestamp encryption
-    voter_nonce = Column(LargeBinary, nullable=False)  # Nonce for voter encryption
-    verification_code = Column(String(100), nullable=False, unique=True)  # For vote verification
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    election_id = Column(UUID, nullable=False)
+    vote_encrypted = Column(LargeBinary, nullable=False)
+    vote_nonce = Column(LargeBinary, nullable=False)
+    verification_code = Column(String(100), nullable=False, unique=True)
     is_counted = Column(Boolean, default=False)
 
-    def __init__(self, voter_id, election_id, ticket_id=None, candidate_id=None, **kwargs):
-        self.ticket_id = ticket_id
-        self.candidate_id = candidate_id
+    def __init__(self, voter_id, election_id, ticket_id=None, **kwargs):
         self.election_id = election_id
 
         # Prepare payloads
         now_iso = datetime.utcnow().isoformat()
-        vote_payload = json.dumps({
-            'candidate_id': candidate_id,
-            'election_id': election_id,
-            'voter_id': voter_id,
-            'timestamp': now_iso,
-        }).encode()
+        vote_payload = json.dumps(
+            {
+                "election_id": str(election_id) if election_id is not None else None,
+                "voter_id": str(voter_id) if voter_id is not None else None,
+                "ticket_id": str(ticket_id) if ticket_id is not None else None,
+                "timestamp": now_iso,
+            }
+        ).encode()
 
         # Derive one-time AES session key per ballot using ML-KEM
         kem_ciphertext, session_key = mlkem_encapsulate()
         aesgcm = AESGCM(session_key)
 
         vote_nonce = secrets.token_bytes(12)
-        timestamp_nonce = secrets.token_bytes(12)
-        voter_nonce = secrets.token_bytes(12)
 
         ciphertext = aesgcm.encrypt(vote_nonce, vote_payload, None)
         self.vote_encrypted = ciphertext
-        # Store the same ciphertext for compatibility (single encryption per ballot)
-        self.timestamp_encrypted = ciphertext
-        self.voter_id = ciphertext
-        # Store ML-KEM ciphertext (encapsulated key)
-        self.session_key_encrypted = kem_ciphertext
         self.vote_nonce = vote_nonce
-        self.timestamp_nonce = timestamp_nonce
-        self.voter_nonce = voter_nonce
         self.verification_code = secrets.token_urlsafe(32)
+        self._session_ciphertext = kem_ciphertext
         super().__init__(**kwargs)
 
     def _session_key(self):
-        return decrypt_session_key(self.session_key_encrypted)
+        ciphertext = get_cached_session_ciphertext(self.verification_code)
+        if not ciphertext:
+            raise RuntimeError("Session key not available in Redis for this vote.")
+        return decrypt_session_key(ciphertext)
 
     @property
     def vote_data(self):
@@ -248,7 +283,7 @@ class Vote(Base, AuditMixin):
             session_key = self._session_key()
             plaintext = decrypt_with_session_key(self.vote_encrypted, session_key, self.vote_nonce)
             return json.loads(plaintext.decode())
-        except (InvalidTag, ValueError, json.JSONDecodeError):
+        except (InvalidTag, ValueError, json.JSONDecodeError, RuntimeError):
             return {}
 
     @property
@@ -273,17 +308,41 @@ class Vote(Base, AuditMixin):
             return ""
         return ""
 
+    @property
+    def ticket_id_plain(self):
+        try:
+            data = self.vote_data
+            if isinstance(data, dict):
+                tid = data.get("ticket_id")
+                return int(tid) if tid is not None else None
+        except Exception:
+            return None
+        return None
+
+    @property
+    def candidate_id_plain(self):
+        try:
+            data = self.vote_data
+            if isinstance(data, dict):
+                cid = data.get("candidate_id")
+                return int(cid) if cid is not None else None
+        except Exception:
+            return None
+        return None
+
 class Cohort(Base):
     __tablename__ = "cohort"
 
-    cohort_id = Column(Integer, primary_key=True, index=True)
+    cohort_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = synonym("cohort_id")
     cohort_num = Column(Integer, nullable=False, unique=True)
 
 
 class Major(Base):
     __tablename__ = "majors"
 
-    major_id = Column(Integer, primary_key=True, index=True)
+    major_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = synonym("major_id")
     major_code = Column(Integer, nullable=False, unique=True)
     major_name = Column(String(200), nullable=False)
 
@@ -291,29 +350,38 @@ class Major(Base):
 class CandidateTicket(Base):
     __tablename__ = "candidate_tickets"
 
-    id = Column(Integer, primary_key=True, index=True)
-    election_id = Column(Integer, nullable=False)
-    president_candidate_id = Column(Integer, nullable=False)
-    vice_president_candidate_id = Column(Integer, nullable=True)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    election_id = Column(UUID, nullable=False)
+    president_candidate_id = Column(UUID, nullable=False)
+    vice_president_candidate_id = Column(UUID, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+
+class VoterElectionStatus(Base):
+    __tablename__ = "voter_election_status"
+
+    voter_id = Column(String(100), primary_key=True)
+    election_id = Column(UUID, primary_key=True)
+    has_voted = Column(Boolean, default=False, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
 class Candidate(Base, AuditMixin):
     __tablename__ = "candidates"
     
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     full_name = Column(String(100), nullable=False)
     student_id = Column(String(20), nullable=False)
-    cohort_id = Column(Integer, nullable=True)
-    major_id = Column(Integer, nullable=True)
-    description = Column(Text, nullable=False)
+    cohort_id = Column(UUID, nullable=True)
+    major_id = Column(UUID, nullable=True)
     position = Column(String(100), nullable=False)
     status = Column(String(20), default="pending")  # pending, running, rejected
     is_active = Column(Boolean, default=True)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
 class Election(Base, AuditMixin):
     __tablename__ = "elections"
     
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     title = Column(String(200), nullable=False)
     description = Column(Text)
     start_date = Column(DateTime, nullable=False)
@@ -339,9 +407,9 @@ class Election(Base, AuditMixin):
 class AuditLog(Base):
     __tablename__ = "audit_logs"
     
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     table_name = Column(String(50), nullable=False)
-    record_id = Column(Integer, nullable=False)
+    record_id = Column(UUID, nullable=False)
     action = Column(String(20), nullable=False)  # INSERT, UPDATE, DELETE, SELECT
     user_id = Column(String(100), nullable=True)
     ip_address = Column(String(45), nullable=True)
@@ -353,7 +421,7 @@ class AuditLog(Base):
 class Admin(Base):
     __tablename__ = "admins"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     full_name = Column(String(200), nullable=False)
     email = Column(String(255), nullable=False, unique=True, index=True)
     password_hash = Column(String(255), nullable=False)
@@ -374,7 +442,7 @@ class Admin(Base):
 class SystemConfig(Base):
     __tablename__ = "system_config"
     
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     key = Column(String(100), nullable=False, unique=True)
     value = Column(Text, nullable=False)
     is_readonly = Column(Boolean, default=True)
@@ -400,6 +468,13 @@ def log_insert(mapper, connection, target):
     )
     # Note: In a real implementation, you'd need to handle the session properly
 
+
+@event.listens_for(Vote, "after_insert")
+def cache_session_key_after_insert(mapper, connection, target):
+    """Persist the ML-KEM ciphertext for this vote inside Redis."""
+    ciphertext = getattr(target, "_session_ciphertext", None)
+    if ciphertext:
+        cache_session_ciphertext(target.verification_code, ciphertext)
 @event.listens_for(User, 'after_update')
 @event.listens_for(Vote, 'after_update')
 @event.listens_for(Candidate, 'after_update')
@@ -474,35 +549,30 @@ def verify_data_integrity(db, model_class, record_id):
 
 def get_vote_count_secure(db, election_id):
     """Get vote count without exposing individual votes"""
-    # Only return aggregated, anonymized data
-    vote_counts = (
-        db.query(Vote.ticket_id, func.count(Vote.id))
+    counts: dict = {}
+    votes = (
+        db.query(Vote)
         .filter(
             Vote.election_id == election_id,
             Vote.is_counted == True,
-            Vote.ticket_id.isnot(None),
         )
-        .group_by(Vote.ticket_id)
         .all()
     )
-
-    # Fallback for any legacy rows without ticket_id
-    legacy_counts = (
-        db.query(Vote.candidate_id, func.count(Vote.id))
-        .filter(
-            Vote.election_id == election_id,
-            Vote.is_counted == True,
-            Vote.ticket_id.is_(None),
-            Vote.candidate_id.isnot(None),
-        )
-        .group_by(Vote.candidate_id)
-        .all()
-    )
-
-    counts = {ticket_id: count for ticket_id, count in vote_counts}
-    # store legacy counts under negative keys to avoid collision
-    for cid, count in legacy_counts:
-        counts[f"legacy_candidate_{cid}"] = count
+    for vote in votes:
+        try:
+            payload = vote.vote_data
+            if not isinstance(payload, dict):
+                continue
+            ticket_id = payload.get("ticket_id")
+            candidate_id = payload.get("candidate_id")
+            if ticket_id is not None:
+                ticket_key = str(ticket_id)
+                counts[ticket_key] = counts.get(ticket_key, 0) + 1
+            elif candidate_id is not None:
+                key = f"legacy_candidate_{candidate_id}"
+                counts[key] = counts.get(key, 0) + 1
+        except Exception:
+            continue
     return counts
 
 def create_secure_backup():

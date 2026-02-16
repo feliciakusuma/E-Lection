@@ -4,3 +4,11 @@ keys/
 logs/
 liboqs/
 liboqs-python/
+.venv/
+new_env/
+node_modules/
+.vscode/
+__pycache__/
+*.pyc
+*.pem
+election_db_backup.sql

@@ -1,11 +1,11 @@
 from datetime import datetime, timedelta
 import json
-import hashlib
 from fastapi import APIRouter, Depends, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy import func, or_, text
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Session
+from uuid import UUID
 
 from ..database import (
     AuditLog,
@@ -15,12 +15,15 @@ from ..database import (
     User,
     Vote,
     Admin,
+    VoterElectionStatus,
     get_readonly_db,
     get_vote_count_secure,
 )
 from ..dependencies import get_db, templates
 from ..services.audit import log_security_event, security_logger
 from ..utils.counts import get_eligible_voters_count
+from ..utils.csrf import validate_csrf
+from ..utils.cookies import set_secure_cookies
 
 router = APIRouter()
 
@@ -280,12 +283,8 @@ def admin_dashboard(request: Request, db: Session = Depends(get_db)):
     eligible_voters_current = None
     live_results = []
     if elections:
-        try:
-            sel_id_int = int(selected_election_id) if selected_election_id else None
-        except ValueError:
-            sel_id_int = None
-        if sel_id_int:
-            current_election = next((e for e in elections if e.id == sel_id_int), elections[0])
+        if selected_election_id:
+            current_election = next((e for e in elections if str(e.id) == str(selected_election_id)), elections[0])
         else:
             current_election = elections[0]
 
@@ -320,7 +319,7 @@ def admin_dashboard(request: Request, db: Session = Depends(get_db)):
                 name = _ticket_label(pres, vice)
                 if not name:
                     continue
-                raw.append({"name": name, "votes": int(vote_counts.get(t.id, 0))})
+                raw.append({"name": name, "votes": int(vote_counts.get(str(t.id), 0))})
 
             if not tickets:
                 candidates = db.query(Candidate).filter(Candidate.position == current_election.title).all()
@@ -332,7 +331,11 @@ def admin_dashboard(request: Request, db: Session = Depends(get_db)):
             if tickets:
                 for key, count in vote_counts.items():
                     if isinstance(key, str) and key.startswith("legacy_candidate_"):
-                        cid = int(key.split("_")[-1])
+                        cid_str = key.split("_")[-1]
+                        try:
+                            cid = UUID(cid_str)
+                        except Exception:
+                            continue
                         c = db.query(Candidate).filter(Candidate.id == cid).first()
                         ticket_match = (
                             db.query(CandidateTicket)
@@ -361,8 +364,6 @@ def admin_dashboard(request: Request, db: Session = Depends(get_db)):
                         if vice:
                             name = f"{name} & {getattr(vice, 'full_name', f'Candidate {vice.id}')}"
                         raw.append({"name": name, "votes": 0})
-                else:
-                    raw.append({"name": "No candidates", "votes": 0})
 
             aggregated = {}
             for r in raw:
@@ -384,6 +385,11 @@ def admin_dashboard(request: Request, db: Session = Depends(get_db)):
                         "rank_label": rank_label,
                     }
                 )
+            # Defensive: ignore placeholder rows so the template can show true empty state.
+            live_results = [
+                r for r in live_results
+                if (not str(r.get("name", "")).strip().lower().startswith("no candidates"))
+            ]
         except Exception:
             live_results = live_results or []
 
@@ -477,57 +483,21 @@ def admin_voters(request: Request, db: Session = Depends(get_db)):
             )
         )
 
-    # Compute has_voted by decrypting voter identifiers; fall back to legacy hashes
-    election_ids = [row[0] for row in db.query(Election.id).all()]
-    votes_all = db.query(Vote).all()
-
-    def vote_matches_user(vote: Vote, user: User) -> bool:
-        ident_email = (user.email or "").strip()
-        ident_sid = (user.student_id or "").strip()
-        ident_id = str(getattr(user, "id", "") or "").strip()
-
-        # Primary: decrypt stored voter_id
-        try:
-            plain = vote.voter_id_plain or ""
-            if plain and (plain == ident_email or plain == ident_sid or plain == ident_id):
-                return True
-        except Exception:
-            pass
-
-        # Fallback: legacy hashed bytes (hex string from earlier versions)
-        try:
-            raw = (vote.voter_id or b"").decode(errors="ignore")
-        except Exception:
-            raw = ""
-        if raw and len(raw) == 64:
-            try:
-                import hashlib
-                if ident_email and raw == hashlib.sha256(f"{ident_email}_{vote.election_id}".encode()).hexdigest():
-                    return True
-                if ident_sid and raw == hashlib.sha256(f"{ident_sid}_{vote.election_id}".encode()).hexdigest():
-                    return True
-                if ident_id and raw == hashlib.sha256(f"{ident_id}_{vote.election_id}".encode()).hexdigest():
-                    return True
-            except Exception:
-                pass
-        return False
-
-    def user_has_voted(user: User) -> bool:
-        if not election_ids or not votes_all:
-            return False
-        for v in votes_all:
-            if v.election_id not in election_ids:
-                continue
-            if vote_matches_user(v, user):
-                return True
-        return False
+    status_rows = (
+        db.query(VoterElectionStatus.voter_id)
+        .filter(VoterElectionStatus.has_voted == True)
+        .distinct()
+        .all()
+    )
+    # Normalize identifiers to strings because some backends may coerce the column into ints.
+    voted_identifiers = {str(row[0]) for row in status_rows if row[0] is not None}
 
     total_count = query.count()  # total voters (unfiltered)
     voters_all = query.order_by(User.created_at.desc()).all() if hasattr(User, "created_at") else query.all()
 
     voter_rows = []
     for v in voters_all:
-        has_voted = user_has_voted(v)
+        has_voted = str(getattr(v, "id", "") or "") in voted_identifiers
         if getattr(v, "created_at", None):
             try:
                 v.display_created_at = v.created_at + tz_offset
@@ -613,8 +583,10 @@ def admin_settings_save(
     request: Request,
     full_name: str = Form(...),
     email: str = Form(...),
+    csrf_token: str = Form(...),
     db: Session = Depends(get_db),
 ):
+    validate_csrf(request, csrf_token)
     email_cookie = request.cookies.get("user_email")
     if not email_cookie:
         return RedirectResponse(url="/admin", status_code=302)
@@ -630,14 +602,24 @@ def admin_settings_save(
     # Update cookies to reflect new info
     response = RedirectResponse(url="/admin-settings?saved=1", status_code=303)
     try:
-        response.set_cookie("user_email", admin_row.email, httponly=False)
-        response.set_cookie("full_name", admin_row.full_name, httponly=False)
+        set_secure_cookies(
+            response,
+            {
+                "user_email": admin_row.email or "",
+                "full_name": admin_row.full_name or "",
+            },
+        )
         # best-effort split for display names
         parts = admin_row.full_name.split(" ", 1)
         first = parts[0] if parts else ""
         last = parts[1] if len(parts) > 1 else ""
-        response.set_cookie("first_name", first, httponly=False)
-        response.set_cookie("last_name", last, httponly=False)
+        set_secure_cookies(
+            response,
+            {
+                "first_name": first,
+                "last_name": last,
+            },
+        )
     except Exception:
         pass
     return response

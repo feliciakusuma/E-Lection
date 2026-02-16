@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ asset(request, 'tailwind.css') }}" />
   <link rel="stylesheet" href="{{ request.url_for('static', path='style.css') }}">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="/static/vendor/fontawesome/css/all.min.css" rel="stylesheet">
   <title>Edit Profile</title>  
 </head>
 
 <body class="body-main">
   {% set profile_data = form_data or {} %}
-  {% set avatar_url = profile_data.get('avatar_url') or request.cookies.get('avatar_url') or 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png' %}
+{% set avatar_url = (profile_data.get('avatar_url') or request.cookies.get('avatar_url')) | safe_url('https://cdn-icons-png.flaticon.com/512/3177/3177440.png') %}
   {% set display_first = profile_data.get('first_name') or request.cookies.get('first_name') or 'First Name' %}
   {% set display_last = profile_data.get('last_name') or request.cookies.get('last_name') or 'Last Name' %}
   {% set display_full = (display_first ~ ' ' ~ display_last).strip() %}
@@ -22,9 +22,9 @@
       <i class="fas fa-vote-yea text-blue-600 text-xl"></i> 
       <span class="logo-text">E-Lection</span>
     </div>
-    <div class="navbar-inner" style="margin-left:auto;display:flex;align-items:center;gap:1rem;">
+    <div class="navbar-inner ui-ml-auto-flex-gap-1">
       <div class="profile" data-menu>
-        <img id="navAvatar" src="{{ avatar_url }}" class="avatar profile-trigger" alt="User avatar" aria-haspopup="menu" aria-expanded="false">
+        <img id="navAvatar" src="{{ avatar_url | e }}" class="avatar profile-trigger" alt="User avatar" aria-haspopup="menu" aria-expanded="false">
         <div>
           <p class="admin-name" id="navDisplayName">{{ display_full or current_user_name or 'User' }}</p>
           <p class="admin-role" id="navRole">Voter</p>
@@ -39,13 +39,13 @@
 
   <!-- Main Content -->
   <main class="dashboard-main candidates-main">
-    <div class="candidates-container" style="max-width: 640px; margin: 0 auto;">
+    <div class="candidates-container ui-maxw-640-center">
 
       {% if error %}
-      <div class="alert-error mb-4">{{ error }}</div>
+      <div class="alert-error mb-4">{{ error | e }}</div>
       {% endif %}
       {% if success %}
-      <div class="alert-success mb-4">{{ success }}</div>
+      <div class="alert-success mb-4">{{ success | e }}</div>
       {% endif %}
 
       <div class="bg-white rounded-lg shadow p-6 text-sm md:text-base">
@@ -54,15 +54,16 @@
         </div>
 
         <form method="POST" action="/profile" enctype="multipart/form-data" class="space-y-4">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token(request)  | e }}" />
           {% set profile_data = form_data or {} %}
-          {% set avatar_url = profile_data.get('avatar_url') or 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png' %}
+          {% set avatar_url = (profile_data.get('avatar_url')) | safe_url('https://cdn-icons-png.flaticon.com/512/3177/3177440.png') %}
           {% set display_first = profile_data.get('first_name') or 'First Name' %}
           {% set display_last = profile_data.get('last_name') or 'Last Name' %}
           {% set display_student_id = profile_data.get('student_id') or 'Student ID' %}
 
           <div class="flex flex-col items-center text-center gap-3">
             <div class="relative w-24 h-24">
-              <img id="avatarPreview" src="{{ avatar_url }}" alt="Profile photo" class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md bg-gray-100">
+              <img id="avatarPreview" src="{{ avatar_url | e }}" alt="Profile photo" class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md bg-gray-100">
               <label for="avatar" class="absolute bottom-0 right-0 inline-flex items-center justify-center w-9 h-9 bg-blue-600 text-white rounded-full shadow hover:bg-blue-700 cursor-pointer">
                 <i class="fa-solid fa-pen text-xs"></i>
               </label>
@@ -99,7 +100,7 @@
       </div>
     </div>
   </main>
-  <script>
+  <script nonce="{{ csp_nonce(request) }}">
     (function(){
       function initProfileMenus(){
         document.querySelectorAll('.profile[data-menu]').forEach(function(profile){
@@ -172,5 +173,8 @@
       if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
     })();
   </script>
+  <script nonce="{{ csp_nonce(request) }}" src="{{ asset(request, 'app.js') }}" defer></script>
 </body>
 </html>
+
+

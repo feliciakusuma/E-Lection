@@ -7,14 +7,14 @@ import secrets
 import requests
 import smtplib
 from email.message import EmailMessage
-from google.oauth2 import id_token
-from google.auth.transport import requests as google_requests
+from jose import jwt
 
 from ..config import (
     DEV_OPEN_ADMIN,
-    GOOGLE_CLIENT_ID,
-    GOOGLE_CLIENT_SECRET,
-    GOOGLE_REDIRECT_URI,
+    MS_CLIENT_ID,
+    MS_CLIENT_SECRET,
+    MS_REDIRECT_URI,
+    MS_TENANT_ID,
     EMAIL_SENDER,
     SMTP_HOST,
     SMTP_PORT,
@@ -27,11 +27,20 @@ from ..database import User, Candidate, Election, Admin, Cohort, Major
 from ..services.audit import create_audit_log, log_security_event, security_logger
 from ..services.security import get_password_hash, verify_password
 from ..utils.validation import MAJOR_CODE_MAP, SUPPORTED_COHORTS, is_valid_email_address
+from ..utils.csrf import validate_csrf
+from ..utils.cookies import set_secure_cookie, set_secure_cookies, delete_secure_cookie
 
 router = APIRouter()
 
-# Google login is enabled only if both client ID and secret are present
-GOOGLE_LOGIN_ENABLED = bool(GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET)
+# Microsoft login is enabled only if both client ID and secret are present
+MS_LOGIN_ENABLED = bool(MS_CLIENT_ID and MS_CLIENT_SECRET)
+ALLOWED_EMAIL_DOMAIN = "@my.sampoernauniversity.ac.id"
+
+
+def is_allowed_domain(email: str | None) -> bool:
+    if not email:
+        return False
+    return email.strip().lower().endswith(ALLOWED_EMAIL_DOMAIN)
 
 
 def parse_email_change_token(token: str | None):
@@ -78,7 +87,7 @@ def login_page(request: Request):
         "login.html",
         {
             "request": request,
-            "google_enabled": GOOGLE_LOGIN_ENABLED,
+            "ms_enabled": MS_LOGIN_ENABLED,
             "success": msg,
             "error": err,
         },
@@ -133,28 +142,59 @@ def send_verification_email(to_email: str, first_name: str, last_name: str, code
     finally:
         server.quit()
 
-@router.get("/login/google")
-def login_google(request: Request):
-    """Start Google OAuth 2.0 login."""
-    if not GOOGLE_LOGIN_ENABLED:
+def fetch_ms_jwks(tenant_id: str) -> dict:
+    jwks_url = f"https://login.microsoftonline.com/{tenant_id}/discovery/v2.0/keys"
+    resp = requests.get(jwks_url, timeout=10)
+    resp.raise_for_status()
+    return resp.json()
+
+
+def verify_ms_id_token(id_token_value: str) -> dict:
+    unverified_header = jwt.get_unverified_header(id_token_value)
+    unverified_claims = jwt.get_unverified_claims(id_token_value)
+
+    issuer_tenant = unverified_claims.get("tid") or MS_TENANT_ID
+    if not issuer_tenant:
+        raise ValueError("Missing tenant id in token")
+
+    jwks = fetch_ms_jwks(issuer_tenant)
+    keys = jwks.get("keys", [])
+    key = next((k for k in keys if k.get("kid") == unverified_header.get("kid")), None)
+    if not key:
+        raise ValueError("Unable to find matching JWK for token")
+
+    issuer = f"https://login.microsoftonline.com/{issuer_tenant}/v2.0"
+    return jwt.decode(
+        id_token_value,
+        key,
+        algorithms=["RS256"],
+        audience=MS_CLIENT_ID,
+        issuer=issuer,
+    )
+
+
+@router.get("/login/microsoft")
+def login_microsoft(request: Request):
+    """Start Microsoft OAuth 2.0 login."""
+    if not MS_LOGIN_ENABLED:
         return RedirectResponse(
-            url="/login?error=Google+login+is+disabled",
+            url="/login?error=Microsoft+login+is+disabled",
             status_code=302
         )
 
     # CSRF protection state token
     state = secrets.token_urlsafe(24)
     params = {
-        "client_id": GOOGLE_CLIENT_ID,
-        "redirect_uri": GOOGLE_REDIRECT_URI,
+        "client_id": MS_CLIENT_ID,
+        "redirect_uri": MS_REDIRECT_URI,
         "response_type": "code",
+        "response_mode": "query",
         "scope": "openid email profile",
-        "access_type": "offline",
-        "include_granted_scopes": "true",
         "state": state,
         "prompt": "select_account",
     }
-    auth_url = f"https://accounts.google.com/o/oauth2/v2/auth?{urlencode(params)}"
+    tenant = MS_TENANT_ID or "common"
+    auth_url = f"https://login.microsoftonline.com/{tenant}/oauth2/v2.0/authorize?{urlencode(params)}"
 
     response = RedirectResponse(url=auth_url, status_code=302)
     response.set_cookie(
@@ -162,23 +202,24 @@ def login_google(request: Request):
         state,
         max_age=600,
         httponly=True,
+        secure=True,
         samesite="lax",
+        path="/",
     )
     return response
 
 
-@router.get("/auth/google/callback")
-@router.get("/authorize")
-def google_callback(
+@router.get("/auth/microsoft/callback")
+def microsoft_callback(
     request: Request,
     code: str | None = None,
     state: str | None = None,
     db: Session = Depends(get_db),
 ):
-    """Handle Google OAuth callback and issue application session."""
-    if not GOOGLE_LOGIN_ENABLED:
+    """Handle Microsoft OAuth callback and issue application session."""
+    if not MS_LOGIN_ENABLED:
         return RedirectResponse(
-            url="/login?error=Google+login+is+disabled",
+            url="/login?error=Microsoft+login+is+disabled",
             status_code=302
         )
 
@@ -198,14 +239,16 @@ def google_callback(
 
     try:
         # Exchange authorization code for tokens
+        tenant = MS_TENANT_ID or "common"
         token_resp = requests.post(
-            "https://oauth2.googleapis.com/token",
+            f"https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token",
             data={
                 "code": code,
-                "client_id": GOOGLE_CLIENT_ID,
-                "client_secret": GOOGLE_CLIENT_SECRET,
-                "redirect_uri": GOOGLE_REDIRECT_URI,
+                "client_id": MS_CLIENT_ID,
+                "client_secret": MS_CLIENT_SECRET,
+                "redirect_uri": MS_REDIRECT_URI,
                 "grant_type": "authorization_code",
+                "scope": "openid email profile",
             },
             timeout=10,
         )
@@ -213,47 +256,60 @@ def google_callback(
         token_data = token_resp.json()
 
         # Verify ID token
-        id_info = id_token.verify_oauth2_token(
-            token_data.get("id_token"),
-            google_requests.Request(),
-            GOOGLE_CLIENT_ID,
-        )
+        id_token_value = token_data.get("id_token")
+        if not id_token_value:
+            raise ValueError("Missing id_token from Microsoft response")
 
-        email = id_info.get("email")
-        email_verified = id_info.get("email_verified", False)
+        id_info = verify_ms_id_token(id_token_value)
 
-        if not email or not email_verified:
+        email = id_info.get("email") or id_info.get("preferred_username") or id_info.get("upn")
+        if not email:
             log_security_event(
-                "LOGIN_GOOGLE_BLOCKED",
-                "Google email missing or unverified",
+                "LOGIN_MICROSOFT_BLOCKED",
+                "Microsoft account email missing",
                 request.client.host,
             )
             return RedirectResponse(
-                url="/login?error=Google+account+email+not+verified",
+                url="/login?error=Microsoft+account+email+missing",
                 status_code=302,
             )
 
-        # Look up local user linked to this email
-        user = User.find_by_email(db, email)
-        if not user:
+        if not is_allowed_domain(email):
             log_security_event(
-                "LOGIN_GOOGLE_BLOCKED",
-                f"Google account not linked: {email}",
+                "LOGIN_MICROSOFT_BLOCKED",
+                f"Microsoft email not allowed: {email}",
                 request.client.host,
             )
             return templates.TemplateResponse(
                 "login.html",
                 {
                     "request": request,
-                    "error": "No account exists for this Google email. Please register first.",
-                    "google_enabled": GOOGLE_LOGIN_ENABLED,
+                    "error": "Please use your Sampoerna University email.",
+                    "ms_enabled": MS_LOGIN_ENABLED,
+                },
+            )
+
+        # Look up local user linked to this email
+        user = User.find_by_email(db, email)
+        if not user:
+            log_security_event(
+                "LOGIN_MICROSOFT_BLOCKED",
+                f"Microsoft account not linked: {email}",
+                request.client.host,
+            )
+            return templates.TemplateResponse(
+                "login.html",
+                {
+                    "request": request,
+                    "error": "No account exists for this Microsoft email. Please register first.",
+                    "ms_enabled": MS_LOGIN_ENABLED,
                 },
             )
 
         if not user.is_active:
             log_security_event(
-                "LOGIN_GOOGLE_BLOCKED",
-                f"Inactive Google user: {email}",
+                "LOGIN_MICROSOFT_BLOCKED",
+                f"Inactive Microsoft user: {email}",
                 request.client.host,
             )
             return templates.TemplateResponse(
@@ -261,7 +317,7 @@ def google_callback(
                 {
                     "request": request,
                     "error": "Account inactive. Contact an administrator.",
-                    "google_enabled": GOOGLE_LOGIN_ENABLED,
+                    "ms_enabled": MS_LOGIN_ENABLED,
                 },
             )
 
@@ -274,17 +330,22 @@ def google_callback(
             db,
             "users",
             user.id,
-            "LOGIN_GOOGLE_SUCCESS",
+            "LOGIN_MICROSOFT_SUCCESS",
             user_id=str(user.id),
             ip_address=request.client.host,
         )
 
         response = RedirectResponse(url="/dashboard", status_code=302)
-        response.delete_cookie("oauth_state")
+        response.delete_cookie("oauth_state", path="/")
         try:
-            response.set_cookie("user_email", user.email, httponly=False)
-            response.set_cookie("first_name", user.first_name, httponly=False)
-            response.set_cookie("last_name", user.last_name, httponly=False)
+            set_secure_cookies(
+                response,
+                {
+                    "user_email": user.email or "",
+                    "first_name": user.first_name or "",
+                    "last_name": user.last_name or "",
+                },
+            )
         except Exception:
             # Cookie failure shouldn't break login entirely
             pass
@@ -294,12 +355,12 @@ def google_callback(
     except Exception as exc:
         db.rollback()
         log_security_event(
-            "LOGIN_GOOGLE_ERROR",
-            f"Google login failed: {exc}",
+            "LOGIN_MICROSOFT_ERROR",
+            f"Microsoft login failed: {exc}",
             request.client.host,
         )
         return RedirectResponse(
-            url="/login?error=Google+login+failed",
+            url="/login?error=Microsoft+login+failed",
             status_code=302,
         )
 
@@ -309,19 +370,21 @@ def login_post(
     request: Request,
     email: str = Form(...),
     password: str = Form(...),
+    csrf_token: str = Form(...),
     db: Session = Depends(get_db),
 ):
+    validate_csrf(request, csrf_token)
     client_ip = request.client.host
-    base_ctx = {"request": request, "google_enabled": GOOGLE_LOGIN_ENABLED}
+    base_ctx = {"request": request, "ms_enabled": MS_LOGIN_ENABLED}
     email = (email or "").strip().lower()
 
     try:
-        # Password login disabled; require Google OAuth
+        # Password login disabled; require Microsoft OAuth
         return templates.TemplateResponse(
             "login.html",
             {
                 **base_ctx,
-                "error": "Password login disabled. Use Google Sign-In.",
+                "error": "Password login disabled. Use Microsoft Sign-In.",
                 "form_data": {"email": email},
             },
         )
@@ -351,8 +414,10 @@ def admin_login_post(
     request: Request,
     email: str = Form(...),
     password: str = Form(...),
+    csrf_token: str = Form(...),
     db: Session = Depends(get_db),
 ):
+    validate_csrf(request, csrf_token)
     client_ip = request.client.host
     email = (email or "").strip().lower()
     form_data = {"email": email}
@@ -397,7 +462,7 @@ def admin_login_post(
             )
             response = RedirectResponse(url="/admin-dashboard", status_code=302)
             try:
-                response.set_cookie("user_email", admin_row.email, httponly=False)
+                set_secure_cookie(response, "user_email", admin_row.email or "")
                 # Derive display name from admin full_name or linked user record
                 full_name = (admin_row.full_name or "").strip()
                 if not full_name:
@@ -407,9 +472,14 @@ def admin_login_post(
                 parts = full_name.split(" ", 1)
                 first = parts[0] if parts else ""
                 last = parts[1] if len(parts) > 1 else ""
-                response.set_cookie("full_name", full_name or "", httponly=False)
-                response.set_cookie("first_name", first, httponly=False)
-                response.set_cookie("last_name", last, httponly=False)
+                set_secure_cookies(
+                    response,
+                    {
+                        "full_name": full_name or "",
+                        "first_name": first,
+                        "last_name": last,
+                    },
+                )
             except Exception:
                 pass
             return response
@@ -454,7 +524,7 @@ def user_logout():
     """Logout regular users and send them to /login."""
     response = RedirectResponse(url="/login", status_code=302)
     for ck in ["user_email", "first_name", "last_name", "full_name", "avatar_url", "oauth_state"]:
-        response.delete_cookie(ck)
+        delete_secure_cookie(response, ck)
     return response
 
 
@@ -463,7 +533,7 @@ def admin_logout():
     """Logout admins and send them to /admin."""
     response = RedirectResponse(url="/admin", status_code=302)
     for ck in ["user_email", "first_name", "last_name", "full_name", "avatar_url", "oauth_state"]:
-        response.delete_cookie(ck)
+        delete_secure_cookie(response, ck)
     return response
 
 
@@ -487,8 +557,10 @@ def verify_code_submit(
     request: Request,
     email: str = Form(...),
     code: str = Form(...),
+    csrf_token: str = Form(...),
     db: Session = Depends(get_db),
 ):
+    validate_csrf(request, csrf_token)
     code = (code or "").strip()
     user = db.query(User).filter(User.email == email).first()
     pending_code = None
@@ -544,10 +616,15 @@ def verify_code_submit(
         if pending_mode:
             response = RedirectResponse(url="/profile?email_updated=1", status_code=302)
             try:
-                response.set_cookie("user_email", user.email or "", httponly=False)
-                response.set_cookie("first_name", user.first_name or "", httponly=False)
-                response.set_cookie("last_name", user.last_name or "", httponly=False)
-                response.set_cookie("full_name", f"{user.first_name or ''} {user.last_name or ''}".strip(), httponly=False)
+                set_secure_cookies(
+                    response,
+                    {
+                        "user_email": user.email or "",
+                        "first_name": user.first_name or "",
+                        "last_name": user.last_name or "",
+                        "full_name": f"{user.first_name or ''} {user.last_name or ''}".strip(),
+                    },
+                )
             except Exception:
                 pass
             return response
@@ -568,8 +645,10 @@ def verify_code_submit(
 def resend_code(
     request: Request,
     email: str = Form(...),
+    csrf_token: str = Form(...),
     db: Session = Depends(get_db),
 ):
+    validate_csrf(request, csrf_token)
     user = db.query(User).filter(User.email == email).first()
     pending_code = None
     pending_email = None
@@ -630,8 +709,10 @@ def register_post(
     lastName: str = Form(...),
     email: str = Form(...),
     studentId: str = Form(...),
+    csrf_token: str = Form(...),
     db: Session = Depends(get_db),
 ):
+    validate_csrf(request, csrf_token)
     client_ip = request.client.host
     form_values = {
         "firstName": firstName,
@@ -685,6 +766,20 @@ def register_post(
                 {
                     "request": request,
                     "error": "Email address is invalid",
+                    "form_data": form_values,
+                },
+            )
+        if not is_allowed_domain(email):
+            log_security_event(
+                "REGISTRATION_BLOCKED",
+                f"Email domain not allowed: {email}",
+                client_ip,
+            )
+            return templates.TemplateResponse(
+                "register.html",
+                {
+                    "request": request,
+                    "error": "Please use your Sampoerna University email.",
                     "form_data": form_values,
                 },
             )
@@ -859,7 +954,8 @@ def register_post(
 @router.get("/verify/{token}")
 def verify_email(token: str, request: Request, db: Session = Depends(get_db)):
     """Verify user email using token."""
-    user = db.query(User).filter(User.verification_token == token).first()
+    token_hash = User._hash_verification_token(token)
+    user = db.query(User).filter(User.verification_token_hash == token_hash).first()
     if not user:
         return RedirectResponse(url="/login?error=Invalid+or+expired+verification+link", status_code=302)
     try:

@@ -6,11 +6,24 @@ from datetime import datetime
 from fastapi import APIRouter, Depends, Form, HTTPException, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy.orm import Session
+from uuid import UUID
 
-from ..database import Candidate, CandidateTicket, Election, Vote, User, get_readonly_db, get_secure_db, get_vote_count_secure
+from ..database import (
+    Candidate,
+    CandidateTicket,
+    Election,
+    Vote,
+    User,
+    VoterElectionStatus,
+    get_readonly_db,
+    get_secure_db,
+    get_vote_count_secure,
+)
 from ..dependencies import get_db, templates
 from ..services.audit import create_audit_log, log_security_event, security_logger
 from ..utils.counts import get_eligible_voters_count
+from ..utils.csrf import validate_csrf
+from sqlalchemy.exc import IntegrityError
 
 router = APIRouter()
 
@@ -24,12 +37,28 @@ def _ticket_label(president: Candidate | None, vice: Candidate | None) -> str:
     return pres_name or vice_name or ""
 
 
+def _reset_status_if_no_votes(db: Session, election_id: UUID) -> None:
+    """If the votes table has no rows for this election (e.g., manual reset),
+    mark all voter_election_status entries as not voted so testing can continue."""
+    try:
+        has_vote = db.query(Vote.id).filter(Vote.election_id == election_id).first()
+    except Exception:
+        has_vote = None
+    if has_vote:
+        return
+    db.query(VoterElectionStatus).filter(
+        VoterElectionStatus.election_id == election_id,
+        VoterElectionStatus.has_voted == True,
+    ).update({VoterElectionStatus.has_voted: False})
+    db.flush()
+
+
 @router.get("/confirmation", response_class=HTMLResponse)
 def confirm(
     request: Request,
-    candidate_id: int | None = None,
-    ticket_id: int | None = None,
-    election_id: int | None = None,
+    candidate_id: UUID | None = None,
+    ticket_id: UUID | None = None,
+    election_id: UUID | None = None,
     verification_code: str | None = None,
     db: Session = Depends(get_db),
 ):
@@ -70,16 +99,19 @@ def confirm(
 
     # Redirect voters who already cast a ballot for this election
     if election and user_obj:
+        _reset_status_if_no_votes(db, election.id)
         vid = str(user_obj.id)
-        try:
-            already = any(
-                v.voter_id_plain and str(v.voter_id_plain) == vid
-                for v in db.query(Vote).filter(Vote.election_id == election.id).all()
+        status = (
+            db.query(VoterElectionStatus)
+            .filter(
+                VoterElectionStatus.voter_id == vid,
+                VoterElectionStatus.election_id == election.id,
+                VoterElectionStatus.has_voted == True,
             )
-            if already:
-                return RedirectResponse(url=f"/results/{election.id}", status_code=303)
-        except Exception:
-            pass
+            .first()
+        )
+        if status:
+            return RedirectResponse(url=f"/results/{election.id}", status_code=303)
 
     return templates.TemplateResponse(
         "confirmation.html",
@@ -97,12 +129,14 @@ def confirm(
 @router.post("/vote")
 def cast_vote(
     request: Request,
-    ticket_id: int | None = Form(None),
-    candidate_id: int | None = Form(None),  # legacy
-    election_id: int = Form(...),
+    ticket_id: UUID | None = Form(None),
+    candidate_id: UUID | None = Form(None),  # legacy
+    election_id: UUID = Form(...),
     voter_id: str = Form(...),
+    csrf_token: str = Form(...),
     db: Session = Depends(get_db),
 ):
+    validate_csrf(request, csrf_token)
     client_ip = request.client.host
 
     try:
@@ -131,23 +165,17 @@ def cast_vote(
             log_security_event("VOTE_BLOCKED", f"Election ended: {election_id}", client_ip, voter_id)
             raise HTTPException(status_code=400, detail="Election not available")
 
-        # Duplicate check: decrypt or legacy-hash match existing votes for this election
-        def _vote_matches(vote: Vote) -> bool:
-            try:
-                if vote.voter_id_plain and str(vote.voter_id_plain) == str(voter_identifier):
-                    return True
-            except Exception:
-                pass
-            # Also compare encrypted payload if it includes voter_id
-            try:
-                data = vote.vote_data
-                if isinstance(data, dict) and str(data.get("voter_id", "")) == str(voter_identifier):
-                    return True
-            except Exception:
-                pass
-            return False
+        _reset_status_if_no_votes(db, election_id)
 
-        if any(_vote_matches(v) for v in db.query(Vote).filter(Vote.election_id == election_id).all()):
+        status_row = (
+            db.query(VoterElectionStatus)
+            .filter(
+                VoterElectionStatus.voter_id == voter_identifier,
+                VoterElectionStatus.election_id == election_id,
+            )
+            .first()
+        )
+        if status_row and status_row.has_voted:
             log_security_event("VOTE_DUPLICATE", f"Duplicate vote attempt for election {election_id}", client_ip, voter_id)
             raise HTTPException(status_code=400, detail="Vote already cast")
 
@@ -189,9 +217,18 @@ def cast_vote(
             voter_id=voter_identifier,
             election_id=election_id,
             ticket_id=ticket.id if ticket else None,
-            candidate_id=effective_candidate_id,
         )
         new_vote.is_counted = True
+        if status_row is None:
+            status_row = VoterElectionStatus(
+                voter_id=voter_identifier,
+                election_id=election_id,
+                has_voted=True,
+            )
+            db.add(status_row)
+        else:
+            status_row.has_voted = True
+            db.add(status_row)
 
         db.add(new_vote)
         db.commit()
@@ -208,6 +245,10 @@ def cast_vote(
     except HTTPException:
         db.rollback()
         raise
+    except IntegrityError:
+        db.rollback()
+        log_security_event("VOTE_DUPLICATE", f"Duplicate vote attempt for election {election_id}", client_ip, voter_id)
+        raise HTTPException(status_code=400, detail="Vote already cast")
     except Exception as exc:
         db.rollback()
         log_security_event("VOTE_ERROR", f"Vote casting error: {exc}", client_ip, voter_id)
@@ -215,7 +256,7 @@ def cast_vote(
 
 
 @router.get("/api/results/{election_id}")
-def api_results(election_id: int, db=Depends(get_readonly_db)):
+def api_results(election_id: UUID, db=Depends(get_readonly_db)):
     """Get election results as JSON for the specified election only."""
     try:
         election = db.query(Election).filter(Election.id == election_id).first()
@@ -237,7 +278,7 @@ def api_results(election_id: int, db=Depends(get_readonly_db)):
             name = _ticket_label(pres, vice)
             if not name:
                 continue
-            raw.append({"name": name, "votes": int(vote_counts.get(t.id, 0))})
+            raw.append({"name": name, "votes": int(vote_counts.get(str(t.id), 0))})
 
         # Fallback when no tickets: include individual candidates for this election title
         if not tickets:
@@ -249,7 +290,11 @@ def api_results(election_id: int, db=Depends(get_readonly_db)):
             # Only add legacy rows separately when tickets exist (avoids duplication when candidates already appended)
             for key, count in vote_counts.items():
                 if isinstance(key, str) and key.startswith("legacy_candidate_"):
-                    cid = int(key.split("_")[-1])
+                    cid_str = key.split("_")[-1]
+                    try:
+                        cid = UUID(cid_str)
+                    except Exception:
+                        continue
                     c = db.query(Candidate).filter(Candidate.id == cid).first()
                     # If this candidate is already in a ticket, label it with president & vice to merge tallies correctly
                     ticket_match = (
@@ -311,7 +356,7 @@ def api_results(election_id: int, db=Depends(get_readonly_db)):
 
 
 @router.get("/results/{election_id}", response_class=HTMLResponse)
-def election_results_page(request: Request, election_id: int, db=Depends(get_secure_db)):
+def election_results_page(request: Request, election_id: UUID, db=Depends(get_secure_db)):
     election = db.query(Election).filter(Election.id == election_id).first()
     if not election:
         return RedirectResponse(url="/dashboard?error=Election%20not%20found", status_code=303)
@@ -345,7 +390,7 @@ def election_results_page(request: Request, election_id: int, db=Depends(get_sec
             name = _ticket_label(pres, vice)
             if not name:
                 continue
-            raw.append({"name": name, "votes": int(vote_counts.get(t.id, 0))})
+            raw.append({"name": name, "votes": int(vote_counts.get(str(t.id), 0))})
 
         if not tickets:
             candidates = db.query(Candidate).filter(Candidate.position == election.title).all()
@@ -355,7 +400,11 @@ def election_results_page(request: Request, election_id: int, db=Depends(get_sec
         if tickets:
             for key, count in vote_counts.items():
                 if isinstance(key, str) and key.startswith("legacy_candidate_"):
-                    cid = int(key.split("_")[-1])
+                    cid_str = key.split("_")[-1]
+                    try:
+                        cid = UUID(cid_str)
+                    except Exception:
+                        continue
                     c = db.query(Candidate).filter(Candidate.id == cid).first()
                     ticket_match = (
                         db.query(CandidateTicket)
@@ -467,8 +516,8 @@ def verify_vote(verification_code: str, request: Request, db: Session = Depends(
             "request": request,
             "verification_code": verification_code,
             "found": True,
-            "ticket_id": vote.ticket_id,
-            "candidate_id": vote.candidate_id,
+            "ticket_id": vote.ticket_id_plain,
+            "candidate_id": vote.candidate_id_plain,
             "election_id": vote.election_id,
             "timestamp": vote.vote_timestamp,
         },

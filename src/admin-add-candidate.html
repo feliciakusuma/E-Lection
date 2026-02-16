@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ asset(request, 'tailwind.css') }}" />
   <link rel="stylesheet" href="{{ request.url_for('static', path='style.css') }}">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="/static/vendor/fontawesome/css/all.min.css" rel="stylesheet">
   <title>Admin - Add Candidate</title>
 </head>
 
@@ -18,29 +18,29 @@
     </div>
     <nav class="sidebar-nav">
       <a href="/admin-dashboard" class="sidebar-link">
-        <i class="fa-solid fa-chart-line icon text-black"></i>
+        <i class="fa-solid fa-chart-line text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Dashboard</span>
       </a>
       <a href="/admin-voters" class="sidebar-link">
-        <i class="fa-solid fa-users icon text-black"></i>
+        <i class="fa-solid fa-users text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Voters</span>
       </a>
       <a href="/admin-candidates" class="sidebar-link active">
-        <i class="fa-solid fa-user-tie icon text-black"></i>
+        <i class="fa-solid fa-user-tie text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Candidates</span>
       </a>
       <a href="/admin-elections" class="sidebar-link">
-        <i class="fa-solid fa-square-poll-vertical icon text-black"></i>
+        <i class="fa-solid fa-square-poll-vertical text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Elections</span>
       </a>   
       <a href="/admin-settings" class="sidebar-link">
-        <i class="fa-solid fa-gear icon text-black"></i>
+        <i class="fa-solid fa-gear text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Settings</span>
       </a>
     </nav>
     <div class="sidebar-footer">
       <a href="/admin" class="logout-link">
-        <i class="fa-solid fa-arrow-right-from-bracket icon text-red-500"></i>
+        <i class="fa-solid fa-arrow-right-from-bracket text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Logout</span>
       </a>
     </div>
@@ -76,22 +76,23 @@
         <h2 class="text-xl font-bold mb-4">Add New Candidate</h2>
 
         {% if error %}
-        <div class="alert-error mb-4">{{ error }}</div>
+        <div class="alert-error mb-4">{{ error | e }}</div>
         {% endif %}
 
         {% if success %}
-        <div class="alert-success mb-4">{{ success }}</div>
+        <div class="alert-success mb-4">{{ success | e }}</div>
         {% endif %}
 
         <form method="POST" action="/admin-add-candidate" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token(request)  | e }}" />
           <div>
             <label class="block text-sm font-medium mb-1" for="full_name">Full Name</label>
-            <input type="text" id="full_name" name="full_name" class="w-full px-4 py-2 border rounded-md" value="{{ (form_data or {}).get('full_name', '') }}" required>
+            <input type="text" id="full_name" name="full_name" class="w-full px-4 py-2 border rounded-md" value="{{ (form_data or {}).get('full_name', '')  | e }}" required>
           </div>
 
           <div>
             <label class="block text-sm font-medium mb-1" for="student_id">Student ID</label>
-            <input type="text" id="student_id" name="student_id" class="w-full px-4 py-2 border rounded-md" value="{{ (form_data or {}).get('student_id', '') }}" required>
+            <input type="text" id="student_id" name="student_id" class="w-full px-4 py-2 border rounded-md" value="{{ (form_data or {}).get('student_id', '')  | e }}" required>
           </div>
 
           <div>
@@ -113,14 +114,14 @@
 
           <div>
             <label class="block text-sm font-medium mb-1" for="major_display">Major</label>
-            <input type="text" id="major_display" class="w-full px-4 py-2 border rounded-md bg-gray-50" value="{{ (form_data or {}).get('major', '') }}" placeholder="Auto-filled from Student ID" readonly>
-            <input type="hidden" id="major" name="major" value="{{ (form_data or {}).get('major', '') }}">
+            <input type="text" id="major_display" class="w-full px-4 py-2 border rounded-md bg-gray-50" value="{{ (form_data or {}).get('major', '')  | e }}" placeholder="Auto-filled from Student ID" readonly>
+            <input type="hidden" id="major" name="major" value="{{ (form_data or {}).get('major', '')  | e }}">
           </div>
 
           <div>
             <label class="block text-sm font-medium mb-1" for="cohort_display">Cohort</label>
-            <input type="text" id="cohort_display" class="w-full px-4 py-2 border rounded-md bg-gray-50" value="{{ (form_data or {}).get('cohort', '') }}" placeholder="Auto-filled from Student ID" readonly>
-            <input type="hidden" id="cohort" name="cohort" value="{{ (form_data or {}).get('cohort', '') }}">
+            <input type="text" id="cohort_display" class="w-full px-4 py-2 border rounded-md bg-gray-50" value="{{ (form_data or {}).get('cohort', '')  | e }}" placeholder="Auto-filled from Student ID" readonly>
+            <input type="hidden" id="cohort" name="cohort" value="{{ (form_data or {}).get('cohort', '')  | e }}">
           </div>
 
           <!-- Position moved above and sourced from Elections -->
@@ -145,21 +146,21 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
               <div>
                 <label class="block text-sm font-medium mb-1" for="vice_full_name">Vice President Full Name</label>
-                <input type="text" id="vice_full_name" name="vice_full_name" class="w-full px-4 py-2 border rounded-md" value="{{ (form_data or {}).get('vice_full_name', '') }}" placeholder="Optional">
+                <input type="text" id="vice_full_name" name="vice_full_name" class="w-full px-4 py-2 border rounded-md" value="{{ (form_data or {}).get('vice_full_name', '')  | e }}" placeholder="Optional">
               </div>
               <div>
                 <label class="block text-sm font-medium mb-1" for="vice_student_id">Vice President Student ID</label>
-                <input type="text" id="vice_student_id" name="vice_student_id" class="w-full px-4 py-2 border rounded-md" value="{{ (form_data or {}).get('vice_student_id', '') }}" placeholder="Optional">
+                <input type="text" id="vice_student_id" name="vice_student_id" class="w-full px-4 py-2 border rounded-md" value="{{ (form_data or {}).get('vice_student_id', '')  | e }}" placeholder="Optional">
               </div>
               <div>
                 <label class="block text-sm font-medium mb-1" for="vice_major_display">Vice President Major</label>
-                <input type="text" id="vice_major_display" class="w-full px-4 py-2 border rounded-md bg-gray-50" value="{{ (form_data or {}).get('vice_major', '') }}" placeholder="Auto-filled from Student ID" readonly>
-                <input type="hidden" id="vice_major" name="vice_major" value="{{ (form_data or {}).get('vice_major', '') }}">
+                <input type="text" id="vice_major_display" class="w-full px-4 py-2 border rounded-md bg-gray-50" value="{{ (form_data or {}).get('vice_major', '')  | e }}" placeholder="Auto-filled from Student ID" readonly>
+                <input type="hidden" id="vice_major" name="vice_major" value="{{ (form_data or {}).get('vice_major', '')  | e }}">
               </div>
               <div>
                 <label class="block text-sm font-medium mb-1" for="vice_cohort_display">Vice President Cohort</label>
-                <input type="text" id="vice_cohort_display" class="w-full px-4 py-2 border rounded-md bg-gray-50" value="{{ (form_data or {}).get('vice_cohort', '') }}" placeholder="Auto-filled from Student ID" readonly>
-                <input type="hidden" id="vice_cohort" name="vice_cohort" value="{{ (form_data or {}).get('vice_cohort', '') }}">
+                <input type="text" id="vice_cohort_display" class="w-full px-4 py-2 border rounded-md bg-gray-50" value="{{ (form_data or {}).get('vice_cohort', '')  | e }}" placeholder="Auto-filled from Student ID" readonly>
+                <input type="hidden" id="vice_cohort" name="vice_cohort" value="{{ (form_data or {}).get('vice_cohort', '')  | e }}">
               </div>
             </div>
           </div>
@@ -177,8 +178,9 @@
       </div>
     </div>
   </main>
+  <script nonce="{{ csp_nonce(request) }}" src="{{ asset(request, 'app.js') }}" defer></script>
 </body>
-<script>
+<script nonce="{{ csp_nonce(request) }}">
   (function() {
     const studentInput = document.getElementById('student_id');
     const majorHidden = document.getElementById('major');
@@ -240,7 +242,7 @@
   })();
 </script>
 </html>
-<script>
+<script nonce="{{ csp_nonce(request) }}">
   (function(){
     function initProfileMenus(){
       document.querySelectorAll('.profile[data-menu]').forEach(function(profile){
@@ -257,7 +259,7 @@
     if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initProfileMenus); else initProfileMenus();
   })();
 </script>
-<script>
+<script nonce="{{ csp_nonce(request) }}">
   (function(){
     function initProfileMenus(){
       document.querySelectorAll('.profile[data-menu]').forEach(function(profile){
@@ -275,3 +277,5 @@
   })();
 </script>
 </html>
+
+

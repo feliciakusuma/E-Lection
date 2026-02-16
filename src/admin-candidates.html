@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ asset(request, 'tailwind.css') }}" />
   <link rel="stylesheet" href="{{ request.url_for('static', path='style.css') }}">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="/static/vendor/fontawesome/css/all.min.css" rel="stylesheet">
   <title>Admin - Candidates</title>
 </head>
 
@@ -18,29 +18,29 @@
     </div>
     <nav class="sidebar-nav">
       <a href="/admin-dashboard" class="sidebar-link">
-        <i class="fa-solid fa-chart-line icon text-black"></i>
+        <i class="fa-solid fa-chart-line text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Dashboard</span>
       </a>
       <a href="/admin-voters" class="sidebar-link">
-        <i class="fa-solid fa-users icon text-black"></i>
+        <i class="fa-solid fa-users text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Voters</span>
       </a>
       <a href="/admin-candidates" class="sidebar-link active">
-        <i class="fa-solid fa-user-tie icon text-black"></i>
+        <i class="fa-solid fa-user-tie text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Candidates</span>
       </a>
       <a href="/admin-elections" class="sidebar-link">
-        <i class="fa-solid fa-square-poll-vertical icon text-black"></i>
+        <i class="fa-solid fa-square-poll-vertical text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Elections</span>
       </a>   
       <a href="/admin-settings" class="sidebar-link">
-        <i class="fa-solid fa-gear icon text-black"></i>
+        <i class="fa-solid fa-gear text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Settings</span>
       </a>
     </nav>
     <div class="sidebar-footer">
       <a href="/admin-logout" class="logout-link">
-        <i class="fa-solid fa-arrow-right-from-bracket icon text-red-500"></i>
+        <i class="fa-solid fa-arrow-right-from-bracket text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Logout</span>
       </a>
     </div>
@@ -50,7 +50,7 @@
   <main class="main-content">
     <!-- Top Navbar -->
     <header class="topbar">
-      <div style="display:flex; align-items:center; gap:.75rem;">
+      <div class="ui-flex-gap-75">
         <button class="hamburger" id="hamburger" aria-label="Open menu">
           <i class="fa-solid fa-bars"></i>
         </button>
@@ -91,13 +91,13 @@
             <form method="GET" action="/admin-candidates" class="flex gap-2">
               <input type="hidden" name="q" value="{{ request.query_params.get('q','') }}">
               {% set sf = (status_filter or 'all') %}
-              <select name="status" class="filter-select" onchange="this.form.submit()">
+              <select name="status" class="filter-select" data-auto-submit="true">
                 <option value="all" {% if sf=='all' %}selected{% endif %}>All Status</option>
                 <option value="running" {% if sf=='running' %}selected{% endif %}>Running</option>
                 <option value="pending" {% if sf=='pending' %}selected{% endif %}>Pending</option>
               </select>
 
-              <select name="election_id" class="filter-select w-40" onchange="this.form.submit()">
+              <select name="election_id" class="filter-select w-40" data-auto-submit="true">
                 <option value="" {% if not selected_election_id %}selected{% endif %}>All Elections</option>
                 {% for e in elections or [] %}
                   <option value="{{ e.id }}" {% if selected_election_id == e.id %}selected{% endif %}>{{ e.title }}</option>
@@ -113,11 +113,11 @@
         </div>
 
         {% if success %}
-        <div class="alert-success mb-4">{{ success }}</div>
+        <div class="alert-success mb-4">{{ success | e }}</div>
         {% endif %}
 
         {% if error %}
-        <div class="alert-error mb-4">{{ error }}</div>
+        <div class="alert-error mb-4">{{ error | e }}</div>
         {% endif %}
       </div>
 
@@ -161,7 +161,8 @@
                     <a href="/admin-edit-candidate/{{ candidate.id }}" class="btn-edit">
                       <i class="fa-solid fa-pen-to-square text-blue-500"></i>
                     </a>
-                    <form method="POST" action="/admin-delete-candidate/{{ candidate.id }}" class="inline-block" onsubmit="return confirm('Delete this candidate?');">
+                    <form method="POST" action="/admin-delete-candidate/{{ candidate.id }}" class="inline-block" data-confirm="Delete this candidate?">
+                      <input type="hidden" name="csrf_token" value="{{ csrf_token(request)  | e }}" />
                       <button type="submit" class="btn-delete">
                         <i class="fa-solid fa-trash text-red-500"></i>
                       </button>
@@ -196,7 +197,8 @@
                     <a href="/admin-edit-candidate/{{ candidate.id }}" class="btn-edit" title="Edit president/vice ticket">
                       <i class="fa-solid fa-pen-to-square text-blue-500"></i>
                     </a>
-                    <form method="POST" action="/admin-remove-vice/{{ candidate.id }}" class="inline-block" onsubmit="return confirm('Remove this vice president only?');">
+                    <form method="POST" action="/admin-remove-vice/{{ candidate.id }}" class="inline-block" data-confirm="Remove this vice president only?">
+                      <input type="hidden" name="csrf_token" value="{{ csrf_token(request)  | e }}" />
                       <button type="submit" class="btn-delete" title="Delete vice president only">
                         <i class="fa-solid fa-trash text-red-500"></i>
                       </button>
@@ -208,8 +210,8 @@
               {% endfor %}
             {% else %}
               <tr>
-                <td colspan="5" style="padding:0;">
-                  <div class="empty-state" style="padding:3rem 1rem;">No candidates found.</div>
+                <td colspan="5" class="ui-pad-0">
+                  <div class="empty-state ui-empty-pad">No candidates found.</div>
                 </td>
               </tr>
             {% endif %}
@@ -253,7 +255,7 @@
       {% endif %}
     </div>
   </main>
-  <script>
+  <script nonce="{{ csp_nonce(request) }}">
     (function(){
       var sidebar = document.getElementById('sidebar');
       var burger = document.getElementById('hamburger');
@@ -286,5 +288,8 @@
 
     })();
   </script>
+  <script nonce="{{ csp_nonce(request) }}" src="{{ asset(request, 'app.js') }}" defer></script>
 </body>
 </html>
+
+

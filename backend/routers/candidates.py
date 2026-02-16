@@ -7,14 +7,15 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy import or_
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import OperationalError
+from uuid import UUID
 
-from ..database import Candidate, Election, User, CandidateTicket, Cohort, Major, Vote
+from ..database import Candidate, Election, User, CandidateTicket, Cohort, Major, VoterElectionStatus
 from ..dependencies import get_db, templates
 from ..services.audit import log_security_event, security_logger
 from ..utils.validation import MAJOR_CODE_MAP
+from ..utils.csrf import validate_csrf
 
 router = APIRouter()
-
 
 @router.get("/candidates", response_class=HTMLResponse)
 def candidates_page(request: Request, db: Session = Depends(get_db)):
@@ -43,17 +44,25 @@ def candidates_page(request: Request, db: Session = Depends(get_db)):
         except Exception:
             meta = {}
         meta_major = meta.get("major")
-        meta_cohort = str(meta.get("cohort")) if meta.get("cohort") is not None else None
+        raw_cohort = meta.get("cohort")
+        # Support multiple cohorts stored as comma-separated string or list
+        meta_cohorts: list[str] = []
+        if raw_cohort is not None:
+            if isinstance(raw_cohort, list):
+                meta_cohorts = [str(c).strip() for c in raw_cohort if str(c).strip()]
+            else:
+                meta_cohorts = [c.strip() for c in str(raw_cohort).split(",") if c.strip()]
         if meta_major:
             majors = [m.strip() for m in str(meta_major).split(",") if m.strip()]
             has_all_major = any(m.lower() in {"all", "all majors", "all major"} for m in majors)
             if not has_all_major:
                 if user_major and user_major not in majors:
                     return False
-        if meta_cohort:
-            if str(meta_cohort).lower() in {"all", "all cohort", "all cohorts"}:
+        # If cohort is declared, respect it unless it's marked as open/all
+        if meta_cohorts:
+            if any(str(c).lower() in {"all", "all cohort", "all cohorts"} for c in meta_cohorts):
                 pass
-            elif user_cohort and meta_cohort.strip() != user_cohort:
+            elif user_cohort and user_cohort not in meta_cohorts:
                 return False
         return True
 
@@ -63,8 +72,11 @@ def candidates_page(request: Request, db: Session = Depends(get_db)):
 
     active_election = None
     active_status = None
-    if election_id_param.isdigit():
-        active_election = db.query(Election).filter(Election.id == int(election_id_param)).first()
+    if election_id_param:
+        try:
+            active_election = db.query(Election).filter(Election.id == UUID(election_id_param)).first()
+        except (ValueError, TypeError):
+            active_election = None
     if not active_election:
         now = datetime.utcnow()
         active_election = (
@@ -116,29 +128,51 @@ def candidates_page(request: Request, db: Session = Depends(get_db)):
         except Exception:
             pass
 
-    def has_voted(user: User | None, election_id: int | None) -> bool:
+    def has_voted(user: User | None, election_id: UUID | None) -> bool:
         if not user or not election_id:
             return False
-        vid = str(user.id)
-        try:
-            for v in db.query(Vote).filter(Vote.election_id == election_id).all():
-                try:
-                    if v.voter_id_plain and str(v.voter_id_plain) == vid:
-                        return True
-                except Exception:
-                    continue
-        except Exception:
-            return False
-        return False
+        status = (
+            db.query(VoterElectionStatus)
+            .filter(
+                VoterElectionStatus.voter_id == str(user.id),
+                VoterElectionStatus.election_id == election_id,
+                VoterElectionStatus.has_voted == True,
+            )
+            .first()
+        )
+        return status is not None
 
     if active_election and has_voted(user_obj, active_election.id):
         return RedirectResponse(url=f"/results/{active_election.id}", status_code=303)
 
     query = db.query(Candidate).filter(Candidate.is_active == True)
+    candidates = []
     if active_election:
-        query = query.filter(Candidate.position == active_election.title)
-
-    candidates = query.order_by(Candidate.created_at.desc()).all()
+        ticket_rows = (
+            db.query(CandidateTicket)
+            .filter(CandidateTicket.election_id == active_election.id)
+            .all()
+        )
+        cand_ids = []
+        for t in ticket_rows:
+            if t.president_candidate_id:
+                cand_ids.append(t.president_candidate_id)
+            if t.vice_president_candidate_id:
+                cand_ids.append(t.vice_president_candidate_id)
+        if cand_ids:
+            candidates = (
+                query.filter(Candidate.id.in_(cand_ids))
+                .order_by(Candidate.created_at.desc())
+                .all()
+            )
+        else:
+            candidates = (
+                query.filter(Candidate.position == active_election.title)
+                .order_by(Candidate.created_at.desc())
+                .all()
+            )
+    else:
+        candidates = query.order_by(Candidate.created_at.desc()).all()
 
     # Attach vice details and hide standalone vice rows
     tickets_q = db.query(CandidateTicket)
@@ -147,7 +181,6 @@ def candidates_page(request: Request, db: Session = Depends(get_db)):
             or_(
                 CandidateTicket.election_id == active_election.id,
                 CandidateTicket.election_id == None,  # noqa: E711
-                CandidateTicket.election_id == 0,
             )
         )
     tickets = tickets_q.all()
@@ -160,7 +193,7 @@ def candidates_page(request: Request, db: Session = Depends(get_db)):
         vice_rows = db.query(Candidate).filter(Candidate.id.in_(list(vice_ids))).all()
         vice_map = {v.id: v for v in vice_rows}
 
-    def derive_major_and_cohort(student_id: str | None, major_id: int | None, cohort_id: int | None, meta_major=None, meta_cohort=None):
+    def derive_major_and_cohort(student_id: str | None, major_id: UUID | None, cohort_id: UUID | None, meta_major=None, meta_cohort=None):
         sid = (student_id or "").strip()
         major_val = meta_major
         cohort_val = meta_cohort
@@ -181,16 +214,6 @@ def candidates_page(request: Request, db: Session = Depends(get_db)):
         vice_obj = vice_map.get(t.vice_president_candidate_id) if t and t.vice_president_candidate_id else None
         c.vice_full_name = getattr(vice_obj, "full_name", "")
         c.vice_student_id = getattr(vice_obj, "student_id", "")
-        meta_major = meta_cohort = None
-        if not c.vice_full_name and c.description:
-            try:
-                meta = json.loads(c.description) if str(c.description).strip().startswith("{") else {}
-                c.vice_full_name = meta.get("vice_full_name", "") or c.vice_full_name
-                c.vice_student_id = meta.get("vice_student_id", "") or c.vice_student_id
-                meta_major = meta.get("vice_major")
-                meta_cohort = meta.get("vice_cohort")
-            except Exception:
-                pass
 
         # Derive display major/cohort from candidate data (not election meta)
         disp_major, disp_cohort = derive_major_and_cohort(c.student_id, c.major_id, c.cohort_id, None, None)
@@ -201,13 +224,13 @@ def candidates_page(request: Request, db: Session = Depends(get_db)):
 
         if vice_obj:
             v_major, v_cohort = derive_major_and_cohort(
-                vice_obj.student_id, vice_obj.major_id, vice_obj.cohort_id, meta_major, meta_cohort
+                vice_obj.student_id, vice_obj.major_id, vice_obj.cohort_id, None, None
             )
             c.vice_display_major = v_major or "-"
             c.vice_display_cohort = v_cohort or "-"
         else:
-            c.vice_display_major = meta_major or "-"
-            c.vice_display_cohort = meta_cohort or "-"
+            c.vice_display_major = "-"
+            c.vice_display_cohort = "-"
 
         c.vice_major = c.vice_display_major
         c.vice_cohort = c.vice_display_cohort
@@ -240,7 +263,7 @@ def admin_candidates(request: Request, db: Session = Depends(get_db)):
     majors_map = {m.major_id: m for m in db.query(Major).all()}
     cohorts_map = {c.cohort_id: c for c in db.query(Cohort).all()}
 
-    def derive_major_and_cohort(student_id: str | None, major_id: int | None, cohort_id: int | None, meta_major=None, meta_cohort=None):
+    def derive_major_and_cohort(student_id: str | None, major_id: UUID | None, cohort_id: UUID | None, meta_major=None, meta_cohort=None):
         sid = (student_id or "").strip()
         major_val = meta_major
         cohort_val = meta_cohort
@@ -269,7 +292,7 @@ def admin_candidates(request: Request, db: Session = Depends(get_db)):
 
     selected_election_id = None
     if election_id_param.isdigit():
-        election = db.query(Election).filter(Election.id == int(election_id_param)).first()
+        election = db.query(Election).filter(Election.id == UUID(election_id_param)).first()
         if election:
             selected_election_id = election.id
             ticket_rows = db.query(CandidateTicket).filter(CandidateTicket.election_id == election.id).all()
@@ -294,11 +317,15 @@ def admin_candidates(request: Request, db: Session = Depends(get_db)):
         .all()
     )
     for c in candidates:
-        if getattr(c, "created_at", None):
+        raw_ts = getattr(c, "updated_at", None) or getattr(c, "created_at", None)
+        if raw_ts:
             try:
-                c.display_created_at = c.created_at + tz_offset
+                display_ts = raw_ts + tz_offset
             except Exception:
-                c.display_created_at = c.created_at
+                display_ts = raw_ts
+            c.last_updated_str = display_ts.strftime("%b %d, %Y %H:%M")
+        else:
+            c.last_updated_str = "-"
     # Hide standalone vice rows; we will render them under their president
     candidates = [c for c in candidates if c.id not in vice_ids]
 
@@ -316,25 +343,15 @@ def admin_candidates(request: Request, db: Session = Depends(get_db)):
         c.cohort = cohort_val or "-"
         c.vice_full_name = getattr(vice_obj, "full_name", "")
         c.vice_student_id = getattr(vice_obj, "student_id", "")
-        # ensure optional vice metadata fields always exist to avoid AttributeError
-        c.vice_major = getattr(c, "vice_major", None)
-        c.vice_cohort = getattr(c, "vice_cohort", None)
-        # fallback to meta if no ticket/vice row yet (legacy records)
-        if not c.vice_full_name and c.description:
-            try:
-                meta = json.loads(c.description) if str(c.description).strip().startswith("{") else {}
-                c.vice_full_name = meta.get("vice_full_name", "") or c.vice_full_name
-                c.vice_student_id = meta.get("vice_student_id", "") or c.vice_student_id
-                c.vice_major = meta.get("vice_major", c.vice_major)
-                c.vice_cohort = meta.get("vice_cohort", c.vice_cohort)
-            except Exception:
-                pass
         if vice_obj:
             v_major, v_cohort = derive_major_and_cohort(
-                vice_obj.student_id, vice_obj.major_id, vice_obj.cohort_id, c.vice_major, c.vice_cohort
+                vice_obj.student_id, vice_obj.major_id, vice_obj.cohort_id, None, None
             )
-            c.vice_major = v_major or c.vice_major
-            c.vice_cohort = v_cohort or c.vice_cohort
+            c.vice_major = v_major or "-"
+            c.vice_cohort = v_cohort or "-"
+        else:
+            c.vice_major = "-"
+            c.vice_cohort = "-"
     elections = db.query(Election).order_by(Election.start_date.desc()).all()
 
     total_pages = (total_count + page_size - 1) // page_size if total_count else 1
@@ -371,27 +388,61 @@ def admin_add_candidate_submit(
     major: str = Form(""),
     cohort: str = Form(""),
     position: str = Form(...),
-    description: str = Form(""),
     status: str = Form("pending"),
     vice_full_name: str = Form(""),
     vice_student_id: str = Form(""),
     vice_major: str = Form(""),
     vice_cohort: str = Form(""),
     is_active: bool = Form(False),
+    csrf_token: str = Form(...),
     db: Session = Depends(get_db),
 ):
+    validate_csrf(request, csrf_token)
     try:
-        import json
-
-        meta = {
-            "about": description,
-            "vice_full_name": vice_full_name,
-            "vice_student_id": vice_student_id,
-            "vice_major": vice_major,
-            "vice_cohort": vice_cohort,
-        }
-
         election = db.query(Election).filter(Election.title == position).first()
+        if not election:
+            return templates.TemplateResponse(
+                "admin-edit-candidate.html",
+                {
+                    "request": request,
+                    "candidate": {"id": candidate_id},
+                    "error": "Please select a valid election before saving.",
+                    "form_data": {
+                        "full_name": full_name,
+                        "student_id": student_id,
+                        "major": major,
+                        "cohort": cohort,
+                        "position": position,
+                        "status": status,
+                        "vice_full_name": vice_full_name,
+                        "vice_student_id": vice_student_id,
+                        "vice_major": vice_major,
+                        "vice_cohort": vice_cohort,
+                        "is_active": is_active,
+                    },
+                },
+            )
+        if not election:
+            return templates.TemplateResponse(
+                "admin-add-candidate.html",
+                {
+                    "request": request,
+                    "error": "Please select a valid election before adding a candidate.",
+                    "form_data": {
+                        "full_name": full_name,
+                        "student_id": student_id,
+                        "major": major,
+                        "cohort": cohort,
+                        "position": position,
+                        "status": status,
+                        "vice_full_name": vice_full_name,
+                        "vice_student_id": vice_student_id,
+                        "vice_major": vice_major,
+                        "vice_cohort": vice_cohort,
+                        "is_active": is_active,
+                    },
+                },
+            )
 
         def resolve_ids(student_id_val: str, major_hint: str | None, cohort_hint: str | None):
             sid = (student_id_val or "").strip()
@@ -421,7 +472,6 @@ def admin_add_candidate_submit(
             full_name=full_name,
             student_id=student_id,
             position=position,
-            description=json.dumps(meta),
             status=status,
             is_active=is_active,
             cohort_id=cand_cohort_id,
@@ -440,7 +490,6 @@ def admin_add_candidate_submit(
                 full_name=vice_full_name or "",
                 student_id=vice_student_id or "",
                 position=position,
-                description=json.dumps({"about": f"Vice for ticket with {full_name}"}),
                 status=status,
                 is_active=is_active,
                 cohort_id=v_cohort_id,
@@ -450,7 +499,7 @@ def admin_add_candidate_submit(
             db.flush()
 
         ticket = CandidateTicket(
-            election_id=election.id if election else 0,
+            election_id=election.id,
             president_candidate_id=candidate.id,
             vice_president_candidate_id=vice_candidate.id if vice_candidate else None,
             created_at=datetime.utcnow(),
@@ -475,7 +524,6 @@ def admin_add_candidate_submit(
                     "cohort": cohort,
                     "position": position,
                     "status": status,
-                    "description": description,
                     "vice_full_name": vice_full_name,
                     "vice_student_id": vice_student_id,
                     "vice_major": vice_major,
@@ -487,14 +535,14 @@ def admin_add_candidate_submit(
 
 
 @router.get("/admin-edit-candidate/{candidate_id}", response_class=HTMLResponse)
-def admin_edit_candidate_form(candidate_id: int, request: Request, db: Session = Depends(get_db)):
+def admin_edit_candidate_form(candidate_id: UUID, request: Request, db: Session = Depends(get_db)):
     candidate = db.query(Candidate).filter(Candidate.id == candidate_id).first()
     if not candidate:
         return RedirectResponse(url="/admin-candidates?error=Candidate%20not%20found", status_code=303)
 
     majors_map = {m.major_id: m for m in db.query(Major).all()}
     cohorts_map = {c.cohort_id: c for c in db.query(Cohort).all()}
-    def derive_major_and_cohort(student_id: str | None, major_id: int | None, cohort_id: int | None):
+    def derive_major_and_cohort(student_id: str | None, major_id: UUID | None, cohort_id: UUID | None):
         sid = (student_id or "").strip()
         major_val = None
         if major_id and major_id in majors_map:
@@ -511,11 +559,19 @@ def admin_edit_candidate_form(candidate_id: int, request: Request, db: Session =
     cand_major, cand_cohort = derive_major_and_cohort(candidate.student_id, candidate.major_id, candidate.cohort_id)
     elections = db.query(Election).order_by(Election.start_date.desc()).all()
 
-    try:
-        meta = json.loads(candidate.description) if candidate.description and str(candidate.description).strip().startswith("{") else {}
-    except Exception:
-        meta = {}
-    about_text = meta.get("about", candidate.description or "")
+    ticket = (
+        db.query(CandidateTicket)
+        .filter(
+            or_(
+                CandidateTicket.president_candidate_id == candidate_id,
+                CandidateTicket.vice_president_candidate_id == candidate_id,
+            )
+        )
+        .first()
+    )
+    vice = None
+    if ticket and ticket.vice_president_candidate_id:
+        vice = db.query(Candidate).filter(Candidate.id == ticket.vice_president_candidate_id).first()
 
     form_data = {
         "full_name": candidate.full_name,
@@ -524,11 +580,10 @@ def admin_edit_candidate_form(candidate_id: int, request: Request, db: Session =
         "cohort": cand_cohort or "",
         "position": candidate.position,
         "status": candidate.status,
-        "description": about_text,
-        "vice_full_name": meta.get("vice_full_name", ""),
-        "vice_student_id": meta.get("vice_student_id", ""),
-        "vice_major": meta.get("vice_major", ""),
-        "vice_cohort": meta.get("vice_cohort", ""),
+        "vice_full_name": getattr(vice, "full_name", ""),
+        "vice_student_id": getattr(vice, "student_id", ""),
+        "vice_major": "",
+        "vice_cohort": "",
         "is_active": candidate.is_active,
     }
 
@@ -539,22 +594,23 @@ def admin_edit_candidate_form(candidate_id: int, request: Request, db: Session =
 
 @router.post("/admin-edit-candidate/{candidate_id}")
 def admin_edit_candidate_submit(
-    candidate_id: int,
+    candidate_id: UUID,
     request: Request,
     full_name: str = Form(...),
     student_id: str = Form(...),
     major: str = Form(""),
     cohort: str = Form(""),
     position: str = Form(...),
-    description: str = Form(""),
     status: str = Form("pending"),
     vice_full_name: str = Form(""),
     vice_student_id: str = Form(""),
     vice_major: str = Form(""),
     vice_cohort: str = Form(""),
     is_active: bool = Form(False),
+    csrf_token: str = Form(...),
     db: Session = Depends(get_db),
 ):
+    validate_csrf(request, csrf_token)
     try:
         candidate = db.query(Candidate).filter(Candidate.id == candidate_id).first()
         if not candidate:
@@ -575,13 +631,6 @@ def admin_edit_candidate_submit(
         if ticket and ticket.vice_president_candidate_id:
             current_vice = db.query(Candidate).filter(Candidate.id == ticket.vice_president_candidate_id).first()
 
-        meta = {
-            "about": description,
-            "vice_full_name": vice_full_name,
-            "vice_student_id": vice_student_id,
-            "vice_major": vice_major,
-            "vice_cohort": vice_cohort,
-        }
         def resolve_ids(student_id_val: str, major_hint: str | None, cohort_hint: str | None):
             sid = (student_id_val or "").strip()
             cohort_num = None
@@ -609,18 +658,18 @@ def admin_edit_candidate_submit(
         candidate.full_name = full_name
         candidate.student_id = student_id
         candidate.position = position
-        candidate.description = json.dumps(meta)
         candidate.status = status
         candidate.is_active = is_active
         candidate.cohort_id = cand_cohort_id
         candidate.major_id = cand_major_id
+        candidate.updated_at = datetime.utcnow()
 
         has_vice = any([vice_full_name.strip(), vice_student_id.strip(), vice_major.strip(), vice_cohort.strip()])
 
         if ticket is None:
             # create a ticket for this candidate
             ticket = CandidateTicket(
-                election_id=election.id if election else 0,
+                election_id=election.id if election else None,
                 president_candidate_id=candidate.id,
                 vice_president_candidate_id=None,
                 created_at=datetime.utcnow(),
@@ -638,12 +687,12 @@ def admin_edit_candidate_submit(
                 current_vice.is_active = is_active
                 current_vice.cohort_id = v_cohort_id
                 current_vice.major_id = v_major_id
+                current_vice.updated_at = datetime.utcnow()
             else:
                 new_vice = Candidate(
                     full_name=vice_full_name or "",
                     student_id=vice_student_id or "",
                     position=position,
-                    description=json.dumps({"about": f"Vice for ticket with {full_name}"}),
                     status=status,
                     is_active=is_active,
                     cohort_id=v_cohort_id,
@@ -679,7 +728,6 @@ def admin_edit_candidate_submit(
                     "cohort": cohort,
                     "position": position,
                     "status": status,
-                    "description": description,
                     "vice_full_name": vice_full_name,
                     "vice_student_id": vice_student_id,
                     "vice_major": vice_major,
@@ -691,7 +739,13 @@ def admin_edit_candidate_submit(
 
 
 @router.post("/admin-delete-candidate/{candidate_id}")
-def admin_delete_candidate(candidate_id: int, request: Request, db: Session = Depends(get_db)):
+def admin_delete_candidate(
+    candidate_id: UUID,
+    request: Request,
+    csrf_token: str = Form(...),
+    db: Session = Depends(get_db),
+):
+    validate_csrf(request, csrf_token)
     try:
         candidate = db.query(Candidate).filter(Candidate.id == candidate_id).first()
         if not candidate:
@@ -707,7 +761,13 @@ def admin_delete_candidate(candidate_id: int, request: Request, db: Session = De
 
 
 @router.post("/admin-remove-vice/{candidate_id}")
-def admin_remove_vice(candidate_id: int, request: Request, db: Session = Depends(get_db)):
+def admin_remove_vice(
+    candidate_id: UUID,
+    request: Request,
+    csrf_token: str = Form(...),
+    db: Session = Depends(get_db),
+):
+    validate_csrf(request, csrf_token)
     try:
         candidate = db.query(Candidate).filter(Candidate.id == candidate_id).first()
         if not candidate:
@@ -730,23 +790,6 @@ def admin_remove_vice(candidate_id: int, request: Request, db: Session = Depends
             ticket.vice_president_candidate_id = None
             if vice:
                 db.delete(vice)
-
-        # Clean metadata on president candidate
-        try:
-            meta = json.loads(candidate.description) if candidate.description and str(candidate.description).strip().startswith("{") else {}
-            about_text = meta.get("about", "")
-        except Exception:
-            meta = {}
-            about_text = candidate.description or ""
-
-        cleaned = {
-            "about": about_text,
-            "vice_full_name": "",
-            "vice_student_id": "",
-            "vice_major": "",
-            "vice_cohort": "",
-        }
-        candidate.description = json.dumps(cleaned)
 
         if ticket:
             db.add(ticket)

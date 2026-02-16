@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ asset(request, 'tailwind.css') }}" />
   <link rel="stylesheet" href="{{ request.url_for('static', path='style.css') }}">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="/static/vendor/fontawesome/css/all.min.css" rel="stylesheet">
   <title>Confirm Vote</title>  
 </head>
 
@@ -13,16 +13,16 @@
   {% set display_first = request.cookies.get('first_name') or 'User' %}
   {% set display_last = request.cookies.get('last_name') or '' %}
   {% set display_full = (display_first ~ ' ' ~ display_last).strip() %}
-  {% set avatar_url = request.cookies.get('avatar_url') or 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png' %}
+{% set avatar_url = (request.cookies.get('avatar_url') | safe_url('https://cdn-icons-png.flaticon.com/512/3177/3177440.png')) %}
   <!-- Navbar -->
   <nav class="navbar">
     <div class="sidebar-logo">
       <i class="fas fa-vote-yea text-blue-600 text-xl"></i> 
       <span class="logo-text">E-Lection</span>
     </div>
-    <div class="navbar-inner" style="margin-left:auto;display:flex;align-items:center;gap:.5rem;">
+    <div class="navbar-inner ui-ml-auto-flex-gap-05">
         <div class="profile" data-menu>
-          <img src="{{ avatar_url }}" class="avatar profile-trigger" alt="User avatar" aria-haspopup="menu" aria-expanded="false">
+          <img src="{{ avatar_url | e }}" class="avatar profile-trigger" alt="User avatar" aria-haspopup="menu" aria-expanded="false">
           <div>
             <p class="admin-name">{{ display_full or 'User' }}</p>
             <p class="admin-role">Voter</p>
@@ -39,7 +39,7 @@
   <main class="confirm-main">
     <div class="confirm-card">
       {% if error %}
-      <div class="alert-error mb-4">{{ error }}</div>
+      <div class="alert-error mb-4">{{ error | e }}</div>
       {% endif %}
 
       {% if not candidate or not election %}
@@ -92,10 +92,11 @@
       </div>
       {% else %}
       <form action="/vote" method="post" class="form-stack">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token(request)  | e }}" />
         <input type="hidden" name="candidate_id" value="{{ candidate.id }}">
         <input type="hidden" name="election_id" value="{{ election.id }}">
         {# Use the signed-in user's email as voter identifier for hashing/duplicate checks #}
-        <input type="hidden" name="voter_id" value="{{ request.cookies.get('user_email') or '' }}">
+        <input type="hidden" name="voter_id" value="{{ request.cookies.get('user_email') or ''  | e }}">
         <div class="btn-row">
           <a href="/candidates?election_id={{ election.id if election else '' }}" class="btn-goback flex-1">Go Back</a>
           <button type="submit" class="btn-confirm flex-1">Confirm My Vote</button>
@@ -105,7 +106,7 @@
       {% endif %}
     </div>
   </main>
-  <script>
+  <script nonce="{{ csp_nonce(request) }}">
     (function(){
       function initProfileMenus(){
         document.querySelectorAll('.profile[data-menu]').forEach(function(profile){
@@ -122,7 +123,10 @@
       if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initProfileMenus); else initProfileMenus();
     })();
   </script>
+  <script nonce="{{ csp_nonce(request) }}" src="{{ asset(request, 'app.js') }}" defer></script>
 </body>
 </html>
+
+
 
 

@@ -4,12 +4,14 @@ from fastapi import APIRouter, Depends, Form, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy import or_
 from sqlalchemy.orm import Session
+from uuid import UUID
 
-from ..database import Candidate, CandidateTicket, Election, Vote, SessionLocal, User
+from ..database import Candidate, CandidateTicket, Election, Vote, SessionLocal, User, VoterElectionStatus
 from ..dependencies import get_db, templates
 from ..services.audit import log_security_event
 from ..utils.counts import get_eligible_voters_count
 from ..utils.validation import MAJOR_CODE_MAP
+from ..utils.csrf import validate_csrf
 
 router = APIRouter()
 
@@ -177,13 +179,16 @@ def public_dashboard(request: Request, db: Session = Depends(get_db)):
         user_obj = User.find_by_email(db, user_email) if user_email else None
         if user_obj and elections:
             election_ids = [entry["election"].id for entry in elections]
-            voted_ids = set()
-            for v in db.query(Vote).filter(Vote.election_id.in_(election_ids)).all():
-                try:
-                    if v.voter_id_plain and str(v.voter_id_plain) == str(user_obj.id):
-                        voted_ids.add(v.election_id)
-                except Exception:
-                    continue
+            voted_rows = (
+                db.query(VoterElectionStatus.election_id)
+                .filter(
+                    VoterElectionStatus.voter_id == str(user_obj.id),
+                    VoterElectionStatus.election_id.in_(election_ids),
+                    VoterElectionStatus.has_voted == True,
+                )
+                .all()
+            )
+            voted_ids = {row[0] for row in voted_rows}
             for entry in elections:
                 if entry["election"].id in voted_ids:
                     entry["user_has_voted"] = True
@@ -270,7 +275,14 @@ def admin_elections(request: Request, db: Session = Depends(get_db)):
         candidates_count = db.query(CandidateTicket).filter(CandidateTicket.election_id == e.id).count()
         if candidates_count == 0:
             candidates_count = db.query(Candidate).filter(Candidate.position == e.title).count()
-        voters_count = db.query(Vote.voter_id).filter(Vote.election_id == e.id).distinct().count()
+        voters_count = (
+            db.query(VoterElectionStatus)
+            .filter(
+                VoterElectionStatus.election_id == e.id,
+                VoterElectionStatus.has_voted == True,
+            )
+            .count()
+        )
 
         if status_filter != "all" and dstatus != status_filter:
             continue
@@ -326,8 +338,10 @@ def add_election_submit(
     is_active: bool = Form(False),
     eligible_voters: int = Form(0),
     timezone_offset_minutes: int = Form(0),
+    csrf_token: str = Form(...),
     db: Session = Depends(get_db),
 ):
+    validate_csrf(request, csrf_token)
     try:
         offset_minutes = int(timezone_offset_minutes or 0)
 
@@ -410,7 +424,7 @@ def add_election_submit(
 
 
 @router.get("/edit-election/{election_id}", response_class=HTMLResponse)
-def edit_election_form(request: Request, election_id: int, db: Session = Depends(get_db)):
+def edit_election_form(request: Request, election_id: UUID, db: Session = Depends(get_db)):
     e = db.query(Election).filter(Election.id == election_id).first()
     if not e:
         return RedirectResponse(url="/admin-elections?error=Election%20not%20found", status_code=303)
@@ -476,7 +490,7 @@ def edit_election_form(request: Request, election_id: int, db: Session = Depends
 @router.post("/edit-election/{election_id}")
 def edit_election_submit(
     request: Request,
-    election_id: int,
+    election_id: UUID,
     title: str = Form(...),
     major: str = Form(...),
     cohort: str = Form(...),
@@ -485,8 +499,10 @@ def edit_election_submit(
     is_active: bool = Form(False),
     eligible_voters: int = Form(0),
     timezone_offset_minutes: int = Form(0),
+    csrf_token: str = Form(...),
     db: Session = Depends(get_db),
 ):
+    validate_csrf(request, csrf_token)
     try:
         e = db.query(Election).filter(Election.id == election_id).first()
         if not e:
@@ -592,7 +608,13 @@ def edit_election_submit(
 
 
 @router.post("/delete-election/{election_id}")
-def delete_election(election_id: int, request: Request, db: Session = Depends(get_db)):
+def delete_election(
+    election_id: UUID,
+    request: Request,
+    csrf_token: str = Form(...),
+    db: Session = Depends(get_db),
+):
+    validate_csrf(request, csrf_token)
     try:
         e = db.query(Election).filter(Election.id == election_id).first()
         if not e:

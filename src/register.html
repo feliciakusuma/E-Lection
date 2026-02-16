@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ asset(request, 'tailwind.css') }}" />
+  <link href="/static/vendor/fontawesome/css/all.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="{{ asset(request, 'style.css') }}" />
   <title>Login</title>  
 </head>
@@ -32,42 +32,43 @@
       <p class="form-subtitle">Register to participate in e-voting</p>
 
       {% if error %}
-      <div class="alert-error">{{ error }}</div>
+      <div class="alert-error">{{ error | e }}</div>
       {% endif %}
 
       {% if success %}
-      <div class="alert-success">{{ success }}</div>
+      <div class="alert-success">{{ success | e }}</div>
       {% endif %}
 
       <!-- Form -->
       <form id="registerForm" class="space-y-4 text-left" action="/register" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token(request)  | e }}" />
         
         <!-- Name Fields -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label for="firstName" class="form-label">First Name</label>
             <input id="firstName" name="firstName" type="text" placeholder="John"
-              class="form-input" value="{{ (form_data or {}).get('firstName', '') }}" required />
+              class="form-input" value="{{ (form_data or {}).get('firstName', '') | e }}" required />
           </div>
           <div>
             <label for="lastName" class="form-label">Last Name</label>
             <input id="lastName" name="lastName" type="text" placeholder="Doe"
-              class="form-input" value="{{ (form_data or {}).get('lastName', '') }}" required />
+              class="form-input" value="{{ (form_data or {}).get('lastName', '') | e }}" required />
           </div>
         </div>
 
         <!-- Student ID -->
         <div>
           <label for="studentId" class="form-label">Student ID</label>
-          <input id="studentId" name="studentId" type="text" placeholder="2022400001"
-            class="form-input" value="{{ (form_data or {}).get('studentId', '') }}" required />
+          <input id="studentId" name="studentId" type="text" placeholder="Enter a valid 10-digit student ID"
+            class="form-input" value="{{ (form_data or {}).get('studentId', '') | e }}" required />
         </div>
 
         <!-- Email -->
         <div>
           <label for="email" class="form-label">Email Address</label>
-          <input id="email" name="email" type="email" placeholder="john.doe@gmail.com"
-            class="form-input" value="{{ (form_data or {}).get('email', '') }}" required />
+          <input id="email" name="email" type="email" placeholder="john.doe@my.sampoernauniversity.ac.id"
+            class="form-input" value="{{ (form_data or {}).get('email', '') | e }}" required />
         </div>
 
         <!-- Submit Button -->
@@ -85,9 +86,12 @@
       </div>
     </div>
   </main>
-  <script>
+  <script nonce="{{ csp_nonce(request) }}">
     // Password fields removed; no toggles needed.
   </script>
+  <script nonce="{{ csp_nonce(request) }}" src="{{ asset(request, 'app.js') }}" defer></script>
 </body>
 </html>
+
+
 

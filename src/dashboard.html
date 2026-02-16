@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ asset(request, 'tailwind.css') }}" />
   <link rel="stylesheet" href="{{ request.url_for('static', path='style.css') }}">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="/static/vendor/fontawesome/css/all.min.css" rel="stylesheet">
   <title>Dashboard</title>  
 </head>
 
 <body class="body-main">
   {% set display_full = (user_profile.full_name if user_profile else ((request.cookies.get('first_name') or 'User') ~ ' ' ~ (request.cookies.get('last_name') or ''))).strip() %}
-  {% set avatar_url = request.cookies.get('avatar_url') or 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png' %}
+{% set avatar_url = (request.cookies.get('avatar_url') | safe_url('https://cdn-icons-png.flaticon.com/512/3177/3177440.png')) %}
   <!-- Navbar -->
   <nav class="navbar">
     <div class="sidebar-logo">
       <i class="fas fa-vote-yea text-blue-600 text-xl"></i> 
       <span class="logo-text">E-Lection</span>
     </div>
-    <div class="navbar-inner" style="margin-left:auto;display:flex;align-items:center;gap:1.5rem;">
+    <div class="navbar-inner ui-ml-auto-flex-gap-15">
         <div class="profile" data-menu>
-          <img src="{{ avatar_url }}" class="avatar profile-trigger" alt="User avatar" aria-haspopup="menu" aria-expanded="false">
+          <img src="{{ avatar_url | e }}" class="avatar profile-trigger" alt="User avatar" aria-haspopup="menu" aria-expanded="false">
           <div>
             <p class="admin-name">{{ display_full or 'User' }}</p>
             <p class="admin-role">Voter</p>
@@ -70,13 +70,13 @@
 
               <div class="election-cta">
                 {% if st=='ongoing' and not go_to_results %}
-                  <a class="btn-vote" style="width:100%;text-align:center;display:block;" href="/candidates?election_id={{ e.id }}">
+                  <a class="btn-vote ui-block-full-center" href="/candidates?election_id={{ e.id }}">
                     Vote Now
                   </a>
                 {% elif go_to_results %}
-                  <a class="btn-details" style="width:100%;text-align:center;display:block;" href="/results/{{ e.id }}">&#10003; View Results</a>
+                  <a class="btn-details ui-block-full-center" href="/results/{{ e.id }}">&#10003; View Results</a>
                 {% else %}
-                  <div class="btn-details" style="width:100%;text-align:center;opacity:.6;">Coming Soon</div>
+                  <div class="btn-details ui-block-full-center ui-opacity-60">Coming Soon</div>
                 {% endif %}
               </div>
             </div>
@@ -87,7 +87,7 @@
       </div>
     </div>
   </main>
-  <script>
+  <script nonce="{{ csp_nonce(request) }}">
     (function(){
       function initProfileMenus(){
         document.querySelectorAll('.profile[data-menu]').forEach(function(profile){
@@ -104,7 +104,7 @@
       if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initProfileMenus); else initProfileMenus();
     })();
   </script>
-  <script>
+  <script nonce="{{ csp_nonce(request) }}">
     (function(){
       function adjustTitleLines(){
         var titles = Array.from(document.querySelectorAll('.election-title'));
@@ -128,5 +128,7 @@
       window.addEventListener('resize', adjustTitleLines);
     })();
   </script>
+  <script nonce="{{ csp_nonce(request) }}" src="{{ asset(request, 'app.js') }}" defer></script>
 </body>
 </html>
+

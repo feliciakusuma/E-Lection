@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ asset(request, 'tailwind.css') }}" />
   <link rel="stylesheet" href="{{ request.url_for('static', path='style.css') }}">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="/static/vendor/fontawesome/css/all.min.css" rel="stylesheet">
   <title> Election Results</title>  
 </head>
 
@@ -13,16 +13,16 @@
   {% set display_first = request.cookies.get('first_name') or 'User' %}
   {% set display_last = request.cookies.get('last_name') or '' %}
   {% set display_full = (display_first ~ ' ' ~ display_last).strip() %}
-  {% set avatar_url = request.cookies.get('avatar_url') or 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png' %}
+{% set avatar_url = (request.cookies.get('avatar_url') | safe_url('https://cdn-icons-png.flaticon.com/512/3177/3177440.png')) %}
   <!-- Navbar -->
   <nav class="navbar">
     <div class="sidebar-logo">
       <i class="fas fa-vote-yea text-blue-600 text-xl"></i> 
       <span class="logo-text">E-Lection</span>
     </div>
-    <div class="navbar-inner" style="margin-left:auto;display:flex;align-items:center;gap:.5rem;">
+    <div class="navbar-inner ui-ml-auto-flex-gap-05">
         <div class="profile" data-menu>
-          <img src="{{ avatar_url }}" class="avatar profile-trigger" alt="User avatar" aria-haspopup="menu" aria-expanded="false">
+          <img src="{{ avatar_url | e }}" class="avatar profile-trigger" alt="User avatar" aria-haspopup="menu" aria-expanded="false">
           <div>
             <p class="admin-name">{{ display_full or 'User' }}</p>
             <p class="admin-role">Voter</p>
@@ -43,7 +43,7 @@
         <a href="/dashboard" class="election-link"><i class="fa-solid fa-arrow-left mr-1"></i> Back to Elections</a>
       </div>
 
-      <h1 class="dashboard-title" style="margin-bottom:.25rem">{{ election.title if election else 'Election Results' }} - Results</h1>
+      <h1 class="dashboard-title ui-mb-1">{{ election.title if election else 'Election Results' }} - Results</h1>
       <p class="dashboard-subtitle">{% if live %}Live voting results (updates every 5 seconds){% else %}Live voting results{% endif %}</p>
 
       <!-- Grid: Bar chart + Detailed results -->
@@ -75,12 +75,12 @@
                     <p class="text-sm text-gray-500">{{ r.rank_label or 'Candidate' }}</p>
                   </div>
                   <div class="text-right ml-3">
-                    <p class="font-semibold" style="color: {{ color }}">{{ '%.1f' % r.percent }}%</p>
+                    <p class="font-semibold" data-color="{{ color }}">{{ '%.1f' % r.percent }}%</p>
                     <p class="text-xs text-gray-500">{{ r.votes }} votes</p>
                   </div>
                 </div>
                 <div class="mt-2 h-2 rounded-full bg-gray-200 overflow-hidden">
-                  <div class="h-2 rounded-full" style="width: {{ r.percent }}%; background: {{ color }}"></div>
+                  <div class="h-2 rounded-full" data-width="{{ r.percent }}%" data-bg="{{ color }}"></div>
                 </div>
               </div>
             </div>
@@ -94,8 +94,8 @@
   </main>
 
   <!-- Chart.js for bar chart -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
+  <script nonce="{{ csp_nonce(request) }}" src="{{ asset(request, 'vendor/chartjs/chart.umd.min.js') }}"></script>
+  <script nonce="{{ csp_nonce(request) }}">
     (function(){
       try {
         var ctx = document.getElementById('resultsBar');
@@ -165,7 +165,7 @@
       } catch (e) {}
     })();
   </script>
-  <script>
+  <script nonce="{{ csp_nonce(request) }}">
     (function(){
       function initProfileMenus(){
         document.querySelectorAll('.profile[data-menu]').forEach(function(profile){
@@ -183,5 +183,7 @@
     })();
   </script>
   
+  <script nonce="{{ csp_nonce(request) }}" src="{{ asset(request, 'app.js') }}" defer></script>
 </body>
 </html>
+

@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ asset(request, 'tailwind.css') }}" />
   <link rel="stylesheet" href="{{ request.url_for('static', path='style.css') }}">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="/static/vendor/fontawesome/css/all.min.css" rel="stylesheet">
   <title>Admin - Elections</title>
 </head>
 
@@ -18,29 +18,29 @@
     </div>
     <nav class="sidebar-nav">
       <a href="/admin-dashboard" class="sidebar-link">
-        <i class="fa-solid fa-chart-line icon text-black"></i>
+        <i class="fa-solid fa-chart-line text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Dashboard</span>
       </a>
       <a href="/admin-voters" class="sidebar-link">
-        <i class="fa-solid fa-users icon text-black"></i>
+        <i class="fa-solid fa-users text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Voters</span>
       </a>
       <a href="/admin-candidates" class="sidebar-link">
-        <i class="fa-solid fa-user-tie icon text-black"></i>
+        <i class="fa-solid fa-user-tie text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Candidates</span>
       </a>
       <a href="/admin-elections" class="sidebar-link active">
-        <i class="fa-solid fa-square-poll-vertical icon text-black"></i>
+        <i class="fa-solid fa-square-poll-vertical text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Elections</span>
       </a>   
       <a href="/admin-settings" class="sidebar-link">
-        <i class="fa-solid fa-gear icon text-black"></i>
+        <i class="fa-solid fa-gear text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Settings</span>
       </a>
     </nav>
     <div class="sidebar-footer">
       <a href="/admin-logout" class="logout-link">
-        <i class="fa-solid fa-arrow-right-from-bracket icon text-red-500"></i>
+        <i class="fa-solid fa-arrow-right-from-bracket text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Logout</span>
       </a>
     </div>
@@ -50,7 +50,7 @@
   <main class="main-content">
     <!-- Top Navbar -->
     <header class="topbar">
-      <div style="display:flex; align-items:center; gap:.75rem;">
+      <div class="ui-flex-gap-75">
         <button class="hamburger" id="hamburger" aria-label="Open menu">
           <i class="fa-solid fa-bars"></i>
         </button>
@@ -99,154 +99,7 @@
             ＋ Create New Election
           </a>
         </div>
-
-      <!-- Election Cards -->
-      <div class="election-grid" style="display:none">
-        <div class="election-card">
-          <div class="election-card-header">
-            <div class="stat-icon blue">
-              <i class="fas fa-vote-yea text-blue-600 text-xl"></i>
-            </div>
-            <h3>Student Council Election</h3>
-            <span class="status-badge status-ongoing">Ongoing</span>
-          </div>
-          <div class="election-details">
-            <img src="https://cdn-icons-png.flaticon.com/512/747/747310.png" class="inline-icon">
-            Jan 15 - Jan 22, 2024
-          </div>
-          <div class="election-meta">
-            <span><img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" class="inline-icon"> 5 Candidates</span>
-            <span><img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" class="inline-icon"> 1,247 Voters</span>
-          </div>
-          <div class="election-footer">
-            <span class="election-votes">
-              <a href="#" class="election-link">847 votes cast</a>
-            </span>
-            <a href="#" class="election-link">View Details →</a>
-          </div>
-        </div>
-
-        <div class="election-card">
-          <div class="election-card-header">
-            <div class="stat-icon blue">
-              <i class="fas fa-vote-yea text-blue-600 text-xl"></i>
-            </div>
-            <h3>Student Council Election</h3>
-            <span class="status-badge status-ongoing">Ongoing</span>
-          </div>
-          <div class="election-details">
-            <img src="https://cdn-icons-png.flaticon.com/512/747/747310.png" class="inline-icon">
-            Jan 15 - Jan 22, 2024
-          </div>
-          <div class="election-meta">
-            <span><img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" class="inline-icon"> 5 Candidates</span>
-            <span><img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" class="inline-icon"> 1,247 Voters</span>
-          </div>
-          <div class="election-footer">
-            <span class="election-votes">
-              <a href="#" class="election-link">847 votes cast</a>
-            </span>
-            <a href="#" class="election-link">View Details →</a>
-          </div>
-        </div>
-
-        <div class="election-card">
-          <div class="election-card-header">
-            <div class="stat-icon blue">
-              <i class="fas fa-vote-yea text-blue-600 text-xl"></i>
-            </div>
-            <h3>Student Council Election</h3>
-            <span class="status-badge status-ongoing">Ongoing</span>
-          </div>
-          <div class="election-details">
-            <img src="https://cdn-icons-png.flaticon.com/512/747/747310.png" class="inline-icon">
-            Jan 15 - Jan 22, 2024
-          </div>
-          <div class="election-meta">
-            <span><img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" class="inline-icon"> 5 Candidates</span>
-            <span><img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" class="inline-icon"> 1,247 Voters</span>
-          </div>
-          <div class="election-footer">
-            <span class="election-votes">
-              <a href="#" class="election-link">847 votes cast</a>
-            </span>
-            <a href="#" class="election-link">View Details →</a>
-          </div>
-        </div>
-
-        <div class="election-card">
-          <div class="election-card-header">
-            <div class="stat-icon blue">
-              <i class="fas fa-vote-yea text-blue-600 text-xl"></i>
-            </div>
-            <h3>Student Council Election</h3>
-            <span class="status-badge status-ongoing">Ongoing</span>
-          </div>
-          <div class="election-details">
-            <img src="https://cdn-icons-png.flaticon.com/512/747/747310.png" class="inline-icon">
-            Jan 15 - Jan 22, 2024
-          </div>
-          <div class="election-meta">
-            <span><img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" class="inline-icon"> 5 Candidates</span>
-            <span><img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" class="inline-icon"> 1,247 Voters</span>
-          </div>
-          <div class="election-footer">
-            <span class="election-votes">
-              <a href="#" class="election-link">847 votes cast</a>
-            </span>
-            <a href="#" class="election-link">View Details →</a>
-          </div>
-        </div>
-
-        <div class="election-card">
-          <div class="election-card-header">
-            <div class="stat-icon blue">
-              <i class="fas fa-vote-yea text-blue-600 text-xl"></i>
-            </div>
-            <h3>Student Council Election</h3>
-            <span class="status-badge status-ongoing">Ongoing</span>
-          </div>
-          <div class="election-details">
-            <img src="https://cdn-icons-png.flaticon.com/512/747/747310.png" class="inline-icon">
-            Jan 15 - Jan 22, 2024
-          </div>
-          <div class="election-meta">
-            <span><img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" class="inline-icon"> 5 Candidates</span>
-            <span><img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" class="inline-icon"> 1,247 Voters</span>
-          </div>
-          <div class="election-footer">
-            <span class="election-votes">
-              <a href="#" class="election-link">847 votes cast</a>
-            </span>
-            <a href="#" class="election-link">View Details →</a>
-          </div>
-        </div>
-
-        <div class="election-card">
-          <div class="election-card-header">
-            <div class="stat-icon blue">
-              <i class="fas fa-vote-yea text-blue-600 text-xl"></i>
-            </div>
-            <h3>Student Council Election</h3>
-            <span class="status-badge status-ongoing">Ongoing</span>
-          </div>
-          <div class="election-details">
-            <img src="https://cdn-icons-png.flaticon.com/512/747/747310.png" class="inline-icon">
-            Jan 15 - Jan 22, 2024
-          </div>
-          <div class="election-meta">
-            <span><img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" class="inline-icon"> 5 Candidates</span>
-            <span><img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" class="inline-icon"> 1,247 Voters</span>
-          </div>
-          <div class="election-footer">
-            <span class="election-votes">
-              <a href="#" class="election-link">847 votes cast</a>
-            </span>
-            <a href="#" class="election-link">View Details →</a>
-          </div>
-        </div>
-      </div>
-      
+   
       <!-- Dynamic Election Cards (data-driven) -->
       <div class="election-grid">
         {% if elections_payload %}
@@ -289,7 +142,7 @@
       </div>
     </div>
   </main>
-  <script>
+  <script nonce="{{ csp_nonce(request) }}">
     (function(){
       var sidebar = document.getElementById('sidebar');
       var burger = document.getElementById('hamburger');
@@ -308,7 +161,7 @@
       }
     })();
   </script>
-  <script>
+  <script nonce="{{ csp_nonce(request) }}">
     (function(){
       function initProfileMenus(){
         document.querySelectorAll('.profile[data-menu]').forEach(function(profile){
@@ -342,5 +195,7 @@
       if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', formatDateRangesToLocal); else formatDateRangesToLocal();
     })();
   </script>
+  <script nonce="{{ csp_nonce(request) }}" src="{{ asset(request, 'app.js') }}" defer></script>
 </body>
 </html>
+

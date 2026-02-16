@@ -27,16 +27,20 @@ LOG_DIR = Path(__file__).resolve().parent / "logs"
 LOG_DIR.mkdir(parents=True, exist_ok=True)
 LOG_FILE_PATH = LOG_DIR / "security.log"
 
-# Google OAuth (set env vars GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET to enable)
-GOOGLE_CLIENT_ID = os.getenv(
-    "GOOGLE_CLIENT_ID",
-    "963693618176-vc0vrg0varbkd0l8t1m0oddrninh3o5e.apps.googleusercontent.com",
+# Session + cookie security settings
+SESSION_SECRET_KEY = os.getenv("SESSION_SECRET_KEY", "SUPER_SECRET_KEY")
+SESSION_COOKIE_NAME = os.getenv("SESSION_COOKIE_NAME", "session")
+SESSION_MAX_AGE_SECONDS = int(os.getenv("SESSION_MAX_AGE_SECONDS", "14400"))
+COOKIE_SAMESITE = os.getenv("COOKIE_SAMESITE", "lax")
+
+# Microsoft OAuth (set env vars MS_CLIENT_ID / MS_CLIENT_SECRET to enable)
+MS_TENANT_ID = os.getenv("MS_TENANT_ID", "3018ecb9-2438-4581-b036-4b625dac9579")
+MS_CLIENT_ID = os.getenv("MS_CLIENT_ID", "230625e8-a613-4e30-b914-f3f2d6209df1")
+MS_CLIENT_SECRET = os.getenv("MS_CLIENT_SECRET", "~cJ8Q~2k0J77eUu~XL~L5o9yGmrBgIgBT91bdc0B")
+MS_REDIRECT_URI = os.getenv(
+    "MS_REDIRECT_URI",
+    "https://localhost:8000/auth/microsoft/callback",
 )
-GOOGLE_CLIENT_SECRET = os.getenv(
-    "GOOGLE_CLIENT_SECRET",
-    "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",
-)
-GOOGLE_REDIRECT_URI = os.getenv("GOOGLE_REDIRECT_URI", "http://127.0.0.1:8000/authorize")
 
 # Email (verification)
 EMAIL_SENDER = os.getenv("EMAIL_SENDER", "election.noreply@gmail.com")

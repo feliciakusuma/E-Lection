@@ -14,7 +14,7 @@ from typing import Any, Iterable
 from sqlalchemy import create_engine, text
 from sqlalchemy.engine import Connection
 
-from database import Base, cipher_suite, engine as pg_engine
+from database import Base, cipher_suite, engine as pg_engine, User
 from services.seed import ensure_core_schema
 
 SQLITE_PATH = Path(__file__).resolve().parent.parent / "test.db"
@@ -28,6 +28,21 @@ def decrypt_or_none(blob: Any) -> str | None:
         return cipher_suite.decrypt(blob).decode()
     except Exception:
         return None
+
+
+def encrypt_token_or_none(token: Any) -> str | None:
+    if not token:
+        return None
+    try:
+        return cipher_suite.encrypt(str(token).encode("utf-8")).decode("utf-8")
+    except Exception:
+        return str(token)
+
+
+def hash_token_or_none(token: Any) -> str | None:
+    if not token:
+        return None
+    return User._hash_verification_token(str(token))
 
 
 def migrate_users(sqlite_conn: Connection, pg_conn: Connection) -> None:
@@ -55,7 +70,8 @@ def migrate_users(sqlite_conn: Connection, pg_conn: Connection) -> None:
                 "student_id": decrypt_or_none(r.student_id_encrypted),
                 "password_hash": r.password_hash,
                 "status": r.status,
-                "verification_token": r.verification_token,
+                "verification_token_encrypted": encrypt_token_or_none(r.verification_token),
+                "verification_token_hash": hash_token_or_none(r.verification_token),
                 "is_active": r.is_active,
                 "created_at": r.created_at,
             }
@@ -66,13 +82,13 @@ def migrate_users(sqlite_conn: Connection, pg_conn: Connection) -> None:
                 """
                 INSERT INTO users (
                     id, first_name, last_name, email, student_id,
-                    password_hash, status, verification_token,
-                    is_active, created_at
+                    password_hash, status, verification_token_encrypted,
+                    verification_token_hash, is_active, created_at
                 )
                 VALUES (
                     :id, :first_name, :last_name, :email, :student_id,
-                    :password_hash, :status, :verification_token,
-                    :is_active, :created_at
+                    :password_hash, :status, :verification_token_encrypted,
+                    :verification_token_hash, :is_active, :created_at
                 )
                 """
             ),
@@ -194,32 +210,10 @@ def main() -> None:
                 "student_id",
                 "major",
                 "cohort",
-                "description",
                 "position",
                 "status",
                 "is_active",
                 "created_at",
-            ],
-        )
-        migrate_table_copy(
-            sqlite_conn,
-            pg_conn,
-            "votes",
-            [
-                "vote_id",
-                "voter_id",
-                "voter_nonce",
-                "candidate_id",
-                "election_id",
-                "vote_encrypted",
-                "timestamp_encrypted",
-                "session_key_encrypted",
-                "vote_nonce",
-                "timestamp_nonce",
-                "verification_code",
-                "is_counted",
-                "created_at",
-                "ticket_id",
             ],
         )
         migrate_table_copy(

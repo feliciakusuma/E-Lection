@@ -1,5 +1,5 @@
 /* Load Inter font from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('/static/vendor/inter/index.css');
 
 /* ---------- Colors --------- */
 :root{
@@ -248,7 +248,35 @@ html, body {
 .btn-primary:hover { background: var(--blue-700); transform: translateY(-1px); }
 .btn-primary.tw-tip { data-tw: "bg-blue-600 hover:bg-blue-700 text-white py-3 px-6"; }
 
-.icon { color: var(--green-600); display:inline-block; }
+.icon { color: var(--text-800); display:inline-block; }
+
+/* ---------------- CSP-safe utility classes (inline style replacements) ---------------- */
+.ui-flex-gap-75 { display:flex; align-items:center; gap:.75rem; }
+.ui-flex-gap-50 { display:flex; align-items:center; gap:.5rem; }
+.ui-flex-gap-0 { display:flex; align-items:center; gap:0; }
+.ui-flex-col { display:flex; flex-direction:column; }
+.ui-maxh-320 { max-height:320px; }
+.ui-minh-260 { min-height:260px; }
+.ui-maxh-320-scroll { max-height:320px; overflow-y:auto; }
+.ui-flex-center-muted { display:flex; align-items:center; gap:.75rem; justify-content:center; color:#6b7280; }
+.ui-pad-0 { padding:0; }
+.ui-empty-pad { padding:3rem 1rem; }
+.ui-hidden { display:none; }
+.ui-hidden-inert { visibility:hidden; pointer-events:none; }
+.ui-mb-2 { margin-bottom:0.5rem; }
+.ui-mb-1 { margin-bottom:.25rem; }
+.ui-form-footer-tight { margin:0.5rem 0 0.75rem 0; padding:0; }
+.ui-link-button { background:none; border:0; padding:0; margin-left:0.15rem; }
+.ui-ml-auto-flex-gap-1 { margin-left:auto; display:flex; align-items:center; gap:1rem; }
+.ui-ml-auto-flex-gap-05 { margin-left:auto; display:flex; align-items:center; gap:.5rem; }
+.ui-ml-auto-flex-gap-15 { margin-left:auto; display:flex; align-items:center; gap:1.5rem; }
+.ui-maxw-640-center { max-width:640px; margin:0 auto; }
+.ui-block-full-center { width:100%; text-align:center; display:block; }
+.ui-opacity-60 { opacity:.6; }
+
+/* Move inline style from admin-edit-candidate */
+.btn-danger { background:#ef4444; color:#fff; padding:0.5rem 0.875rem; border-radius:0.5rem; }
+.btn-danger:hover { background:#dc2626; }
 
 /* ---------------- Login & Register Page ---------------- */
 .form-main {
@@ -344,6 +372,20 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.btn-microsoft {
+  display: flex;
+  align-items: center;      /* vertical alignment */
+  justify-content: center;  /* center contents horizontally */
+  gap: 0.5rem;              /* space between logo and text */
+
+  background: var(--blue-600);
+  color: var(--white);
+  padding: .65rem 1rem;
+  border-radius: .8rem;
+  width: 100%;
+  text-decoration: none;
 }
 
 .btn-login {
@@ -554,6 +596,12 @@ input[type="password"]::-webkit-textfield-decoration-container {
   padding-right: 1rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
+}
+/* Keep profile page card from stretching full width */
+.candidates-container.ui-maxw-640-center {
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
 }
 @media (min-width:768px){
   .candidates-container { padding-left: 3rem; padding-right: 3rem; }
@@ -1164,10 +1212,10 @@ input[type="password"]::-webkit-textfield-decoration-container {
 }
 @media (min-width:768px) {
   .stats-grid {
-    grid-template-columns: repeat(4, minmax(0,1fr));
+    grid-template-columns: repeat(3, minmax(0,1fr));
   }
 }
-.stats-grid.tw-tip { data-tw: "grid grid-cols-1 md:grid-cols-4 gap-6"; }
+.stats-grid.tw-tip { data-tw: "grid grid-cols-1 md:grid-cols-3 gap-6"; }
 
 .stat-card {
   background: var(--white);

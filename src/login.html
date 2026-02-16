@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ asset(request, 'tailwind.css') }}" />
+  <link href="/static/vendor/fontawesome/css/all.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="{{ asset(request, 'style.css') }}" />
   <title>Login</title>  
 </head>
@@ -29,26 +29,25 @@
       
       <!-- Title -->
       <h2 class="form-title">Login</h2>
-      <p class="form-subtitle">Sign in to your account to continue voting</p>
+      <p class="form-subtitle">Sign in with your account</p>
 
       {% if success %}
-      <div class="alert-success">{{ success }}</div>
+      <div class="alert-success">{{ success | e }}</div>
       {% endif %}
 
       {% if error %}
-      <div class="alert-error">{{ error }}</div>
+      <div class="alert-error">{{ error | e }}</div>
       {% endif %}
 
-        <!-- Button -->
+      <!-- Button -->
       <div class="login-stack">
-        {% if google_enabled %}
-        <form action="/login/google" method="get">
-          <button type="submit" class="btn btn-google">
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo" class="w-5 h-5">
-            <span>Continue with Google</span>
-          </button>
-        </form>
+        {% if ms_enabled %}
+        <a href="/login/microsoft" class="btn btn-microsoft">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft logo" class="w-5 h-5">
+          <span>Continue with Microsoft</span>
+        </a>
         {% endif %}
+      </div>
 
       <!-- Register -->
       <div class="form-footer">
@@ -60,21 +59,9 @@
     </div>
   </main>
 
-  <script>
-    function togglePassword(id) {
-      const input = document.getElementById(id);
-      const icon = document.getElementById(id + '-eye');
-      if (!input || !icon) return;
-      if (input.type === 'password') {
-        input.type = 'text';
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
-      } else {
-        input.type = 'password';
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
-      }
-    }
-  </script>
+  <script nonce="{{ csp_nonce(request) }}"></script>
+  <script nonce="{{ csp_nonce(request) }}" src="{{ asset(request, 'app.js') }}" defer></script>
 </body>
 </html>
+
+
