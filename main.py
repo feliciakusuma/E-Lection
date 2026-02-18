@@ -13,28 +13,27 @@ from backend.dependencies import asset, templates, csrf_token, csp_nonce
 from backend.routers import admins, auth, candidates, elections, users, votes
 from backend.services import seed
 from backend.services.audit import security_logger
+import os
 import uvicorn
 import secrets
 from fastapi import Response
 from starlette.status import HTTP_204_NO_CONTENT
 
-SECURITY_CSP_TEMPLATE = "; ".join(
-    [
-        "default-src 'self'",
-        "base-uri 'self'",
-        "object-src 'none'",
-        "frame-ancestors 'none'",
-        "form-action 'self'",
-        "img-src 'self' data: https://upload.wikimedia.org https://cdn-icons-png.flaticon.com",
-        "font-src 'self' data:",
-        "style-src 'self'",
-        "script-src 'self' 'nonce-{nonce}'",
-        "connect-src 'self'",
-        "upgrade-insecure-requests",
-        "block-all-mixed-content",
-        "report-to csp-endpoint",
-    ]
-)
+SECURITY_CSP_TEMPLATE = "; ".join([
+    "default-src 'self'",
+    "base-uri 'self'",
+    "object-src 'none'",
+    "frame-ancestors 'none'",
+    "form-action 'self'",
+    "img-src 'self' data: https://upload.wikimedia.org https://cdn-icons-png.flaticon.com",
+    "font-src 'self' data:",
+    "style-src 'self'",
+    "script-src 'self' 'nonce-{nonce}'",
+    "connect-src 'self'",
+    "upgrade-insecure-requests",
+    "block-all-mixed-content",
+    "report-to csp-endpoint",
+])
 SECURITY_HEADERS = {
     "x-frame-options": "DENY",
     "strict-transport-security": "max-age=31536000; includeSubDomains",
@@ -47,6 +46,7 @@ REPORTING_ENDPOINTS_HEADER = 'csp-endpoint="https://localhost:8000/csp-report"'
 
 
 class SecurityHeadersMiddleware:
+
     def __init__(self, app):
         self.app = app
 
@@ -64,7 +64,8 @@ class SecurityHeadersMiddleware:
             if message["type"] == "http.response.start":
                 headers = list(message.get("headers") or [])
                 # Remove any existing CSP header so we always enforce the current policy.
-                headers = [(k, v) for (k, v) in headers if k.lower() != b"content-security-policy"]
+                headers = [(k, v) for (k, v) in headers
+                           if k.lower() != b"content-security-policy"]
                 existing = {k.lower() for k, _ in headers}
                 csp_key = b"content-security-policy"
                 headers.append((csp_key, csp_value.encode("latin-1")))
@@ -73,20 +74,21 @@ class SecurityHeadersMiddleware:
                     if key not in existing:
                         headers.append((key, value.encode("latin-1")))
                 if b"report-to" not in existing:
-                    headers.append((b"report-to", REPORT_TO_HEADER.encode("latin-1")))
+                    headers.append(
+                        (b"report-to", REPORT_TO_HEADER.encode("latin-1")))
                 if b"reporting-endpoints" not in existing:
                     headers.append(
-                        (b"reporting-endpoints", REPORTING_ENDPOINTS_HEADER.encode("latin-1"))
-                    )
+                        (b"reporting-endpoints",
+                         REPORTING_ENDPOINTS_HEADER.encode("latin-1")))
                 if b"cache-control" not in existing:
                     if path.startswith("/static"):
                         headers.append(
-                            (b"cache-control", b"public, max-age=31536000, immutable")
-                        )
+                            (b"cache-control",
+                             b"public, max-age=31536000, immutable"))
                     else:
                         headers.append(
-                            (b"cache-control", b"no-store, no-cache, must-revalidate")
-                        )
+                            (b"cache-control",
+                             b"no-store, no-cache, must-revalidate"))
                         if b"pragma" not in existing:
                             headers.append((b"pragma", b"no-cache"))
                         if b"expires" not in existing:
@@ -114,6 +116,7 @@ def apply_security_headers(response):
         response.headers[name] = value
     return response
 
+
 # Static files and templates
 app.mount("/static", StaticFiles(directory="src/static"), name="static")
 templates.env.globals["asset"] = asset
@@ -123,7 +126,8 @@ templates.env.globals["csp_nonce"] = csp_nonce
 
 @app.middleware("http")
 async def security_middleware(request: Request, call_next):
-    security_logger.info("Request: %s %s from %s", request.method, request.url, request.client.host)
+    security_logger.info("Request: %s %s from %s", request.method, request.url,
+                         request.client.host)
 
     path = request.url.path
     public_paths = {
@@ -146,21 +150,22 @@ async def security_middleware(request: Request, call_next):
 
     admin_exact_paths = {"/add-election"}
     admin_prefixes = ("/edit-election", "/delete-election")
-    is_admin_path = (
-        (path.startswith("/admin") and path not in {"/admin"})
-        or path in admin_exact_paths
-        or path.startswith(admin_prefixes)
-    )
+    is_admin_path = ((path.startswith("/admin") and path not in {"/admin"})
+                     or path in admin_exact_paths
+                     or path.startswith(admin_prefixes))
 
     if is_admin_path:
         email_cookie = request.cookies.get("user_email")
         db = SessionLocal()
         try:
             if not email_cookie:
-                return apply_security_headers(RedirectResponse(url="/admin", status_code=302))
-            admin_row = db.query(Admin).filter(Admin.email == email_cookie, Admin.is_active == True).first()
+                return apply_security_headers(
+                    RedirectResponse(url="/admin", status_code=302))
+            admin_row = db.query(Admin).filter(
+                Admin.email == email_cookie, Admin.is_active == True).first()
             if not admin_row:
-                return apply_security_headers(RedirectResponse(url="/admin", status_code=302))
+                return apply_security_headers(
+                    RedirectResponse(url="/admin", status_code=302))
         finally:
             db.close()
     elif not is_public(path):
@@ -170,9 +175,11 @@ async def security_middleware(request: Request, call_next):
             if email_cookie:
                 user = User.find_by_email(db, email_cookie)
                 if not user:
-                    return apply_security_headers(RedirectResponse(url="/login", status_code=302))
+                    return apply_security_headers(
+                        RedirectResponse(url="/login", status_code=302))
             else:
-                return apply_security_headers(RedirectResponse(url="/login", status_code=302))
+                return apply_security_headers(
+                    RedirectResponse(url="/login", status_code=302))
         finally:
             db.close()
 
@@ -184,10 +191,7 @@ async def security_middleware(request: Request, call_next):
 def startup():
     seed.ensure_core_schema()
     Base.metadata.create_all(bind=engine)
-    seed.backfill_user_verification_tokens()
-    seed.seed_default_accounts()
     seed.seed_cohorts_and_majors()
-    seed.ensure_support_admin()
     seed.ensure_admins_table_and_account()
 
 
@@ -222,4 +226,6 @@ async def csp_report(request: Request):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="localhost", port=8000)
+    uvicorn.run("main:app",
+                host="0.0.0.0",
+                port=int(os.getenv("PORT", "5000")))
