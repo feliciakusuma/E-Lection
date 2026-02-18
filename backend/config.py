@@ -34,12 +34,12 @@ SESSION_MAX_AGE_SECONDS = int(os.getenv("SESSION_MAX_AGE_SECONDS", "14400"))
 COOKIE_SAMESITE = os.getenv("COOKIE_SAMESITE", "lax")
 
 # Microsoft OAuth (set env vars MS_CLIENT_ID / MS_CLIENT_SECRET to enable)
-MS_TENANT_ID = os.getenv("MS_TENANT_ID", "3018ecb9-2438-4581-b036-4b625dac9579")
-MS_CLIENT_ID = os.getenv("MS_CLIENT_ID", "230625e8-a613-4e30-b914-f3f2d6209df1")
-MS_CLIENT_SECRET = os.getenv("MS_CLIENT_SECRET", "~cJ8Q~2k0J77eUu~XL~L5o9yGmrBgIgBT91bdc0B")
+MS_TENANT_ID = os.getenv("MS_TENANT_ID", " ")
+MS_CLIENT_ID = os.getenv("MS_CLIENT_ID", " ")
+MS_CLIENT_SECRET = os.getenv("MS_CLIENT_SECRET", " ")
 MS_REDIRECT_URI = os.getenv(
     "MS_REDIRECT_URI",
-    "https://localhost:8000/auth/microsoft/callback",
+    " ",
 )
 
 # Email (verification)
