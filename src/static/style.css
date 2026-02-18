@@ -2158,3 +2158,9 @@ body { margin: 0; }
   overflow-y: auto;
 }
 
+.ui-flex-gap-75 {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+
