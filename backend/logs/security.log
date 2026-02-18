@@ -79173,3 +79173,947 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 2026-02-16 19:15:24,390 - security - INFO - Request: GET https://localhost:8000/static/vendor/inter/files/inter-latin-400-normal.woff2 from ::1
 2026-02-16 19:15:24,391 - security - INFO - Request: GET https://localhost:8000/static/vendor/fontawesome/webfonts/fa-solid-900.woff2 from ::1
 2026-02-16 19:15:24,526 - security - INFO - Request: GET https://localhost:8000/favicon.ico from ::1
+2026-02-16 19:15:42,304 - security - WARNING - Verification token backfill skipped/failed: type object 'User' has no attribute 'verification_token_hash'
+2026-02-16 19:15:42,331 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2026-02-16 19:15:42,627 - security - INFO - Admins table ensured and admin account synced from env configuration
+2026-02-16 19:15:44,334 - security - INFO - Request: GET https://localhost:8000/admin-dashboard from ::1
+2026-02-16 19:15:50,669 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-16 19:15:50,678 - security - INFO - Request: GET https://localhost:8000/admin-dashboard?election_id=2113702f-864f-43fc-8271-42d6fa8c4288 from ::1
+2026-02-16 19:15:52,226 - security - INFO - Request: GET https://localhost:8000/admin-dashboard?election_id=04babc75-acbf-4f46-99b8-18a5a580ce93 from ::1
+2026-02-16 19:15:53,602 - security - INFO - Request: GET https://localhost:8000/admin-candidates from ::1
+2026-02-16 19:15:55,282 - security - INFO - Request: GET https://localhost:8000/admin-elections from ::1
+2026-02-16 19:15:56,123 - security - INFO - Request: GET https://localhost:8000/edit-election/cbfdd076-b185-46cd-9e5e-034a0ae71f48 from ::1
+2026-02-16 19:15:57,024 - security - INFO - Request: GET https://localhost:8000/admin-elections from ::1
+2026-02-16 19:15:57,825 - security - INFO - Request: GET https://localhost:8000/add-election from ::1
+2026-02-16 19:15:58,748 - security - INFO - Request: GET https://localhost:8000/admin-elections from ::1
+2026-02-16 19:16:00,014 - security - INFO - Request: GET https://localhost:8000/admin-dashboard from ::1
+2026-02-16 19:16:03,399 - security - INFO - Request: GET https://localhost:8000/admin-dashboard?election_id=2113702f-864f-43fc-8271-42d6fa8c4288 from ::1
+2026-02-16 19:16:09,572 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-16 19:16:09,687 - security - INFO - Request: GET https://localhost:8000/admin-logout from ::1
+2026-02-16 19:16:09,706 - security - INFO - Request: GET https://localhost:8000/admin from ::1
+2026-02-16 19:16:11,734 - security - INFO - Request: GET https://localhost:8000/login/microsoft from ::1
+2026-02-16 19:16:18,705 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-16 19:16:19,087 - security - INFO - Request: GET https://localhost:8000/auth/microsoft/callback?code=1.AUUAuewYMDgkgUWwNktiXayVeeglBiMTpjBOuRTz8tYgnfEAAK1FAA.BQABBAIAAAADAOz_BQD0_0V2b1N0c0FydGlmYWN0cwIAAAAAANMF1ekoJDk7hcS27qC_O8brMsEPJ68YurKR8gWN6_pAN3oGnPpiGIoduFbHJXpYcY1F-VRp4KF_828_Rqs2HsZ0HKn2_8nyojplIKBx57MBOcCWCXHSoauN-G42kaZxmtWW4VJ8yVegnpSkixImwJDiIPF8lrBeltWLHLGRV1nj7UOgDyd3gpXkuYmO60UCJDbqx8NVLsa9I1oT9I4Cu3QY5QARInDAUjkpl3g8Kws1U0ZLOfUPSJes8n62cWAaq9dQJ4FFutipEVNbI2xkK59tZYLeExD7zWRU-xUW65pBzC_bbvYznmgSrt8PJD8FIr46US495vMoXQHeSsRPJe7PEzRGVr1K-V5JPYVDUR2xJz34-gYeM7ZNmys4FVRiwCUtW_WeOE9rxrHDGSteBcGTPFKfQw2qLsuxxNoBQmW5O4HP0phsiNei9qI4FxZjpumiTHrhw03kIhN9ooiS-QKyBOGB88K7fuxVia2zDLmuoE3nyGhtngKSwG8-nCkowv_T7-_njg21u0T7Y1XRGuvyWg-KbXcq60KTn4ky9Q2YObQmRkx-v35qkTzAKmgu6ow_iC4dJ3Pf8VQNMYe4a2q-aiNDqD_AkaP9l7v0hPE2-8NcTprYxR179-8YTrC8N39J-VUcgJQkVte8fg5g_UTXKE0pKF7JxVgnZA6vxVqVvTqMzP-9hS-GeTdirABerai9FfCeHqCQIxb3MN17qyhZ1waezLolCN3HDpOLkIi7Cwq_-rsOmGS1FiAQVVGHl1OKBsbHEVNVjDGCeEBkEQU0ihl5dTHhNzd4MmK5Bg-lOTlv7qKCvho2pwh80zXT64c8R9WDR5g7KzidnZy1WfjstA1VvRVPccFBxG1rXDuuhecPCJyJMFlNjvSzWJ8hCQTJfv4IsjqNIMM2VijBIY08TUm_ahkTDG9NZQzvgZb_GNAxQ5CeZA2oMPuCdpeAV0HZg7wlZ02NWluUSSdcJYmkFe0NjVHFUuB35w33vx9pVjtZnDPcPxOn_feopvzYEr-9sg_QZS8yIGB0onL09ONewHOOQi_PvPqJEP48bfHOeXkylJXammUpalRqlYw3bs1sSLtH7aSO_CWxJJKz2kdrjUtVz-MBpMB_Mgk1-MGm39b1guUBlB_8QEdxu-pM9BoiO_a03QM6E0uEEVtX5GX2C5_Se7vAMla4HlbdSrDHwpG2zy9VtOe4xkQw7FItjsuXHWs6BFCD6HjztupDWwvyt5SfuhLhoU2sjg5r6G3SALzupnVW-GV0tilLHKSvpwoewCcmj31TaNbecKBF2Ql39mXEhMNWNZuSP0OT1gOQ0-WJUcXBF8lFgiaP5mQ5Z46ypYOWSuDJ4c7nzqP53asVNBvquosO3SnLrOlhkNPdztTBSK9pmKEuHUVacKS7KSqtI60sRb1FmBvwvWVhjUgvsbd1VjO6E_y6&state=V_4tsnfK10pPyDr8CdQT13Ybv-bAvBkx&session_state=001f28aa-0e16-f496-92ce-a6073ef32dd8 from ::1
+2026-02-16 19:16:21,345 - security - INFO - Request: GET https://localhost:8000/dashboard from ::1
+2026-02-16 19:16:45,654 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-16 19:16:45,817 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from ::1
+2026-02-16 19:16:56,557 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-16 19:17:17,114 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:17,114 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:17,201 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:17,212 - security - INFO - Request: GET https://localhost:8000/sitemap.xml from 127.0.0.1
+2026-02-16 19:17:17,214 - security - INFO - Request: GET https://localhost:8000/robots.txt from 127.0.0.1
+2026-02-16 19:17:17,221 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:17,255 - security - INFO - Request: GET https://localhost:8000/login/microsoft from 127.0.0.1
+2026-02-16 19:17:17,255 - security - INFO - Request: GET https://localhost:8000/register from 127.0.0.1
+2026-02-16 19:17:17,278 - security - INFO - Request: GET https://localhost:8000/static/tailwind.css?v=0 from 127.0.0.1
+2026-02-16 19:17:17,288 - security - INFO - Request: GET https://localhost:8000/static/vendor/fontawesome/css/all.min.css from 127.0.0.1
+2026-02-16 19:17:17,288 - security - INFO - Request: GET https://localhost:8000/static/style.css?v=0 from 127.0.0.1
+2026-02-16 19:17:17,288 - security - INFO - Request: GET https://localhost:8000/static/app.js?v=0 from 127.0.0.1
+2026-02-16 19:17:17,435 - security - INFO - Request: POST https://localhost:8000/register from 127.0.0.1
+2026-02-16 19:17:17,451 - security - WARNING - SECURITY EVENT: REGISTRATION_BLOCKED - Email domain not allowed: zaproxy@example.com - IP: 127.0.0.1 - User: None
+2026-02-16 19:17:22,369 - security - INFO - Request: GET https://localhost:8000/4846292135677895792 from 127.0.0.1
+2026-02-16 19:17:22,369 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,369 - security - INFO - Request: GET https://localhost:8000/6197834899057532087 from 127.0.0.1
+2026-02-16 19:17:22,385 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,385 - security - INFO - Request: GET https://localhost:8000/login/5526241325484640434 from 127.0.0.1
+2026-02-16 19:17:22,400 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,400 - security - INFO - Request: GET https://localhost:8000/login/3206933240789681745 from 127.0.0.1
+2026-02-16 19:17:22,400 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,416 - security - INFO - Request: GET https://localhost:8000/static/3955388654588128964 from 127.0.0.1
+2026-02-16 19:17:22,416 - security - INFO - Request: GET https://localhost:8000/static/vendor/3566452495930202518 from 127.0.0.1
+2026-02-16 19:17:22,432 - security - INFO - Request: GET https://localhost:8000/static/vendor/fontawesome/4682601621032953921 from 127.0.0.1
+2026-02-16 19:17:22,443 - security - INFO - Request: GET https://localhost:8000/static/vendor/fontawesome/css/2798887145105508184 from 127.0.0.1
+2026-02-16 19:17:22,476 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=c%3A%2FWindows%2Fsystem.ini from 127.0.0.1
+2026-02-16 19:17:22,476 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,476 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2FWindows%2Fsystem.ini from 127.0.0.1
+2026-02-16 19:17:22,476 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,496 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=c%3A%5CWindows%5Csystem.ini from 127.0.0.1
+2026-02-16 19:17:22,501 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,506 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5CWindows%5Csystem.ini from 127.0.0.1
+2026-02-16 19:17:22,509 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,515 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%2Fetc%2Fpasswd from 127.0.0.1
+2026-02-16 19:17:22,519 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,525 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2Fetc%2Fpasswd from 127.0.0.1
+2026-02-16 19:17:22,527 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,533 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%2F from 127.0.0.1
+2026-02-16 19:17:22,533 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,533 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F from 127.0.0.1
+2026-02-16 19:17:22,533 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,552 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=c%3A%2F from 127.0.0.1
+2026-02-16 19:17:22,562 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,574 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=c%3A%5C from 127.0.0.1
+2026-02-16 19:17:22,575 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,575 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=WEB-INF%2Fweb.xml from 127.0.0.1
+2026-02-16 19:17:22,575 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,598 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=WEB-INF%5Cweb.xml from 127.0.0.1
+2026-02-16 19:17:22,598 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,609 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%2FWEB-INF%2Fweb.xml from 127.0.0.1
+2026-02-16 19:17:22,614 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,620 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%5CWEB-INF%5Cweb.xml from 127.0.0.1
+2026-02-16 19:17:22,622 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,630 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=thishouldnotexistandhopefullyitwillnot from 127.0.0.1
+2026-02-16 19:17:22,632 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,641 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=http%3A%2F%2Fwww.google.com%2F from 127.0.0.1
+2026-02-16 19:17:22,645 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=http%3A%2F%2Fwww.google.com%3A80%2F from 127.0.0.1
+2026-02-16 19:17:22,648 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=http%3A%2F%2Fwww.google.com from 127.0.0.1
+2026-02-16 19:17:22,652 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=http%3A%2F%2Fwww.google.com%2Fsearch%3Fq%3DZAP from 127.0.0.1
+2026-02-16 19:17:22,655 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=http%3A%2F%2Fwww.google.com%3A80%2Fsearch%3Fq%3DZAP from 127.0.0.1
+2026-02-16 19:17:22,659 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=www.google.com%2F from 127.0.0.1
+2026-02-16 19:17:22,662 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=www.google.com%3A80%2F from 127.0.0.1
+2026-02-16 19:17:22,669 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=www.google.com from 127.0.0.1
+2026-02-16 19:17:22,677 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=www.google.com%2Fsearch%3Fq%3DZAP from 127.0.0.1
+2026-02-16 19:17:22,686 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=www.google.com%3A80%2Fsearch%3Fq%3DZAP from 127.0.0.1
+2026-02-16 19:17:22,687 - security - INFO - Request: GET https://localhost:8000/WEB-INF/web.xml from 127.0.0.1
+2026-02-16 19:17:22,687 - security - INFO - Request: GET https://localhost:8000/WEB-INF/applicationContext.xml from 127.0.0.1
+2026-02-16 19:17:22,703 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%28%29+%7B+%3A%3B%7D%3B+echo+%27x-powered-by%3A+ShellShock-Vulnerable%27 from 127.0.0.1
+2026-02-16 19:17:22,703 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%28%29+%7B+%3A%3B%7D%3B+%2Fbin%2Fsleep+15 from 127.0.0.1
+2026-02-16 19:17:22,718 - security - INFO - Request: GET https://localhost:8000/candidates?-s from 127.0.0.1
+2026-02-16 19:17:22,718 - security - INFO - Request: POST https://localhost:8000/candidates?-d+allow_url_include%3d1+-d+auto_prepend_file%3dphp://input from 127.0.0.1
+2026-02-16 19:17:22,734 - security - INFO - Request: POST https://localhost:8000/candidates?-d+allow_url_include%3d1+-d+auto_prepend_file%3dphp://input from 127.0.0.1
+2026-02-16 19:17:22,734 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=4896592940895481901.owasp.org from 127.0.0.1
+2026-02-16 19:17:22,750 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=https%3A%2F%2F4896592940895481901.owasp.org from 127.0.0.1
+2026-02-16 19:17:22,750 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=https%3A%2F%2F4896592940895481901%252eowasp%252eorg from 127.0.0.1
+2026-02-16 19:17:22,750 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=5%3BURL%3D%27https%3A%2F%2F4896592940895481901.owasp.org%27 from 127.0.0.1
+2026-02-16 19:17:22,766 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=URL%3D%27http%3A%2F%2F4896592940895481901.owasp.org%27 from 127.0.0.1
+2026-02-16 19:17:22,766 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=https%3A%2F%2F4896592940895481901.owasp.org%2F%3Fcbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:22,766 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=5%3BURL%3D%27https%3A%2F%2F4896592940895481901.owasp.org%2F%3Fcbfdd076-b185-46cd-9e5e-034a0ae71f48%27 from 127.0.0.1
+2026-02-16 19:17:22,766 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=https%3A%2F%2F%5C4896592940895481901.owasp.org from 127.0.0.1
+2026-02-16 19:17:22,780 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=http%3A%2F%2F%5C4896592940895481901.owasp.org from 127.0.0.1
+2026-02-16 19:17:22,783 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%3C%21--%23EXEC+cmd%3D%22ls+%2F%22--%3E from 127.0.0.1
+2026-02-16 19:17:22,783 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,783 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%22%3E%3C%21--%23EXEC+cmd%3D%22ls+%2F%22--%3E%3C from 127.0.0.1
+2026-02-16 19:17:22,798 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,798 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%3C%21--%23EXEC+cmd%3D%22dir+%5C%22--%3E from 127.0.0.1
+2026-02-16 19:17:22,798 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,798 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%22%3E%3C%21--%23EXEC+cmd%3D%22dir+%5C%22--%3E%3C from 127.0.0.1
+2026-02-16 19:17:22,814 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,814 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=0W45pz4p from 127.0.0.1
+2026-02-16 19:17:22,814 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,829 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f480W45pz4p from 127.0.0.1
+2026-02-16 19:17:22,834 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,834 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%27%22%3CscrIpt%3Ealert%281%29%3B%3C%2FscRipt%3E from 127.0.0.1
+2026-02-16 19:17:22,845 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,845 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%27%22%00%3CscrIpt%3Ealert%281%29%3B%3C%2FscRipt%3E from 127.0.0.1
+2026-02-16 19:17:22,845 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,861 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%27%22%3Cimg+src%3Dx+onerror%3Dprompt%28%29%3E from 127.0.0.1
+2026-02-16 19:17:22,861 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:22,876 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=zApPX0sS from 127.0.0.1
+2026-02-16 19:17:22,876 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:22,892 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%27 from 127.0.0.1
+2026-02-16 19:17:22,906 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%27 from 127.0.0.1
+2026-02-16 19:17:22,912 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%22 from 127.0.0.1
+2026-02-16 19:17:22,916 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%22 from 127.0.0.1
+2026-02-16 19:17:22,924 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%3B from 127.0.0.1
+2026-02-16 19:17:22,924 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%3B from 127.0.0.1
+2026-02-16 19:17:22,924 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%27%28 from 127.0.0.1
+2026-02-16 19:17:22,939 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%27%28 from 127.0.0.1
+2026-02-16 19:17:22,939 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:22,939 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:22,955 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48+AND+1%3D1+--+ from 127.0.0.1
+2026-02-16 19:17:22,960 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48+AND+1%3D2+--+ from 127.0.0.1
+2026-02-16 19:17:22,960 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48+OR+1%3D1+--+ from 127.0.0.1
+2026-02-16 19:17:22,974 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%27+AND+%271%27%3D%271%27+--+ from 127.0.0.1
+2026-02-16 19:17:22,978 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%27+AND+%271%27%3D%272%27+--+ from 127.0.0.1
+2026-02-16 19:17:22,982 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%27+OR+%271%27%3D%271%27+--+ from 127.0.0.1
+2026-02-16 19:17:22,985 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48+UNION+ALL+select+NULL+--+ from 127.0.0.1
+2026-02-16 19:17:22,989 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%27+UNION+ALL+select+NULL+--+ from 127.0.0.1
+2026-02-16 19:17:22,992 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%22+UNION+ALL+select+NULL+--+ from 127.0.0.1
+2026-02-16 19:17:22,998 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%29+UNION+ALL+select+NULL+--+ from 127.0.0.1
+2026-02-16 19:17:22,998 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%27%29+UNION+ALL+select+NULL+--+ from 127.0.0.1
+2026-02-16 19:17:22,998 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:23,007 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48+%2F+sleep%2815%29+ from 127.0.0.1
+2026-02-16 19:17:23,007 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%27+%2F+sleep%2815%29+%2F+%27 from 127.0.0.1
+2026-02-16 19:17:23,023 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%22+%2F+sleep%2815%29+%2F+%22 from 127.0.0.1
+2026-02-16 19:17:23,023 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48+and+0+in+%28select+sleep%2815%29+%29+--+ from 127.0.0.1
+2026-02-16 19:17:23,023 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%27+and+0+in+%28select+sleep%2815%29+%29+--+ from 127.0.0.1
+2026-02-16 19:17:23,039 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%22+and+0+in+%28select+sleep%2815%29+%29+--+ from 127.0.0.1
+2026-02-16 19:17:23,039 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48+where+0+in+%28select+sleep%2815%29+%29+--+ from 127.0.0.1
+2026-02-16 19:17:23,039 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%27+where+0+in+%28select+sleep%2815%29+%29+--+ from 127.0.0.1
+2026-02-16 19:17:23,039 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%22+where+0+in+%28select+sleep%2815%29+%29+--+ from 127.0.0.1
+2026-02-16 19:17:23,054 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48+or+0+in+%28select+sleep%2815%29+%29+--+ from 127.0.0.1
+2026-02-16 19:17:23,064 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%3B+select+%22java.lang.Thread.sleep%22%2815000%29+from+INFORMATION_SCHEMA.SYSTEM_COLUMNS+where+TABLE_NAME+%3D+%27SYSTEM_COLUMNS%27+and+COLUMN_NAME+%3D+%27TABLE_NAME%27+--+ from 127.0.0.1
+2026-02-16 19:17:23,070 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%27%3B+select+%22java.lang.Thread.sleep%22%2815000%29+from+INFORMATION_SCHEMA.SYSTEM_COLUMNS+where+TABLE_NAME+%3D+%27SYSTEM_COLUMNS%27+and+COLUMN_NAME+%3D+%27TABLE_NAME%27+--+ from 127.0.0.1
+2026-02-16 19:17:23,070 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%22%3B+select+%22java.lang.Thread.sleep%22%2815000%29+from+INFORMATION_SCHEMA.SYSTEM_COLUMNS+where+TABLE_NAME+%3D+%27SYSTEM_COLUMNS%27+and+COLUMN_NAME+%3D+%27TABLE_NAME%27+--+ from 127.0.0.1
+2026-02-16 19:17:23,070 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%29%3B+select+%22java.lang.Thread.sleep%22%2815000%29+from+INFORMATION_SCHEMA.SYSTEM_COLUMNS+where+TABLE_NAME+%3D+%27SYSTEM_COLUMNS%27+and+COLUMN_NAME+%3D+%27TABLE_NAME%27+--+ from 127.0.0.1
+2026-02-16 19:17:23,070 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%22java.lang.Thread.sleep%22%2815000%29 from 127.0.0.1
+2026-02-16 19:17:23,087 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48+%2F+%22java.lang.Thread.sleep%22%2815000%29+ from 127.0.0.1
+2026-02-16 19:17:23,087 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%27+%2F+%22java.lang.Thread.sleep%22%2815000%29+%2F+%27 from 127.0.0.1
+2026-02-16 19:17:23,087 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%22+%2F+%22java.lang.Thread.sleep%22%2815000%29+%2F+%22 from 127.0.0.1
+2026-02-16 19:17:23,098 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48+and+exists+%28+select+%22java.lang.Thread.sleep%22%2815000%29+from+INFORMATION_SCHEMA.SYSTEM_COLUMNS+where+TABLE_NAME+%3D+%27SYSTEM_COLUMNS%27+and+COLUMN_NAME+%3D+%27TABLE_NAME%27%29+--+ from 127.0.0.1
+2026-02-16 19:17:23,102 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%27+and+exists+%28+select+%22java.lang.Thread.sleep%22%2815000%29+from+INFORMATION_SCHEMA.SYSTEM_COLUMNS+where+TABLE_NAME+%3D+%27SYSTEM_COLUMNS%27+and+COLUMN_NAME+%3D+%27TABLE_NAME%27%29+--+ from 127.0.0.1
+2026-02-16 19:17:23,102 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%28DBMS_SESSION.SLEEP%2815%29%29 from 127.0.0.1
+2026-02-16 19:17:23,102 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48+%2F+%28DBMS_SESSION.SLEEP%2815%29%29+ from 127.0.0.1
+2026-02-16 19:17:23,120 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%27+%2F+%28DBMS_SESSION.SLEEP%2815%29%29+%2F+%27 from 127.0.0.1
+2026-02-16 19:17:23,124 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%22+%2F+%28DBMS_SESSION.SLEEP%2815%29%29+%2F+%22 from 127.0.0.1
+2026-02-16 19:17:23,129 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48+and+exists+%28DBMS_SESSION.SLEEP%2815%29%29+--+ from 127.0.0.1
+2026-02-16 19:17:23,136 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=case+when+cast%28pg_sleep%2815.0%29+as+varchar%29+%3E+%27%27+then+0+else+1+end from 127.0.0.1
+2026-02-16 19:17:23,138 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=case+when+cast%28pg_sleep%2815.0%29+as+varchar%29+%3E+%27%27+then+0+else+1+end+--+ from 127.0.0.1
+2026-02-16 19:17:23,138 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%27case+when+cast%28pg_sleep%2815.0%29+as+varchar%29+%3E+%27%27+then+0+else+1+end+--+ from 127.0.0.1
+2026-02-16 19:17:23,138 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%22case+when+cast%28pg_sleep%2815.0%29+as+varchar%29+%3E+%27%27+then+0+else+1+end+--+ from 127.0.0.1
+2026-02-16 19:17:23,154 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48+%2F+case+when+cast%28pg_sleep%2815.0%29+as+varchar%29+%3E+%27%27+then+0+else+1+end+ from 127.0.0.1
+2026-02-16 19:17:23,813 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48+WAITFOR+DELAY+%270%3A0%3A15%27+--+ from 127.0.0.1
+2026-02-16 19:17:23,813 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%27+WAITFOR+DELAY+%270%3A0%3A15%27+--+ from 127.0.0.1
+2026-02-16 19:17:23,813 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%22+WAITFOR+DELAY+%270%3A0%3A15%27+--+ from 127.0.0.1
+2026-02-16 19:17:23,813 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%29+WAITFOR+DELAY+%270%3A0%3A15%27+--+ from 127.0.0.1
+2026-02-16 19:17:23,828 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%29+%27+WAITFOR+DELAY+%270%3A0%3A15%27+--+ from 127.0.0.1
+2026-02-16 19:17:23,828 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%29+%22+WAITFOR+DELAY+%270%3A0%3A15%27+--+ from 127.0.0.1
+2026-02-16 19:17:23,828 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%29%29+WAITFOR+DELAY+%270%3A0%3A15%27+--+ from 127.0.0.1
+2026-02-16 19:17:23,828 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%29%29+%27+WAITFOR+DELAY+%270%3A0%3A15%27+--+ from 127.0.0.1
+2026-02-16 19:17:23,844 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%29%29+%22+WAITFOR+DELAY+%270%3A0%3A15%27+--+ from 127.0.0.1
+2026-02-16 19:17:23,844 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%29+WAITFOR+DELAY+%270%3A0%3A15%27+%28 from 127.0.0.1
+2026-02-16 19:17:23,860 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48&class.module.classLoader.DefaultAssertionStatus=nonsense from 127.0.0.1
+2026-02-16 19:17:23,860 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:23,860 - security - INFO - Request: POST https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:23,860 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:23,877 - security - INFO - Request: POST https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:23,877 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%22%3Bprint%28chr%28122%29.chr%2897%29.chr%28112%29.chr%2895%29.chr%28116%29.chr%28111%29.chr%28107%29.chr%28101%29.chr%28110%29%29%3B%24var%3D%22 from 127.0.0.1
+2026-02-16 19:17:23,892 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%27%3Bprint%28chr%28122%29.chr%2897%29.chr%28112%29.chr%2895%29.chr%28116%29.chr%28111%29.chr%28107%29.chr%28101%29.chr%28110%29%29%3B%24var%3D%27 from 127.0.0.1
+2026-02-16 19:17:23,892 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%24%7B%40print%28chr%28122%29.chr%2897%29.chr%28112%29.chr%2895%29.chr%28116%29.chr%28111%29.chr%28107%29.chr%28101%29.chr%28110%29%29%7D from 127.0.0.1
+2026-02-16 19:17:23,892 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%24%7B%40print%28chr%28122%29.chr%2897%29.chr%28112%29.chr%2895%29.chr%28116%29.chr%28111%29.chr%28107%29.chr%28101%29.chr%28110%29%29%7D%5C from 127.0.0.1
+2026-02-16 19:17:23,900 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%3Bprint%28chr%28122%29.chr%2897%29.chr%28112%29.chr%2895%29.chr%28116%29.chr%28111%29.chr%28107%29.chr%28101%29.chr%28110%29%29%3B from 127.0.0.1
+2026-02-16 19:17:23,906 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%22%2Bresponse.write%28494%2C542*387%2C027%29%2B%22 from 127.0.0.1
+2026-02-16 19:17:23,907 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%2Bresponse.write%28%7B0%7D*%7B1%7D%29%2B from 127.0.0.1
+2026-02-16 19:17:23,907 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=response.write%28494%2C542*387%2C027%29 from 127.0.0.1
+2026-02-16 19:17:23,907 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cat+%2Fetc%2Fpasswd from 127.0.0.1
+2026-02-16 19:17:23,923 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%26cat+%2Fetc%2Fpasswd%26 from 127.0.0.1
+2026-02-16 19:17:23,923 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%3Bcat+%2Fetc%2Fpasswd%3B from 127.0.0.1
+2026-02-16 19:17:23,923 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%22%26cat+%2Fetc%2Fpasswd%26%22 from 127.0.0.1
+2026-02-16 19:17:23,923 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%22%3Bcat+%2Fetc%2Fpasswd%3B%22 from 127.0.0.1
+2026-02-16 19:17:23,939 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%27%26cat+%2Fetc%2Fpasswd%26%27 from 127.0.0.1
+2026-02-16 19:17:23,943 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%27%3Bcat+%2Fetc%2Fpasswd%3B%27 from 127.0.0.1
+2026-02-16 19:17:23,946 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=type+%25SYSTEMROOT%25%5Cwin.ini from 127.0.0.1
+2026-02-16 19:17:23,949 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%26type+%25SYSTEMROOT%25%5Cwin.ini from 127.0.0.1
+2026-02-16 19:17:23,952 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%7Ctype+%25SYSTEMROOT%25%5Cwin.ini from 127.0.0.1
+2026-02-16 19:17:23,956 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%22%26type+%25SYSTEMROOT%25%5Cwin.ini%26%22 from 127.0.0.1
+2026-02-16 19:17:23,959 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%22%7Ctype+%25SYSTEMROOT%25%5Cwin.ini from 127.0.0.1
+2026-02-16 19:17:23,959 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%27%26type+%25SYSTEMROOT%25%5Cwin.ini%26%27 from 127.0.0.1
+2026-02-16 19:17:23,959 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%27%7Ctype+%25SYSTEMROOT%25%5Cwin.ini from 127.0.0.1
+2026-02-16 19:17:23,959 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=get-help from 127.0.0.1
+2026-02-16 19:17:23,975 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%3Bget-help from 127.0.0.1
+2026-02-16 19:17:23,975 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%22%3Bget-help from 127.0.0.1
+2026-02-16 19:17:23,975 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%27%3Bget-help from 127.0.0.1
+2026-02-16 19:17:23,995 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%3Bget-help+%23 from 127.0.0.1
+2026-02-16 19:17:24,001 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%22%27 from 127.0.0.1
+2026-02-16 19:17:24,007 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%3C%21-- from 127.0.0.1
+2026-02-16 19:17:24,012 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%5D%5D%3E from 127.0.0.1
+2026-02-16 19:17:24,026 - security - INFO - Request: GET https://169.254.169.254/latest/meta-data/?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:24,030 - security - INFO - Request: GET https://aws.zaproxy.org/latest/meta-data/?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:24,030 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=zj+5808*1609+zj from 127.0.0.1
+2026-02-16 19:17:24,030 - security - INFO - Request: GET https://169.254.169.254/computeMetadata/v1/?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:24,030 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=zj%7B4647*7919%7Dzj from 127.0.0.1
+2026-02-16 19:17:24,030 - security - INFO - Request: GET https://metadata.google.internal/computeMetadata/v1/?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:24,042 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=zj%24%7B2234*2542%7Dzj from 127.0.0.1
+2026-02-16 19:17:24,042 - security - INFO - Request: GET https://169.254.169.254/opc/v1/instance/?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:24,042 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=zj%23%7B1843*1246%7Dzj from 127.0.0.1
+2026-02-16 19:17:24,042 - security - INFO - Request: GET https://metadata.oraclecloud.com/opc/v1/instance/?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:24,042 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=zj%7B%234958*5869%7Dzj from 127.0.0.1
+2026-02-16 19:17:24,042 - security - INFO - Request: GET https://100.100.100.200/latest/meta-data/?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:24,058 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=zj%7B%404048*1816%7Dzj from 127.0.0.1
+2026-02-16 19:17:24,058 - security - INFO - Request: GET https://alibaba.zaproxy.org/latest/meta-data/?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:24,058 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=zj%7B%7B7542*5024%7D%7Dzj from 127.0.0.1
+2026-02-16 19:17:24,058 - security - INFO - Request: GET https://169.254.169.254/metadata/instance?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:24,058 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=zj%7B%7B%3D9495*6927%7D%7Dzj from 127.0.0.1
+2026-02-16 19:17:24,058 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=zj%3C%25%3D6415*6600%25%3Ezj from 127.0.0.1
+2026-02-16 19:17:24,076 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=zj%23set%28%24x%3D9705*8396%29%24%7Bx%7Dzj from 127.0.0.1
+2026-02-16 19:17:24,080 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=zj%3Cp+th%3Atext%3D%22%24%7B7402*3857%7D%22%3E%3C%2Fp%3Ezj from 127.0.0.1
+2026-02-16 19:17:24,084 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=zj%7B%40math+key%3D%221154%22+method%3D%22multiply%22+operand%3D%229552%22%2F%7Dzj from 127.0.0.1
+2026-02-16 19:17:24,087 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=zj%7B%7B56920%7Cadd%3A76180%7D%7Dzj from 127.0.0.1
+2026-02-16 19:17:24,090 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=zj%7B%7Bprint+%229047%22+%224400%22%7D%7Dzj from 127.0.0.1
+2026-02-16 19:17:24,094 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%3C%23assign+ex%3D%22freemarker.template.utility.Execute%22%3Fnew%28%29%3E+%24%7B+ex%28%22sleep+15%22%29+%7D from 127.0.0.1
+2026-02-16 19:17:24,100 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%23set%28%24engine%3D%22%22%29%0A%23set%28%24proc%3D%24engine.getClass%28%29.forName%28%22java.lang.Runtime%22%29.getRuntime%28%29.exec%28%22sleep+15%22%29%29%0A%23set%28%24null%3D%24proc.waitFor%28%29%29%0A%24%7Bnull%7D from 127.0.0.1
+2026-02-16 19:17:24,100 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%7B%7B%3D+global.process.mainModule.require%28%27child_process%27%29.execSync%28%27sleep+15%27%29.toString%28%29+%7D%7D from 127.0.0.1
+2026-02-16 19:17:24,109 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%3C%25%3D+global.process.mainModule.require%28%27child_process%27%29.execSync%28%27sleep+15%27%29.toString%28%29%25%3E from 127.0.0.1
+2026-02-16 19:17:24,109 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%23%7Bglobal.process.mainModule.require%28%27child_process%27%29.execSync%28%27sleep+15%27%29.toString%28%29%7D from 127.0.0.1
+2026-02-16 19:17:24,109 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%7B%7Brange.constructor%28%22return+eval%28%5C%22global.process.mainModule.require%28%27child_process%27%29.execSync%28%27sleep+15%27%29.toString%28%29%5C%22%29%22%29%28%29%7D%7D from 127.0.0.1
+2026-02-16 19:17:24,109 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%7B%7B%22%22.__class__.__mro__%5B1%5D.__subclasses__%28%29%5B157%5D.__repr__.__globals__.get%28%22__builtins__%22%29.get%28%22__import__%22%29%28%22subprocess%22%29.check_output%28%22sleep+15%22%29%7D%7D from 127.0.0.1
+2026-02-16 19:17:24,124 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%24%7B__import__%28%22subprocess%22%29.check_output%28%22sleep+15%22%2C+shell%3DTrue%29%7D from 127.0.0.1
+2026-02-16 19:17:24,124 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%7B%7B__import__%28%22subprocess%22%29.check_output%28%22sleep+15%22%2C+shell%3DTrue%29%7D%7D from 127.0.0.1
+2026-02-16 19:17:24,124 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%3C%25%3D%25x%28sleep+15%29%25%3E from 127.0.0.1
+2026-02-16 19:17:24,124 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%23%7B%25x%28sleep+15%29%7D from 127.0.0.1
+2026-02-16 19:17:24,124 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%7Bsystem%28%22sleep+15%22%29%7D from 127.0.0.1
+2026-02-16 19:17:24,140 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%26sleep+15.0%26 from 127.0.0.1
+2026-02-16 19:17:24,140 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%3Bsleep+15.0%3B from 127.0.0.1
+2026-02-16 19:17:24,140 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%22%26sleep+15.0%26%22 from 127.0.0.1
+2026-02-16 19:17:24,158 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%22%3Bsleep+15.0%3B%22 from 127.0.0.1
+2026-02-16 19:17:24,161 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%27%26sleep+15.0%26%27 from 127.0.0.1
+2026-02-16 19:17:24,165 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%27%3Bsleep+15.0%3B%27 from 127.0.0.1
+2026-02-16 19:17:24,168 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%26timeout+%2FT+15.0 from 127.0.0.1
+2026-02-16 19:17:24,173 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%7Ctimeout+%2FT+15.0 from 127.0.0.1
+2026-02-16 19:17:24,176 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%22%26timeout+%2FT+15.0%26%22 from 127.0.0.1
+2026-02-16 19:17:24,176 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%22%7Ctimeout+%2FT+15.0 from 127.0.0.1
+2026-02-16 19:17:24,176 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%27%26timeout+%2FT+15.0%26%27 from 127.0.0.1
+2026-02-16 19:17:24,176 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%27%7Ctimeout+%2FT+15.0 from 127.0.0.1
+2026-02-16 19:17:24,193 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%3Bstart-sleep+-s+15.0 from 127.0.0.1
+2026-02-16 19:17:24,193 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%22%3Bstart-sleep+-s+15.0 from 127.0.0.1
+2026-02-16 19:17:24,200 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%27%3Bstart-sleep+-s+15.0 from 127.0.0.1
+2026-02-16 19:17:24,203 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48%3Bstart-sleep+-s+15.0+%23 from 127.0.0.1
+2026-02-16 19:17:24,208 - security - INFO - Request: GET https://localhost:8000/candidates/ from 127.0.0.1
+2026-02-16 19:17:24,208 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,224 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=ZXqAdTLQqQOlYwKhApLLcyLLKmJYVPtLLxhWkKPrmhcWmsJlFAPfQtFWDQVVpmqKdJVGhIQyiYqlDEVRwHVqTZlXgINnlqHfycMrLNsiCkBrRibHavbKGtPwJghtpwsfAaNVQThIHkGocUBFdXjvFXCQfRBlHHflMSQTeQkHjshurQNdCBFEBvZCwvpXBxPqBonMkCauEfKNhmOVuDbxKSYhtIWHtZSkCGLtncXjaLUelyknoqaSywTiKLwlOhhUQxEENnXwXxwghHVZWbFXrtgtFsYilPGWxqdabkikDCKToBwYiTDTdxrJfhZyiSlIKUMFbqsVakVUHsBTxyjdeuDqejHtQZaqmDAQqvvfaRFaUKHBsLBUhhYLkjLvZXZKBsmZtnsoXnCIuPkiPdsjeoGFASsXYNOSCZNaqkiKMujHYqnfekPUKIsXVdNdwBndEMGhKaKTLuqVSLYTrQTZKbUhsWOqXpkOTvodmXoZSwQsuNmTmWTbFMPrGTtkmPQyBGObdQwqmhvkqqEnGOJDeVRcjcRiUJuQskLuSHBwEFUEpqESvAXMjjxdxQWRscWZkwsbjMQyjcSxnMTXysfhvHGLUXKmsfbakRLHOFhCUHKkOnXiQjlAJeejqOMuZmclkrPGWruwdALOHgTKnglJuuClqehnLOyLRkwOHAWTcCmqfYckxfObJkeIaBjBbGNHJYkiNHOPPjQxCPFDIcjosbZxMIVKNbbqbsEdLTTVZZxrqYINHUXHTyBFgHmReWijNACXfAefQYWdRxCJArTddhXFwxdAakEUHWybOTiHJGTjLmZkaSdPWTinlIDJEqZCqJRDwkobXFxEeVcXcAZSDFmQpfICWJbdeQnjLabQABlpMeWcLPIAoyEBDrCCJZIjFpyibffuCltDwiqwoEpUKwvCNUGEqAgXiKjempAdiPHlqHwNuQxsPZsFVbQNVCLmTujgRBTpUZwnEbfhXtNkjTmhqJGByXJayqpLKSLjgtFFtXAjXaKDiRrEhyDLqJhljiscZDDPTkeXXLjYqmKtYYKktSOjVPgZNmsajCkIMgrJFbSSdbQSGoawvIvxYCbXXiXDCcqqwGlFYFZiwEZQoKUJXftkVTyeoXjSMGVZLxxiLZbqdhibNlaLbcwREpALSwhnNnJGvDBOdrDBsAHpYfPptXtnIXaVHXMElheGQiWaBTwAhmjSJbKJpQxSciLPaXkjwakkyLoJCgJKOwQgrPIFkMNbgjUSOcFPtwIDTOcUspZJnBhDHRCZddKbidjdhEPYwUQCSrQBsWXUEceogxXGmviompRTFWoHFDTNpXUHiGrBVLmdIYVAUNhlNHkyBLqSKdvjaVjWaTnwxngGoRZhwsuaxmDyEbkZrZcJdccyGievKBgeBfSMcgKhucgpXcrbOfmgiiwbXMXOVuAVKnkaeFXCXLDcAmYfsIhADevdagrwWtIwvsoCjGNTGjxxhsMOMgkBrTvPEkSCmmtbnJjCHHAgIOsbVvatPaYXLcygbydDcxBODjZZDbLHqTGRUmTAQfhwYOuuYMHWXwXKJKxBRGyPEqqvdloFOBHyKADhHIOTRnBHCyKbJjKTjJUTAedLCsooUKCmJUgnPRAyYbApsSZBCJxukcfKVvOBKALnPyxHDVNucWHlYhaGCCDRbbybdObEmnGmwejbkycHNfTXbDTgIHxrNQTtEDppgDCmxXgrnNFEqoEarpwGDXFxqoRLJfqFOxjujSqXInIJEOuVVQSvlLaRHeHliiqaZrBXRFSsOFldWUpyCthWiIkgSGMDYrQKDeXbpTPaeLkhMYgwXSixOptbsYyjPyqfDRwFdFHZCNthlDXJlcCyUFBrGcDcFfAfWBTnlFWpjHWlornArHDdfDZogQcSlDpffbZVGBtRtAxJuZhedNrwLpGDxXMkqNlkaTAfSqAGsqEBgAriMEZhgJscSoYTydqbJhAWJYOaQfgoFypHUEsIawwabHfBgHsLQPLtJjChsgyOrNeGlmtAtUQITdkwTiOlRhoqRScQjXNaKODJvPBjwXGosAUvbIElqsCUgyiBVNlrWAgIafUxARJSEeRrepwNbNNlTSFslMxV from 127.0.0.1
+2026-02-16 19:17:24,224 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,240 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=ZAP from 127.0.0.1
+2026-02-16 19:17:24,244 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,244 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=ZAP%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%0A from 127.0.0.1
+2026-02-16 19:17:24,255 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,255 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=ZAP+%251%21s%252%21s%253%21s%254%21s%255%21s%256%21s%257%21s%258%21s%259%21s%2510%21s%2511%21s%2512%21s%2513%21s%2514%21s%2515%21s%2516%21s%2517%21s%2518%21s%2519%21s%2520%21s%2521%21n%2522%21n%2523%21n%2524%21n%2525%21n%2526%21n%2527%21n%2528%21n%2529%21n%2530%21n%2531%21n%2532%21n%2533%21n%2534%21n%2535%21n%2536%21n%2537%21n%2538%21n%2539%21n%2540%21n%0A from 127.0.0.1
+2026-02-16 19:17:24,255 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,271 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=Set-cookie%3A+Tamper%3D3a26d0f4-8538-4ed3-bce1-85a84eeff6c7 from 127.0.0.1
+2026-02-16 19:17:24,271 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=any%0D%0ASet-cookie%3A+Tamper%3D3a26d0f4-8538-4ed3-bce1-85a84eeff6c7 from 127.0.0.1
+2026-02-16 19:17:24,271 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=any%3F%0D%0ASet-cookie%3A+Tamper%3D3a26d0f4-8538-4ed3-bce1-85a84eeff6c7 from 127.0.0.1
+2026-02-16 19:17:24,271 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=any%0ASet-cookie%3A+Tamper%3D3a26d0f4-8538-4ed3-bce1-85a84eeff6c7 from 127.0.0.1
+2026-02-16 19:17:24,287 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=any%3F%0ASet-cookie%3A+Tamper%3D3a26d0f4-8538-4ed3-bce1-85a84eeff6c7 from 127.0.0.1
+2026-02-16 19:17:24,287 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=any%0D%0ASet-cookie%3A+Tamper%3D3a26d0f4-8538-4ed3-bce1-85a84eeff6c7%0D%0A from 127.0.0.1
+2026-02-16 19:17:24,287 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=any%3F%0D%0ASet-cookie%3A+Tamper%3D3a26d0f4-8538-4ed3-bce1-85a84eeff6c7%0D%0A from 127.0.0.1
+2026-02-16 19:17:24,295 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:24,300 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,303 - security - INFO - Request: GET https://localhost:8000/candidates?= from 127.0.0.1
+2026-02-16 19:17:24,303 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,303 - security - INFO - Request: GET https://localhost:8000/candidates?election_id= from 127.0.0.1
+2026-02-16 19:17:24,317 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,323 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%40 from 127.0.0.1
+2026-02-16 19:17:24,327 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,335 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%2B from 127.0.0.1
+2026-02-16 19:17:24,335 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,335 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%00 from 127.0.0.1
+2026-02-16 19:17:24,335 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,350 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%7C from 127.0.0.1
+2026-02-16 19:17:24,372 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,382 - security - INFO - Request: GET https://localhost:8000/elmah.axd from 127.0.0.1
+2026-02-16 19:17:24,400 - security - INFO - Request: GET https://localhost:8000/trace.axd from 127.0.0.1
+2026-02-16 19:17:24,414 - security - INFO - Request: GET https://localhost:8000/.htaccess from 127.0.0.1
+2026-02-16 19:17:24,445 - security - INFO - Request: GET https://localhost:8000/.env from 127.0.0.1
+2026-02-16 19:17:24,464 - security - INFO - Request: GET https://localhost:8000/zap7111855866286852863 from 127.0.0.1
+2026-02-16 19:17:24,464 - security - INFO - Request: GET https://localhost:8000/actuator/health from 127.0.0.1
+2026-02-16 19:17:24,480 - security - INFO - Request: GET https://localhost:8000/.zap6179039050654754796 from 127.0.0.1
+2026-02-16 19:17:24,480 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,487 - security - INFO - Request: GET https://localhost:8000/lfm.php from 127.0.0.1
+2026-02-16 19:17:24,491 - security - INFO - Request: GET https://localhost:8000/.idea/WebServers.xml from 127.0.0.1
+2026-02-16 19:17:24,496 - security - INFO - Request: GET https://localhost:8000/config/databases.yml from 127.0.0.1
+2026-02-16 19:17:24,500 - security - INFO - Request: GET https://localhost:8000/actuator/health from 127.0.0.1
+2026-02-16 19:17:24,503 - security - INFO - Request: GET https://localhost:8000/config/database.yml from 127.0.0.1
+2026-02-16 19:17:24,503 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,503 - security - INFO - Request: GET https://localhost:8000/.git/config from 127.0.0.1
+2026-02-16 19:17:24,510 - security - INFO - Request: GET https://localhost:8000/.svn/entries from 127.0.0.1
+2026-02-16 19:17:24,518 - security - INFO - Request: GET https://localhost:8000/.svn/wc.db from 127.0.0.1
+2026-02-16 19:17:24,520 - security - INFO - Request: GET https://localhost:8000/CVS/root from 127.0.0.1
+2026-02-16 19:17:24,520 - security - INFO - Request: GET https://localhost:8000/server-status from 127.0.0.1
+2026-02-16 19:17:24,528 - security - INFO - Request: GET https://localhost:8000/core from 127.0.0.1
+2026-02-16 19:17:24,528 - security - INFO - Request: GET https://localhost:8000/sftp-config.json from 127.0.0.1
+2026-02-16 19:17:24,528 - security - INFO - Request: GET https://localhost:8000/WS_FTP.ini from 127.0.0.1
+2026-02-16 19:17:24,528 - security - INFO - Request: GET https://localhost:8000/ws_ftp.ini from 127.0.0.1
+2026-02-16 19:17:24,528 - security - INFO - Request: GET https://localhost:8000/WS_FTP.INI from 127.0.0.1
+2026-02-16 19:17:24,543 - security - INFO - Request: GET https://localhost:8000/filezilla.xml from 127.0.0.1
+2026-02-16 19:17:24,543 - security - INFO - Request: GET https://localhost:8000/sitemanager.xml from 127.0.0.1
+2026-02-16 19:17:24,550 - security - INFO - Request: GET https://localhost:8000/FileZilla.xml from 127.0.0.1
+2026-02-16 19:17:24,550 - security - INFO - Request: GET https://localhost:8000/winscp.ini from 127.0.0.1
+2026-02-16 19:17:24,550 - security - INFO - Request: GET https://localhost:8000/WinSCP.ini from 127.0.0.1
+2026-02-16 19:17:24,559 - security - INFO - Request: GET https://localhost:8000/.DS_Store from 127.0.0.1
+2026-02-16 19:17:24,559 - security - INFO - Request: GET https://localhost:8000/.php_cs.cache from 127.0.0.1
+2026-02-16 19:17:24,565 - security - INFO - Request: GET https://localhost:8000/DEADJOE from 127.0.0.1
+2026-02-16 19:17:24,565 - security - INFO - Request: GET https://localhost:8000/sites/default/private/files/backup_migrate/scheduled/test.txt from 127.0.0.1
+2026-02-16 19:17:24,565 - security - INFO - Request: GET https://localhost:8000/app/etc/local.xml from 127.0.0.1
+2026-02-16 19:17:24,577 - security - INFO - Request: GET https://localhost:8000/server.key from 127.0.0.1
+2026-02-16 19:17:24,580 - security - INFO - Request: GET https://localhost:8000/privatekey.key from 127.0.0.1
+2026-02-16 19:17:24,583 - security - INFO - Request: GET https://localhost:8000/myserver.key from 127.0.0.1
+2026-02-16 19:17:24,585 - security - INFO - Request: GET https://localhost:8000/key.pem from 127.0.0.1
+2026-02-16 19:17:24,590 - security - INFO - Request: GET https://localhost:8000/id_rsa from 127.0.0.1
+2026-02-16 19:17:24,594 - security - INFO - Request: GET https://localhost:8000/id_dsa from 127.0.0.1
+2026-02-16 19:17:24,597 - security - INFO - Request: GET https://localhost:8000/.ssh/id_rsa from 127.0.0.1
+2026-02-16 19:17:24,601 - security - INFO - Request: GET https://localhost:8000/.ssh/id_dsa from 127.0.0.1
+2026-02-16 19:17:24,605 - security - INFO - Request: GET https://localhost:8000/adminer.php from 127.0.0.1
+2026-02-16 19:17:24,608 - security - INFO - Request: GET https://localhost:8000/vb_test.php from 127.0.0.1
+2026-02-16 19:17:24,611 - security - INFO - Request: GET https://localhost:8000/CHANGELOG.txt from 127.0.0.1
+2026-02-16 19:17:24,615 - security - INFO - Request: GET https://localhost:8000/sites/default/files/.ht.sqlite from 127.0.0.1
+2026-02-16 19:17:24,618 - security - INFO - Request: GET https://localhost:8000/composer.json from 127.0.0.1
+2026-02-16 19:17:24,622 - security - INFO - Request: GET https://localhost:8000/composer.lock from 127.0.0.1
+2026-02-16 19:17:24,625 - security - INFO - Request: GET https://localhost:8000/vim_settings.xml from 127.0.0.1
+2026-02-16 19:17:24,629 - security - INFO - Request: GET https://localhost:8000/server-info from 127.0.0.1
+2026-02-16 19:17:24,632 - security - INFO - Request: GET https://localhost:8000/phpinfo.php from 127.0.0.1
+2026-02-16 19:17:24,636 - security - INFO - Request: GET https://localhost:8000/info.php from 127.0.0.1
+2026-02-16 19:17:24,641 - security - INFO - Request: GET https://localhost:8000/i.php from 127.0.0.1
+2026-02-16 19:17:24,645 - security - INFO - Request: GET https://localhost:8000/test.php from 127.0.0.1
+2026-02-16 19:17:24,649 - security - INFO - Request: GET https://localhost:8000/_wpeprivate/config.json from 127.0.0.1
+2026-02-16 19:17:24,652 - security - INFO - Request: GET https://localhost:8000/_framework/blazor.boot.json from 127.0.0.1
+2026-02-16 19:17:24,656 - security - INFO - Request: GET https://localhost:8000/.hg from 127.0.0.1
+2026-02-16 19:17:24,656 - security - INFO - Request: GET https://localhost:8000/.bzr from 127.0.0.1
+2026-02-16 19:17:24,656 - security - INFO - Request: GET https://localhost:8000/._darcs from 127.0.0.1
+2026-02-16 19:17:24,656 - security - INFO - Request: GET https://localhost:8000/BitKeeper from 127.0.0.1
+2026-02-16 19:17:24,672 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%3C from 127.0.0.1
+2026-02-16 19:17:24,677 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,677 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%3Cxsl%3Avalue-of+select%3D%22system-property%28%27xsl%3Avendor%27%29%22%2F%3E from 127.0.0.1
+2026-02-16 19:17:24,685 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,693 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=system-property%28%27xsl%3Avendor%27%29%2F%3E from 127.0.0.1
+2026-02-16 19:17:24,693 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,700 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%22%2F%3E%3Cxsl%3Avalue-of+select%3D%22system-property%28%27xsl%3Avendor%27%29%22%2F%3E%3C%21-- from 127.0.0.1
+2026-02-16 19:17:24,704 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,704 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%3Cxsl%3Avalue-of+select%3D%22system-property%28%27xsl%3Avendor%27%29%22%2F%3E%3C%21-- from 127.0.0.1
+2026-02-16 19:17:24,704 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,704 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%3Cxsl%3Avalue-of+select%3D%22document%28%27http%3A%2F%2Flocalhost%3A22%27%29%22%2F%3E from 127.0.0.1
+2026-02-16 19:17:24,704 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,720 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%3Cxsl%3Avariable+name%3D%22rtobject%22+select%3D%22runtime%3AgetRuntime%28%29%22%2F%3E%0A%3Cxsl%3Avariable+name%3D%22process%22+select%3D%22runtime%3Aexec%28%24rtobject%2C%27erroneous_command%27%29%22%2F%3E%0A%3Cxsl%3Avariable+name%3D%22waiting%22+select%3D%22process%3AwaitFor%28%24process%29%22%2F%3E%0A%3Cxsl%3Avalue-of+select%3D%22%24process%22%2F%3E from 127.0.0.1
+2026-02-16 19:17:24,725 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,725 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=%3Cxsl%3Avalue-of+select%3D%22php%3Afunction%28%27exec%27%2C%27erroneous_command+2%3E%26amp%3B1%27%29%22%2F%3E from 127.0.0.1
+2026-02-16 19:17:24,735 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,751 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:24,751 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,767 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:24,782 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,800 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:24,800 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,814 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:24,814 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,830 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:24,846 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,861 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:24,868 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,887 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:24,887 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,900 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:24,909 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,917 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:24,919 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,924 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:24,930 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,938 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:24,940 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:24,954 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from 127.0.0.1
+2026-02-16 19:17:24,958 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-16 19:17:25,262 - security - INFO - Request: GET https://localhost:8000/swagger-ui/ from 127.0.0.1
+2026-02-16 19:17:25,337 - security - INFO - Request: GET https://localhost:8000/v3/api-docs from 127.0.0.1
+2026-02-16 19:17:25,337 - security - INFO - Request: GET https://localhost:8000/swagger.json from 127.0.0.1
+2026-02-16 19:17:25,354 - security - INFO - Request: GET https://localhost:8000/openapi.json from 127.0.0.1
+2026-02-16 19:17:25,358 - security - INFO - Request: GET https://localhost:8000/api-docs from 127.0.0.1
+2026-02-16 19:17:25,369 - security - INFO - Request: GET https://localhost:8000/docs/ from 127.0.0.1
+2026-02-16 19:17:25,376 - security - INFO - Request: GET https://localhost:8000/swagger from 127.0.0.1
+2026-02-16 19:17:25,383 - security - INFO - Request: GET https://localhost:8000/v2/api-docs from 127.0.0.1
+2026-02-16 19:17:25,389 - security - INFO - Request: GET https://localhost:8000/swagger-ui/index.html from 127.0.0.1
+2026-02-16 19:17:25,395 - security - INFO - Request: GET https://localhost:8000/openapi.yaml from 127.0.0.1
+2026-02-16 19:17:25,401 - security - INFO - Request: GET https://localhost:8000/swagger.yaml from 127.0.0.1
+2026-02-16 19:17:25,441 - security - INFO - Request: GET https://localhost:8000/swagger/ui/index.html from 127.0.0.1
+2026-02-16 19:25:11,400 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=cbfdd076-b185-46cd-9e5e-034a0ae71f48 from ::1
+2026-02-16 19:25:14,542 - security - INFO - Request: GET https://localhost:8000/dashboard from ::1
+2026-02-16 19:25:17,856 - security - INFO - Request: GET https://localhost:8000/logout from ::1
+2026-02-16 19:25:17,890 - security - INFO - Request: GET https://localhost:8000/login from ::1
+2026-02-16 19:25:22,715 - security - INFO - Request: GET https://localhost:8000/admin-dashboard from ::1
+2026-02-16 19:25:22,730 - security - INFO - Request: GET https://localhost:8000/admin from ::1
+2026-02-16 19:25:23,937 - security - INFO - Request: POST https://localhost:8000/admin from ::1
+2026-02-16 19:25:24,321 - security - INFO - Request: GET https://localhost:8000/admin-dashboard from ::1
+2026-02-16 19:25:30,215 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-16 19:25:31,771 - security - INFO - Request: GET https://localhost:8000/admin-elections from ::1
+2026-02-16 19:25:33,313 - security - INFO - Request: GET https://localhost:8000/edit-election/cbfdd076-b185-46cd-9e5e-034a0ae71f48 from ::1
+2026-02-16 19:25:35,384 - security - INFO - Request: GET https://localhost:8000/admin-elections from ::1
+2026-02-16 19:25:36,314 - security - INFO - Request: GET https://localhost:8000/admin-candidates from ::1
+2026-02-16 19:25:37,384 - security - INFO - Request: GET https://localhost:8000/admin-add-candidate from ::1
+2026-02-16 19:25:40,464 - security - INFO - Request: GET https://localhost:8000/admin-candidates from ::1
+2026-02-16 19:25:49,577 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-16 19:25:49,749 - security - INFO - Request: GET https://localhost:8000/admin-settings from ::1
+2026-02-16 19:25:51,090 - security - INFO - Request: GET https://localhost:8000/admin-elections from ::1
+2026-02-16 19:25:52,003 - security - INFO - Request: GET https://localhost:8000/edit-election/cbfdd076-b185-46cd-9e5e-034a0ae71f48 from ::1
+2026-02-16 19:25:54,175 - security - INFO - Request: POST https://localhost:8000/delete-election/cbfdd076-b185-46cd-9e5e-034a0ae71f48 from ::1
+2026-02-16 19:25:54,216 - security - INFO - Request: GET https://localhost:8000/admin-elections?deleted=1 from ::1
+2026-02-16 19:25:56,107 - security - INFO - Request: GET https://localhost:8000/edit-election/cbfdd076-b185-46cd-9e5e-034a0ae71f48 from ::1
+2026-02-16 19:25:56,132 - security - INFO - Request: GET https://localhost:8000/admin-elections?error=Election%20not%20found from ::1
+2026-02-16 19:25:58,371 - security - INFO - Request: GET https://localhost:8000/admin-logout from ::1
+2026-02-16 19:25:58,388 - security - INFO - Request: GET https://localhost:8000/admin from ::1
+2026-02-16 19:25:59,757 - security - INFO - Request: GET https://localhost:8000/login/microsoft from ::1
+2026-02-16 19:26:15,574 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-16 19:26:34,853 - security - INFO - Request: GET https://localhost:8000/auth/microsoft/callback?code=1.AUUAuewYMDgkgUWwNktiXayVeeglBiMTpjBOuRTz8tYgnfEAAK1FAA.BQABBAIAAAADAOz_BQD0_0V2b1N0c0FydGlmYWN0cwIAAAAAAMiOCJB6Ve3udEHICaXe7SquZvMQoT-8uyjsVXPNKZ3rvTLV8E-pMgYkQR-ujtmkc6MfVfLbuZbofnv1pUImk_DcLXRCGREwu4kEosqSaU1be-prXe0Arvq5RlQhIkbnoBqvUK9ikRCv3QHfuRYLxsHKZi093YvEE-tRIuq3565_rt_bnr_B2ywyzV7g1kY8ykoRRnrV33vka20Ljb2QT2g5iqNULd3MwkQrzbPobhpup3xtStch-la4mMOHkcoWghF30AgAuvrJd8eXIYx20QJ1cSa13dYHmXOD-B8AafqizxC_2Bh_o7-RqTVahw6OVDm8HRbUhfZoEKYLXQFuSqOlFYHhh_gGX2BrJwTTviU9v-ScrHDe7lNHhNF83A85KNSGKymxSAnptngQkvF0ys-J9UzZhbvmMXP2KEcMd1W8GmkyetA9l0gnnkaIMV1CNWgLkrhrKbnBmikNHH3f_y20HQTg4ztnnZ9Hzry6lGfllqoR6s6p8Z7RuLM4rVDueAb3hLUS2mF1xNymtASXcbJYcWoMBUbPlNhCLlkrVqJdevTkxnULNfwCYzcZbHJY4WKjzNaLDTZR4Risf5r8o-SOMpyrS9q3sP8aDeNAOfweAJVbFLJbwJcr6wY-2s_SZzWoFYI5J8HkdGzTftWmxUvQxbg0V8M5QMiLaR35jgE4EoGPdOxKPdaXDxOj70jXBRwyvno6auTI_6XfrFTke9rYerVdyD0lvA0NpkvWcZYhRYliSVBuDt8sk1CROnEPzDEsI8WY23wPWRJPy1gxbwCvIVdEqz0mq9jkYmtHDRyaDMqBAOSW4JRuC5SbhKxbq4iN1nL5YYDKC1WPZXADxaGdVrAYQGvi3DTx9iB7h5pw-2RXWR3NBN3Yfeuj6vUElL5evU_ZqM86kGYyPI4-2brKuKCBsCgn1Xi3bC57oYtoOYdjSUq4NssV69u-G546rgfiTQNgXAQfnmaT9orKveWyprDNT2aozo6pDo7Cd9d6FO4fvbOKmFVXv6NZ3V03SRnCbbGLuf3h56eeTgfiOe2KB0DSrFEVSpqxxE6VDdvFL3ELma035b27rO45J2OKPkzLPBVj_cbqTb72bvrCazgFUM75lJWQEIGwerr_3xWO8FLDUuoSaXiKmXTMTQYKH4NO_edC4iImYCg3f6i_p8yIiR76-chWx5nHB_Jp7z55pM0G8eWLfs3sa-I7G5ZK9K1lE2rkkCJoDwrwEBmQsYUCHLIak-sP1v31bWcmGkC-71_rS9dBNwXM3uhNAad1_GMneAlOh8DkCAY-KaUqp3z7EMkLs7FxVoHTmlhGYIxfCtlSvujh7uDsppeqOSOOfcsntuGqjs0Rxs-g8AaGgltGvHOogmwFIo4uvHBnvx8VF1sUjp_qoQoxFSjfsGRP7XyzCc5x0I9sjThtjHHlbUpOF9t47o8zwQv6zng&state=bLQyc024qqIOxwLxpWwg7ApxXYyIeh_g&session_state=001f28aa-0e16-f496-92ce-a6073ef32dd8 from ::1
+2026-02-16 19:26:40,473 - security - INFO - Request: GET https://localhost:8000/dashboard from ::1
+2026-02-16 19:26:59,179 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-16 19:26:59,183 - security - INFO - Request: GET https://localhost:8000/dashboard from ::1
+2026-02-16 19:27:22,924 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-16 19:27:22,927 - security - INFO - Request: GET https://localhost:8000/dashboard from ::1
+2026-02-16 19:27:27,758 - security - INFO - Request: GET https://localhost:8000/dashboard from ::1
+2026-02-16 19:27:30,192 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=2113702f-864f-43fc-8271-42d6fa8c4288 from ::1
+2026-02-16 19:27:31,681 - security - INFO - Request: GET https://localhost:8000/confirmation?candidate_id=229f7879-bccd-4a38-a592-ee5316e9157b&election_id=2113702f-864f-43fc-8271-42d6fa8c4288 from ::1
+2026-02-16 19:27:38,090 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-16 19:27:38,090 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=2113702f-864f-43fc-8271-42d6fa8c4288 from ::1
+2026-02-16 19:27:40,116 - security - INFO - Request: GET https://localhost:8000/dashboard from ::1
+2026-02-16 19:27:43,483 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=2113702f-864f-43fc-8271-42d6fa8c4288 from ::1
+2026-02-16 19:27:44,256 - security - INFO - Request: GET https://localhost:8000/confirmation?candidate_id=229f7879-bccd-4a38-a592-ee5316e9157b&election_id=2113702f-864f-43fc-8271-42d6fa8c4288 from ::1
+2026-02-16 19:27:45,117 - security - INFO - Request: POST https://localhost:8000/vote from ::1
+2026-02-16 19:27:45,178 - security - INFO - Vote cast successfully - Election: 2113702f-864f-43fc-8271-42d6fa8c4288, Verification: M6C3aRv4jN8nYKSm02vK0vPC8RYdU6s6eYxwMShfIuc
+2026-02-16 19:27:45,200 - security - INFO - Request: GET https://localhost:8000/results/2113702f-864f-43fc-8271-42d6fa8c4288?verification_code=M6C3aRv4jN8nYKSm02vK0vPC8RYdU6s6eYxwMShfIuc from ::1
+2026-02-16 19:29:09,700 - security - INFO - Request: GET https://localhost:8000/dashboard from ::1
+2026-02-16 19:29:15,595 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-16 19:29:17,467 - security - INFO - Request: GET https://localhost:8000/profile from ::1
+2026-02-16 19:29:23,767 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-16 19:29:36,309 - security - INFO - Request: GET https://localhost:8000/register from ::1
+2026-02-16 19:30:07,758 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-16 19:30:26,779 - security - INFO - Request: GET https://localhost:8000/profile from ::1
+2026-02-16 19:30:27,610 - security - INFO - Request: GET https://localhost:8000/profile from ::1
+2026-02-16 19:30:39,680 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-16 19:30:39,682 - security - INFO - Request: GET https://localhost:8000/profile from ::1
+2026-02-16 19:31:38,197 - security - INFO - Request: GET https://localhost:8000/profile from ::1
+2026-02-16 19:31:39,409 - security - INFO - Request: GET https://localhost:8000/profile from ::1
+2026-02-16 19:31:40,743 - security - INFO - Request: GET https://localhost:8000/profile from ::1
+2026-02-16 19:31:40,812 - security - INFO - Request: GET https://localhost:8000/static/tailwind.css?v=0 from ::1
+2026-02-16 19:31:40,818 - security - INFO - Request: GET https://localhost:8000/static/style.css from ::1
+2026-02-16 19:31:40,825 - security - INFO - Request: GET https://localhost:8000/static/vendor/fontawesome/css/all.min.css from ::1
+2026-02-16 19:31:40,825 - security - INFO - Request: GET https://localhost:8000/static/app.js?v=0 from ::1
+2026-02-16 19:31:40,851 - security - INFO - Request: GET https://localhost:8000/static/vendor/inter/index.css from ::1
+2026-02-16 19:31:40,866 - security - INFO - Request: GET https://localhost:8000/static/vendor/fontawesome/webfonts/fa-solid-900.woff2 from ::1
+2026-02-16 19:31:40,868 - security - INFO - Request: GET https://localhost:8000/static/vendor/inter/files/inter-latin-400-normal.woff2 from ::1
+2026-02-16 19:31:41,132 - security - INFO - Request: GET https://localhost:8000/favicon.ico from ::1
+2026-02-16 19:31:44,814 - security - INFO - Request: GET https://localhost:8000/dashboard from ::1
+2026-02-16 19:32:00,241 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-16 19:32:00,242 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-16 19:32:00,243 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-16 19:32:00,245 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-16 19:32:00,465 - security - INFO - Request: GET https://localhost:8000/logout from ::1
+2026-02-16 19:32:00,481 - security - INFO - Request: GET https://localhost:8000/login from ::1
+2026-02-16 19:32:03,665 - security - INFO - Request: GET https://localhost:8000/register from ::1
+2026-02-16 19:32:15,661 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-17 00:41:41,698 - security - WARNING - Verification token backfill skipped/failed: type object 'User' has no attribute 'verification_token_hash'
+2026-02-17 00:41:41,738 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2026-02-17 00:41:42,036 - security - INFO - Admins table ensured and admin account synced from env configuration
+2026-02-17 00:41:44,858 - security - WARNING - Verification token backfill skipped/failed: type object 'User' has no attribute 'verification_token_hash'
+2026-02-17 00:41:44,897 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2026-02-17 00:41:45,196 - security - INFO - Admins table ensured and admin account synced from env configuration
+2026-02-17 00:41:48,665 - security - INFO - Request: GET https://localhost:8000/ from ::1
+2026-02-17 00:41:48,683 - security - INFO - Request: GET https://localhost:8000/login from ::1
+2026-02-17 00:41:48,739 - security - INFO - Request: GET https://localhost:8000/static/tailwind.css?v=0 from ::1
+2026-02-17 00:41:48,746 - security - INFO - Request: GET https://localhost:8000/static/vendor/fontawesome/css/all.min.css from ::1
+2026-02-17 00:41:48,924 - security - INFO - Request: GET https://localhost:8000/static/vendor/inter/index.css from ::1
+2026-02-17 00:41:48,925 - security - INFO - Request: GET https://localhost:8000/static/app.js?v=0 from ::1
+2026-02-17 00:41:48,990 - security - INFO - Request: GET https://localhost:8000/static/vendor/fontawesome/webfonts/fa-solid-900.woff2 from ::1
+2026-02-17 00:41:48,991 - security - INFO - Request: GET https://localhost:8000/static/vendor/inter/files/inter-latin-400-normal.woff2 from ::1
+2026-02-17 00:41:52,397 - security - INFO - Request: GET https://localhost:8000/admin-dashboard from ::1
+2026-02-17 00:41:52,410 - security - INFO - Request: GET https://localhost:8000/admin from ::1
+2026-02-17 00:41:52,496 - security - INFO - Request: GET https://localhost:8000/static/style.css from ::1
+2026-02-17 00:41:53,879 - security - INFO - Request: POST https://localhost:8000/admin from ::1
+2026-02-17 00:41:54,360 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-17 00:41:54,371 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-17 00:41:54,381 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-17 00:41:54,382 - security - INFO - Request: GET https://localhost:8000/admin-dashboard from ::1
+2026-02-17 00:42:09,628 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-17 00:42:09,632 - security - INFO - Request: GET https://localhost:8000/.well-known/appspecific/com.chrome.devtools.json from ::1
+2026-02-17 00:42:09,639 - security - INFO - Request: GET https://localhost:8000/login from ::1
+2026-02-17 00:42:09,943 - security - INFO - Request: GET https://localhost:8000/static/vendor/chartjs/chart.umd.min.js.map from ::1
+2026-02-17 00:42:19,232 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-17 00:45:02,725 - security - INFO - Request: OPTIONS https://localhost:8000/csp-report from ::1
+2026-02-17 00:45:02,732 - security - INFO - Request: OPTIONS https://localhost:8000/csp-report from ::1
+2026-02-17 00:45:02,733 - security - INFO - Request: OPTIONS https://localhost:8000/login from ::1
+2026-02-17 00:45:02,752 - security - INFO - Request: OPTIONS https://localhost:8000/login from ::1
+2026-02-17 00:45:07,838 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-17 00:45:07,846 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-18 17:14:49,643 - security - WARNING - Verification token backfill skipped/failed: type object 'User' has no attribute 'verification_token_hash'
+2026-02-18 17:14:49,693 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2026-02-18 17:14:50,000 - security - INFO - Admins table ensured and admin account synced from env configuration
+2026-02-18 22:06:40,161 - security - WARNING - Verification token backfill skipped/failed: type object 'User' has no attribute 'verification_token_hash'
+2026-02-18 22:06:40,212 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2026-02-18 22:06:40,517 - security - INFO - Admins table ensured and admin account synced from env configuration
+2026-02-18 23:00:13,557 - security - INFO - Request: GET https://localhost:8000/ from ::1
+2026-02-18 23:00:13,667 - security - INFO - Request: GET https://localhost:8000/login from ::1
+2026-02-18 23:00:14,425 - security - INFO - Request: GET https://localhost:8000/favicon.ico from ::1
+2026-02-18 23:02:56,205 - security - WARNING - Verification token backfill skipped/failed: type object 'User' has no attribute 'verification_token_hash'
+2026-02-18 23:02:56,339 - security - INFO - Admin credentials not provided via env; using support admin fallback
+2026-02-18 23:02:57,437 - security - INFO - Admins table ensured and admin account synced from env configuration
+2026-02-18 23:03:12,754 - security - INFO - Request: GET https://localhost:8000/login/microsoft from ::1
+2026-02-18 23:03:18,820 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-18 23:03:18,902 - security - INFO - Request: GET https://localhost:8000/auth/microsoft/callback?code=1.AUUAuewYMDgkgUWwNktiXayVeeglBiMTpjBOuRTz8tYgnfEAAK1FAA.BQABBAIAAAADAOz_BQD0_0V2b1N0c0FydGlmYWN0cwIAAAAAAE3_PSBAGT581VWvn53zGw086BqXhyfxKPO_EcZjD6chqzMHhxrZn3R7puJGBpDGrM0DNE0OvmCQHfRwgfXUZwtKTVnX0ER8fA11ITMuEY2YHtuS4SB6eMHZVv4CPC8CTh2rGbBCQH3doyHxNfuoYndojr1BpXke2Eg3hDsQsuPVSPKDoqEADUMpR35icvK_xxO9tpSdVTz8L01dSuxCRlT9YE3k0dvf4LQudOr948HiPOqB4q4KuYqHjF7G5YIvMZFIRrUyylf3v4dkPZCtGU_Uaz_lGzg8UE9A0FsV1JQ0lXF3mDrSYXJaDVSP9nQHZkRf4yccAOLlPhbKTyFIH7KlFgGvGEeAC0wlpgrj7XfkGqgzS4bc4hg58mbwlnPXP7PQO9N5-kgjhDAmtERAAMUbXrmV8qBkKpZvwajU3yDl_vNuyCGFUezylQKZq-9a6-MDt0BtsFOn19LzfWTDXhYH_0ZNkR_TgahS-nUmtzQ_jOeZhqNg94VY0XI02wRNDD0Z_UjDSpXqLBvEQwnTVlLueTpO58OAf7Fn4CFSnhmbqUOzqv3Z8sx-91f0CDsrA33zLsDNmE6mP6fQGnBEVbTUYgmFMSwaeO15sR1HeAy7Xm9RE6N9qaQlfpBjNJ8C9-wxPX3HOCVB2ycHhcA8mKYhbo-hYbaL5HwVGeg00JPMwUR_CGNx6QKr4z9EmRWuJFfwgtaJwgQbTy4-FDW9qYtKy40B-YSqRj2WjNIjF1X7X7Lqbwy3TQxj_Qd1Xd37aT18ZmbVOubkc2vAji9HkIadT1vPHvlZMdLeTtnHvt-bEeJfP5L-cZp11pt9jd9UmwE_TEVL1IIGQdjywomHU0rKwxOu7qInG_Afo0nMfVJqPPZ9jQmFE_uULrA8blFe2Jx1ACHXTbPXZ5q9rAPIgS_DAznp7RqEVrM0jqUlkzH81hMjNrqVu7ZZmJZ2JcMbQbQGvVnngC0vUgpt38yNJHPou4wjBT_9-zUMk_hq_Yh7FNuAllU660jBAXnCY8TamRox3EzHWU9XK9WmywKF7Lm7uCR0FxFBET4pZS-5nBTWKkgVRpv56yLa8WDfMz7p3_ownTYPFadjgwQcCHFBO5blgtk4-c5Fz5f-qZbfP4cctrP8skYX9tYHHOrKr0JFGPiB5Jg9E5eOlsooota67Q_3mrwMIJ2qaNJZdhjgR6MKw52ajAtn7c1tpZ1PrkbkDj5MMqEpOQ-GQjDCx3eii_8eDHNzYR9snwH23icMXQA22OWOyluyuNWV7sCBHPR6pgjoIcui18uWcB6VOF96orsqBXWXWeCKVuwu4sqpk2KGOjUmg2y-HNor1eqz0xUlnKt8HoA9y56WwtaCphNTnoA9Z3NBZsAwDcIZ03mLLXZbnF6f-jpxIzMbu5Ud4jlhuueTM_XkT6TENVLnXkLj7_kZBXIjuOAOWBS_Qd8&state=X1OPbD1eLvtpRpk3ebBwQwYiGSF2ALWc&session_state=001f28aa-0e16-f496-92ce-a6073ef32dd8 from ::1
+2026-02-18 23:03:24,302 - security - INFO - Request: GET https://localhost:8000/dashboard from ::1
+2026-02-18 23:03:29,147 - security - INFO - Request: GET https://localhost:8000/results/2113702f-864f-43fc-8271-42d6fa8c4288 from ::1
+2026-02-18 23:16:16,459 - security - INFO - Request: GET https://localhost:8000/dashboard from ::1
+2026-02-18 23:17:07,119 - security - INFO - Request: GET https://localhost:8000/dashboard from ::1
+2026-02-18 23:17:08,478 - security - INFO - Request: GET https://localhost:8000/dashboard from ::1
+2026-02-18 23:17:35,188 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-18 23:17:35,201 - security - INFO - Request: GET https://localhost:8000/dashboard from ::1
+2026-02-18 23:17:36,613 - security - INFO - Request: GET https://localhost:8000/candidates?election_id=2113702f-864f-43fc-8271-42d6fa8c4288 from ::1
+2026-02-18 23:17:37,800 - security - INFO - Request: GET https://localhost:8000/confirmation?candidate_id=229f7879-bccd-4a38-a592-ee5316e9157b&election_id=2113702f-864f-43fc-8271-42d6fa8c4288 from ::1
+2026-02-18 23:17:38,969 - security - INFO - Request: POST https://localhost:8000/vote from ::1
+2026-02-18 23:17:39,110 - security - INFO - Vote cast successfully - Election: 2113702f-864f-43fc-8271-42d6fa8c4288, Verification: ZlvBCa7ZE7LLQPVCXH75zTXp7Rhr1Wm--UDfZ-VuxkA
+2026-02-18 23:17:39,139 - security - INFO - Request: GET https://localhost:8000/results/2113702f-864f-43fc-8271-42d6fa8c4288?verification_code=ZlvBCa7ZE7LLQPVCXH75zTXp7Rhr1Wm--UDfZ-VuxkA from ::1
+2026-02-18 23:17:41,189 - security - INFO - Request: GET https://localhost:8000/dashboard from ::1
+2026-02-18 23:17:47,174 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-18 23:17:47,346 - security - INFO - Request: GET https://localhost:8000/logout from ::1
+2026-02-18 23:17:47,396 - security - INFO - Request: GET https://localhost:8000/login from ::1
+2026-02-18 23:17:51,300 - security - INFO - Request: GET https://localhost:8000/admin-dashboard from ::1
+2026-02-18 23:17:51,317 - security - INFO - Request: GET https://localhost:8000/admin from ::1
+2026-02-18 23:17:52,852 - security - INFO - Request: POST https://localhost:8000/admin from ::1
+2026-02-18 23:17:53,836 - security - INFO - Request: GET https://localhost:8000/admin-dashboard from ::1
+2026-02-18 23:17:59,442 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-18 23:17:59,915 - security - INFO - Request: GET https://localhost:8000/admin-voters from ::1
+2026-02-18 23:18:01,801 - security - INFO - Request: GET https://localhost:8000/admin-candidates from ::1
+2026-02-18 23:18:03,738 - security - INFO - Request: GET https://localhost:8000/admin-settings from ::1
+2026-02-18 23:18:05,256 - security - INFO - Request: GET https://localhost:8000/admin-elections from ::1
+2026-02-18 23:18:07,257 - security - INFO - Request: GET https://localhost:8000/admin-dashboard from ::1
+2026-02-18 23:18:25,084 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-02-18 23:20:27,485 - security - INFO - Request: GET https://localhost:8000/ from 127.0.0.1
+2026-02-18 23:20:27,497 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-18 23:20:27,682 - security - INFO - Request: GET https://localhost:8000/ from 127.0.0.1
+2026-02-18 23:20:27,706 - security - INFO - Request: GET https://localhost:8000/robots.txt from 127.0.0.1
+2026-02-18 23:20:27,721 - security - INFO - Request: GET https://localhost:8000/sitemap.xml from 127.0.0.1
+2026-02-18 23:20:27,753 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-18 23:20:27,827 - security - INFO - Request: GET https://localhost:8000/login/microsoft from 127.0.0.1
+2026-02-18 23:20:27,829 - security - INFO - Request: GET https://localhost:8000/register from 127.0.0.1
+2026-02-18 23:20:27,842 - security - INFO - Request: GET https://localhost:8000/static/tailwind.css?v=0 from 127.0.0.1
+2026-02-18 23:20:27,898 - security - INFO - Request: GET https://localhost:8000/static/vendor/fontawesome/css/all.min.css from 127.0.0.1
+2026-02-18 23:20:28,366 - security - INFO - Request: GET https://localhost:8000/static/style.css?v=0 from 127.0.0.1
+2026-02-18 23:20:28,401 - security - INFO - Request: POST https://localhost:8000/register from 127.0.0.1
+2026-02-18 23:20:28,405 - security - INFO - Request: GET https://localhost:8000/static/app.js?v=0 from 127.0.0.1
+2026-02-18 23:20:28,509 - security - WARNING - SECURITY EVENT: REGISTRATION_BLOCKED - Email domain not allowed: zaproxy@example.com - IP: 127.0.0.1 - User: None
+2026-02-18 23:20:32,952 - security - INFO - Request: GET https://localhost:8000/2969686614856657714 from 127.0.0.1
+2026-02-18 23:20:32,957 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-18 23:20:32,984 - security - INFO - Request: GET https://localhost:8000/4115955269089686200 from 127.0.0.1
+2026-02-18 23:20:32,998 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-18 23:20:33,026 - security - INFO - Request: GET https://localhost:8000/login/5995879790195978487 from 127.0.0.1
+2026-02-18 23:20:33,028 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-18 23:20:33,028 - security - INFO - Request: GET https://localhost:8000/login/4474482671492258807 from 127.0.0.1
+2026-02-18 23:20:33,047 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-18 23:20:33,067 - security - INFO - Request: GET https://localhost:8000/static/6840678794529204366 from 127.0.0.1
+2026-02-18 23:20:33,088 - security - INFO - Request: GET https://localhost:8000/static/vendor/2604291823123904758 from 127.0.0.1
+2026-02-18 23:20:33,120 - security - INFO - Request: GET https://localhost:8000/static/vendor/fontawesome/6489577862278154704 from 127.0.0.1
+2026-02-18 23:20:33,141 - security - INFO - Request: GET https://localhost:8000/static/vendor/fontawesome/css/5128087582745750199 from 127.0.0.1
+2026-02-18 23:20:33,210 - security - INFO - Request: GET https://localhost:8000/WEB-INF/web.xml from 127.0.0.1
+2026-02-18 23:20:33,210 - security - INFO - Request: GET https://localhost:8000/WEB-INF/applicationContext.xml from 127.0.0.1
+2026-02-18 23:20:33,255 - security - INFO - Request: GET https://localhost:8000/?-s from 127.0.0.1
+2026-02-18 23:20:33,270 - security - INFO - Request: POST https://localhost:8000/?-d+allow_url_include%3d1+-d+auto_prepend_file%3dphp://input from 127.0.0.1
+2026-02-18 23:20:33,281 - security - INFO - Request: POST https://localhost:8000/?-d+allow_url_include%3d1+-d+auto_prepend_file%3dphp://input from 127.0.0.1
+2026-02-18 23:20:33,312 - security - INFO - Request: GET https://localhost:8000/ from 127.0.0.1
+2026-02-18 23:20:34,067 - security - INFO - Request: GET https://localhost:8000/?class.module.classLoader.DefaultAssertionStatus=nonsense from 127.0.0.1
+2026-02-18 23:20:34,074 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-18 23:20:34,084 - security - INFO - Request: POST https://localhost:8000/ from 127.0.0.1
+2026-02-18 23:20:34,096 - security - INFO - Request: POST https://localhost:8000/ from 127.0.0.1
+2026-02-18 23:20:34,130 - security - INFO - Request: GET https://169.254.169.254/latest/meta-data/ from 127.0.0.1
+2026-02-18 23:20:34,130 - security - INFO - Request: GET https://aws.zaproxy.org/latest/meta-data/ from 127.0.0.1
+2026-02-18 23:20:34,147 - security - INFO - Request: GET https://169.254.169.254/computeMetadata/v1/ from 127.0.0.1
+2026-02-18 23:20:34,147 - security - INFO - Request: GET https://metadata.google.internal/computeMetadata/v1/ from 127.0.0.1
+2026-02-18 23:20:34,160 - security - INFO - Request: GET https://169.254.169.254/opc/v1/instance/ from 127.0.0.1
+2026-02-18 23:20:34,162 - security - INFO - Request: GET https://metadata.oraclecloud.com/opc/v1/instance/ from 127.0.0.1
+2026-02-18 23:20:34,174 - security - INFO - Request: GET https://100.100.100.200/latest/meta-data/ from 127.0.0.1
+2026-02-18 23:20:34,181 - security - INFO - Request: GET https://alibaba.zaproxy.org/latest/meta-data/ from 127.0.0.1
+2026-02-18 23:20:34,183 - security - INFO - Request: GET https://169.254.169.254/metadata/instance from 127.0.0.1
+2026-02-18 23:20:34,204 - security - INFO - Request: GET https://localhost:8000/ from 127.0.0.1
+2026-02-18 23:20:34,210 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-18 23:20:34,242 - security - INFO - Request: GET https://localhost:8000/elmah.axd from 127.0.0.1
+2026-02-18 23:20:34,248 - security - INFO - Request: GET https://localhost:8000/trace.axd from 127.0.0.1
+2026-02-18 23:20:34,259 - security - INFO - Request: GET https://localhost:8000/.htaccess from 127.0.0.1
+2026-02-18 23:20:34,268 - security - INFO - Request: GET https://localhost:8000/.env from 127.0.0.1
+2026-02-18 23:20:34,324 - security - INFO - Request: GET https://localhost:8000/zap8060872076866887880 from 127.0.0.1
+2026-02-18 23:20:34,330 - security - INFO - Request: GET https://localhost:8000/.zap5794478492592856778 from 127.0.0.1
+2026-02-18 23:20:34,346 - security - INFO - Request: GET https://localhost:8000/lfm.php from 127.0.0.1
+2026-02-18 23:20:34,361 - security - INFO - Request: GET https://localhost:8000/actuator/health from 127.0.0.1
+2026-02-18 23:20:34,376 - security - INFO - Request: GET https://localhost:8000/.idea/WebServers.xml from 127.0.0.1
+2026-02-18 23:20:34,380 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-18 23:20:34,398 - security - INFO - Request: GET https://localhost:8000/config/databases.yml from 127.0.0.1
+2026-02-18 23:20:34,417 - security - INFO - Request: GET https://localhost:8000/config/database.yml from 127.0.0.1
+2026-02-18 23:20:34,422 - security - INFO - Request: GET https://localhost:8000/actuator/health from 127.0.0.1
+2026-02-18 23:20:34,426 - security - INFO - Request: GET https://localhost:8000/.git/config from 127.0.0.1
+2026-02-18 23:20:34,438 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-18 23:20:34,447 - security - INFO - Request: GET https://localhost:8000/.svn/entries from 127.0.0.1
+2026-02-18 23:20:34,447 - security - INFO - Request: GET https://localhost:8000/.svn/wc.db from 127.0.0.1
+2026-02-18 23:20:34,464 - security - INFO - Request: GET https://localhost:8000/CVS/root from 127.0.0.1
+2026-02-18 23:20:34,464 - security - INFO - Request: GET https://localhost:8000/server-status from 127.0.0.1
+2026-02-18 23:20:34,479 - security - INFO - Request: GET https://localhost:8000/core from 127.0.0.1
+2026-02-18 23:20:34,479 - security - INFO - Request: GET https://localhost:8000/sftp-config.json from 127.0.0.1
+2026-02-18 23:20:34,491 - security - INFO - Request: GET https://localhost:8000/WS_FTP.ini from 127.0.0.1
+2026-02-18 23:20:34,499 - security - INFO - Request: GET https://localhost:8000/ws_ftp.ini from 127.0.0.1
+2026-02-18 23:20:34,507 - security - INFO - Request: GET https://localhost:8000/WS_FTP.INI from 127.0.0.1
+2026-02-18 23:20:34,513 - security - INFO - Request: GET https://localhost:8000/filezilla.xml from 127.0.0.1
+2026-02-18 23:20:34,529 - security - INFO - Request: GET https://localhost:8000/sitemanager.xml from 127.0.0.1
+2026-02-18 23:20:34,538 - security - INFO - Request: GET https://localhost:8000/FileZilla.xml from 127.0.0.1
+2026-02-18 23:20:34,544 - security - INFO - Request: GET https://localhost:8000/winscp.ini from 127.0.0.1
+2026-02-18 23:20:34,547 - security - INFO - Request: GET https://localhost:8000/WinSCP.ini from 127.0.0.1
+2026-02-18 23:20:34,562 - security - INFO - Request: GET https://localhost:8000/.DS_Store from 127.0.0.1
+2026-02-18 23:20:34,562 - security - INFO - Request: GET https://localhost:8000/.php_cs.cache from 127.0.0.1
+2026-02-18 23:20:34,581 - security - INFO - Request: GET https://localhost:8000/DEADJOE from 127.0.0.1
+2026-02-18 23:20:34,593 - security - INFO - Request: GET https://localhost:8000/sites/default/private/files/backup_migrate/scheduled/test.txt from 127.0.0.1
+2026-02-18 23:20:34,599 - security - INFO - Request: GET https://localhost:8000/app/etc/local.xml from 127.0.0.1
+2026-02-18 23:20:34,613 - security - INFO - Request: GET https://localhost:8000/server.key from 127.0.0.1
+2026-02-18 23:20:34,627 - security - INFO - Request: GET https://localhost:8000/privatekey.key from 127.0.0.1
+2026-02-18 23:20:34,637 - security - INFO - Request: GET https://localhost:8000/myserver.key from 127.0.0.1
+2026-02-18 23:20:34,646 - security - INFO - Request: GET https://localhost:8000/key.pem from 127.0.0.1
+2026-02-18 23:20:34,675 - security - INFO - Request: GET https://localhost:8000/id_rsa from 127.0.0.1
+2026-02-18 23:20:34,689 - security - INFO - Request: GET https://localhost:8000/id_dsa from 127.0.0.1
+2026-02-18 23:20:34,699 - security - INFO - Request: GET https://localhost:8000/.ssh/id_rsa from 127.0.0.1
+2026-02-18 23:20:34,707 - security - INFO - Request: GET https://localhost:8000/.ssh/id_dsa from 127.0.0.1
+2026-02-18 23:20:34,713 - security - INFO - Request: GET https://localhost:8000/adminer.php from 127.0.0.1
+2026-02-18 23:20:34,724 - security - INFO - Request: GET https://localhost:8000/vb_test.php from 127.0.0.1
+2026-02-18 23:20:34,730 - security - INFO - Request: GET https://localhost:8000/CHANGELOG.txt from 127.0.0.1
+2026-02-18 23:20:34,743 - security - INFO - Request: GET https://localhost:8000/sites/default/files/.ht.sqlite from 127.0.0.1
+2026-02-18 23:20:34,755 - security - INFO - Request: GET https://localhost:8000/composer.json from 127.0.0.1
+2026-02-18 23:20:34,763 - security - INFO - Request: GET https://localhost:8000/composer.lock from 127.0.0.1
+2026-02-18 23:20:34,763 - security - INFO - Request: GET https://localhost:8000/vim_settings.xml from 127.0.0.1
+2026-02-18 23:20:34,780 - security - INFO - Request: GET https://localhost:8000/server-info from 127.0.0.1
+2026-02-18 23:20:34,794 - security - INFO - Request: GET https://localhost:8000/phpinfo.php from 127.0.0.1
+2026-02-18 23:20:34,803 - security - INFO - Request: GET https://localhost:8000/info.php from 127.0.0.1
+2026-02-18 23:20:34,810 - security - INFO - Request: GET https://localhost:8000/i.php from 127.0.0.1
+2026-02-18 23:20:34,821 - security - INFO - Request: GET https://localhost:8000/test.php from 127.0.0.1
+2026-02-18 23:20:34,824 - security - INFO - Request: GET https://localhost:8000/_wpeprivate/config.json from 127.0.0.1
+2026-02-18 23:20:34,837 - security - INFO - Request: GET https://localhost:8000/_framework/blazor.boot.json from 127.0.0.1
+2026-02-18 23:20:34,848 - security - INFO - Request: GET https://localhost:8000/.hg from 127.0.0.1
+2026-02-18 23:20:34,857 - security - INFO - Request: GET https://localhost:8000/.bzr from 127.0.0.1
+2026-02-18 23:20:34,863 - security - INFO - Request: GET https://localhost:8000/._darcs from 127.0.0.1
+2026-02-18 23:20:34,898 - security - INFO - Request: GET https://localhost:8000/BitKeeper from 127.0.0.1
+2026-02-18 23:20:34,965 - security - INFO - Request: GET https://localhost:8000/ from 127.0.0.1
+2026-02-18 23:20:34,972 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-18 23:20:35,024 - security - INFO - Request: GET https://localhost:8000/ from 127.0.0.1
+2026-02-18 23:20:35,033 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-18 23:20:35,062 - security - INFO - Request: GET https://localhost:8000/ from 127.0.0.1
+2026-02-18 23:20:35,076 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-18 23:20:35,112 - security - INFO - Request: GET https://localhost:8000/ from 127.0.0.1
+2026-02-18 23:20:35,120 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-18 23:20:35,157 - security - INFO - Request: GET https://localhost:8000/ from 127.0.0.1
+2026-02-18 23:20:35,167 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-18 23:20:35,200 - security - INFO - Request: GET https://localhost:8000/ from 127.0.0.1
+2026-02-18 23:20:35,207 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-18 23:20:35,234 - security - INFO - Request: GET https://localhost:8000/ from 127.0.0.1
+2026-02-18 23:20:35,243 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-18 23:20:35,262 - security - INFO - Request: GET https://localhost:8000/ from 127.0.0.1
+2026-02-18 23:20:35,276 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-18 23:20:35,303 - security - INFO - Request: GET https://localhost:8000/ from 127.0.0.1
+2026-02-18 23:20:35,315 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-18 23:20:35,330 - security - INFO - Request: GET https://localhost:8000/ from 127.0.0.1
+2026-02-18 23:20:35,346 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-18 23:20:35,369 - security - INFO - Request: GET https://localhost:8000/ from 127.0.0.1
+2026-02-18 23:20:35,378 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-18 23:20:35,396 - security - INFO - Request: GET https://localhost:8000/ from 127.0.0.1
+2026-02-18 23:20:35,405 - security - INFO - Request: GET https://localhost:8000/login from 127.0.0.1
+2026-02-18 23:20:35,996 - security - INFO - Request: GET https://localhost:8000/swagger-ui/ from 127.0.0.1
+2026-02-18 23:20:36,558 - security - INFO - Request: GET https://localhost:8000/v3/api-docs from 127.0.0.1
+2026-02-18 23:20:36,577 - security - INFO - Request: GET https://localhost:8000/swagger.json from 127.0.0.1
+2026-02-18 23:20:36,605 - security - INFO - Request: GET https://localhost:8000/openapi.json from 127.0.0.1
+2026-02-18 23:20:36,626 - security - INFO - Request: GET https://localhost:8000/api-docs from 127.0.0.1
+2026-02-18 23:20:36,649 - security - INFO - Request: GET https://localhost:8000/docs/ from 127.0.0.1
+2026-02-18 23:20:36,667 - security - INFO - Request: GET https://localhost:8000/swagger from 127.0.0.1
+2026-02-18 23:20:36,687 - security - INFO - Request: GET https://localhost:8000/v2/api-docs from 127.0.0.1
+2026-02-18 23:20:36,703 - security - INFO - Request: GET https://localhost:8000/swagger-ui/index.html from 127.0.0.1
+2026-02-18 23:20:36,720 - security - INFO - Request: GET https://localhost:8000/openapi.yaml from 127.0.0.1
+2026-02-18 23:20:36,753 - security - INFO - Request: GET https://localhost:8000/swagger.yaml from 127.0.0.1
+2026-02-18 23:20:37,810 - security - INFO - Request: GET https://localhost:8000/swagger/ui/index.html from 127.0.0.1
+2026-02-18 23:22:24,221 - security - INFO - Request: OPTIONS https://localhost:8000/csp-report from ::1
+2026-02-18 23:22:24,228 - security - INFO - Request: OPTIONS https://localhost:8000/login from ::1
+2026-02-18 23:22:30,276 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MSI-PC\AppData\Local\Python\pythoncore-3.11-64\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host

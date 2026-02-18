@@ -2,7 +2,7 @@ from sqlalchemy import create_engine, Column, Integer, UUID, String, DateTime, B
 from sqlalchemy.orm import sessionmaker, declarative_base, synonym
 from sqlalchemy.ext.declarative import declared_attr
 from datetime import datetime
-from urllib.parse import urlparse
+from urllib.parse import quote_plus
 import os
 import re
 import secrets
@@ -26,19 +26,56 @@ except Exception:  # pragma: no cover - used only when liboqs is unavailable
     oqs = None  # type: ignore
     _OQS_AVAILABLE = False
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+def _build_default_db_url() -> str:
+    """Construct a Postgres URL from Railway-style PG vars."""
+    user = os.getenv("PGUSER") or os.getenv("POSTGRES_USER")
+    password = os.getenv("PGPASSWORD") or os.getenv("POSTGRES_PASSWORD")
+    host = os.getenv("PGHOST") or os.getenv("POSTGRES_HOST")
+    port = os.getenv("PGPORT") or os.getenv("POSTGRES_PORT") or "5432"
+    db = os.getenv("PGDATABASE") or os.getenv("POSTGRES_DB")
 
-if not DATABASE_URL:
-    raise RuntimeError("DATABASE_URL is not set. Railway Postgres is required.")
+    if not all([user, password, host, db]):
+        return ""
 
-# Railway sometimes provides postgres://
-if DATABASE_URL.startswith("postgres://"):
-    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+    return f"postgresql+psycopg2://{quote_plus(user)}:{quote_plus(password)}@{host}:{port}/{db}"
 
+def _normalize_database_url(raw_url: str) -> str:
+    """Normalize URL variants for SQLAlchemy + psycopg2."""
+    url = raw_url.strip()
+    if url.startswith("postgres://"):
+        url = "postgresql://" + url[len("postgres://"):]
+    if url.startswith("postgresql://") and "+psycopg2" not in url:
+        url = url.replace("postgresql://", "postgresql+psycopg2://", 1)
+    return url
+
+
+def _resolve_database_url() -> str:
+    candidates = [
+        os.getenv("DATABASE_URL"),
+        os.getenv("DATABASE_PRIVATE_URL"),
+        os.getenv("DATABASE_PUBLIC_URL"),
+        os.getenv("POSTGRES_URL"),
+    ]
+    for value in candidates:
+        if value and value.strip():
+            return _normalize_database_url(value)
+
+    assembled = _build_default_db_url()
+    if assembled:
+        return assembled
+
+    raise RuntimeError(
+        "Database is not configured. Set DATABASE_URL (or DATABASE_PRIVATE_URL), "
+        "or provide PGHOST/PGPORT/PGDATABASE/PGUSER/PGPASSWORD. "
+        "If using Railway, add/link a Postgres service and redeploy."
+    )
+
+
+DATABASE_URL = _resolve_database_url()
 
 connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
 
-engine = create_engine(DATABASE_URL, connect_args=connect_args)
+engine = create_engine(DATABASE_URL, connect_args=connect_args, pool_pre_ping=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
@@ -61,11 +98,18 @@ cipher_suite = Fernet(ENCRYPTION_KEY)
 
 logger = logging.getLogger(__name__)
 
-# ML-KEM settings and key storage (defaults to ML-KEM-768)
-MLKEM_PARAM = os.getenv("MLKEM_PARAM", "ML-KEM-768")
+# ML-KEM settings and key storage (defaults to ML-KEM-512)
+MLKEM_PARAM = os.getenv("MLKEM_PARAM", "ML-KEM-512")
 MLKEM_KEY_DIR = os.getenv("MLKEM_KEY_DIR", KEY_STORAGE_DIR)
-MLKEM_PUBLIC_KEY_PATH = os.getenv("MLKEM_PUBLIC_KEY_PATH", os.path.join(MLKEM_KEY_DIR, "mlkem_public.bin"))
-MLKEM_PRIVATE_KEY_PATH = os.getenv("MLKEM_PRIVATE_KEY_PATH", os.path.join(MLKEM_KEY_DIR, "mlkem_private.bin"))
+_mlkem_param_slug = re.sub(r"[^a-zA-Z0-9]+", "_", MLKEM_PARAM).strip("_").lower()
+MLKEM_PUBLIC_KEY_PATH = os.getenv(
+    "MLKEM_PUBLIC_KEY_PATH",
+    os.path.join(MLKEM_KEY_DIR, f"mlkem_public_{_mlkem_param_slug}.bin"),
+)
+MLKEM_PRIVATE_KEY_PATH = os.getenv(
+    "MLKEM_PRIVATE_KEY_PATH",
+    os.path.join(MLKEM_KEY_DIR, f"mlkem_private_{_mlkem_param_slug}.bin"),
+)
 
 _MLKEM_CACHE = {"pub": None, "sec": None}
 _RAW_SESSION_PREFIX = b"RAW_AES_KEY:"

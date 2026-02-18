@@ -17,8 +17,8 @@ DLL_DIR = None
 # Config / Paths / Constants
 # ------------------------------
 KEY_STORAGE_DIR = os.getenv("KEY_STORAGE_DIR", os.path.join(os.path.dirname(__file__), "keys"))
-MLKEM_PK_PATH   = os.path.join(KEY_STORAGE_DIR, "mlkem768_public.key")
-MLKEM_SK_PATH   = os.path.join(KEY_STORAGE_DIR, "mlkem768_secret.key")
+MLKEM_PK_PATH   = os.path.join(KEY_STORAGE_DIR, "mlkem512_public.key")
+MLKEM_SK_PATH   = os.path.join(KEY_STORAGE_DIR, "mlkem512_secret.key")
 
 # Versioning helps with future migrations (e.g., rotating algorithms)
 TOKEN_VERSION   = "hyb-v1"
@@ -33,26 +33,26 @@ def _oqs_list_kems():
     return oqs.get_enabled_kem_mechanisms() if _OQS_AVAILABLE else []
 
 
-def _pick_mlkem768_name() -> str:
+def _pick_mlkem512_name() -> str:
     if not _OQS_AVAILABLE:
         raise RuntimeError("liboqs is disabled; ML-KEM operations are unavailable")
     # liboqs added ML-KEM names in recent versions; fall back to Kyber aliases if needed
     for name in _oqs_list_kems():
-        if name.upper().startswith("ML-KEM-768"):
+        if name.upper().startswith("ML-KEM-512"):
             return name
-    # Accept legacy Kyber768 if ML-KEM names not present
-    for legacy in ("Kyber768", "Kyber-768"):
+    # Accept legacy Kyber512 if ML-KEM names not present
+    for legacy in ("Kyber512", "Kyber-512"):
         if legacy in _oqs_list_kems():
             return legacy
-    raise RuntimeError("ML-KEM-768 not available in this liboqs build")
+    raise RuntimeError("ML-KEM-512 not available in this liboqs build")
 
 
-ALG = "ML-KEM-768"
+ALG = "ML-KEM-512"
 
 def mlkem_keygen() -> Tuple[bytes, bytes]:
     if not _OQS_AVAILABLE:
         raise RuntimeError("liboqs is disabled; ML-KEM operations are unavailable")
-    kem_name = _pick_mlkem768_name()
+    kem_name = _pick_mlkem512_name()
     with oqs.KeyEncapsulation(kem_name) as kem:
         pk = kem.generate_keypair()
         sk = kem.export_secret_key()
@@ -61,7 +61,7 @@ def mlkem_keygen() -> Tuple[bytes, bytes]:
 def mlkem_encaps(pk: bytes) -> Tuple[bytes, bytes]:
     if not _OQS_AVAILABLE:
         raise RuntimeError("liboqs is disabled; ML-KEM operations are unavailable")
-    kem_name = _pick_mlkem768_name()
+    kem_name = _pick_mlkem512_name()
     with oqs.KeyEncapsulation(kem_name) as kem:
         ct, ss = kem.encap_secret(pk)
         return ct, ss
@@ -69,7 +69,7 @@ def mlkem_encaps(pk: bytes) -> Tuple[bytes, bytes]:
 def mlkem_decaps(ct: bytes, sk: bytes) -> bytes:
     if not _OQS_AVAILABLE:
         raise RuntimeError("liboqs is disabled; ML-KEM operations are unavailable")
-    kem_name = _pick_mlkem768_name()
+    kem_name = _pick_mlkem512_name()
     with oqs.KeyEncapsulation(kem_name) as kem:
         kem.import_secret_key(sk)
         ss = kem.decap_secret(ct)
@@ -95,7 +95,7 @@ def _ensure_dir(path: str):
 # ------------------------------
 def load_or_create_mlkem_keys() -> Tuple[bytes, bytes]:
     """
-    Loads ML-KEM-768 public/secret keys from disk, or creates and persists them.
+    Loads ML-KEM-512 public/secret keys from disk, or creates and persists them.
     Returns: (pk, sk)
     """
     _ensure_dir(KEY_STORAGE_DIR)
@@ -150,7 +150,7 @@ def encrypt_password_hybrid(plaintext: str) -> str:
     kek = _hkdf_sha256(
         ikm=shared_secret,
         salt=kem_ct,                 # binds KEK to this encapsulation
-        info=b"KEK:MLKEM768-AESGCM", # context label
+        info=b"KEK:MLKEM512-AESGCM", # context label
         length=32
     )
 
@@ -162,7 +162,7 @@ def encrypt_password_hybrid(plaintext: str) -> str:
     # 5) Assemble versioned token
     token: Dict[str, Any] = {
         "v": TOKEN_VERSION,
-        "alg": {"kem": "ML-KEM-768", "sym": "AES-256-GCM"},
+        "alg": {"kem": "ML-KEM-512", "sym": "AES-256-GCM"},
         "kem_ct": _b64e(kem_ct),
         "nonce1": _b64e(nonce1),
         "ct1": _b64e(ct1),            # AES-GCM(password)
@@ -200,7 +200,7 @@ def decrypt_password_hybrid(token_json: str) -> str:
     kek = _hkdf_sha256(
         ikm=shared_secret,
         salt=kem_ct,
-        info=b"KEK:MLKEM768-AESGCM",
+        info=b"KEK:MLKEM512-AESGCM",
         length=32
     )
 
