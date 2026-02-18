@@ -26,22 +26,15 @@ except Exception:  # pragma: no cover - used only when liboqs is unavailable
     oqs = None  # type: ignore
     _OQS_AVAILABLE = False
 
-def _build_default_db_url() -> str:
-    """Construct a Postgres URL from env overrides with sensible defaults."""
-    user = os.getenv("POSTGRES_USER", "postgres")
-    password = os.getenv("POSTGRES_PASSWORD", "Kamisatoayato.77")
-    host = os.getenv("POSTGRES_HOST", "localhost")
-    port = os.getenv("POSTGRES_PORT", "5432")
-    db = os.getenv("POSTGRES_DB", "election_db")
-    return f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{db}"
+DATABASE_URL = os.getenv("DATABASE_URL")
 
+if not DATABASE_URL:
+    raise RuntimeError("DATABASE_URL is not set. Railway Postgres is required.")
 
-raw_url = os.getenv("DATABASE_URL")
-if raw_url:
-    parsed = urlparse(raw_url)
-    DATABASE_URL = raw_url if parsed.password else _build_default_db_url()
-else:
-    DATABASE_URL = _build_default_db_url()
+# Railway sometimes provides postgres://
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
 
 connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
 
