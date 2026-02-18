@@ -2,7 +2,7 @@ import json
 from datetime import datetime, timedelta
 from fastapi import APIRouter, Depends, Form, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
-from sqlalchemy import or_
+from sqlalchemy import or_, func
 from sqlalchemy.orm import Session
 from uuid import UUID
 
@@ -128,12 +128,25 @@ def public_dashboard(request: Request, db: Session = Depends(get_db)):
                     status = "ongoing"
                 elif now > e.end_date:
                     status = "ended"
-            # Count candidate tickets (president+vice counted as one)
+            # Count distinct valid ticket presidents to avoid duplicate/orphan ticket inflation.
             try:
-                candidates_count = db.query(CandidateTicket).filter(CandidateTicket.election_id == e.id).count()
+                candidates_count = (
+                    db.query(func.count(func.distinct(CandidateTicket.president_candidate_id)))
+                    .join(Candidate, Candidate.id == CandidateTicket.president_candidate_id)
+                    .filter(
+                        CandidateTicket.election_id == e.id,
+                        Candidate.is_active == True,
+                    )
+                    .scalar()
+                    or 0
+                )
                 if candidates_count == 0:
                     # Fallback to individual candidates tied to the election title
-                    candidates_count = db.query(Candidate).filter(Candidate.position == e.title).count()
+                    candidates_count = (
+                        db.query(Candidate)
+                        .filter(Candidate.position == e.title, Candidate.is_active == True)
+                        .count()
+                    )
             except Exception:
                 candidates_count = 0
             disp_start = (e.start_date + tz_offset) if e.start_date else None
@@ -271,10 +284,23 @@ def admin_elections(request: Request, db: Session = Depends(get_db)):
         votes_q = db.query(Vote).filter(Vote.election_id == e.id)
         votes_cast = votes_q.count()
 
-        # Count candidates from tickets; fallback to legacy direct candidates (position match)
-        candidates_count = db.query(CandidateTicket).filter(CandidateTicket.election_id == e.id).count()
+        # Count distinct valid ticket presidents to avoid duplicate/orphan ticket inflation.
+        candidates_count = (
+            db.query(func.count(func.distinct(CandidateTicket.president_candidate_id)))
+            .join(Candidate, Candidate.id == CandidateTicket.president_candidate_id)
+            .filter(
+                CandidateTicket.election_id == e.id,
+                Candidate.is_active == True,
+            )
+            .scalar()
+            or 0
+        )
         if candidates_count == 0:
-            candidates_count = db.query(Candidate).filter(Candidate.position == e.title).count()
+            candidates_count = (
+                db.query(Candidate)
+                .filter(Candidate.position == e.title, Candidate.is_active == True)
+                .count()
+            )
         voters_count = (
             db.query(VoterElectionStatus)
             .filter(

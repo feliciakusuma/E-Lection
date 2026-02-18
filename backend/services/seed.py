@@ -401,6 +401,10 @@ def ensure_core_schema():
                 {"id", "election_id", "president_candidate_id", "vice_president_candidate_id", "created_at"},
             )
             drop_if_missing(
+                "election_ticket_tallies",
+                {"election_id", "ticket_id", "vote_count", "updated_at"},
+            )
+            drop_if_missing(
                 "candidates",
                 {
                     "id",

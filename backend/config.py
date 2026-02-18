@@ -48,3 +48,7 @@ SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
 SMTP_USERNAME = os.getenv("SMTP_USERNAME", EMAIL_SENDER)
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD","miud xzce erzg pcca")
 SMTP_USE_TLS = os.getenv("SMTP_USE_TLS", "true").lower() == "true"
+
+# Crypto mode for vote session-key wrapping.
+# Set ENABLE_MLKEM=false in constrained runtimes (e.g., Replit) to avoid liboqs dependency.
+ENABLE_MLKEM = os.getenv("ENABLE_MLKEM", "true").lower() == "true"

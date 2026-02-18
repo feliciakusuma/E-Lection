@@ -16,6 +16,7 @@ from cryptography.exceptions import InvalidTag
 import redis
 import uuid
 from sqlalchemy.dialects.postgresql import UUID
+from .config import ENABLE_MLKEM
 
 # liboqs (ML-KEM) support
 try:  # Prefer ML-KEM, fall back cleanly if liboqs is missing
@@ -74,6 +75,7 @@ MLKEM_PUBLIC_KEY_PATH = os.getenv("MLKEM_PUBLIC_KEY_PATH", os.path.join(MLKEM_KE
 MLKEM_PRIVATE_KEY_PATH = os.getenv("MLKEM_PRIVATE_KEY_PATH", os.path.join(MLKEM_KEY_DIR, "mlkem_private.bin"))
 
 _MLKEM_CACHE = {"pub": None, "sec": None}
+_RAW_SESSION_PREFIX = b"RAW_AES_KEY:"
 
 def _load_mlkem_keys_from_disk():
     if os.path.exists(MLKEM_PUBLIC_KEY_PATH) and os.path.exists(MLKEM_PRIVATE_KEY_PATH):
@@ -121,6 +123,9 @@ def decrypt_with_session_key(ciphertext: bytes, session_key: bytes, nonce: bytes
 
 def mlkem_encapsulate() -> tuple[bytes, bytes]:
     """Encapsulate to ML-KEM public key, returning (kem_ciphertext, session_key)."""
+    if not ENABLE_MLKEM:
+        session_key = AESGCM.generate_key(bit_length=256)
+        return _RAW_SESSION_PREFIX + session_key, session_key
     if not _OQS_AVAILABLE:
         raise RuntimeError("ML-KEM encapsulation disabled (liboqs unavailable).")
     pub, _ = _get_mlkem_keys()
@@ -137,6 +142,10 @@ def mlkem_encapsulate() -> tuple[bytes, bytes]:
 
 def mlkem_decapsulate(kem_ciphertext: bytes) -> bytes:
     """Decapsulate KEM ciphertext using ML-KEM private key, return session key."""
+    if kem_ciphertext and kem_ciphertext.startswith(_RAW_SESSION_PREFIX):
+        return kem_ciphertext[len(_RAW_SESSION_PREFIX):]
+    if not ENABLE_MLKEM:
+        raise RuntimeError("ML-KEM decapsulation disabled by configuration.")
     if not _OQS_AVAILABLE:
         raise RuntimeError("ML-KEM decapsulation disabled (liboqs unavailable).")
     _, sec = _get_mlkem_keys()
@@ -357,6 +366,15 @@ class CandidateTicket(Base):
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
 
+class ElectionTicketTally(Base):
+    __tablename__ = "election_ticket_tallies"
+
+    election_id = Column(UUID, primary_key=True, nullable=False)
+    ticket_id = Column(UUID, primary_key=True, nullable=False)
+    vote_count = Column(Integer, nullable=False, default=0)
+    updated_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+
 class VoterElectionStatus(Base):
     __tablename__ = "voter_election_status"
 
@@ -550,6 +568,16 @@ def verify_data_integrity(db, model_class, record_id):
 def get_vote_count_secure(db, election_id):
     """Get vote count without exposing individual votes"""
     counts: dict = {}
+    tallies = (
+        db.query(ElectionTicketTally)
+        .filter(ElectionTicketTally.election_id == election_id)
+        .all()
+    )
+    if tallies:
+        for row in tallies:
+            counts[str(row.ticket_id)] = int(row.vote_count or 0)
+        return counts
+
     votes = (
         db.query(Vote)
         .filter(
@@ -574,6 +602,32 @@ def get_vote_count_secure(db, election_id):
         except Exception:
             continue
     return counts
+
+
+def increment_ticket_tally(db, election_id, ticket_id, step: int = 1):
+    """Increment persistent ticket tally inside the same vote transaction."""
+    if ticket_id is None or step == 0:
+        return
+    row = (
+        db.query(ElectionTicketTally)
+        .filter(
+            ElectionTicketTally.election_id == election_id,
+            ElectionTicketTally.ticket_id == ticket_id,
+        )
+        .first()
+    )
+    if not row:
+        row = ElectionTicketTally(
+            election_id=election_id,
+            ticket_id=ticket_id,
+            vote_count=0,
+            updated_at=datetime.utcnow(),
+        )
+        db.add(row)
+        db.flush()
+    row.vote_count = int(row.vote_count or 0) + int(step)
+    row.updated_at = datetime.utcnow()
+    db.add(row)
 
 def create_secure_backup():
     """Create encrypted backup of critical data"""

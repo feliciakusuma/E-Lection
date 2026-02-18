@@ -10,7 +10,7 @@ cryptography
 python-multipart
 dnspython
 cryptography
-oqs
+liboqs-python==0.14.1
 psycopg2-binary
 psycopg2-binary
 python-jose[cryptography]

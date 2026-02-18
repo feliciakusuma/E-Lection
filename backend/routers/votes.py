@@ -15,6 +15,7 @@ from ..database import (
     Vote,
     User,
     VoterElectionStatus,
+    increment_ticket_tally,
     get_readonly_db,
     get_secure_db,
     get_vote_count_secure,
@@ -230,6 +231,7 @@ def cast_vote(
             status_row.has_voted = True
             db.add(status_row)
 
+        increment_ticket_tally(db, election_id, ticket.id if ticket else None, step=1)
         db.add(new_vote)
         db.commit()
 
