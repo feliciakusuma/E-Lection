@@ -1,3 +1,4 @@
+import base64
 from urllib.parse import urlencode
 from fastapi import APIRouter, Depends, Form, HTTPException, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
@@ -22,6 +23,10 @@ from ..config import (
     SMTP_PASSWORD,
     SMTP_USE_TLS,
     RESEND_API_KEY,
+    GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET,
+    GOOGLE_REFRESH_TOKEN,
+    GMAIL_API_USER,
 )
 from ..dependencies import get_db, templates
 from ..database import User, Candidate, Election, Admin, Cohort, Major
@@ -96,7 +101,7 @@ def login_page(request: Request):
 
 
 def send_verification_email(to_email: str, first_name: str, last_name: str, code: str):
-    """Send a verification code email via Resend, with SMTP fallback."""
+    """Send a verification code email via Gmail API, then Resend, then SMTP."""
 
     msg = EmailMessage()
     msg["From"] = EMAIL_SENDER
@@ -132,6 +137,44 @@ def send_verification_email(to_email: str, first_name: str, last_name: str, code
     msg.set_content(plain_body)
     msg.add_alternative(html_body, subtype="html")
 
+    errors: list[str] = []
+
+    # Prefer Gmail API (HTTPS + OAuth refresh token).
+    if GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET and GOOGLE_REFRESH_TOKEN:
+        try:
+            token_resp = requests.post(
+                "https://oauth2.googleapis.com/token",
+                data={
+                    "client_id": GOOGLE_CLIENT_ID,
+                    "client_secret": GOOGLE_CLIENT_SECRET,
+                    "refresh_token": GOOGLE_REFRESH_TOKEN,
+                    "grant_type": "refresh_token",
+                },
+                timeout=10,
+            )
+            if not (200 <= token_resp.status_code < 300):
+                raise RuntimeError(f"Token exchange failed: {token_resp.status_code} {token_resp.text}")
+
+            access_token = token_resp.json().get("access_token")
+            if not access_token:
+                raise RuntimeError("Token exchange succeeded but access_token is missing")
+
+            raw_message = base64.urlsafe_b64encode(msg.as_bytes()).decode("utf-8")
+            gmail_resp = requests.post(
+                f"https://gmail.googleapis.com/gmail/v1/users/{GMAIL_API_USER}/messages/send",
+                headers={
+                    "Authorization": f"Bearer {access_token}",
+                    "Content-Type": "application/json",
+                },
+                json={"raw": raw_message},
+                timeout=10,
+            )
+            if not (200 <= gmail_resp.status_code < 300):
+                raise RuntimeError(f"Gmail API send failed: {gmail_resp.status_code} {gmail_resp.text}")
+            return
+        except Exception as exc:
+            errors.append(str(exc))
+
     if RESEND_API_KEY:
         resp = requests.post(
             "https://api.resend.com/emails",
@@ -148,21 +191,29 @@ def send_verification_email(to_email: str, first_name: str, last_name: str, code
             },
             timeout=10,
         )
-        if not (200 <= resp.status_code < 300):
-            raise RuntimeError(f"Resend API error: {resp.status_code} {resp.text}")
-        return
+        if 200 <= resp.status_code < 300:
+            return
+        errors.append(f"Resend API error: {resp.status_code} {resp.text}")
 
-    if not (SMTP_HOST and SMTP_PORT and SMTP_USERNAME and SMTP_PASSWORD and EMAIL_SENDER):
-        raise RuntimeError("Email provider not configured (RESEND_API_KEY or SMTP).")
+    if SMTP_HOST and SMTP_PORT and SMTP_USERNAME and SMTP_PASSWORD and EMAIL_SENDER:
+        server = smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=10)
+        try:
+            if SMTP_USE_TLS:
+                server.starttls()
+            server.login(SMTP_USERNAME, SMTP_PASSWORD)
+            server.send_message(msg)
+            return
+        except Exception as exc:
+            errors.append(f"SMTP send failed: {exc}")
+        finally:
+            server.quit()
 
-    server = smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=10)
-    try:
-        if SMTP_USE_TLS:
-            server.starttls()
-        server.login(SMTP_USERNAME, SMTP_PASSWORD)
-        server.send_message(msg)
-    finally:
-        server.quit()
+    if not errors:
+        raise RuntimeError(
+            "Email provider not configured (set GOOGLE_CLIENT_ID/GOOGLE_CLIENT_SECRET/GOOGLE_REFRESH_TOKEN, "
+            "or RESEND_API_KEY, or SMTP config)."
+        )
+    raise RuntimeError("All email providers failed: " + " | ".join(errors))
 
 def fetch_ms_jwks(tenant_id: str) -> dict:
     jwks_url = f"https://login.microsoftonline.com/{tenant_id}/discovery/v2.0/keys"

@@ -50,6 +50,10 @@ SMTP_USERNAME = os.getenv("SMTP_USERNAME", EMAIL_SENDER)
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
 SMTP_USE_TLS = os.getenv("SMTP_USE_TLS", "true").lower() == "true"
 RESEND_API_KEY = os.getenv("RESEND_API_KEY", "")
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "").strip()
+GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET", "").strip()
+GOOGLE_REFRESH_TOKEN = os.getenv("GOOGLE_REFRESH_TOKEN", "").strip()
+GMAIL_API_USER = os.getenv("GMAIL_API_USER", "me").strip() or "me"
 
 # Crypto mode for vote session-key wrapping.
 # Set ENABLE_MLKEM=false in constrained runtimes (e.g., Replit) to avoid liboqs dependency.
