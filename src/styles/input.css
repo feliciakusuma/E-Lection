@@ -1314,6 +1314,20 @@ input[type="password"]::-webkit-textfield-decoration-container {
   font-size: .875rem;
 }
 
+.section-list.section-list-empty {
+  min-height: 190px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-list.section-list-empty .empty-list-item {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+  padding: 0;
+}
+
 .placeholder {
   height: 10rem;
   display: flex;

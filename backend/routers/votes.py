@@ -12,6 +12,7 @@ from ..database import (
     Candidate,
     CandidateTicket,
     Election,
+    ElectionTicketTally,
     Vote,
     User,
     VoterElectionStatus,
@@ -67,7 +68,7 @@ def _ticket_label(president: Candidate | None, vice: Candidate | None) -> str:
 
 def _reset_status_if_no_votes(db: Session, election_id: UUID) -> None:
     """If the votes table has no rows for this election (e.g., manual reset),
-    mark all voter_election_status entries as not voted so testing can continue."""
+    mark all voter_election_status entries as not voted and clear stale tallies."""
     try:
         has_vote = db.query(Vote.id).filter(Vote.election_id == election_id).first()
     except Exception:
@@ -78,6 +79,9 @@ def _reset_status_if_no_votes(db: Session, election_id: UUID) -> None:
         VoterElectionStatus.election_id == election_id,
         VoterElectionStatus.has_voted == True,
     ).update({VoterElectionStatus.has_voted: False})
+    db.query(ElectionTicketTally).filter(
+        ElectionTicketTally.election_id == election_id,
+    ).delete(synchronize_session=False)
     db.flush()
 
 

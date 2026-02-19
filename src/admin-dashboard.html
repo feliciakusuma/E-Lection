@@ -40,7 +40,7 @@
     </nav>
     <div class="sidebar-footer">
       <a href="/admin" class="logout-link">
-        <i class="fa-solid fa-arrow-right-from-bracket text-black mr-2 w-5 h-5 inline-flex items-center justify-center"></i>
+        <i class="fa-solid fa-arrow-right-from-bracket text-red-500 mr-3 w-5 h-5 inline-flex items-center justify-center"></i>
         <span>Logout</span>
       </a>
     </div>
@@ -202,7 +202,7 @@
             <h3 class="section-title">Recent Activity</h3>
           </div>
           <div class="section-divider"></div>
-          <ul class="section-list recent-activity-list ui-maxh-320-scroll">
+          <ul class="section-list recent-activity-list {% if not (recent_activity and recent_activity|length > 0) %}section-list-empty{% else %}ui-maxh-320-scroll{% endif %}">
             {% if recent_activity and recent_activity|length > 0 %}
               {% for item in recent_activity %}
               <li class="activity-list">
@@ -216,7 +216,7 @@
               </li>
               {% endfor %}
             {% else %}
-              <li class="list-item ui-flex-center-muted">
+              <li class="list-item ui-flex-center-muted empty-list-item">
                 No recent activity.
               </li>
             {% endif %}
@@ -234,7 +234,7 @@
           </div>
           <div class="section-divider"></div>
 
-          <ul class="section-list">
+          <ul class="section-list {% if not (recent_voters and recent_voters|length > 0) %}section-list-empty{% endif %}">
             {% if recent_voters and recent_voters|length > 0 %}
               {% for item in recent_voters %}
               {% set voter = item[0] %}
@@ -249,7 +249,7 @@
               </li>
               {% endfor %}
             {% else %}
-              <li class="list-item ui-flex-center-muted">
+              <li class="list-item ui-flex-center-muted empty-list-item">
                 No recent voters found.
               </li>
             {% endif %}
@@ -263,7 +263,7 @@
           </div>
           <div class="section-divider" aria-hidden="true"></div>
           
-          <ul class="section-list">
+          <ul class="section-list {% if not active_candidates %}section-list-empty{% endif %}">
             {% if active_candidates %}
               {% for c in active_candidates %}
                 {% set st = (c.status or 'pending')|lower %}
@@ -283,8 +283,8 @@
                 </li>
               {% endfor %}
             {% else %}
-              <li class="list-item ui-flex-center-muted">
-                No candidates found.
+              <li class="list-item ui-flex-center-muted empty-list-item">
+                No active candidates found.
               </li>
             {% endif %}
           </ul>
@@ -415,6 +415,7 @@
   <script nonce="{{ csp_nonce(request) }}" src="{{ asset(request, 'app.js') }}" defer></script>
 </body>
 </html>
+
 
 
 
