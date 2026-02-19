@@ -88,8 +88,8 @@
 
           <div>
             <label class="block text-sm font-medium mb-1" for="email">Email</label>
-            <input type="email" id="email" name="email" class="w-full px-3 py-2 border rounded-md" value="{{ profile_data.get('email', '') }}" required>
-            <p class="text-xs text-gray-500 mt-1">Update your email address if it has changed.</p>
+            <input type="email" id="email" name="email" class="w-full px-3 py-2 border rounded-md bg-gray-100 text-gray-600 cursor-not-allowed" value="{{ profile_data.get('email', '') }}" readonly aria-readonly="true">
+            <p class="text-xs text-gray-500 mt-1">Email is fixed to your Sampoerna University account and cannot be changed.</p>
           </div>
 
           <div class="flex justify-end gap-2">

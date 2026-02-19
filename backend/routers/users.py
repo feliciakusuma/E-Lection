@@ -1,13 +1,9 @@
-import secrets
 from fastapi import APIRouter, Form, Request, Depends
 from sqlalchemy.orm import Session
-from uuid import UUID
 
 from ..dependencies import templates, get_db
 from ..database import User
 from fastapi.responses import HTMLResponse, RedirectResponse
-from ..utils.validation import is_valid_email_address
-from ..routers.auth import send_verification_email
 from ..utils.csrf import validate_csrf
 from ..utils.cookies import set_secure_cookies
 
@@ -35,16 +31,10 @@ def profile_page(request: Request, db: Session = Depends(get_db)):
         {
             "request": request,
             "form_data": form_data,
-            "success": request.query_params.get("email_updated") and "Email updated successfully." or None,
+            "success": None,
             "error": None,
         },
     )
-
-
-def _build_email_change_token(new_email: str) -> tuple[str, str]:
-    """Create a verification code and token string for email change flow."""
-    code = f"{secrets.randbelow(10**6):06d}"
-    return code, f"change:{code}:{new_email}"
 
 
 @router.post("/profile", response_class=HTMLResponse)
@@ -101,6 +91,22 @@ def profile_submit(
         user.last_name = last_name.strip()
         if student_id:
             user.student_id = student_id.strip()
+        # Email is immutable for voter accounts.
+        if email and email.strip().lower() != (user.email or "").strip().lower():
+            return templates.TemplateResponse(
+                "profile.html",
+                {
+                    "request": request,
+                    "form_data": {
+                        "first_name": user.first_name,
+                        "last_name": user.last_name,
+                        "email": user.email,
+                        "student_id": user.student_id,
+                    },
+                    "error": "Email cannot be changed.",
+                    "success": None,
+                },
+            )
 
         db.commit()
         db.refresh(user)
