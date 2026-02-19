@@ -21,6 +21,7 @@ from ..config import (
     SMTP_USERNAME,
     SMTP_PASSWORD,
     SMTP_USE_TLS,
+    RESEND_API_KEY,
 )
 from ..dependencies import get_db, templates
 from ..database import User, Candidate, Election, Admin, Cohort, Major
@@ -95,9 +96,7 @@ def login_page(request: Request):
 
 
 def send_verification_email(to_email: str, first_name: str, last_name: str, code: str):
-    """Send a verification code email."""
-    if not (SMTP_HOST and SMTP_PORT and SMTP_USERNAME and SMTP_PASSWORD and EMAIL_SENDER):
-        raise RuntimeError("SMTP settings are not configured")
+    """Send a verification code email via Resend, fall back to SMTP."""
 
     msg = EmailMessage()
     msg["From"] = EMAIL_SENDER
@@ -132,6 +131,29 @@ def send_verification_email(to_email: str, first_name: str, last_name: str, code
     )
     msg.set_content(plain_body)
     msg.add_alternative(html_body, subtype="html")
+
+    if RESEND_API_KEY:
+        resp = requests.post(
+            "https://api.resend.com/emails",
+            headers={
+                "Authorization": f"Bearer {RESEND_API_KEY}",
+                "Content-Type": "application/json",
+            },
+            json={
+                "from": EMAIL_SENDER,
+                "to": [to_email],
+                "subject": msg["Subject"],
+                "html": html_body,
+                "text": plain_body,
+            },
+            timeout=10,
+        )
+        if not (200 <= resp.status_code < 300):
+            raise RuntimeError(f"Resend API error: {resp.status_code} {resp.text}")
+        return
+
+    if not (SMTP_HOST and SMTP_PORT and SMTP_USERNAME and SMTP_PASSWORD and EMAIL_SENDER):
+        raise RuntimeError("Email provider not configured (RESEND_API_KEY or SMTP).")
 
     server = smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=10)
     try:
