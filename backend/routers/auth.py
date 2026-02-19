@@ -399,14 +399,18 @@ def microsoft_callback(
             user.status = "verified"
         db.commit()
 
-        create_audit_log(
-            db,
-            "users",
-            user.id,
-            "LOGIN_MICROSOFT_SUCCESS",
-            user_id=str(user.id),
-            ip_address=request.client.host,
-        )
+        try:
+            # Keep action <= 20 chars for older DB schemas.
+            create_audit_log(
+                db,
+                "users",
+                user.id,
+                "MS_LOGIN_SUCCESS",
+                user_id=str(user.id),
+                ip_address=request.client.host,
+            )
+        except Exception as audit_exc:
+            security_logger.warning("Audit write failed on Microsoft login: %s", audit_exc)
 
         response = RedirectResponse(url="/dashboard", status_code=302)
         response.delete_cookie("oauth_state", path="/")
