@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, Column, Integer, UUID, String, DateTime, Boolean, Text, LargeBinary, event, func
-from sqlalchemy.orm import sessionmaker, declarative_base, synonym
+from sqlalchemy.orm import sessionmaker, declarative_base, synonym, validates
 from sqlalchemy.ext.declarative import declared_attr
 from datetime import datetime
 from urllib.parse import quote_plus
@@ -8,6 +8,7 @@ import re
 import secrets
 import json
 import logging
+import hashlib
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from cryptography.hazmat.primitives.kdf.hkdf import HKDF
@@ -266,7 +267,8 @@ class User(Base):
     cohort_id = Column(UUID, nullable=True)
     major_id = Column(UUID, nullable=True)
     status = Column(String(20), default="pending")  # pending, verified, rejected
-    verification_token = Column(String(100), nullable=True)
+    verification_token = Column("verification_token_encrypted", Text, nullable=True)
+    verification_token_hash = Column(String(64), nullable=True, index=True)
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     
@@ -279,6 +281,17 @@ class User(Base):
         self.major_id = major_id
         self.verification_token = secrets.token_urlsafe(32)
         super().__init__(**kwargs)
+
+    @staticmethod
+    def _hash_verification_token(token: str | None) -> str | None:
+        if not token:
+            return None
+        return hashlib.sha256(token.encode("utf-8")).hexdigest()
+
+    @validates("verification_token")
+    def _set_verification_token(self, key, value):
+        self.verification_token_hash = self._hash_verification_token(value)
+        return value
     
     @staticmethod
     def find_by_email(db, email):
