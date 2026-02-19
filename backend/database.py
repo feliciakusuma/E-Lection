@@ -201,7 +201,7 @@ def decrypt_session_key(encrypted_session_key: bytes) -> bytes:
     """Derive the AES session key from stored KEM ciphertext using ML-KEM only."""
     return mlkem_decapsulate(encrypted_session_key)
 
-REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
+REDIS_URL = os.getenv("REDIS_URL")
 try:
     SESSION_KEY_TTL_SECONDS = int(os.getenv("SESSION_KEY_TTL_SECONDS", "0") or 0)
 except ValueError:
@@ -211,6 +211,8 @@ _redis_client = None
 
 def _get_redis_client():
     global _redis_client
+    if not REDIS_URL:
+        raise RuntimeError("REDIS_URL is not set.")
     if _redis_client is None:
         _redis_client = redis.Redis.from_url(REDIS_URL)
     return _redis_client
@@ -222,6 +224,8 @@ def _session_cache_key(verification_code: str) -> str:
 
 def cache_session_ciphertext(verification_code: str, ciphertext: bytes) -> None:
     if not ciphertext:
+        return
+    if not REDIS_URL:
         return
     try:
         client = _get_redis_client()
@@ -235,6 +239,8 @@ def cache_session_ciphertext(verification_code: str, ciphertext: bytes) -> None:
 
 
 def get_cached_session_ciphertext(verification_code: str) -> bytes | None:
+    if not REDIS_URL:
+        return None
     try:
         client = _get_redis_client()
         return client.get(_session_cache_key(verification_code))
