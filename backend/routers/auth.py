@@ -1004,7 +1004,7 @@ def register_post(
             "users",
             new_user.id,
             "REGISTRATION_SUCCESS",
-            user_id=email,
+            user_id=str(new_user.id),
             ip_address=client_ip,
         )
         security_logger.info(f"New user registered: {email} from {client_ip}")

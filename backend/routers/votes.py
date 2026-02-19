@@ -266,7 +266,14 @@ def cast_vote(
         db.add(new_vote)
         db.commit()
 
-        create_audit_log(db, "votes", new_vote.id, "VOTE_CAST", user_id=voter_id, ip_address=client_ip)
+        create_audit_log(
+            db,
+            "votes",
+            new_vote.id,
+            "VOTE_CAST",
+            user_id=voter_identifier,
+            ip_address=client_ip,
+        )
         security_logger.info(
             "Vote cast successfully - Election: %s, Verification: %s", election_id, new_vote.verification_code
         )
