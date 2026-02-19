@@ -18,6 +18,13 @@ logging.basicConfig(
 security_logger = logging.getLogger("security")
 
 
+def _truncate(value: Optional[str], max_len: int) -> Optional[str]:
+    if value is None:
+        return None
+    text = str(value)
+    return text[:max_len]
+
+
 def log_security_event(
     event_type: str, details: str, ip_address: Optional[str] = None, user_id: Optional[str] = None
 ) -> None:
@@ -37,14 +44,18 @@ def create_audit_log(
 ):
     """Create audit log entry."""
     audit_entry = AuditLog(
-        table_name=table_name,
+        table_name=_truncate(table_name, 50) or "unknown",
         record_id=record_id,
-        action=action,
-        user_id=user_id,
-        ip_address=ip_address,
-        user_agent=user_agent,
+        action=_truncate(action, 20) or "UNKNOWN",
+        user_id=_truncate(user_id, 100),
+        ip_address=_truncate(ip_address, 45),
+        user_agent=_truncate(user_agent, 500),
         timestamp=datetime.utcnow(),
         is_authorized=True,
     )
-    db.add(audit_entry)
-    db.commit()
+    try:
+        db.add(audit_entry)
+        db.commit()
+    except Exception as exc:
+        db.rollback()
+        security_logger.warning("Failed to write audit log: %s", exc)
