@@ -421,8 +421,17 @@ def admin_dashboard(request: Request, db: Session = Depends(get_db)):
 
     recent_voters = []
     try:
+        status_rows = (
+            db.query(VoterElectionStatus.voter_id)
+            .filter(VoterElectionStatus.has_voted == True)
+            .distinct()
+            .all()
+        )
+        voted_identifiers = {str(row[0]) for row in status_rows if row[0] is not None}
         recent_users = db.query(User).order_by(User.created_at.desc()).limit(3).all()
-        recent_voters = [(u, False) for u in recent_users]
+        recent_voters = [
+            (u, str(getattr(u, "id", "") or "") in voted_identifiers) for u in recent_users
+        ]
     except Exception:
         recent_voters = []
 
