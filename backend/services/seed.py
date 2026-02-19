@@ -322,9 +322,9 @@ def ensure_core_schema():
                         or "is_admin" in legacy_cols):
                     conn.execute(text("DROP TABLE IF EXISTS users CASCADE;"))
                 else:
-                    # Ensure verification token storage is encrypted + hashed
-                    if "verification_token" in legacy_cols and "verification_token_encrypted" not in legacy_cols:
-                        conn.execute(text("ALTER TABLE users RENAME COLUMN verification_token TO verification_token_encrypted;"))
+                    # Keep a single plaintext verification token column.
+                    if "verification_token_encrypted" in legacy_cols and "verification_token" not in legacy_cols:
+                        conn.execute(text("ALTER TABLE users RENAME COLUMN verification_token_encrypted TO verification_token;"))
                         legacy_cols = conn.execute(
                             text(
                                 """
@@ -334,11 +334,11 @@ def ensure_core_schema():
                                 """
                             )
                         ).scalars().all()
-                    if "verification_token_encrypted" in legacy_cols:
-                        conn.execute(text("ALTER TABLE users ALTER COLUMN verification_token_encrypted TYPE TEXT;"))
-                    if "verification_token_hash" not in legacy_cols:
-                        conn.execute(text("ALTER TABLE users ADD COLUMN verification_token_hash VARCHAR(64);"))
-                        conn.execute(text("CREATE INDEX IF NOT EXISTS ix_users_verification_token_hash ON users (verification_token_hash);"))
+                    if "verification_token" in legacy_cols:
+                        conn.execute(text("ALTER TABLE users ALTER COLUMN verification_token TYPE TEXT;"))
+                    if "verification_token_hash" in legacy_cols:
+                        conn.execute(text("DROP INDEX IF EXISTS ix_users_verification_token_hash;"))
+                        conn.execute(text("ALTER TABLE users DROP COLUMN IF EXISTS verification_token_hash;"))
 
             # Drop elections table if legacy encrypted results column exists.
             election_reg = conn.execute(text("SELECT to_regclass('public.elections')")).scalar()
@@ -441,14 +441,10 @@ def ensure_core_schema():
 
 
 def backfill_user_verification_tokens():
-    """Encrypt and hash any legacy plaintext verification tokens."""
+    """Normalize verification tokens as plain text."""
     db = SessionLocal()
     try:
-        users = (
-            db.query(User)
-            .filter(User.verification_token_hash == None)  # noqa: E711
-            .all()
-        )
+        users = db.query(User).all()
         changed = False
         for u in users:
             token = u.verification_token

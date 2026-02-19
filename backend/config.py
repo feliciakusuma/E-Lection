@@ -45,11 +45,10 @@ MS_REDIRECT_URI = os.getenv(
 # Email (verification)
 EMAIL_SENDER = os.getenv("EMAIL_SENDER", "election.noreply@gmail.com")
 SMTP_HOST = os.getenv("SMTP_HOST", "smtp.gmail.com")
-SMTP_PORT = int(os.getenv("SMTP_PORT", "2525"))
+SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
 SMTP_USERNAME = os.getenv("SMTP_USERNAME", EMAIL_SENDER)
-SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
+SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "miud xzce erzg pcca")
 SMTP_USE_TLS = os.getenv("SMTP_USE_TLS", "true").lower() == "true"
-RESEND_API_KEY = os.getenv("RESEND_API_KEY", "")
 
 # Crypto mode for vote session-key wrapping.
 # Set ENABLE_MLKEM=false in constrained runtimes (e.g., Replit) to avoid liboqs dependency.
