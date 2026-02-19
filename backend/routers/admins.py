@@ -27,6 +27,33 @@ from ..utils.cookies import set_secure_cookies
 
 router = APIRouter()
 
+_RANK_LABELS = ["Winner", "Runner-up", "Third place"]
+
+
+def _apply_rank_labels(rows: list[dict], total_votes: int) -> None:
+    """Assign rank_label with tie handling. Mutates rows in-place."""
+    if not rows:
+        return
+    if total_votes <= 0:
+        for r in rows:
+            r["rank_label"] = "Candidate"
+        return
+
+    distinct_votes = []
+    for r in rows:
+        v = int(r.get("votes", 0))
+        if v not in distinct_votes:
+            distinct_votes.append(v)
+
+    vote_to_label = {}
+    for idx, v in enumerate(distinct_votes):
+        if idx < len(_RANK_LABELS):
+            vote_to_label[v] = _RANK_LABELS[idx]
+        else:
+            vote_to_label[v] = "Candidate"
+
+    for r in rows:
+        r["rank_label"] = vote_to_label.get(int(r.get("votes", 0)), "Candidate")
 
 def _ticket_label(president: Candidate | None, vice: Candidate | None) -> str:
     pres_name = (getattr(president, "full_name", "") or "").strip()
@@ -375,16 +402,15 @@ def admin_dashboard(request: Request, db: Session = Depends(get_db)):
             raw.sort(key=lambda x: x["votes"], reverse=True)
             for idx, r in enumerate(raw):
                 pct = (r["votes"] / total_votes_live * 100) if total_votes_live > 0 else 0
-                rank_label = "Winner" if idx == 0 else ("Runner-up" if idx == 1 else ("Third place" if idx == 2 else "Candidate"))
                 live_results.append(
                     {
                         "name": r["name"],
                         "votes": r["votes"],
                         "percent": pct,
                         "color": palette[idx % len(palette)],
-                        "rank_label": rank_label,
                     }
                 )
+            _apply_rank_labels(live_results, total_votes_live)
             # Defensive: ignore placeholder rows so the template can show true empty state.
             live_results = [
                 r for r in live_results

@@ -28,6 +28,33 @@ from sqlalchemy.exc import IntegrityError
 
 router = APIRouter()
 
+_RANK_LABELS = ["Winner", "Runner-up", "Third place"]
+
+
+def _apply_rank_labels(rows: list[dict], total_votes: int) -> None:
+    """Assign rank_label with tie handling. Mutates rows in-place."""
+    if not rows:
+        return
+    if total_votes <= 0:
+        for r in rows:
+            r["rank_label"] = "Candidate"
+        return
+
+    distinct_votes = []
+    for r in rows:
+        v = int(r.get("votes", 0))
+        if v not in distinct_votes:
+            distinct_votes.append(v)
+
+    vote_to_label = {}
+    for idx, v in enumerate(distinct_votes):
+        if idx < len(_RANK_LABELS):
+            vote_to_label[v] = _RANK_LABELS[idx]
+        else:
+            vote_to_label[v] = "Candidate"
+
+    for r in rows:
+        r["rank_label"] = vote_to_label.get(int(r.get("votes", 0)), "Candidate")
 
 def _ticket_label(president: Candidate | None, vice: Candidate | None) -> str:
     """Consistently format ticket name with optional vice."""
@@ -350,6 +377,7 @@ def api_results(election_id: UUID, db=Depends(get_readonly_db)):
                     "color": palette[idx % len(palette)],
                 }
             )
+        _apply_rank_labels(results, total)
 
         return {"election_id": election.id, "title": election.title, "results": results}
     except Exception as exc:
@@ -448,16 +476,15 @@ def election_results_page(request: Request, election_id: UUID, db=Depends(get_se
         raw.sort(key=lambda x: x["votes"], reverse=True)
         for idx, r in enumerate(raw):
             pct = (r["votes"] / total * 100) if total > 0 else 0
-            rank_label = "Winner" if idx == 0 else ("Runner-up" if idx == 1 else ("Third place" if idx == 2 else "Candidate"))
             results.append(
                 {
                     "name": r["name"],
                     "votes": r["votes"],
                     "percent": pct,
                     "color": palette[idx % len(palette)],
-                    "rank_label": rank_label,
                 }
             )
+        _apply_rank_labels(results, total)
     except Exception as exc:
         log_security_event("RESULTS_ERROR", f"Error building results for {election_id}: {exc}", None, None)
         results = []
@@ -477,17 +504,16 @@ def election_results_page(request: Request, election_id: UUID, db=Depends(get_se
                     name = getattr(pres, "full_name", f"Candidate {pres.id}")
                     if vice:
                         name = f"{name} & {getattr(vice, 'full_name', f'Candidate {vice.id}')}"
-                    rank_label = "Winner" if pair_idx == 0 else ("Runner-up" if pair_idx == 1 else ("Third place" if pair_idx == 2 else "Candidate"))
                     results.append(
                         {
                             "name": name,
                             "votes": 0,
                             "percent": 0,
                             "color": palette[pair_idx % len(palette)],
-                            "rank_label": rank_label,
                         }
                     )
                     pair_idx += 1
+            _apply_rank_labels(results, 0)
         except Exception:
             # If the fallback also fails, leave results empty and let the template handle it.
             pass
