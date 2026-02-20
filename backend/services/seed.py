@@ -322,6 +322,8 @@ def ensure_core_schema():
                         or "is_admin" in legacy_cols):
                     conn.execute(text("DROP TABLE IF EXISTS users CASCADE;"))
                 else:
+                    if "has_voted" not in legacy_cols:
+                        conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS has_voted BOOLEAN NOT NULL DEFAULT FALSE;"))
                     # Keep a single plaintext verification token column.
                     if "verification_token_encrypted" in legacy_cols and "verification_token" not in legacy_cols:
                         conn.execute(text("ALTER TABLE users RENAME COLUMN verification_token_encrypted TO verification_token;"))
@@ -355,20 +357,10 @@ def ensure_core_schema():
                 if "results_encrypted" in election_cols:
                     conn.execute(text("DROP TABLE IF EXISTS elections CASCADE;"))
 
-            # Drop system_config table if legacy encrypted value column exists.
-            sys_reg = conn.execute(text("SELECT to_regclass('public.system_config')")).scalar()
-            if sys_reg:
-                sys_cols = conn.execute(
-                    text(
-                        """
-                        SELECT column_name
-                        FROM information_schema.columns
-                        WHERE table_name = 'system_config'
-                        """
-                    )
-                ).scalars().all()
-                if "value_encrypted" in sys_cols:
-                    conn.execute(text("DROP TABLE IF EXISTS system_config CASCADE;"))
+            # Drop legacy tables we no longer use.
+            conn.execute(text("DROP TABLE IF EXISTS system_config CASCADE;"))
+            conn.execute(text("DROP TABLE IF EXISTS voter_election_status CASCADE;"))
+            conn.execute(text("DROP TABLE IF EXISTS election_ticket_tallies CASCADE;"))
 
             # Only drop data tables if schema is wrong (otherwise keep data).
             drop_if_missing(
@@ -388,21 +380,8 @@ def ensure_core_schema():
                 },
             )
             drop_if_missing(
-                "voter_election_status",
-                {
-                    "voter_id",
-                    "election_id",
-                    "has_voted",
-                    "created_at",
-                },
-            )
-            drop_if_missing(
                 "candidate_tickets",
-                {"id", "election_id", "president_candidate_id", "vice_president_candidate_id", "created_at"},
-            )
-            drop_if_missing(
-                "election_ticket_tallies",
-                {"election_id", "ticket_id", "vote_count", "updated_at"},
+                {"id", "election_id", "president_candidate_id", "vice_president_candidate_id", "vote_count", "created_at", "updated_at"},
             )
             drop_if_missing(
                 "candidates",

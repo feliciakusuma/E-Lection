@@ -5,7 +5,7 @@ E-Lection is a small end-to-end e-voting prototype built with a FastAPI backend 
 ## Features
 - **User side:** register, verify via emailed code, Microsoft Sign-In, view active elections, cast votes, and see results/confirmation pages.
 - **Admin side:** login, manage voters, candidates (with president/vice tickets), elections, and view dashboards with stats and recent activity.
-- **Security:** email verification flow, admin auth, audit logging, and environment-driven configuration for secrets (Microsoft OAuth, SMTP, admin seed). Ballots use a hybrid scheme: a per-ballot AES-256-GCM session key encrypts voter_id + election_id + candidate_id + ticket_id + timestamp; that session key is encapsulated with ML-KEM-512 (via liboqs) and persisted in Redis. A separate `voter_election_status` table tracks whether a voter has cast a ballot for an election, keeping the primary `votes` table minimal.
+- **Security:** email verification flow, admin auth, audit logging, and environment-driven configuration for secrets (Microsoft OAuth, SMTP, admin seed). Ballots use a hybrid scheme: a per-ballot AES-256-GCM session key encrypts voter_id + election_id + candidate_id + ticket_id + timestamp; that session key is encapsulated with ML-KEM-512 (via liboqs) and persisted in Redis. Voter participation is tracked on the `users` table (`has_voted`) to keep the schema compact.
 
 ## Tech Stack
 - **Backend:** Python, FastAPI, SQLAlchemy

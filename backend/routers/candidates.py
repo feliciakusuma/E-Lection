@@ -9,13 +9,15 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import OperationalError
 from uuid import UUID
 
-from ..database import Candidate, Election, User, CandidateTicket, Cohort, Major, VoterElectionStatus
+from ..database import Candidate, Election, User, CandidateTicket, Cohort, Major
 from ..dependencies import get_db, templates
 from ..services.audit import log_security_event, security_logger
 from ..utils.validation import MAJOR_CODE_MAP
 from ..utils.csrf import validate_csrf
+from ..utils.cookies import get_signed_cookie
 
 router = APIRouter()
+_VOTED_ELECTIONS_COOKIE = "voted_elections"
 
 @router.get("/candidates", response_class=HTMLResponse)
 def candidates_page(request: Request, db: Session = Depends(get_db)):
@@ -131,16 +133,10 @@ def candidates_page(request: Request, db: Session = Depends(get_db)):
     def has_voted(user: User | None, election_id: UUID | None) -> bool:
         if not user or not election_id:
             return False
-        status = (
-            db.query(VoterElectionStatus)
-            .filter(
-                VoterElectionStatus.voter_id == str(user.id),
-                VoterElectionStatus.election_id == election_id,
-                VoterElectionStatus.has_voted == True,
-            )
-            .first()
-        )
-        return status is not None
+        data = get_signed_cookie(request, _VOTED_ELECTIONS_COOKIE, default=[])
+        if isinstance(data, list):
+            return str(election_id) in {str(x) for x in data if x is not None}
+        return False
 
     if active_election and has_voted(user_obj, active_election.id):
         return RedirectResponse(url=f"/results/{active_election.id}", status_code=303)
@@ -503,6 +499,7 @@ def admin_add_candidate_submit(
             president_candidate_id=candidate.id,
             vice_president_candidate_id=vice_candidate.id if vice_candidate else None,
             created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow(),
         )
         db.add(ticket)
 

@@ -15,7 +15,6 @@ from ..database import (
     User,
     Vote,
     Admin,
-    VoterElectionStatus,
     get_readonly_db,
     get_vote_count_secure,
 )
@@ -421,16 +420,9 @@ def admin_dashboard(request: Request, db: Session = Depends(get_db)):
 
     recent_voters = []
     try:
-        status_rows = (
-            db.query(VoterElectionStatus.voter_id)
-            .filter(VoterElectionStatus.has_voted == True)
-            .distinct()
-            .all()
-        )
-        voted_identifiers = {str(row[0]) for row in status_rows if row[0] is not None}
         recent_users = db.query(User).order_by(User.created_at.desc()).limit(3).all()
         recent_voters = [
-            (u, str(getattr(u, "id", "") or "") in voted_identifiers) for u in recent_users
+            (u, bool(getattr(u, "has_voted", False))) for u in recent_users
         ]
     except Exception:
         recent_voters = []
@@ -518,21 +510,12 @@ def admin_voters(request: Request, db: Session = Depends(get_db)):
             )
         )
 
-    status_rows = (
-        db.query(VoterElectionStatus.voter_id)
-        .filter(VoterElectionStatus.has_voted == True)
-        .distinct()
-        .all()
-    )
-    # Normalize identifiers to strings because some backends may coerce the column into ints.
-    voted_identifiers = {str(row[0]) for row in status_rows if row[0] is not None}
-
     total_count = query.count()  # total voters (unfiltered)
     voters_all = query.order_by(User.created_at.desc()).all() if hasattr(User, "created_at") else query.all()
 
     voter_rows = []
     for v in voters_all:
-        has_voted = str(getattr(v, "id", "") or "") in voted_identifiers
+        has_voted = bool(getattr(v, "has_voted", False))
         if getattr(v, "created_at", None):
             try:
                 v.display_created_at = v.created_at + tz_offset

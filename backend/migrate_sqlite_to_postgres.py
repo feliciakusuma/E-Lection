@@ -63,6 +63,7 @@ def migrate_users(sqlite_conn: Connection, pg_conn: Connection) -> None:
                 "status": r.status,
                 "verification_token": normalize_token_or_none(r.verification_token),
                 "is_active": r.is_active,
+                "has_voted": False,
                 "created_at": r.created_at,
             }
         )
@@ -72,11 +73,11 @@ def migrate_users(sqlite_conn: Connection, pg_conn: Connection) -> None:
                 """
                 INSERT INTO users (
                     id, first_name, last_name, email, student_id,
-                    password_hash, status, verification_token, is_active, created_at
+                    password_hash, status, verification_token, is_active, has_voted, created_at
                 )
                 VALUES (
                     :id, :first_name, :last_name, :email, :student_id,
-                    :password_hash, :status, :verification_token, :is_active, :created_at
+                    :password_hash, :status, :verification_token, :is_active, :has_voted, :created_at
                 )
                 """
             ),
@@ -143,35 +144,6 @@ def migrate_table_copy(sqlite_conn: Connection, pg_conn: Connection, table: str,
             payload,
         )
     print(f"{table}: migrated {len(payload)} rows")
-
-
-def migrate_system_config(sqlite_conn: Connection, pg_conn: Connection) -> None:
-    if pg_conn.execute(text("SELECT COUNT(*) FROM system_config")).scalar() > 0:
-        print("system_config: skipped (destination not empty)")
-        return
-    rows = sqlite_conn.execute(text("SELECT id, key, value_encrypted, is_readonly, created_at FROM system_config"))
-    payload = []
-    for r in rows:
-        payload.append(
-            {
-                "id": r.id,
-                "key": r.key,
-                "value": decrypt_or_none(r.value_encrypted),
-                "is_readonly": r.is_readonly,
-                "created_at": r.created_at,
-            }
-        )
-    if payload:
-        pg_conn.execute(
-            text(
-                """
-                INSERT INTO system_config (id, key, value, is_readonly, created_at)
-                VALUES (:id, :key, :value, :is_readonly, :created_at)
-                """
-            ),
-            payload,
-        )
-    print(f"system_config: migrated {len(payload)} rows")
 
 
 def main() -> None:
@@ -244,9 +216,8 @@ def main() -> None:
             sqlite_conn,
             pg_conn,
             "candidate_tickets",
-            ["id", "election_id", "president_candidate_id", "vice_president_candidate_id", "created_at"],
+            ["id", "election_id", "president_candidate_id", "vice_president_candidate_id", "created_at", "updated_at", "vote_count"],
         )
-        migrate_system_config(sqlite_conn, pg_conn)
 
     print("Migration complete.")
 

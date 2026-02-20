@@ -12,10 +12,8 @@ from ..database import (
     Candidate,
     CandidateTicket,
     Election,
-    ElectionTicketTally,
     Vote,
     User,
-    VoterElectionStatus,
     increment_ticket_tally,
     get_readonly_db,
     get_secure_db,
@@ -25,11 +23,13 @@ from ..dependencies import get_db, templates
 from ..services.audit import create_audit_log, log_security_event, security_logger
 from ..utils.counts import get_eligible_voters_count
 from ..utils.csrf import validate_csrf
+from ..utils.cookies import get_signed_cookie, set_signed_cookie
 from sqlalchemy.exc import IntegrityError
 
 router = APIRouter()
 
 _RANK_LABELS = ["Winner", "Runner-up", "Third place"]
+_VOTED_ELECTIONS_COOKIE = "voted_elections"
 
 
 def _apply_rank_labels(rows: list[dict], total_votes: int) -> None:
@@ -68,21 +68,25 @@ def _ticket_label(president: Candidate | None, vice: Candidate | None) -> str:
 
 def _reset_status_if_no_votes(db: Session, election_id: UUID) -> None:
     """If the votes table has no rows for this election (e.g., manual reset),
-    mark all voter_election_status entries as not voted and clear stale tallies."""
+    mark all users as not voted and clear stale tallies."""
     try:
         has_vote = db.query(Vote.id).filter(Vote.election_id == election_id).first()
     except Exception:
         has_vote = None
     if has_vote:
         return
-    db.query(VoterElectionStatus).filter(
-        VoterElectionStatus.election_id == election_id,
-        VoterElectionStatus.has_voted == True,
-    ).update({VoterElectionStatus.has_voted: False})
-    db.query(ElectionTicketTally).filter(
-        ElectionTicketTally.election_id == election_id,
-    ).delete(synchronize_session=False)
+    db.query(User).filter(User.has_voted == True).update({User.has_voted: False})
+    db.query(CandidateTicket).filter(
+        CandidateTicket.election_id == election_id,
+    ).update({CandidateTicket.vote_count: 0, CandidateTicket.updated_at: datetime.utcnow()})
     db.flush()
+
+
+def _get_voted_election_ids(request: Request) -> set[str]:
+    data = get_signed_cookie(request, _VOTED_ELECTIONS_COOKIE, default=[])
+    if isinstance(data, list):
+        return {str(x) for x in data if x is not None}
+    return set()
 
 
 @router.get("/confirmation", response_class=HTMLResponse)
@@ -132,17 +136,7 @@ def confirm(
     # Redirect voters who already cast a ballot for this election
     if election and user_obj:
         _reset_status_if_no_votes(db, election.id)
-        vid = str(user_obj.id)
-        status = (
-            db.query(VoterElectionStatus)
-            .filter(
-                VoterElectionStatus.voter_id == vid,
-                VoterElectionStatus.election_id == election.id,
-                VoterElectionStatus.has_voted == True,
-            )
-            .first()
-        )
-        if status:
+        if str(election.id) in _get_voted_election_ids(request):
             return RedirectResponse(url=f"/results/{election.id}", status_code=303)
 
     return templates.TemplateResponse(
@@ -199,15 +193,7 @@ def cast_vote(
 
         _reset_status_if_no_votes(db, election_id)
 
-        status_row = (
-            db.query(VoterElectionStatus)
-            .filter(
-                VoterElectionStatus.voter_id == voter_identifier,
-                VoterElectionStatus.election_id == election_id,
-            )
-            .first()
-        )
-        if status_row and status_row.has_voted:
+        if str(election_id) in _get_voted_election_ids(request):
             log_security_event("VOTE_DUPLICATE", f"Duplicate vote attempt for election {election_id}", client_ip, voter_id)
             raise HTTPException(status_code=400, detail="Vote already cast")
 
@@ -251,16 +237,9 @@ def cast_vote(
             ticket_id=ticket.id if ticket else None,
         )
         new_vote.is_counted = True
-        if status_row is None:
-            status_row = VoterElectionStatus(
-                voter_id=voter_identifier,
-                election_id=election_id,
-                has_voted=True,
-            )
-            db.add(status_row)
-        else:
-            status_row.has_voted = True
-            db.add(status_row)
+        if user_obj:
+            user_obj.has_voted = True
+            db.add(user_obj)
 
         increment_ticket_tally(db, election_id, ticket.id if ticket else None, step=1)
         db.add(new_vote)
@@ -280,7 +259,11 @@ def cast_vote(
 
         # After a successful, encrypted ballot write, send the voter straight to the results page
         query_params = urlencode({"verification_code": new_vote.verification_code})
-        return RedirectResponse(url=f"/results/{election_id}?{query_params}", status_code=303)
+        response = RedirectResponse(url=f"/results/{election_id}?{query_params}", status_code=303)
+        voted_ids = _get_voted_election_ids(request)
+        voted_ids.add(str(election_id))
+        set_signed_cookie(response, _VOTED_ELECTIONS_COOKIE, sorted(voted_ids))
+        return response
 
     except HTTPException:
         db.rollback()

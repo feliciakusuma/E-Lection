@@ -268,6 +268,7 @@ class User(Base):
     status = Column(String(20), default="pending")  # pending, verified, rejected
     verification_token = Column(Text, nullable=True)
     is_active = Column(Boolean, default=True)
+    has_voted = Column(Boolean, default=False, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     
     def __init__(self, first_name, last_name, email, student_id, cohort_id=None, major_id=None, **kwargs):
@@ -406,25 +407,13 @@ class CandidateTicket(Base):
     election_id = Column(UUID, nullable=False)
     president_candidate_id = Column(UUID, nullable=False)
     vice_president_candidate_id = Column(UUID, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
-
-
-class ElectionTicketTally(Base):
-    __tablename__ = "election_ticket_tallies"
-
-    election_id = Column(UUID, primary_key=True, nullable=False)
-    ticket_id = Column(UUID, primary_key=True, nullable=False)
     vote_count = Column(Integer, nullable=False, default=0)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
 
-class VoterElectionStatus(Base):
-    __tablename__ = "voter_election_status"
 
-    voter_id = Column(String(100), primary_key=True)
-    election_id = Column(UUID, primary_key=True)
-    has_voted = Column(Boolean, default=False, nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
 
 class Candidate(Base, AuditMixin):
     __tablename__ = "candidates"
@@ -499,20 +488,6 @@ class Admin(Base):
         self.verification_token = secrets.token_urlsafe(32)
         self.is_active = is_active
         super().__init__(**kwargs)
-
-class SystemConfig(Base):
-    __tablename__ = "system_config"
-    
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    key = Column(String(100), nullable=False, unique=True)
-    value = Column(Text, nullable=False)
-    is_readonly = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
-    
-    def __init__(self, key, value, is_readonly=True):
-        self.key = key
-        self.value = str(value)
-        self.is_readonly = is_readonly
 
 # Event listeners for audit logging
 @event.listens_for(User, 'after_insert')
@@ -611,14 +586,14 @@ def verify_data_integrity(db, model_class, record_id):
 def get_vote_count_secure(db, election_id):
     """Get vote count without exposing individual votes"""
     counts: dict = {}
-    tallies = (
-        db.query(ElectionTicketTally)
-        .filter(ElectionTicketTally.election_id == election_id)
+    tickets = (
+        db.query(CandidateTicket)
+        .filter(CandidateTicket.election_id == election_id)
         .all()
     )
-    if tallies:
-        for row in tallies:
-            counts[str(row.ticket_id)] = int(row.vote_count or 0)
+    if tickets:
+        for row in tickets:
+            counts[str(row.id)] = int(row.vote_count or 0)
         return counts
 
     votes = (
@@ -652,22 +627,15 @@ def increment_ticket_tally(db, election_id, ticket_id, step: int = 1):
     if ticket_id is None or step == 0:
         return
     row = (
-        db.query(ElectionTicketTally)
+        db.query(CandidateTicket)
         .filter(
-            ElectionTicketTally.election_id == election_id,
-            ElectionTicketTally.ticket_id == ticket_id,
+            CandidateTicket.election_id == election_id,
+            CandidateTicket.id == ticket_id,
         )
         .first()
     )
     if not row:
-        row = ElectionTicketTally(
-            election_id=election_id,
-            ticket_id=ticket_id,
-            vote_count=0,
-            updated_at=datetime.utcnow(),
-        )
-        db.add(row)
-        db.flush()
+        return
     row.vote_count = int(row.vote_count or 0) + int(step)
     row.updated_at = datetime.utcnow()
     db.add(row)

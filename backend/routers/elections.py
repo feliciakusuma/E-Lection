@@ -6,14 +6,16 @@ from sqlalchemy import or_, func
 from sqlalchemy.orm import Session
 from uuid import UUID
 
-from ..database import Candidate, CandidateTicket, Election, Vote, SessionLocal, User, VoterElectionStatus
+from ..database import Candidate, CandidateTicket, Election, Vote, SessionLocal, User
 from ..dependencies import get_db, templates
 from ..services.audit import log_security_event
 from ..utils.counts import get_eligible_voters_count
 from ..utils.validation import MAJOR_CODE_MAP
 from ..utils.csrf import validate_csrf
+from ..utils.cookies import get_signed_cookie
 
 router = APIRouter()
+_VOTED_ELECTIONS_COOKIE = "voted_elections"
 
 
 @router.get("/dashboard", response_class=HTMLResponse)
@@ -191,19 +193,10 @@ def public_dashboard(request: Request, db: Session = Depends(get_db)):
         user_email = request.cookies.get("user_email")
         user_obj = User.find_by_email(db, user_email) if user_email else None
         if user_obj and elections:
-            election_ids = [entry["election"].id for entry in elections]
-            voted_rows = (
-                db.query(VoterElectionStatus.election_id)
-                .filter(
-                    VoterElectionStatus.voter_id == str(user_obj.id),
-                    VoterElectionStatus.election_id.in_(election_ids),
-                    VoterElectionStatus.has_voted == True,
-                )
-                .all()
-            )
-            voted_ids = {row[0] for row in voted_rows}
+            data = get_signed_cookie(request, _VOTED_ELECTIONS_COOKIE, default=[])
+            voted_ids = {str(x) for x in data} if isinstance(data, list) else set()
             for entry in elections:
-                if entry["election"].id in voted_ids:
+                if str(entry["election"].id) in voted_ids:
                     entry["user_has_voted"] = True
     except Exception:
         pass
@@ -302,11 +295,8 @@ def admin_elections(request: Request, db: Session = Depends(get_db)):
                 .count()
             )
         voters_count = (
-            db.query(VoterElectionStatus)
-            .filter(
-                VoterElectionStatus.election_id == e.id,
-                VoterElectionStatus.has_voted == True,
-            )
+            db.query(User)
+            .filter(User.has_voted == True)
             .count()
         )
 
