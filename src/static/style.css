@@ -346,6 +346,12 @@ html, body {
   border-radius: 0.5rem;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
+.form-card .form-input {
+  box-sizing: border-box;
+  height: 3.25rem;
+  line-height: 1.25rem;
+  font-size: 1rem;
+}
 .form-input:focus {
   outline: ;
   border-color: var(--blue-500);
@@ -357,11 +363,7 @@ html, body {
 .form-card .password-field {
   -webkit-appearance: none;
   appearance: none;
-  box-sizing: border-box;
-  height: auto;
-  line-height: 1.25rem;
-  padding: 0.5rem 3rem 0.5rem 0.75rem;
-  font-size: 1rem;
+  padding-right: 3rem;
   -webkit-text-fill-color: currentColor;
 }
 .form-card input[type="password"].password-field::-webkit-textfield-decoration-container {
