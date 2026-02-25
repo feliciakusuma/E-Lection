@@ -520,9 +520,9 @@ input[type="password"]::-ms-clear {
   display: none; 
 }
 
-/* Hide WebKit credential/reveal button (Safari/iOS) if present */
-input[type="password"]::-webkit-credentials-auto-fill-button,
-input[type="password"]::-webkit-textfield-decoration-container {
+/* Hide only Safari's credential auto-fill button; avoid hiding the
+   textfield decoration container because it can collapse password inputs on iOS. */
+input[type="password"]::-webkit-credentials-auto-fill-button {
   visibility: hidden;
   display: none;
   pointer-events: none;
