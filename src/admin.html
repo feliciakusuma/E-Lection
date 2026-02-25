@@ -9,7 +9,7 @@
   <title>Admin Login</title>
 </head>
 
-<body class="body-main">
+<body class="body-main admin-login-page">
   <!-- Navbar -->
   <nav class="navbar">
     <div class="sidebar-logo">
@@ -46,7 +46,7 @@
             name="email"
             type="email"
             placeholder="Enter your email"
-            class="form-input"
+            class="form-input admin-login-input"
             value="{{ (form_data or {}).get('email', '')  | e }}"
             required
           />
@@ -61,7 +61,7 @@
               name="password"
               type="password"
               placeholder="Enter your password"
-              class="form-input pr-12 password-field"
+              class="form-input pr-12 password-field admin-login-input"
               autocomplete="current-password"
               required
             />

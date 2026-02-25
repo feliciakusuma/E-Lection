@@ -346,17 +346,21 @@ html, body {
   border-radius: 0.5rem;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
-.form-card .form-input {
-  box-sizing: border-box;
-  height: 2.75rem;
-  line-height: 1.25rem;
-  font-size: 1rem;
-}
 .form-input:focus {
   outline: ;
   border-color: var(--blue-500);
   background-color: var(--white);
   box-shadow: 0 0 0 2px var(--blue-500);
+}
+
+/* Match admin login field sizing to register page input sizing. */
+.admin-login-page .admin-login-input {
+  box-sizing: border-box;
+  height: auto;
+  line-height: normal;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 1rem;
 }
 
 /* Normalize password input rendering on mobile Safari/Chrome. */
