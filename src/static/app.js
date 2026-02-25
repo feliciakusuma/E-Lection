@@ -1,4 +1,27 @@
 (() => {
+  const normalizePasswordRendering = () => {
+    document.querySelectorAll("input[type='password'].password-field").forEach((input) => {
+      if (!(input instanceof HTMLInputElement)) return;
+      if (input.dataset.renderNormalized === "1") return;
+      if (document.activeElement === input) return;
+      try {
+        input.type = "text";
+        void input.offsetHeight; // force reflow before switching back
+        input.type = "password";
+        input.dataset.renderNormalized = "1";
+      } catch (_) {
+        // Ignore browser restrictions; field still works without normalization.
+      }
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", normalizePasswordRendering);
+  } else {
+    normalizePasswordRendering();
+  }
+  window.addEventListener("pageshow", normalizePasswordRendering);
+
   document.addEventListener("submit", (event) => {
     const form = event.target;
     if (!(form instanceof HTMLFormElement)) return;
