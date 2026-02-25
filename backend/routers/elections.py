@@ -275,7 +275,8 @@ def admin_elections(request: Request, db: Session = Depends(get_db)):
         dstatus = derive_status(e)
 
         votes_q = db.query(Vote).filter(Vote.election_id == e.id)
-        votes_cast = votes_q.count()
+        votes = votes_q.all()
+        votes_cast = len(votes)
 
         # Count distinct valid ticket presidents to avoid duplicate/orphan ticket inflation.
         candidates_count = (
@@ -294,11 +295,17 @@ def admin_elections(request: Request, db: Session = Depends(get_db)):
                 .filter(Candidate.position == e.title, Candidate.is_active == True)
                 .count()
             )
-        voters_count = (
-            db.query(User)
-            .filter(User.has_voted == True)
-            .count()
-        )
+        # Count voters for this election only. Prefer unique voter ids from ballot payload;
+        # fallback to vote count when voter ids are unavailable (legacy/redis key expiry).
+        unique_voter_ids = set()
+        for vote in votes:
+            try:
+                voter_id = getattr(vote, "voter_id_plain", "") or ""
+                if voter_id:
+                    unique_voter_ids.add(str(voter_id))
+            except Exception:
+                continue
+        voters_count = len(unique_voter_ids) if unique_voter_ids else votes_cast
 
         if status_filter != "all" and dstatus != status_filter:
             continue
