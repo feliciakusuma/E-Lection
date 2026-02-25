@@ -1559,6 +1559,233 @@ html, body {
   vertical-align: middle;
 }
 
+/* ---------------- Mobile Voters Table ---------------- */
+@media (max-width: 640px){
+  .candidates-wrapper,
+  .table-container,
+  .pagination {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  .topbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  .topbar-right {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .topbar-right .search-box {
+    flex: 1 1 auto;
+    max-width: 100%;
+  }
+  .topbar-right .search-box .search-bar {
+    width: 100%;
+    max-width: 100%;
+  }
+  .topbar-right .profile {
+    flex: 0 0 auto;
+  }
+
+  .candidates-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .filter-group,
+  .filter-group form,
+  .filter-select {
+    width: 100%;
+  }
+
+  .table-container {
+    overflow: visible;
+  }
+  .table {
+    display: block;
+    width: 100%;
+  }
+  .table thead {
+    display: none;
+  }
+  .table tbody {
+    display: block;
+  }
+  .table tr {
+    display: block;
+    margin-bottom: 0.85rem;
+    border: 1px solid var(--gray-200);
+    border-radius: 0.75rem;
+    background: var(--white);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .table td {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.75rem 0.9rem;
+    border-top: 1px solid var(--gray-200);
+  }
+  .table td:first-child {
+    border-top: 0;
+  }
+  .table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--gray-600);
+    min-width: 36%;
+    flex: 0 0 36%;
+  }
+
+  .candidate-cell {
+    align-items: center;
+  }
+  .candidate-cell .avatar {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+  .candidate-id {
+    font-size: 0.75rem;
+  }
+
+  .table td[data-label="Email"] {
+    word-break: break-word;
+  }
+  .table td[data-label="Registration Date"] {
+    flex-wrap: wrap;
+  }
+  .badge {
+    white-space: nowrap;
+  }
+
+  .pagination {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .pagination-buttons {
+    flex-wrap: wrap;
+  }
+}
+
+/* ---------------- Mobile Candidates Table ---------------- */
+@media (max-width: 640px){
+  .candidates-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .candidates-toolbar .filter-group {
+    width: 100%;
+  }
+  .candidates-toolbar .filter-group form {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  .candidates-toolbar .filter-select {
+    width: 100%;
+  }
+  .candidates-toolbar .btn-create {
+    width: 100%;
+    text-align: center;
+  }
+
+  .table td[data-label="Position"] {
+    word-break: break-word;
+  }
+  .table td[data-label="Actions"] > div {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .table tr.bg-gray-50 {
+    background: #f9fafb;
+  }
+}
+
+/* ---------------- Mobile Elections Page ---------------- */
+@media (max-width: 640px){
+  .filter-tabs,
+  .candidates-toolbar .filter-group {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .filter-btn {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+  .candidates-toolbar .btn-create {
+    width: 100%;
+    text-align: center;
+  }
+
+  .election-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .election-card {
+    padding: 0.85rem;
+  }
+  .election-card-header {
+    align-items: center;
+  }
+  .election-card-header h3 {
+    max-width: 20ch;
+  }
+  .election-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+  .election-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+}
+
+/* ---------------- Mobile Live Results (Dashboard) ---------------- */
+@media (max-width: 640px){
+  .section-card.wide .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .section-card.wide .section-header .filter-select {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .section-card.wide .ui-maxh-320 {
+    max-height: none;
+  }
+  .results-chart-card {
+    padding: 0.75rem;
+  }
+  .results-chart-container {
+    min-height: 240px;
+    height: auto;
+  }
+  .results-chart-container canvas {
+    width: 100% !important;
+    height: 240px !important;
+  }
+
+  .live-results-grid,
+  .results-list {
+    gap: 1rem;
+  }
+  .results-list {
+    max-height: none;
+  }
+}
+
 .table-header {
   display: flex;
   justify-content: space-between;
