@@ -75,9 +75,8 @@
 
     <div class="p-6">
       <div class="bg-white rounded-lg shadow p-6 max-w-3xl mx-auto">
-        <div class="flex items-center justify-between mb-4">
+        <div class="mb-4">
           <h2 class="text-xl font-bold">{{ election.title }}</h2>
-          <span class="text-sm text-gray-500">ID: {{ election.id }}</span>
         </div>
 
         {% if error %}<div class="alert-error mb-4">{{ error | e }}</div>{% endif %}
