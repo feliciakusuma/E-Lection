@@ -2023,40 +2023,54 @@ html, body {
 
 .search-submit:hover{background:var(--blue-700);}
 
-/* Search bar fix override */
-.search-box { 
-  position: relative; 
-  display: inline-block; 
+/* Admin topbar layout stabilization across tablet/mobile widths */
+.admin-body .topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
 }
 
-.search-box .search-bar { 
-  width: 22rem; 
-  max-width: 70%; 
-  padding-left: 1rem; 
-  padding-right: 2.5rem; 
-  border: 1px solid var(--gray-300);
-  border-radius: .75rem; 
-  float: right;
+.admin-body .topbar-right .search-box {
+  flex: 1 1 22rem;
+  min-width: 0;
+  max-width: 100%;
 }
 
-.search-submit { 
-  position: absolute; 
-  right: .5rem; 
-  top: 50%; 
-  transform: translateY(-50%); 
-  width: 1.75rem; 
-  height: 1.75rem; 
-  border-radius: 9999px; 
-  background: var(--blue-600); 
-  color: #fff; 
-  display: inline-flex; 
-  align-items: center; 
-  justify-content: center; 
-  border: none; 
-  cursor: pointer; 
+.admin-body .topbar-right .search-box .search-bar {
+  width: 100%;
+  max-width: 100%;
+  float: none;
 }
 
-.search-submit:hover { background: var(--blue-700); }
+@media (max-width: 900px) {
+  .admin-body .topbar {
+    height: auto;
+    padding: 0.75rem 1rem;
+    align-items: stretch;
+    gap: 0.6rem;
+  }
+
+  .admin-body .topbar-right {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.6rem;
+  }
+
+  .admin-body .topbar-right .search-box {
+    flex: 1 1 auto;
+  }
+
+  .admin-body .topbar-right .profile {
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .admin-body .topbar-right .search-box .search-bar {
+    height: 2.5rem;
+  }
+}
 
 /* Reset default body margin to remove page gutter */
 body { margin: 0; }
