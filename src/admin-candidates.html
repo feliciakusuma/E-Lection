@@ -154,7 +154,7 @@
                   {% endif %}
                 </td>
                 <td data-label="Last Updated">
-                  {{ candidate.created_at.strftime('%b %d, %Y %H:%M') if candidate.created_at else '-' }}
+                  {{ candidate.last_updated_str if candidate.last_updated_str else '-' }}
                 </td>
                 <td data-label="Actions">
                   <div class>
@@ -190,7 +190,7 @@
                   {% endif %}
                 </td>
                 <td data-label="Last Updated">
-                  {{ candidate.created_at.strftime('%b %d, %Y %H:%M') if candidate.created_at else '-' }}
+                  {{ candidate.last_updated_str if candidate.last_updated_str else '-' }}
                 </td>
                 <td data-label="Actions">
                   <div class>
@@ -291,6 +291,7 @@
   <script nonce="{{ csp_nonce(request) }}" src="{{ asset(request, 'app.js') }}" defer></script>
 </body>
 </html>
+
 
 
 
