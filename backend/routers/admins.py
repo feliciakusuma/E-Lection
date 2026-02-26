@@ -62,6 +62,41 @@ def _ticket_label(president: Candidate | None, vice: Candidate | None) -> str:
     return pres_name or vice_name or ""
 
 
+def _collect_voted_identifiers(db: Session) -> set[str]:
+    """Read voted user identifiers without mutating database state."""
+    voted: set[str] = set()
+
+    # Primary source: persisted audit entries from successful vote casts.
+    try:
+        rows = (
+            db.query(AuditLog.user_id)
+            .filter(AuditLog.action == "VOTE_CAST", AuditLog.user_id != None)  # noqa: E711
+            .distinct()
+            .all()
+        )
+        voted.update(str(r[0]) for r in rows if r and r[0] is not None)
+    except Exception:
+        pass
+
+    # Fallback source: user flag where available.
+    try:
+        rows = db.query(User.id).filter(User.has_voted == True).all()
+        voted.update(str(r[0]) for r in rows if r and r[0] is not None)
+    except Exception:
+        pass
+
+    # Last fallback: decrypt vote payloads when session keys are available.
+    try:
+        ballots = db.query(Vote).all()
+        for ballot in ballots:
+            vid = str(getattr(ballot, "voter_id_plain", "") or "").strip()
+            if vid:
+                voted.add(vid)
+    except Exception:
+        pass
+
+    return voted
+
 @router.get("/admin-dashboard", response_class=HTMLResponse)
 def admin_dashboard(request: Request, db: Session = Depends(get_db)):
     total_voters = get_eligible_voters_count(db)
@@ -420,9 +455,15 @@ def admin_dashboard(request: Request, db: Session = Depends(get_db)):
 
     recent_voters = []
     try:
+        voted_identifiers = _collect_voted_identifiers(db)
         recent_users = db.query(User).order_by(User.created_at.desc()).limit(3).all()
         recent_voters = [
-            (u, bool(getattr(u, "has_voted", False))) for u in recent_users
+            (
+                u,
+                (str(getattr(u, "id", "") or "") in voted_identifiers)
+                or bool(getattr(u, "has_voted", False)),
+            )
+            for u in recent_users
         ]
     except Exception:
         recent_voters = []
@@ -510,12 +551,15 @@ def admin_voters(request: Request, db: Session = Depends(get_db)):
             )
         )
 
+    voted_identifiers = _collect_voted_identifiers(db)
     total_count = query.count()  # total voters (unfiltered)
     voters_all = query.order_by(User.created_at.desc()).all() if hasattr(User, "created_at") else query.all()
 
     voter_rows = []
     for v in voters_all:
-        has_voted = bool(getattr(v, "has_voted", False))
+        has_voted = (
+            str(getattr(v, "id", "") or "") in voted_identifiers
+        ) or bool(getattr(v, "has_voted", False))
         if getattr(v, "created_at", None):
             try:
                 v.display_created_at = v.created_at + tz_offset
@@ -667,3 +711,4 @@ def get_audit_log(db=Depends(get_readonly_db)):
     except Exception as exc:
         security_logger.error(f"Audit log access error: {exc}")
         raise
+
