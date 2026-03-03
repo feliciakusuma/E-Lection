@@ -13,6 +13,8 @@ from backend.dependencies import asset, templates, csrf_token, csp_nonce
 from backend.routers import admins, auth, candidates, elections, users, votes
 from backend.services import seed
 from backend.services.audit import security_logger
+import asyncio
+from contextlib import suppress
 import os
 import uvicorn
 import secrets
@@ -100,6 +102,7 @@ class SecurityHeadersMiddleware:
 
 
 app = FastAPI()
+cleanup_task = None
 app.add_middleware(SecurityHeadersMiddleware)
 app.add_middleware(
     SessionMiddleware,
@@ -177,6 +180,9 @@ async def security_middleware(request: Request, call_next):
                 if not user:
                     return apply_security_headers(
                         RedirectResponse(url="/login", status_code=302))
+                if not user.is_active or user.status != "verified":
+                    return apply_security_headers(
+                        RedirectResponse(url="/login", status_code=302))
             else:
                 return apply_security_headers(
                     RedirectResponse(url="/login", status_code=302))
@@ -188,11 +194,35 @@ async def security_middleware(request: Request, call_next):
 
 
 @app.on_event("startup")
-def startup():
+async def startup():
     seed.ensure_core_schema()
     Base.metadata.create_all(bind=engine)
     seed.seed_cohorts_and_majors()
     seed.ensure_admins_table_and_account()
+    global cleanup_task
+    if cleanup_task is None or cleanup_task.done():
+        cleanup_task = asyncio.create_task(_pending_user_cleanup_worker())
+
+
+async def _pending_user_cleanup_worker():
+    while True:
+        db = SessionLocal()
+        try:
+            auth.purge_expired_pending_users(db)
+        except Exception as exc:
+            security_logger.warning("Scheduled pending-user cleanup failed: %s", exc)
+        finally:
+            db.close()
+        await asyncio.sleep(60)
+
+
+@app.on_event("shutdown")
+async def shutdown():
+    global cleanup_task
+    if cleanup_task is not None and not cleanup_task.done():
+        cleanup_task.cancel()
+        with suppress(asyncio.CancelledError):
+            await cleanup_task
 
 
 # Routers

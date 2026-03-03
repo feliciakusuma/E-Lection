@@ -1,10 +1,12 @@
 import base64
 from urllib.parse import urlencode
+from datetime import datetime, timedelta
 from fastapi import APIRouter, Depends, Form, HTTPException, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 import secrets
+import time
 import requests
 import smtplib
 from email.message import EmailMessage
@@ -41,6 +43,8 @@ router = APIRouter()
 # Microsoft login is enabled only if both client ID and secret are present
 MS_LOGIN_ENABLED = bool(MS_CLIENT_ID and MS_CLIENT_SECRET)
 ALLOWED_EMAIL_DOMAIN = "@my.sampoernauniversity.ac.id"
+OTP_TTL_SECONDS = 60
+PENDING_PURGE_GRACE_SECONDS = 300
 
 
 def is_allowed_domain(email: str | None) -> bool:
@@ -49,15 +53,68 @@ def is_allowed_domain(email: str | None) -> bool:
     return email.strip().lower().endswith(ALLOWED_EMAIL_DOMAIN)
 
 
-def parse_email_change_token(token: str | None):
-    """Return (code, pending_email) if token is for email change, else (None, None)."""
+def build_otp_token(code: str) -> str:
+    return f"otp:{code}:{int(time.time()) + OTP_TTL_SECONDS}"
+
+
+def parse_otp_token(token: str | None):
     if not token:
         return None, None
-    if token.startswith("change:"):
+    if token.startswith("otp:"):
         parts = token.split(":", 2)
-        if len(parts) == 3:
-            return parts[1], parts[2]
+        if len(parts) == 3 and parts[2].isdigit():
+            return parts[1], int(parts[2])
+        return None, None
+    # Legacy format compatibility: plain 6-digit code without expiry
+    if token.isdigit() and len(token) == 6:
+        return token, None
     return None, None
+
+
+def build_email_change_token(code: str, pending_email: str) -> str:
+    return f"change:{code}:{pending_email}:{int(time.time()) + OTP_TTL_SECONDS}"
+
+
+def parse_email_change_token(token: str | None):
+    """Return (code, pending_email, expires_at) if token is for email change."""
+    if not token:
+        return None, None, None
+    if token.startswith("change:"):
+        parts = token.split(":", 3)
+        if len(parts) == 4 and parts[3].isdigit():
+            return parts[1], parts[2], int(parts[3])
+        if len(parts) == 3:
+            # Legacy format compatibility: no expiry
+            return parts[1], parts[2], None
+    return None, None, None
+
+
+def is_expired(expires_at: int | None) -> bool:
+    return bool(expires_at and int(time.time()) >= expires_at)
+
+
+def purge_expired_pending_users(db: Session) -> None:
+    now = int(time.time())
+    deleted = 0
+    try:
+        pending_users = db.query(User).filter(User.status == "pending").all()
+        for u in pending_users:
+            token = getattr(u, "verification_token", None)
+            _, expires_at = parse_otp_token(token)
+            should_delete = False
+            if expires_at is not None:
+                should_delete = now > (expires_at + PENDING_PURGE_GRACE_SECONDS)
+            elif getattr(u, "created_at", None):
+                age = datetime.utcnow() - u.created_at
+                should_delete = age > timedelta(seconds=PENDING_PURGE_GRACE_SECONDS)
+            if should_delete and not getattr(u, "has_voted", False):
+                db.delete(u)
+                deleted += 1
+        if deleted:
+            db.commit()
+    except Exception as exc:
+        db.rollback()
+        security_logger.warning("Pending-user purge failed: %s", exc)
 
 
 def find_user_by_pending_email(db: Session, email: str | None):
@@ -67,7 +124,7 @@ def find_user_by_pending_email(db: Session, email: str | None):
     target = email.strip().lower()
     try:
         for candidate in db.query(User).all():
-            code, pending_email = parse_email_change_token(getattr(candidate, "verification_token", None))
+            code, pending_email, _ = parse_email_change_token(getattr(candidate, "verification_token", None))
             if pending_email and pending_email.strip().lower() == target:
                 return candidate, code, pending_email
     except Exception:
@@ -114,7 +171,7 @@ def send_verification_email(to_email: str, first_name: str, last_name: str, code
         f"Verification code: {code}\n\n"
         "Please enter this code on the E-Lection verification page to confirm your email address and complete your registration.\n\n"
         "Important:\n"
-        "• This code will expire in 5 minutes.\n"
+        "• This code will expire in 1 minute.\n"
         "• Do not share this code with anyone. E-Lection will never ask you for this code.\n\n"
         "If you did not request this registration, you can safely ignore this email and no account will be created.\n\n"
         "Best regards,\n"
@@ -128,7 +185,7 @@ def send_verification_email(to_email: str, first_name: str, last_name: str, code
         f"<p>Verification code: <strong>{code}</strong></p>"
         "<p>Please enter this code on the E-Lection verification page to confirm your email address and complete your registration.</p>"
         "<p><strong>Important:</strong><br>"
-        "• This code will expire in 5 minutes.<br>"
+        "• This code will expire in 1 minute.<br>"
         "• Do not share this code with anyone. E-Lection will never ask you for this code.</p>"
         "<p>If you did not request this registration, you can safely ignore this email and no account will be created.</p>"
         "<p>Best regards,<br>E-Lection Team</p>"
@@ -379,6 +436,9 @@ def microsoft_callback(
                 },
             )
 
+        if user.status != "verified":
+            return RedirectResponse(url=f"/verify-code?email={email}", status_code=302)
+
         if not user.is_active:
             log_security_event(
                 "LOGIN_MICROSOFT_BLOCKED",
@@ -393,11 +453,6 @@ def microsoft_callback(
                     "ms_enabled": MS_LOGIN_ENABLED,
                 },
             )
-
-        # Mark verified if needed
-        if user.status != "verified":
-            user.status = "verified"
-        db.commit()
 
         try:
             # Keep action <= 20 chars for older DB schemas.
@@ -638,17 +693,19 @@ def verify_code_submit(
     db: Session = Depends(get_db),
 ):
     validate_csrf(request, csrf_token)
+    purge_expired_pending_users(db)
     code = (code or "").strip()
     user = db.query(User).filter(User.email == email).first()
     pending_code = None
     pending_email = None
+    pending_expires_at = None
     pending_mode = False
 
     if not user:
         user, pending_code, pending_email = find_user_by_pending_email(db, email)
         pending_mode = user is not None
     else:
-        pending_code, pending_email = parse_email_change_token(getattr(user, "verification_token", None))
+        pending_code, pending_email, pending_expires_at = parse_email_change_token(getattr(user, "verification_token", None))
         pending_mode = bool(pending_email)
 
     if not user:
@@ -671,8 +728,29 @@ def verify_code_submit(
             },
         )
 
-    expected_code = pending_code if pending_mode else (user.verification_token or "")
-    if not code or code.strip() != expected_code:
+    if pending_mode:
+        expected_code = pending_code or ""
+        if is_expired(pending_expires_at):
+            return templates.TemplateResponse(
+                "verify.html",
+                {
+                    "request": request,
+                    "error": "Verification code expired. Please request a new code.",
+                    "email": email,
+                },
+            )
+    else:
+        expected_code, expires_at = parse_otp_token(user.verification_token)
+        if is_expired(expires_at):
+            return templates.TemplateResponse(
+                "verify.html",
+                {
+                    "request": request,
+                    "error": "Verification code expired. Please request a new code.",
+                    "email": email,
+                },
+            )
+    if not expected_code or not code or code.strip() != expected_code:
         return templates.TemplateResponse(
             "verify.html",
             {
@@ -689,6 +767,7 @@ def verify_code_submit(
         else:
             user.status = "verified"
             user.is_active = True
+            user.verification_token = None
         db.commit()
         if pending_mode:
             response = RedirectResponse(url="/profile?email_updated=1", status_code=302)
@@ -726,6 +805,7 @@ def resend_code(
     db: Session = Depends(get_db),
 ):
     validate_csrf(request, csrf_token)
+    purge_expired_pending_users(db)
     user = db.query(User).filter(User.email == email).first()
     pending_code = None
     pending_email = None
@@ -735,7 +815,7 @@ def resend_code(
         user, pending_code, pending_email = find_user_by_pending_email(db, email)
         pending_mode = user is not None
     else:
-        pending_code, pending_email = parse_email_change_token(getattr(user, "verification_token", None))
+        pending_code, pending_email, _ = parse_email_change_token(getattr(user, "verification_token", None))
         pending_mode = bool(pending_email)
 
     if not user:
@@ -751,9 +831,9 @@ def resend_code(
     # Generate and set a new code
     new_code = f"{secrets.randbelow(10**6):06d}"
     if pending_mode and pending_email:
-        user.verification_token = f"change:{new_code}:{pending_email}"
+        user.verification_token = build_email_change_token(new_code, pending_email)
     else:
-        user.verification_token = new_code
+        user.verification_token = build_otp_token(new_code)
     db.commit()
 
     try:
@@ -790,6 +870,7 @@ def register_post(
     db: Session = Depends(get_db),
 ):
     validate_csrf(request, csrf_token)
+    purge_expired_pending_users(db)
     client_ip = request.client.host
     form_values = {
         "firstName": firstName,
@@ -931,8 +1012,8 @@ def register_post(
             major_id=major_id,
         )
         new_user.status = "pending"
-        new_user.is_active = True
-        new_user.verification_token = verification_code
+        new_user.is_active = False
+        new_user.verification_token = build_otp_token(verification_code)
 
         db.add(new_user)
         db.flush()
