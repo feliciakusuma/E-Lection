@@ -9,7 +9,7 @@
   <title>Admin - Elections</title>
 </head>
 
-<body class="admin-body">
+<body class="admin-body admin-elections-page">
    <!-- Sidebar -->
   <aside class="sidebar" id="sidebar"> 
     <div class="sidebar-logo">
@@ -94,12 +94,16 @@
           </div>
 
           <!-- Create New Election button -->
+          <div class="toolbar-actions">
           <a href="/add-election" class="btn-create">
             ＋ Create New Election
           </a>
+          <button type="button" class="btn-scroll-toggle" id="electionsScrollToggle" aria-controls="electionsScrollPanel">Scroll Down</button>
+          </div>
         </div>
    
       <!-- Dynamic Election Cards (data-driven) -->
+      <div class="elections-scroll-panel" id="electionsScrollPanel">
       <div class="election-grid">
         {% if elections_payload %}
           {% for item in elections_payload %}
@@ -138,6 +142,7 @@
             {% else %}
               <div class="empty-state">No elections found.</div>
             {% endif %}
+      </div>
       </div>
     </div>
   </main>
@@ -192,6 +197,37 @@
         });
       }
       if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', formatDateRangesToLocal); else formatDateRangesToLocal();
+
+      function initElectionScrollToggle(){
+        var panel = document.getElementById('electionsScrollPanel');
+        var toggle = document.getElementById('electionsScrollToggle');
+        if(!panel || !toggle) return;
+
+        function updateToggle(){
+          var overflow = panel.scrollHeight - panel.clientHeight > 8;
+          if(!overflow){
+            toggle.hidden = true;
+            return;
+          }
+          toggle.hidden = false;
+          var nearBottom = panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 12;
+          toggle.textContent = nearBottom ? 'Back to Top' : 'Scroll Down';
+        }
+
+        toggle.addEventListener('click', function(){
+          var nearBottom = panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 12;
+          if(nearBottom){
+            panel.scrollTo({ top: 0, behavior: 'smooth' });
+            return;
+          }
+          panel.scrollBy({ top: Math.max(240, panel.clientHeight * 0.8), behavior: 'smooth' });
+        });
+
+        panel.addEventListener('scroll', updateToggle, { passive: true });
+        window.addEventListener('resize', updateToggle);
+        updateToggle();
+      }
+      if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initElectionScrollToggle); else initElectionScrollToggle();
     })();
   </script>
   <script nonce="{{ csp_nonce(request) }}" src="{{ asset(request, 'app.js') }}" defer></script>
