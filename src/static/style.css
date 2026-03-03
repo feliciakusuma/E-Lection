@@ -1862,6 +1862,23 @@ html, body {
   padding-bottom: 1rem;
 }
 
+.admin-dashboard-page {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.admin-dashboard-page .main-content {
+  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.admin-dashboard-page .dashboard {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
 /* Toolbar row */
 .candidates-toolbar {
   display: flex;
