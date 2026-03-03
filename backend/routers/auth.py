@@ -1,6 +1,5 @@
 import base64
 from urllib.parse import urlencode
-from datetime import datetime, timedelta
 from fastapi import APIRouter, Depends, Form, HTTPException, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy import text
@@ -44,7 +43,6 @@ router = APIRouter()
 MS_LOGIN_ENABLED = bool(MS_CLIENT_ID and MS_CLIENT_SECRET)
 ALLOWED_EMAIL_DOMAIN = "@my.sampoernauniversity.ac.id"
 OTP_TTL_SECONDS = 60
-PENDING_PURGE_GRACE_SECONDS = 300
 
 
 def is_allowed_domain(email: str | None) -> bool:
@@ -91,30 +89,6 @@ def parse_email_change_token(token: str | None):
 
 def is_expired(expires_at: int | None) -> bool:
     return bool(expires_at and int(time.time()) >= expires_at)
-
-
-def purge_expired_pending_users(db: Session) -> None:
-    now = int(time.time())
-    deleted = 0
-    try:
-        pending_users = db.query(User).filter(User.status == "pending").all()
-        for u in pending_users:
-            token = getattr(u, "verification_token", None)
-            _, expires_at = parse_otp_token(token)
-            should_delete = False
-            if expires_at is not None:
-                should_delete = now > (expires_at + PENDING_PURGE_GRACE_SECONDS)
-            elif getattr(u, "created_at", None):
-                age = datetime.utcnow() - u.created_at
-                should_delete = age > timedelta(seconds=PENDING_PURGE_GRACE_SECONDS)
-            if should_delete and not getattr(u, "has_voted", False):
-                db.delete(u)
-                deleted += 1
-        if deleted:
-            db.commit()
-    except Exception as exc:
-        db.rollback()
-        security_logger.warning("Pending-user purge failed: %s", exc)
 
 
 def find_user_by_pending_email(db: Session, email: str | None):
@@ -693,7 +667,6 @@ def verify_code_submit(
     db: Session = Depends(get_db),
 ):
     validate_csrf(request, csrf_token)
-    purge_expired_pending_users(db)
     code = (code or "").strip()
     user = db.query(User).filter(User.email == email).first()
     pending_code = None
@@ -805,7 +778,6 @@ def resend_code(
     db: Session = Depends(get_db),
 ):
     validate_csrf(request, csrf_token)
-    purge_expired_pending_users(db)
     user = db.query(User).filter(User.email == email).first()
     pending_code = None
     pending_email = None
@@ -870,7 +842,6 @@ def register_post(
     db: Session = Depends(get_db),
 ):
     validate_csrf(request, csrf_token)
-    purge_expired_pending_users(db)
     client_ip = request.client.host
     form_values = {
         "firstName": firstName,

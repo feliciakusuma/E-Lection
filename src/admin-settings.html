@@ -76,8 +76,7 @@
             <p class="admin-role">Administrator</p>
           </div>
           <div class="profile-menu" role="menu">
-            <a href="/admin-settings" class="profile-item" role="menuitem"><i class="fa-solid fa-user-pen"></i> Edit Profile</a>
-            <a href="/admin-logout" class="profile-item text-red-500" role="menuitem"><i class="fa-solid fa-arrow-right-from-bracket text-red-500"></i> Logout</a>
+                        <a href="/admin-logout" class="profile-item text-red-500" role="menuitem"><i class="fa-solid fa-arrow-right-from-bracket text-red-500"></i> Logout</a>
           </div>
         </div>
       </div>
@@ -93,10 +92,7 @@
             <h2 class="text-lg font-semibold">Profile</h2>
             <span class="badge badge-running">Admin</span>
           </div>
-          <p class="text-sm text-gray-600 mb-4">Update your display details. Changes apply to new sessions.</p>
-          {% if saved %}
-          <div class="alert-success mb-3">Profile updated successfully.</div>
-          {% endif %}
+          <p class="text-sm text-gray-600 mb-4">Profile editing is locked.</p>
           {% if error %}
           <div class="alert-error mb-3">{{ error | e }}</div>
           {% endif %}
@@ -104,14 +100,11 @@
             <input type="hidden" name="csrf_token" value="{{ csrf_token(request)  | e }}" />
             <div>
               <label class="form-label">Full Name</label>
-              <input type="text" name="full_name" class="form-input" value="{{ admin.full_name if admin else '' }}" placeholder="Full name" required>
+              <input type="text" name="full_name" class="form-input bg-gray-100 text-gray-600 cursor-not-allowed" value="{{ admin.full_name if admin else '' }}" placeholder="Full name" readonly aria-readonly="true">
             </div>
             <div>
               <label class="form-label">Email</label>
-              <input type="email" name="email" class="form-input" value="{{ admin.email if admin else '' }}" placeholder="admin@example.com" required>
-            </div>
-            <div class="flex justify-end pt-4">
-              <button type="submit" class="btn-create">Save Profile</button>
+              <input type="email" name="email" class="form-input bg-gray-100 text-gray-600 cursor-not-allowed" value="{{ admin.email if admin else '' }}" placeholder="admin@example.com" readonly aria-readonly="true">
             </div>
           </form>
         </div>

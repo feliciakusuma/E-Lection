@@ -635,7 +635,7 @@ def admin_settings(request: Request, db: Session = Depends(get_db)):
             "request": request,
             "admin": admin,
             "saved": request.query_params.get("saved"),
-            "error": None if admin else "Admin not found" if email_cookie else None,
+            "error": request.query_params.get("error") or (None if admin else "Admin not found" if email_cookie else None),
         },
     )
 
@@ -649,42 +649,7 @@ def admin_settings_save(
     db: Session = Depends(get_db),
 ):
     validate_csrf(request, csrf_token)
-    email_cookie = request.cookies.get("user_email")
-    if not email_cookie:
-        return RedirectResponse(url="/admin", status_code=302)
-
-    admin_row = db.query(Admin).filter(Admin.email == email_cookie).first()
-    if not admin_row:
-        return RedirectResponse(url="/admin", status_code=302)
-
-    admin_row.full_name = full_name.strip()
-    admin_row.email = email.strip().lower()
-    db.commit()
-
-    # Update cookies to reflect new info
-    response = RedirectResponse(url="/admin-settings?saved=1", status_code=303)
-    try:
-        set_secure_cookies(
-            response,
-            {
-                "user_email": admin_row.email or "",
-                "full_name": admin_row.full_name or "",
-            },
-        )
-        # best-effort split for display names
-        parts = admin_row.full_name.split(" ", 1)
-        first = parts[0] if parts else ""
-        last = parts[1] if len(parts) > 1 else ""
-        set_secure_cookies(
-            response,
-            {
-                "first_name": first,
-                "last_name": last,
-            },
-        )
-    except Exception:
-        pass
-    return response
+    return RedirectResponse(url="/admin-settings?error=Profile+editing+is+disabled", status_code=303)
 
 
 @router.get("/audit-log")
