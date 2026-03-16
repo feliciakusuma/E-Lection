@@ -558,37 +558,55 @@ def admin_login_post(
             .first()
         )
         if admin_row and verify_password(password, admin_row.password_hash):
-            create_audit_log(
-                db,
-                "admins",
-                admin_row.id,
-                "ADMIN_LOGIN_SUCCESS",
-                user_id=str(admin_row.id),
-                ip_address=client_ip,
-            )
-            response = RedirectResponse(url="/admin-dashboard", status_code=302)
+            # Send admin verification code to email before completing login.
+            full_name = (admin_row.full_name or "").strip()
+            if not full_name:
+                linked_user = User.find_by_email(db, admin_row.email)
+                if linked_user:
+                    full_name = f"{linked_user.first_name or ''} {linked_user.last_name or ''}".strip() or linked_user.email
+            parts = full_name.split(" ", 1)
+            first = parts[0] if parts else ""
+            last = parts[1] if len(parts) > 1 else ""
+
+            code = f"{secrets.randbelow(10**6):06d}"
+            admin_row.verification_token = build_otp_token(code)
+            db.commit()
             try:
-                set_secure_cookie(response, "user_email", admin_row.email or "")
-                # Derive display name from admin full_name or linked user record
-                full_name = (admin_row.full_name or "").strip()
-                if not full_name:
-                    linked_user = User.find_by_email(db, admin_row.email)
-                    if linked_user:
-                        full_name = f"{linked_user.first_name or ''} {linked_user.last_name or ''}".strip() or linked_user.email
-                parts = full_name.split(" ", 1)
-                first = parts[0] if parts else ""
-                last = parts[1] if len(parts) > 1 else ""
-                set_secure_cookies(
-                    response,
+                send_verification_email(
+                    to_email=admin_row.email or "",
+                    first_name=first or "Admin",
+                    last_name=last or "",
+                    code=code,
+                )
+            except Exception as send_exc:
+                admin_row.verification_token = None
+                db.commit()
+                log_security_event(
+                    "ADMIN_LOGIN_CODE_FAILED",
+                    f"Admin verification email failed for {email}: {send_exc}",
+                    client_ip,
+                )
+                return templates.TemplateResponse(
+                    "admin.html",
                     {
-                        "full_name": full_name or "",
-                        "first_name": first,
-                        "last_name": last,
+                        "request": request,
+                        "error": "Unable to send verification code. Please try again.",
+                        "form_data": form_data,
                     },
+                )
+
+            try:
+                create_audit_log(
+                    db,
+                    "admins",
+                    admin_row.id,
+                    "ADMIN_LOGIN_OTP_SENT",
+                    user_id=str(admin_row.id),
+                    ip_address=client_ip,
                 )
             except Exception:
                 pass
-            return response
+            return RedirectResponse(url=f"/admin-verify-code?email={email}", status_code=302)
 
         log_security_event(
             "ADMIN_LOGIN_FAILED",
@@ -641,6 +659,151 @@ def admin_logout():
     for ck in ["user_email", "first_name", "last_name", "full_name", "avatar_url", "oauth_state"]:
         delete_secure_cookie(response, ck)
     return response
+
+
+@router.get("/admin-verify-code", response_class=HTMLResponse)
+def admin_verify_code_page(request: Request, email: str | None = None):
+    return templates.TemplateResponse(
+        "admin-verify.html",
+        {
+            "request": request,
+            "email": email or "",
+        },
+    )
+
+
+@router.post("/admin-verify-code")
+def admin_verify_code_submit(
+    request: Request,
+    email: str = Form(...),
+    code: str = Form(...),
+    csrf_token: str = Form(...),
+    db: Session = Depends(get_db),
+):
+    validate_csrf(request, csrf_token)
+    code = (code or "").strip()
+    admin_row = db.query(Admin).filter(Admin.email == email).first()
+    if not admin_row:
+        return templates.TemplateResponse(
+            "admin-verify.html",
+            {
+                "request": request,
+                "error": "Admin account not found.",
+                "email": email,
+            },
+        )
+
+    expected_code, expires_at = parse_otp_token(admin_row.verification_token)
+    if is_expired(expires_at):
+        return templates.TemplateResponse(
+            "admin-verify.html",
+            {
+                "request": request,
+                "error": "Verification code expired. Please request a new code.",
+                "email": email,
+            },
+        )
+
+    if not expected_code or not code or code.strip() != expected_code:
+        return templates.TemplateResponse(
+            "admin-verify.html",
+            {
+                "request": request,
+                "error": "Invalid or expired verification code.",
+                "email": email,
+            },
+        )
+
+    try:
+        admin_row.verification_token = None
+        db.commit()
+        response = RedirectResponse(url="/admin-dashboard", status_code=302)
+        try:
+            set_secure_cookie(response, "user_email", admin_row.email or "")
+            full_name = (admin_row.full_name or "").strip()
+            if not full_name:
+                linked_user = User.find_by_email(db, admin_row.email)
+                if linked_user:
+                    full_name = f"{linked_user.first_name or ''} {linked_user.last_name or ''}".strip() or linked_user.email
+            parts = full_name.split(" ", 1)
+            first = parts[0] if parts else ""
+            last = parts[1] if len(parts) > 1 else ""
+            set_secure_cookies(
+                response,
+                {
+                    "full_name": full_name or "",
+                    "first_name": first,
+                    "last_name": last,
+                },
+            )
+        except Exception:
+            pass
+        return response
+    except Exception:
+        db.rollback()
+        return templates.TemplateResponse(
+            "admin-verify.html",
+            {
+                "request": request,
+                "error": "Verification failed. Please try again.",
+                "email": email,
+            },
+        )
+
+
+@router.post("/admin-resend-code")
+def admin_resend_code(
+    request: Request,
+    email: str = Form(...),
+    csrf_token: str = Form(...),
+    db: Session = Depends(get_db),
+):
+    validate_csrf(request, csrf_token)
+    admin_row = db.query(Admin).filter(Admin.email == email).first()
+    if not admin_row:
+        return templates.TemplateResponse(
+            "admin-verify.html",
+            {
+                "request": request,
+                "error": "Admin account not found.",
+                "email": email,
+            },
+        )
+
+    new_code = f"{secrets.randbelow(10**6):06d}"
+    admin_row.verification_token = build_otp_token(new_code)
+    db.commit()
+
+    full_name = (admin_row.full_name or "").strip()
+    if not full_name:
+        linked_user = User.find_by_email(db, admin_row.email)
+        if linked_user:
+            full_name = f"{linked_user.first_name or ''} {linked_user.last_name or ''}".strip() or linked_user.email
+    parts = full_name.split(" ", 1)
+    first = parts[0] if parts else ""
+    last = parts[1] if len(parts) > 1 else ""
+
+    try:
+        send_verification_email(
+            to_email=admin_row.email or "",
+            first_name=first or "Admin",
+            last_name=last or "",
+            code=new_code,
+        )
+        success_msg = "A new verification code has been sent."
+    except Exception as send_exc:
+        success_msg = None
+        security_logger.warning(f"Admin resend code failed for {email}: {send_exc}")
+
+    return templates.TemplateResponse(
+        "admin-verify.html",
+        {
+            "request": request,
+            "success": success_msg,
+            "error": None if success_msg else "Unable to send code. Please try again.",
+            "email": email,
+        },
+    )
 
 
 @router.get("/verify-code", response_class=HTMLResponse)

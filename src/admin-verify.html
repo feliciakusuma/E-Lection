@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{{ asset(request, 'tailwind.css') }}" />
+  <link href="/static/vendor/fontawesome/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ asset(request, 'style.css') }}" />
+  <title>Verify Admin Login</title>
+</head>
+
+<body class="body-main">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="sidebar-logo">
+      <i class="fas fa-vote-yea text-blue-600 text-xl"></i>
+      <span class="logo-text">E-Lection</span>
+    </div>
+  </nav>
+
+  <!-- Main-->
+  <main class="form-main">
+    <div class="form-card">
+      <!-- Icon -->
+      <div class="form-icon circle-icon">
+        <i class="fa-solid fa-key text-white text-2xl"></i>
+      </div>
+
+      <!-- Title -->
+      <h2 class="form-title">Verify Admin Login</h2>
+      <p class="form-subtitle">To complete admin sign-in, enter the 6-digit verification code sent to your email.</p>
+
+      <p class="form-subtitle ui-mb-2">Please enter your verification code</p>
+
+      {% if success %}
+      <div class="alert-success">{{ success | e }}</div>
+      {% endif %}
+
+      {% if error %}
+      <div class="alert-error">{{ error | e }}</div>
+      {% endif %}
+
+      <form id="verifyForm" class="space-y-4 text-left" action="/admin-verify-code" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token(request)  | e }}" />
+        <input type="hidden" name="email" value="{{ email or '' }}" />
+        <div>
+          <div class="relative">
+            <div class="code-boxes">
+              {% for i in range(0,6) %}
+              <input
+                type="text"
+                inputmode="numeric"
+                maxlength="1"
+                class="code-box"
+              />
+              {% endfor %}
+              <input type="hidden" id="code" name="code" required />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-footer ui-form-footer-tight">
+          <span class="text-sm text-gray-600">Didn't receive a code?</span>
+          <span class="text-sm text-gray-500">Check junk/spam, then</span>
+          <button type="button" class="blue-underline ui-link-button" data-submit-target="#resendForm">Resend code</button>
+        </div>
+
+        <button type="submit" class="btn btn-login w-full mt-1">
+          Submit
+        </button>
+
+        <a href="/admin" class="btn btn-ghost w-full text-center mt-2">Cancel</a>
+      </form>
+
+      <form id="resendForm" action="/admin-resend-code" method="post" class="ui-hidden">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token(request)  | e }}" />
+        <input type="hidden" name="email" value="{{ email or '' }}" />
+      </form>
+    </div>
+  </main>
+  <script nonce="{{ csp_nonce(request) }}">
+    (function() {
+      const boxes = Array.from(document.querySelectorAll('.code-box'));
+      const hidden = document.getElementById('code');
+      const form = document.getElementById('verifyForm');
+      function syncCode() {
+        hidden.value = boxes.map((b) => (b.value || '').trim()).join('');
+      }
+      function handlePaste(e) {
+        const paste = (e.clipboardData || window.clipboardData).getData('text') || '';
+        if (!paste) return;
+        e.preventDefault();
+        const digits = paste.replace(/\D/g, '').slice(0, boxes.length).split('');
+        boxes.forEach((box, idx) => { box.value = digits[idx] || ''; });
+        syncCode();
+        const next = boxes.find(b => !b.value);
+        if (next) next.focus();
+      }
+      function moveNext(el) {
+        const idx = boxes.indexOf(el);
+        if (el.value && idx < boxes.length - 1) {
+          boxes[idx + 1].focus();
+        }
+        syncCode();
+      }
+      boxes.forEach((box) => {
+        box.addEventListener('input', () => moveNext(box));
+        box.addEventListener('keydown', (e) => {
+          if (e.key === 'Backspace' && !box.value) {
+            const idx = boxes.indexOf(box);
+            if (idx > 0) boxes[idx - 1].focus();
+          }
+        });
+        box.addEventListener('paste', handlePaste);
+      });
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          const val = (hidden && hidden.value || '').trim();
+          if (val.length !== 6) {
+            e.preventDefault();
+            alert('Please enter the 6-digit verification code.');
+          }
+        });
+      }
+    })();
+  </script>
+  <script nonce="{{ csp_nonce(request) }}" src="{{ asset(request, 'app.js') }}" defer></script>
+</body>
+</html>
