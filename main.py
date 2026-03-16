@@ -136,6 +136,8 @@ async def security_middleware(request: Request, call_next):
         "/register",
         "/verify-code",
         "/resend-code",
+        "/admin-verify-code",
+        "/admin-resend-code",
         "/health",
         "/login/microsoft",
         "/auth/microsoft/callback",
