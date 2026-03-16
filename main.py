@@ -152,7 +152,7 @@ async def security_middleware(request: Request, call_next):
 
     admin_exact_paths = {"/add-election"}
     admin_prefixes = ("/edit-election", "/delete-election")
-    is_admin_path = ((path.startswith("/admin") and path not in {"/admin"})
+    is_admin_path = ((path.startswith("/admin") and path not in {"/admin", "/admin-verify-code", "/admin-resend-code"})
                      or path in admin_exact_paths
                      or path.startswith(admin_prefixes))
 
