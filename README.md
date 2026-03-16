@@ -49,12 +49,6 @@ E-Lection is a small end-to-end e-voting prototype built with a FastAPI backend 
    uvicorn main:app --reload
    ```
 
-5) **Useful URLs**
-   - User login: `http://127.0.0.1:8000/login`
-   - User dashboard: `http://127.0.0.1:8000/dashboard`
-   - Admin login: `http://127.0.0.1:8000/admin`
-   - Admin dashboard: `http://127.0.0.1:8000/admin-dashboard`
-
 ## Project Layout
 - `main.py` – FastAPI entrypoint and middleware.
 - `backend/routers` – API and page routes (auth, admins, candidates, elections, votes).
