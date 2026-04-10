@@ -9,6 +9,18 @@ from .utils.csrf import get_or_create_csrf_token
 # Shared template setup and static mounting helper.
 templates = Jinja2Templates(directory="src")
 
+# Defensive wrapper: swap args if TemplateResponse is called with context first.
+_template_response = templates.TemplateResponse
+
+
+def _safe_template_response(name, context=None, **kwargs):
+    if isinstance(name, dict) and isinstance(context, str):
+        name, context = context, name
+    return _template_response(name=name, context=context, **kwargs)
+
+
+templates.TemplateResponse = _safe_template_response
+
 
 def asset(request: Request, path: str) -> str:
     """Cache-busting helper for static assets."""
