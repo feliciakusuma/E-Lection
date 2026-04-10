@@ -1,6 +1,7 @@
 import os
 from urllib.parse import urlparse
 from fastapi import Request
+import inspect
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from .database import SessionLocal
@@ -45,24 +46,44 @@ templates.env.filters["safe_url"] = safe_url
 
 # Compatibility wrapper for TemplateResponse across Starlette/FastAPI versions.
 _template_response = templates.TemplateResponse
+_expects_request = None
+
+
+def _template_expects_request() -> bool:
+    global _expects_request
+    if _expects_request is None:
+        try:
+            sig = inspect.signature(_template_response)
+            params = list(sig.parameters.values())
+            # Bound method: first param should be "request" or "name".
+            _expects_request = bool(params and params[0].name == "request")
+        except Exception:
+            _expects_request = False
+    return _expects_request
 
 
 def _safe_template_response(*args, **kwargs):
+    expects_request = _template_expects_request()
     if args:
         # Newer/older signatures: (request, name, context) or (name, context).
         if len(args) >= 3 and isinstance(args[0], Request):
-            return _template_response(*args, **kwargs)
+            if expects_request:
+                return _template_response(*args, **kwargs)
+            return _template_response(args[1], args[2], *args[3:], **kwargs)
         if len(args) >= 2 and isinstance(args[0], str) and isinstance(args[1], dict):
-            ctx = args[1]
-            req = ctx.get("request") if isinstance(ctx, dict) else None
-            if req is not None:
-                return _template_response(req, args[0], ctx, *args[2:], **kwargs)
+            if expects_request:
+                req = args[1].get("request")
+                if req is not None:
+                    return _template_response(req, args[0], args[1], *args[2:], **kwargs)
+            return _template_response(*args, **kwargs)
     if "name" in kwargs and "context" in kwargs:
         ctx = kwargs.get("context")
-        req = ctx.get("request") if isinstance(ctx, dict) else None
-        if req is not None:
-            extra = {k: v for k, v in kwargs.items() if k not in ("name", "context")}
-            return _template_response(req, kwargs["name"], ctx, **extra)
+        if expects_request:
+            req = ctx.get("request") if isinstance(ctx, dict) else None
+            if req is not None:
+                extra = {k: v for k, v in kwargs.items() if k not in ("name", "context")}
+                return _template_response(req, kwargs["name"], ctx, **extra)
+        return _template_response(kwargs["name"], ctx, **{k: v for k, v in kwargs.items() if k not in ("name", "context")})
     return _template_response(*args, **kwargs)
 
 
