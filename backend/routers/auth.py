@@ -121,8 +121,9 @@ def login_page(request: Request):
         msg = "Check your email for the verification link to activate your account."
     err = qp.get("error")
     return templates.TemplateResponse(
-        name="login.html",
-        context={
+        request,
+        "login.html",
+        {
             "request": request,
             "ms_enabled": MS_LOGIN_ENABLED,
             "success": msg,

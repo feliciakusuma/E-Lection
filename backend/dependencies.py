@@ -43,6 +43,31 @@ def safe_url(value: str | None, fallback: str = "") -> str:
 # Jinja filters
 templates.env.filters["safe_url"] = safe_url
 
+# Compatibility wrapper for TemplateResponse across Starlette/FastAPI versions.
+_template_response = templates.TemplateResponse
+
+
+def _safe_template_response(*args, **kwargs):
+    if args:
+        # Newer/older signatures: (request, name, context) or (name, context).
+        if len(args) >= 3 and isinstance(args[0], Request):
+            return _template_response(*args, **kwargs)
+        if len(args) >= 2 and isinstance(args[0], str) and isinstance(args[1], dict):
+            ctx = args[1]
+            req = ctx.get("request") if isinstance(ctx, dict) else None
+            if req is not None:
+                return _template_response(req, args[0], ctx, *args[2:], **kwargs)
+    if "name" in kwargs and "context" in kwargs:
+        ctx = kwargs.get("context")
+        req = ctx.get("request") if isinstance(ctx, dict) else None
+        if req is not None:
+            extra = {k: v for k, v in kwargs.items() if k not in ("name", "context")}
+            return _template_response(req, kwargs["name"], ctx, **extra)
+    return _template_response(*args, **kwargs)
+
+
+templates.TemplateResponse = _safe_template_response
+
 
 def get_db():
     """Yield a database session."""
