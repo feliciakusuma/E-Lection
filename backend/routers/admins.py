@@ -627,17 +627,7 @@ def admin_results(request: Request, db: Session = Depends(get_db)):
 
 @router.get("/admin-settings", response_class=HTMLResponse)
 def admin_settings(request: Request, db: Session = Depends(get_db)):
-    email_cookie = request.cookies.get("user_email")
-    admin = db.query(Admin).filter(Admin.email == email_cookie).first() if email_cookie else None
-    return templates.TemplateResponse(
-        "admin-settings.html",
-        {
-            "request": request,
-            "admin": admin,
-            "saved": request.query_params.get("saved"),
-            "error": request.query_params.get("error") or (None if admin else "Admin not found" if email_cookie else None),
-        },
-    )
+    return RedirectResponse(url="/admin-dashboard", status_code=302)
 
 
 @router.post("/admin-settings")
@@ -649,7 +639,7 @@ def admin_settings_save(
     db: Session = Depends(get_db),
 ):
     validate_csrf(request, csrf_token)
-    return RedirectResponse(url="/admin-settings?error=Profile+editing+is+disabled", status_code=303)
+    return RedirectResponse(url="/admin-dashboard", status_code=303)
 
 
 @router.get("/audit-log")
