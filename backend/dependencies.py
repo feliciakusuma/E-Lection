@@ -32,14 +32,14 @@ def csp_nonce(request: Request) -> str:
 
 
 def safe_url(value: str | None, fallback: str = "") -> str:
-    """Allow only http(s) URLs; otherwise return a safe fallback."""
+    """Allow only HTTPS URLs; otherwise return a safe fallback."""
     if not value:
         return fallback
     try:
         parsed = urlparse(value)
     except Exception:
         return fallback
-    if parsed.scheme in {"http", "https"} and parsed.netloc:
+    if parsed.scheme == "https" and parsed.netloc:
         return value
     return fallback
 
